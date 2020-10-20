@@ -1,0 +1,476 @@
+#container
+{
+    height:2000px;
+}
+
+#container DIV
+{
+    margin:50px;
+    padding:50px;
+    background-color:lightgreen;
+}
+
+
+
+.circle {
+    width: 300px;
+    height: 268px;
+    background: url('../img/logo-06.png');
+  /*  -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;*/
+    position: absolute;
+    left: 50%;
+    top:100px;
+    transform: translateX(-50%);
+    -moz-background-size:contain;
+    -webkit-background-size:contain;
+    -o-background-size:contain;
+    background-size:contain;
+    animation:myfirst 1s;
+    -moz-animation:myfirst 1s; /* Firefox */
+    -webkit-animation:myfirst 1s; /* Safari and Chrome */
+    -o-animation:myfirst 1s; /* Opera */
+}
+
+@keyframes myfirst
+{
+    from {opacity:0;}
+    to {opacity:1;}
+}
+
+@-moz-keyframes myfirst /* Firefox */
+{
+    from {opacity:0;}
+    to {opacity:1;}
+}
+
+@-webkit-keyframes myfirst /* Safari and Chrome */
+{
+    from {opacity:0;}
+    to {opacity:1;}
+}
+
+@-o-keyframes myfirst /* Opera */
+{
+    from {opacity:0;}
+    to {opacity:1;}
+}
+
+#leftbox {
+    left:0%;
+	border-radius: 65px;
+	background: #6dc8f3;
+	font-weight: bold
+}
+
+#rightbox {
+    left:50%;
+    border-radius: 65px;
+	background: #6dc8f3;
+    font-weight: bold
+}
+#leftbox2 {
+    left:65%;
+    top:-180px;
+}
+
+#rightbox2 {
+    left:25%;
+    top:-180px;
+    
+}
+
+#RWDbox {
+    position:relative;
+    left:5%;
+    top: -40%
+}
+
+#RWDbox2 {
+    position:relative;
+    left:10%;
+    top : 5%;
+}
+
+
+.aboutu12{
+    height:2000px;
+}
+
+.heightu{
+    height:400px;
+}
+
+
+#aboutH1{
+    position:relative;
+    left:20%;
+    top: 45%
+    
+}
+
+.aboutBody{
+	font-weight: bold;
+}
+
+@media screen and (min-width: 980px){
+    .scrEvent{
+        display:none;
+    }
+    
+	.newClass1 {
+		opacity:'1';
+	}
+	
+	.newClass2 {
+		opacity:'0';
+	}
+	
+    .circle2 {
+        width: 100px;
+        height: 200px;
+        background: url('../images/logo-07.png');
+       /* -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;*/
+        background-size: contain;
+        position:relative;
+        
+    }
+    .circle3 {
+        width: 100px;
+        height: 200px;
+        background: url('../images/logo-08.png');
+       /* -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;*/
+        background-size: contain;
+        position:relative;
+        
+    }
+    .circle4 {
+        width: 100px;
+        height: 200px;
+        background: url('../images/logo-09-1.png');
+        /*-moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;*/
+        background-size: contain;
+        position:relative;
+        
+    }
+    .circle5 {
+        width: 100px;
+        height: 200px;
+        background: url('../images/logo-10.png');
+       /* -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;*/
+        background-size: contain;
+        position:relative;
+        
+    }
+    
+    .rectangle {
+        width: 50%;
+        height: 150px;
+        background: cyan;
+        position:relative;
+    }
+    
+    .leaf1{
+        width: 306px;
+		height: 174px;
+        background: url('../images/leaf1.png');
+        text-align:center;
+        background-size: contain;
+        position:relative;
+        left: 50%;
+        top: -370px;
+        transform: translateX(-50%);
+        
+    }
+    
+    .leaf2{
+        width: 290px;
+		height: 180px;
+        background: url('../images/leaf2.png');
+        text-align:center;
+        background-size: contain;
+        position: relative;
+        left: 50%;
+        top: -370px;
+        transform: translateX(-50%);
+        
+    }
+    .leafH1{
+        position:relative;
+        top:43%;
+		font-size: 20px;
+		font-weight: bold;
+    }
+    .aboutBody{
+        position: relative;
+        top: 50%;
+        left:25%;
+        transform: translateY(-50%);
+        white-space: normal; width: 70%;
+		padding-left: 8px;
+		color:#FFFFFF;
+		font-size: 15px;
+		font-weight: bold;
+    }
+
+    
+}
+
+@media screen and (max-width: 980px){
+    .circle2 {
+        display:none;
+    }
+    .circle3 {
+        display:none;
+    }
+    .circle4 {
+        display:none;
+    }
+    .circle5 {
+        display:none;
+    }
+    
+    .rectangle {
+        width: 80%;
+        height: 150px;
+        background: cyan;
+        position:relative;
+    }
+    
+    .leaf1{
+        width: 200px;
+        height: 200px;
+        background: url('../images/leaf1.png');
+        background-repeat:no-repeat;
+        text-align:center;
+        background-size: contain;
+        position:relative;
+        left: 10%;
+        top:-180px;
+        transform: translateX(-50%);
+        
+    }
+    
+    .leaf2{
+        width: 200px;
+        height: 200px;
+        background: url('../images/leaf1.png');
+        background-repeat:no-repeat;
+        text-align:center;
+        background-size: contain;
+        position: relative;
+        left: 10%;
+        top:-180px;
+        transform: translateX(-50%);
+        
+    }
+    .leafH1{
+        position:relative;
+        top:23%;
+        left:6%;
+        font-weight: bold;
+    }
+    
+    
+    #leftbox {
+        left:20%;
+    }
+    
+    #rightbox {
+        left:20%;
+    }
+    #leftbox2 {
+        left:0%;
+    }
+    
+    #rightbox2 {
+        left:0%;
+        
+    }
+    .aboutBody{
+        position: relative;
+        top: 50%;
+        left:5%;
+        transform: translateY(-50%);
+        white-space: normal; width: 90%;
+		padding-left: 20px;
+		color:#FFFFFF;
+    }
+    
+    
+}
+
+@media screen and (max-width: 480px){
+    .circle2 {
+        display:none;
+    }
+    .circle3 {
+        display:none;
+    }
+    .circle4 {
+        display:none;
+    }
+    .circle5 {
+        display:none;
+    }
+    
+    .rectangle {
+        width: 80%;
+        height: 150px;
+        background: cyan;
+        position:relative;
+    }
+    
+    .leaf1{
+        width: 150px;
+        height: 200px;
+        background: url('../images/leaf1.png');
+        background-repeat:no-repeat;
+        text-align:center;
+        background-size: contain;
+        position:relative;
+        left: 10%;
+        top:-200px;
+        transform: translateX(-50%);
+        
+    }
+    
+    .leaf2{
+        width: 150px;
+        height: 200px;
+        background: url('../images/leaf1.png');
+        background-repeat:no-repeat;
+        text-align:center;
+        background-size: contain;
+        position: relative;
+        left: 10%;
+        top:-200px;
+        transform: translateX(-50%);
+        
+    }
+    .leafH1{
+        position:relative;
+        top:17%;
+        left:5%;
+        
+    }
+    
+    
+    #leftbox {
+        left:20%;
+    }
+    
+    #rightbox {
+        left:20%;
+        
+    }
+    #leftbox2 {
+        left:0%;
+    }
+    
+    #rightbox2 {
+        left:0%;
+        
+    }
+    .aboutBody{
+        position: relative;
+        top: 50%;
+        left:5%;
+        transform: translateY(-50%);
+        white-space: normal; width: 90%;
+		font-size: 13px;
+    }
+    
+    
+}
+
+
+@media screen and (max-width: 320px){
+    .circle2 {
+        display:none;
+    }
+    .circle3 {
+        display:none;
+    }.circle4 {
+        display:none;
+    }.circle5 {
+        display:none;
+    }
+    
+    .rectangle {
+        width: 80%;
+        height: 150px;
+        background: cyan;
+        position:relative;
+    }
+    
+    .leaf1{
+        width: 150px;
+        height: 200px;
+        background: url('../images/leaf1.png');
+        background-repeat:no-repeat;
+        text-align:center;
+        background-size: contain;
+        position:relative;
+        left: 5%;
+        top:-200px;
+        transform: translateX(-50%);
+        
+    }
+    
+    .leaf2{
+        width: 150px;
+        height: 200px;
+        background: url('../images/leaf1.png');
+        background-repeat:no-repeat;
+        text-align:center;
+        background-size: contain;
+        position: relative;
+        left: 5%;
+        top:-200px;
+        transform: translateX(-50%);
+        
+    }
+    .leafH1{
+        position:relative;
+        top:17%;
+        left:5%;
+        
+    }
+
+    
+    #leftbox {
+        left:20%;
+    }
+    
+    #rightbox {
+        left:20%;
+        
+    }
+    #leftbox2 {
+        left:0%;
+    }
+    
+    #rightbox2 {
+        left:0%;
+        
+    }
+    .aboutBody{
+        position: relative;
+        top: 50%;
+        left:5%;
+        transform: translateY(-50%);
+        white-space: normal; width: 90%;
+    }
+
+
+}

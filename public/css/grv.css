@@ -1,0 +1,326 @@
+.btn-primary-style {
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 1rem;
+    box-shadow: 0 2px 6px rgb(52, 144, 220, .5);
+}
+
+.btn-danger-style {
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 1rem;
+    box-shadow: 0 2px 6px rgb(227, 52, 47, .5);
+}
+
+.btn-success-style {
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 1rem;
+    box-shadow: 0 2px 6px rgb(40, 167, 69, .5);
+}
+
+#tr-rv {
+    display: none;
+}
+
+#invoice-rv {
+    display: none;
+}
+#purchase-rv{
+    display: none;
+}
+#otherInvoice {
+    display: none;
+}
+
+#otherCreateInvoice {
+    display: none;
+}
+
+#company {
+    display: none;
+}
+
+.collapse-style {
+    cursor: pointer;
+    font-size: 1.5rem;
+    /* border-bottom: rgb(228, 228, 228) 1px solid; */
+}
+
+.project-a {
+    color: #6c757d;
+}
+
+.project-a:hover {
+    color: #4d4d4d;
+}
+
+.collapseRotate {
+    transform: rotate(90deg);
+    transition: all .5s;
+}
+
+.table-style {
+    width: 100%;
+    overflow: auto;
+}
+
+.table-style table {
+    width: 100%;
+}
+
+.table-style th {
+    background-color: #f1f3fa;
+}
+
+.table-style th,
+td {
+    text-align: center;
+    white-space: nowrap;
+    padding: 1rem .5rem;
+    font-size: 1rem;
+
+}
+
+.table-style-invoice {
+    width: 100%;
+    overflow: auto;
+}
+
+.table-style-invoice table {
+    width: 100%;
+}
+
+
+
+.table-style-invoice th,
+td {
+    text-align: center;
+    white-space: nowrap;
+    padding: 1rem .5rem;
+    font-size: 1rem;
+
+}
+
+.tr-choose {
+    cursor: pointer;
+    border-bottom: rgb(228, 228, 228) 1px solid;
+}
+
+.receive-choose{
+    cursor: pointer;
+}
+.receive-choose:hover {
+    background-color: rgb(247, 247, 247, .5)
+}
+.tr-choose:last-child {
+    cursor: pointer;
+    border-bottom: none;
+}
+
+.tr-choose:hover {
+    background-color: rgb(247, 247, 247, .5)
+}
+
+
+.card-style {
+    box-shadow: 0 0 10px rgb(0, 0, 0, .1);
+    border: 0;
+    margin-bottom: 24px;
+}
+
+.time-line {
+    /* padding-left: 1rem; */
+    position: relative;
+}
+
+.time-line::before {
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: calc(100% - 2.5px);
+    left: 11.5px;
+    top: 5px;
+    background: rgb(209, 209, 209);
+}
+
+.time-i {
+    position: absolute;
+    top: 2.5px;
+    left: 2.5px;
+    border-radius: 100rem;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.time-i i {
+    border-radius: 100rem;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+
+.line {
+    position: absolute;
+    width: 2px;
+    /* height: 58px; */
+    left: 27.5px;
+    z-index: 6;
+    background: rgb(209, 209, 209);
+}
+
+.time-line span {
+
+    font-size: 1rem;
+    padding: 1px .75rem;
+    color: white;
+    border-radius: 1rem;
+    font-weight: 800;
+}
+
+.time-line p {
+    margin-top: .25rem;
+    margin-bottom: 0;
+    padding-bottom: .75rem;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.menu {
+    width: 260px;
+    height: 100vh;
+    max-height: 100vh;
+}
+
+.menu-rwd {
+    display: none;
+    height: calc(100vh - 55px);
+}
+
+.menu-rwd li {
+    border-bottom: 1px rgb(0, 0, 0, .1) solid;
+}
+
+.menu-rwd li :last-child {
+    border-bottom: none;
+}
+
+.menu a {
+    font-size: 1.2rem;
+    color: #8391a2;
+    width: 100%;
+    font-weight: 600;
+    align-items: center;
+    transition: all .25s;
+
+}
+
+.menu a:hover {
+    color: #cedce4;
+    transition: all .25s;
+}
+
+.menu p {
+    font-size: 1.2rem;
+}
+
+.menu ul::-webkit-scrollbar {
+    display: none;
+}
+
+.label-style {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.content-label-style {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.content-page {
+    margin-left: 260px;
+}
+
+.navbar-style {
+    z-index: 99;
+    width: calc(100vw - 260px);
+}
+
+.navbar-style-not-auth {
+    z-index: 99;
+    width: 100vw;
+}
+
+
+.input-h1 {
+    font-family: 'Microsoft JhengHei';
+    font-weight: 700;
+    color: #6c757d;
+    font-size: 2.25rem;
+}
+.number-of-messages{
+    position: absolute;
+    min-width: 25px;
+    min-height: 25px;
+    padding:0 2px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-align: center;
+    background-color: red;
+    color: white;
+    right:0;
+    top:-10px;
+}
+@media screen and (max-width: 767px) {
+    .menu {
+        display: none;
+    }
+
+    .menu-rwd {
+        display: block;
+    }
+
+    .navbar-nav-rwd {
+        display: none;
+    }
+
+    .content-page {
+        margin-left: 0;
+    }
+
+    .navbar-style {
+        z-index: 99;
+        width: calc(100vw);
+    }
+}
+
+
+@page {
+    size: A4;
+    margin: 0;
+}
+@media print {
+    body{
+        width: 21cm;
+        height: 29.7cm;
+        /* change the margins as you want them to be. */
+   } 
+    
+}
+
+.search-not{
+    display: none;
+}
+.search-invoice{
+    display: none;
+}
+.search{
+    display: block;
+}

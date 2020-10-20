@@ -1,0 +1,22 @@
+
+
+.hdr{ background:url(images/logo.png); width:461px; height:94px; margin:10px auto; text-indent:-9999px;}
+.list1{ list-style:none; margin:0; padding:0;}
+
+.sliderBox{ background:#FFF; border:solid 1px #09C; width: 75%; border-radius:10px; overflow:hidden; position:relative; padding-bottom:15px; margin:auto;}
+.slider{max-width:100% padding:20px 0 10px; width:85%; height:280px; overflow:hidden; margin:auto; position:relative;}
+.slider ul{ overflow:hidden; width:1992px; position:absolute; left:0;}
+.slider li{list-style-type:none; float:left; margin:0 10px; text-align:center; }
+.slider a{ display:inline-block; width:140px; height:140px; padding:2px; overflow:hidden; border:solid 1px #CCC; margin-bottom:5px;}
+.slider a:hover{ border-color:#039;}
+
+.status{ text-align:center; margin-top:5px; position:relative\9; *margin-left:435px;}
+.status li{ cursor:pointer; background:#FFF; display:inline-block; text-indent:-9999px; border:2px solid #CCC; width:8px; height:8px; border-radius:100%; margin:0 5px; *float:left; }
+.status li.now{ background:#09C; border-color:#999;}
+
+.dIcon{ text-indent:-9999px; position:absolute; top:140px; display:block; width:20px; height:20px; background:url(../../images/all.png) no-repeat; width:38px; height:47px;}
+.next{ right:10px; background-position:-44px -2px;}
+.prev{ left:10px; background-position:0 -2px;}
+.next:hover{ background-position:-44px -55px;}
+.prev:hover{ background-position:0 -55px;}
+

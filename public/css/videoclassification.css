@@ -1,0 +1,63 @@
+hr.major2 {
+    margin: 13px 0;
+    border: 0;
+    height: 3px;
+    background:#ccc;
+}
+
+.inner2 {
+    max-width: 75em;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 1280px) {
+    
+    .inner2 {
+        max-width: 90%;
+    }
+    
+}
+
+@media screen and (max-width: 480px) {
+    
+    .inner2 {
+        max-width: 85%;
+    }
+    
+}
+
+.inner2 article {
+    text-align:center;
+}
+
+.inner2 a {
+    text-decoration: none;
+    
+}
+
+.inner2 p {
+    margin:0;
+}
+
+.inner2 a:hover {
+    text-decoration: underline;
+    color : black;
+}
+
+.inner2 nav {
+    font-size:30px;
+    
+
+}
+.inner2 ul {
+    line-height: 0;
+    list-style: none;
+    margin:0;
+}
+.inner2 li {
+    display:inline-block;
+    margin: 0 5px;
+}
+button {
+    background-color: rgb(109, 200, 243);
+}

@@ -1,0 +1,152 @@
+#container
+{
+    height:2000px;
+}
+
+#container DIV
+{
+    margin:50px;
+    padding:50px;
+    background-color:lightgreen;
+}
+
+.hideme
+{
+    opacity:0;
+}
+
+.hideme2
+{
+    opacity:0;
+}
+
+.hideme3
+{
+    opacity:0;
+}
+
+
+.circle2 {
+    width: 100px;
+    height: 200px;
+    background: url('../images/logo-07.png');
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+	background-size: contain;
+}
+
+.rectangle {
+    width: 0;
+    height: 150px;
+    background: cyan;
+}
+
+.circle {
+    width: 300px;
+    height: 268px;
+    background: url("../images/logo-06.png");
+  /*  -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;*/
+    position: absolute;
+    left: 50%;
+    top:100px;
+    transform: translateX(-50%);
+    -moz-background-size:contain;
+    -webkit-background-size:contain;
+    -o-background-size:contain;
+    background-size:contain;
+    animation:myfirst 1s;
+    -moz-animation:myfirst 1s; /* Firefox */
+    -webkit-animation:myfirst 1s; /* Safari and Chrome */
+    -o-animation:myfirst 1s; /* Opera */
+}
+@keyframes myfirst
+{
+    from {opacity:0;}
+    to {opacity:1;}
+}
+
+@-moz-keyframes myfirst /* Firefox */
+{
+    from {opacity:0;}
+    to {opacity:1;}
+}
+
+@-webkit-keyframes myfirst /* Safari and Chrome */
+{
+    from {opacity:0;}
+    to {opacity:1;}
+}
+
+@-o-keyframes myfirst /* Opera */
+{
+    from {opacity:0;}
+    to {opacity:1;}
+}
+
+#leftbox {
+position:relative;
+    left:40%;
+    top:5%;
+}
+
+#rightbox {
+    position:relative;
+    left:55%;
+    top:5%;
+
+}
+#leftbox2 {
+    position:relative;
+    left:35%;
+    top: -40%
+}
+
+#rightbox2 {
+    position:relative;
+    left:45%;
+    top: -40%
+    
+}
+
+#RWDbox {
+    position:relative;
+    left:5%;
+    top: -40%
+}
+
+#RWDbox2 {
+    position:relative;
+    left:10%;
+    top : 5%;
+}
+
+
+.aboutu12{
+    height:2000px;
+}
+
+.heightu{
+    height:400px;
+}
+.aboutu22 {
+    display:none;
+}
+
+
+@media only screen and (max-width: 980px) {
+    .aboutu12{
+        display:none;
+    }
+    .aboutu22 {
+        display: block;
+    }
+}
+#aboutH1{
+    position:relative;
+    left:20%;
+    top: 45%
+    
+}
