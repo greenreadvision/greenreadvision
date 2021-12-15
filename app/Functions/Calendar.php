@@ -265,7 +265,7 @@ class Calendar {
         if($event['relationship'] != 'offDay'&&$event['relationship'] != 'leaveDay'){
             return
             '<div class="m-1" style="background-color:'.$project_color.'40;border-radius:25px;text-align:center;">
-                <a tabindex="0" style="text-decoration:none;color:black;" role="button" data-toggle="popover" data-trigger="hover" data-html="true" title="'.$event['name'].'" data-content="標案：'.$project_name.'<br />內容：'.$event['content'].'<br />標案負責人：'.$this->user[$user_index]['nickname'].'">
+                <a tabindex="0" style="text-decoration:none;color:black;" role="button" data-toggle="popover" data-trigger="hover" data-html="true" title="'.$event['name'].'" data-content="專案：'.$project_name.'<br />內容：'.$event['content'].'<br />專案負責人：'.$this->user[$user_index]['nickname'].'">
                     <div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
                         <span>'.$eventName.'</span>
                     </div>

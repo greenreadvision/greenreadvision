@@ -35,8 +35,10 @@ class TodoController extends Controller
     public function create()
     {
         //
-        $projects = Project::select('project_id', 'name')->get()->toArray();
-        return view('pm.todo.createTodo')->with('data', $projects);
+        $rv = Project::where('company_name', '=', 'rv')->orderby('created_at', 'desc')->get();
+        $grv = Project::where('company_name', '=', 'grv')->orderby('created_at', 'desc')->get();
+        $grv2 = Project::where('company_name', '=', 'grv_2')->orderby('created_at', 'desc')->get();
+        return view('pm.todo.createTodo')->with('data',['grv'=>$grv,'rv'=>$rv,'grv_2'=>$grv2] );
     }
 
     /**

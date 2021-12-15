@@ -1,9 +1,10 @@
 <?php
+
 /**
-*@author  Xu Ding
-*@email   thedilab@gmail.com
-*@website http://www.StarTutorial.com
-**/
+ *@author  Xu Ding
+ *@email   thedilab@gmail.com
+ *@website http://www.StarTutorial.com
+ **/
 
 use App\Todo;
 use App\TodoEvent;
@@ -13,46 +14,46 @@ use App\OffDayEvent;
 use App\LeaveDay;
 use App\LeaveDayBreak;
 use App\LeaveDayBreakEvent;
-class Test {
+
+class Test
+{
 
     /**
      * Constructor
      */
-    private $currentYear=0;
-    private $currentId='';
-    public function show($year=null,$id) {
-        if(null==$year&&isset($_GET['year'])){
+    private $currentYear = 0;
+    private $currentId = '';
+    public function show($year = null, $id,$status)
+    {
+        if (null == $year && isset($_GET['year'])) {
 
             $year = $_GET['year'];
+        } else if (null == $year) {
 
-        }else if(null==$year){
-
-            $year = date("Y",time());
-
+            $year = date("Y", time());
         }
-        $this->currentId=$id;
-        $this->currentYear=$year;
+        $this->currentId = $id;
+        $this->currentYear = $year;
         return
-        '<div >
-            <div class="box">'.
-                $this->_createNavi().
+            '<div >
+            <div class="box">' .
+            $this->_createNavi($status) .
             '</div>
         </div>';
     }
 
-    
-    private function _createNavi(){
 
-        $nextYear = intval($this->currentYear)+1;
-        $preYear = intval($this->currentYear)-1;
+    private function _createNavi($status)
+    {
+
+        $nextYear = intval($this->currentYear) + 1;
+        $preYear = intval($this->currentYear) - 1;
 
         return
-        '<div class="col-md d-flex text-center justify-content-between align-items-center my-2">'.
-            // '<a class="prev" style="float:left;" href="'.$this->naviHref.'?month='.sprintf('%02d',$preMonth).'&year='.$preYear.'">Prev</a>'.
-            // '<a class="next" style="float:right;" href="'.$this->naviHref.'?month='.sprintf("%02d", $nextMonth).'&year='.$nextYear.'">Next</a>'.
-            '<a class="btn" href="'.route('leaveDay.show',['id'=>$this->currentId,'year' => $preYear]).'"><i class="fas fa-angle-double-left" style="font-size:1.5rem;width:2rem"></i></a>'.
-            '<h2 class="title"> '.$this->currentYear.' </h1>'.
-            '<a class="btn" href="'.route('leaveDay.show', ['id'=>$this->currentId,'year' => $nextYear]).'"><i class="fas fa-angle-double-right" style="font-size:1.5rem;width:2rem"></i></a>'.
-        '</div>';
+            '<div  class="d-flex  justify-content-between align-items-center">' .
+            '<a class="btn icon-gray py-0" href="' . route('leaveDay.show', ['id' => $this->currentId, 'year' => $preYear.'-'.$status]) . '"><i class="fas fa-angle-left" style="font-size:1.5rem;width:2rem"></i></a>' .
+            '<h4 class="title text-darkBlue" style="cursor: default;"> ' . $this->currentYear . ' </h4>' .
+            '<a class="btn icon-gray py-0" href="' . route('leaveDay.show', ['id' => $this->currentId, 'year' => $nextYear.'-'.$status]) . '"><i class="fas fa-angle-right" style="font-size:1.5rem;width:2rem"></i></a>' .
+            '</div>';
     }
-}   
+}

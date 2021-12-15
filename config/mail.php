@@ -35,7 +35,14 @@ return [
     'username' => env('MAIL_USERNAME'),
     'password' => env('MAIL_PASSWORD'),
     'sendmail' => '/usr/sbin/sendmail -bs',
-    'pretend' => true
+    'pretend' => true,
+    'stream' => [
+        'ssl' => [
+            'allow_self_signed' => true,
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+        ],
+    ]
     // 'driver' => env('MAIL_DRIVER', 'smtp'),
     // 'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
     // 'port' => env('MAIL_PORT', 465),

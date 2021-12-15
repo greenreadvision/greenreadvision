@@ -28,7 +28,7 @@ class BankController extends Controller
     public function index()
     {
         //
-        $bank=Bank::all()->sortBy('created_at');
+        $bank=Bank::all();
         return view('pm.bank.indexBank')->with('data', $bank);
     }
     /**

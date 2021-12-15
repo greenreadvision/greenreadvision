@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Activity;
+use App\ActivityType;
+use App\Board;
 use App\RealName;
-use App\Photcos;
+use App\Photos;
 use App\PhotosEvent;
+use App\Products;
 use Illuminate\Http\Request;
 use App\Functions\RandomId;
 
@@ -61,7 +65,19 @@ class GrvController extends Controller
 
     public function index()
     {
-        return view('grv.index');
+        $boards = Board::orderby('created_at', 'desc')->get();
+        $products = Products::orderby('order')->get();
+        foreach($products as $data){
+            $data->path = explode('/', $data->path);
+         }
+
+        $activities = Activity::orderby('created_at', 'desc')->get();
+        $activity_type = ActivityType::orderby('created_at', 'desc')->get();
+        foreach($activities as $data){
+            $data->img_path = explode('/', $data->img_path);
+ 
+        }
+        return view('grv.index',['products'=>$products,'board'=>$boards,'types'=>$activity_type,'activities' =>$activities]);
     }
     public function about()
     {

@@ -51,7 +51,7 @@ class PhotoController extends Controller
 
         if ($request->hasFile('path')){
             if ($request->path->isValid()){
-                $file_path = $request->path->store('photo');
+                $file_path = $request->path->storeAs('photo',$request->path->getClientOriginalName());
             }
         }
         
@@ -98,7 +98,7 @@ class PhotoController extends Controller
 
             if ($request->hasFile('path')){
                 if ($request->path[$i]->isValid()){
-                    $file_path = $request->path[$i]->store('photo');
+                    $file_path = $request->path[$i]->storeAs('photo',$request->path[$i]->getClientOriginalName());
                 }
             }
             $post = PhotosEvent::create([

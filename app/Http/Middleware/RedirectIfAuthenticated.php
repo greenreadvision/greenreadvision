@@ -18,7 +18,16 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect('/home');
+
+            if (auth()->user()->status == "fill") {
+                return redirect('/basicInformation');
+            } else if (auth()->user()->status == "print") {
+                return redirect('/print');
+            } else if (auth()->user()->status == "train" || auth()->user()->status == "train_OK") {
+                return redirect('/train');
+            }else if (auth()->user()->status == "general") {
+                return redirect('/home');
+            } 
         }
 
         return $next($request);

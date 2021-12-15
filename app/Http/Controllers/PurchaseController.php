@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Company;
+use App\User;
 use App\Project;
 use App\Purchase;
 use App\PurchaseItem;
-
+use App\Invoice;
+use App\OtherInvoice;
 use App\Functions\RandomId;
 use App\Http\Controllers\EventController;
 use Illuminate\Http\Request;
@@ -35,29 +36,15 @@ class PurchaseController extends Controller
     public function index()
     {
         //
-        $project_ids = Purchase::select('project_id')->orderby('project_id')->distinct()->get();
-        $purchase_groups = [];
-        foreach ($project_ids->toArray() as $project_id) {
-            array_push($purchase_groups, Purchase::where('project_id', $project_id)->orderby('created_at')->with('project')->get());
-        }
-        $project = Project::orderby('open_date', 'desc')->get();
-        $temp = "";
-        $years = [];
-
-        foreach ($project as $data) {
-            $state = 0;
-
-            $temp = substr($data->open_date, 0, 4);
-            foreach ($years as $year) {
-                if (substr($data->open_date, 0, 4) == $year) {
-                    $state = 1;
-                }
-            }
-            if ($state == 0) {
-                array_push($years, substr($data->open_date, 0, 4));
+        $users = [];
+        $allUsers = User::orderby('user_id')->get();
+        foreach ($allUsers as $allUser) {
+            if ($allUser->role != 'manager' && count($allUser->purchases) != 0) {
+                array_push($users, $allUser);
             }
         }
-        return view('pm.purchase.indexPurchase', ['purchase_groups' => $purchase_groups, 'years' => $years, 'state' => $state]);
+        $purchases = Purchase::orderby('purchase_date', 'desc')->with('project')->with('user')->get();
+        return view('pm.purchase.indexPurchase', ['users' => $users, 'purchases' => $purchases]);
     }
 
     /**
@@ -86,9 +73,12 @@ class PurchaseController extends Controller
         }
         $id = "PO" . (date('Y') - 1911) . date("m") . $var;
 
-        $projects = Project::select('project_id', 'name')->get()->toArray();
+        $projects = Project::select('project_id', 'name')->orderby('created_at', 'desc')->get()->toArray();
+        $rv = Project::where('company_name', '=', 'rv')->orderby('created_at', 'desc')->get();
+        $grv = Project::where('company_name', '=', 'grv')->orderby('created_at', 'desc')->get();
+        $grv2 = Project::where('company_name', '=', 'grv_2')->orderby('created_at', 'desc')->get();
 
-        return view('pm.purchase.createPurchase', ['id' => $id, 'projects' => $projects]);
+        return view('pm.purchase.createPurchase', ['id' => $id,'rv' => $rv,'grv' => $grv,'grv2'=>$grv2, 'projects' => $projects]);
     }
 
     /**
@@ -107,10 +97,11 @@ class PurchaseController extends Controller
             'project_id' => 'required|string|exists:projects,project_id|size:11',
             'purchase_date' => 'required|date',
             'delivery_date' => 'required|date',
+            'title' => 'required|string|min:1',
             'company1' => 'required|string|min:2|max:20',
             'contact_person' => 'required|string|min:1|max:20',
-            'phone' => 'required|string|size:10',
-            'fax' => 'required|string|size:10',
+            'phone' => 'required|string',
+            'fax' => 'nullable|string',
             'applicant' => 'required|string|min:1|max:5',
             'address' => 'required|string|min:1|max:50',
             'note' => 'nullable|string|min:1|max:500',
@@ -122,6 +113,7 @@ class PurchaseController extends Controller
         $numbers = Purchase::all();
         $i = 0;
         $max = 0;
+        $item_num = $request->input("item_total_num");
         foreach ($numbers->toArray() as $number) {
             if (substr($number['created_at'], 0, 7) == date("Y-m")) {
                 $i++;
@@ -138,15 +130,15 @@ class PurchaseController extends Controller
 
         $j = 0;
         $number = 0;
-        for ($j = 0; $j < 10; $j++) {
-            
+        for ($j = 0; $j < $item_num + 1; $j++) {
+
             if ($request->input('content-' . $j) != null) {
                 $number++;
                 $request->validate([
-                    'content-'.$j => 'required|string|min:1|max:50',
-                    'quantity-'.$j => 'required|integer',
-                    'price-'.$j => 'required|integer',
-                    'note-'.$j => 'nullable|string|min:1|max:50'
+                    'content-' . $j => 'required|string|min:1|max:50',
+                    'quantity-' . $j => 'required|numeric',
+                    'price-' . $j => 'required|numeric',
+                    'note-' . $j => 'nullable|string|min:1|max:50'
                 ]);
                 PurchaseItem::create([
                     'purchase_id' => $purchase_id,
@@ -169,6 +161,7 @@ class PurchaseController extends Controller
             'user_id' => \Auth::user()->user_id,
             'project_id' => $request->input('project_id'),
             'id' => $request->input('id'),
+            'title' => $request->input('title'),
             'no' => $i + 1,
             'company_name' => $project->company_name,
             'company' => $request->input('company1'),
@@ -180,9 +173,11 @@ class PurchaseController extends Controller
             'delivery_date' => $request->input('delivery_date'),
             'address' => $request->input('address'),
             'note' => $request->input('note'),
-            'amount' => $temp,
-            'total_amount' => $temp,
-            'tex' => 0,
+            'amount' => $request->input('amount'),
+            'total_amount' => $request->input('total_amount'),
+            'tex' => $request->input('tex'),
+            // 'is_apply_money' => false,
+
         ]);
 
 
@@ -205,7 +200,11 @@ class PurchaseController extends Controller
         foreach ($purchase_item as $data) {
             $i++;
         }
-        return view('pm.purchase.showPurchase', ['purchase' => $purchase, 'purchase_item' => $purchase_item, 'i' => $i]);
+
+        $invoices = Invoice::where('purchase_id','=',$purchase->id)->get();
+        $other_invoices = OtherInvoice::where('purchase_id','=',$purchase->id)->get();
+
+        return view('pm.purchase.showPurchase', ['purchase' => $purchase, 'purchase_item' => $purchase_item, 'i' => $i,'invoices'=>$invoices,'other_invoices'=>$other_invoices]);
     }
 
     /**
@@ -225,13 +224,18 @@ class PurchaseController extends Controller
         }
 
         $purchase_item = PurchaseItem::where('purchase_id', $purchase_id)->get();
-        return view('pm.purchase.editPurchase', ['purchase' => $purchase, 'projects' => $projects, 'purchase_item' => $purchase_item]);
+        $rv = Project::where('company_name', '=', 'rv')->orderby('created_at', 'desc')->get();
+        $grv = Project::where('company_name', '=', 'grv')->orderby('created_at', 'desc')->get();
+        $grv_2 = Project::where('company_name', '=', 'grv_2')->orderby('created_at', 'desc')->get();
+
+        return view('pm.purchase.editPurchase', ['rv' => $rv,'grv' => $grv,'grv_2' => $grv_2,'purchase' => $purchase, 'projects' => $projects, 'purchase_item' => $purchase_item]);
     }
 
 
     public function update(Request $request, String $purchase_id)
     {
         $purchase = Purchase::find($purchase_id);
+        $project = Project::find($request->input('project_id'));
         //
         $request->validate([
             'project_id' => 'required|string|exists:projects,project_id|size:11',
@@ -239,12 +243,14 @@ class PurchaseController extends Controller
             'delivery_date' => 'required|date',
             'company' => 'required|string|min:2|max:20',
             'contact_person' => 'required|string|min:1|max:10',
-            'phone' => 'required|string|size:10',
-            'fax' => 'required|string|size:10',
+            'phone' => 'required|string',
+            'fax' => 'nullable|string',
             'applicant' => 'required|string|min:1|max:5',
             'address' => 'required|string|min:1|max:50',
             'note' => 'nullable|string|min:1|max:500',
         ]);
+
+        
 
         $purchase->update($request->except('_method', '_token'));
         $purchase_item = PurchaseItem::where('purchase_id', $purchase_id)->get();
@@ -254,6 +260,7 @@ class PurchaseController extends Controller
                 $item->content = $request->input('content' . $i);
                 $item->quantity = $request->input('quantity' . $i);
                 $item->price = $request->input('price' . $i);
+                $item->amount = $request->input('quantity' . $i) * $request->input('price' . $i);
                 $item->note = $request->input('note' . $i);
                 $i++;
                 $item->save();
@@ -261,16 +268,16 @@ class PurchaseController extends Controller
                 $i++;
             }
         }
-        for ($j = 0; $j < 30 - $i; $j++) {
-            if ($request->input('content-' . $j) != null) {
+        for($j=count($purchase_item)+1 ; $j <= (11-count($purchase_item)); $j++){
+            if ($request->input('content' . $j) != null) {
                 PurchaseItem::create([
                     'purchase_id' => $purchase_id,
-                    'no' => $i + $j,
-                    'content' => $request->input('content-' . $j),
-                    'quantity' => $request->input('quantity-' . $j),
-                    'price' => $request->input('price-' . $j),
-                    'amount' => $request->input('quantity-' . $j) * $request->input('price-' . $j),
-                    'note' => $request->input('note-' . $j)
+                    'no' => $j,
+                    'content' => $request->input('content' . $j),
+                    'quantity' => $request->input('quantity' . $j),
+                    'price' => $request->input('price' . $j),
+                    'amount' => $request->input('quantity' . $j) * $request->input('price' . $j),
+                    'note' => $request->input('note' . $j)
                 ]);
             }
         }
@@ -280,8 +287,10 @@ class PurchaseController extends Controller
         foreach ($purchase_item as $data) {
             $temp += $data['price'] * $data['quantity'];
         }
-        $purchase->amount = $temp;
-        $purchase->total_amount = $temp;
+        $purchase->company_name = $project->company_name;
+        $purchase->amount = $request->input('amount');
+        $purchase->tex = $request->input('tex');
+        $purchase->total_amount = $request->input('total_amount');
         $purchase->save();
         // if (!$request->input('receipt')){
         //     $event = InvoiceEvent::where('invoice_id', $invoice_id)->get()[0];
@@ -298,13 +307,23 @@ class PurchaseController extends Controller
     public function destroy(String $purchase_id)
     {
         //Delete the invoice
-        $purchase = Purchase::find($purchase_id);
-        foreach ($purchase->purchaseItem as $item) {
-            $item->delete();
+        $purchase_delete = Purchase::find($purchase_id);
+        $allPurchase = Purchase::orderby('created_at', 'desc')->get();
+        //刪除外部invoice含有此刪除報價單的
+        $invoice = Invoice::where('purchase_id','=',$purchase_delete->id)->get();
+        $otherinvoice = OtherInvoice::where('purchase_id','=',$purchase_delete->id)->get();
+        foreach($invoice as $item){
+            $item->purchase_id = null;
+            $item->save();
         }
-        $purchase->delete();
+        foreach($otherinvoice as $item){
+            $item->purchase_id = null;
+            $item->save();
+        }
+        
+        $purchase_delete->delete();
 
-        return redirect()->route('purchase.list', $purchase['project_id']);
+        return redirect()->route('purchase.index');
     }
 
     public function destroyItem(String $purchase_id, String $no)
@@ -364,6 +383,6 @@ class PurchaseController extends Controller
         }
 
         // $invoices = Invoice::where('user_id', \Auth::user()->user_id)->orderby('project_id')->with('project')->get();
-        return view('pm.purchase.listPurchase', ['purchase_groups' => $purchase_groups, 'projects_id' => $projects_id, 'years' => $years, 'months' => $months]);
+        return redirect()->route('purchase.index');
     }
 }

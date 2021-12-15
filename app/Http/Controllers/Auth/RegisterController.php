@@ -30,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/basicInformation';
 
     /**
      * Create a new controller instance.
@@ -53,11 +53,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'nickname' => 'required|string|max:255',
-            'role' => 'required|string|max:10',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'account' => 'required|string|max:255|unique:users',
+            'password' => 'required|string|min:8|max:16|confirmed',
         ]);
     }
 
@@ -69,26 +66,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $users = User::select('user_id')->get()->map(function($user) { return $user->user_id; })->toArray();
-        $user_id =\App\Functions\RandomId::getNewId($users, 11);
+        $users = User::all();
+        $staff_id = 'GRV'.sprintf("%05d",count($users));
         $registerPost= User::create([
-            'user_id' => $user_id,
-            'name' => $data['name'],
-            'nickname' => $data['nickname'],
-            'role' => $data['role'],
-            'email' => $data['email'],
+            'user_id' => $staff_id,
+            'account' => $data['account'],
+            'role' => 'staff',
             'password' => Hash::make($data['password']),
-            'status' => 'hold a post'
+            'status' => 'fill'
         ]);
         $leaveDay_ids = LeaveDay::select('leave_day_id')->get()->map(function($leaveDay) { return $leaveDay->leaveDay_id; })->toArray();
         $newId = RandomId::getNewId($leaveDay_ids);
 
         $post = LeaveDay::create([
             'leave_day_id' => $newId,
-            'user_id' => $user_id,
-            'should_break'=>0,
-            'not_break' =>0,
-            'has_break'=>0
+            'user_id' => $staff_id,
         ]);
         return $registerPost;
     }
