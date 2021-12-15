@@ -13,11 +13,29 @@
                 <div class="col-lg-6 form-group">
                     <label class="label-style col-form-label" for="detail_file">{{__('customize.Project')}}</label>
                     <select type="text" name="project_id" class="form-control{{ $errors->has('project_id') ? ' is-invalid' : '' }}">
-                        @foreach ($data as $project)
-                        @if($project['name']!='其他')
-                        <option value="{{$project['project_id']}}">{{$project['name']}}</option>
-                        @endif
-                        @endforeach
+                        <optgroup label="綠雷德">
+                            @foreach($data['grv_2'] as $grv2)
+                            @if( $grv2['finished']==0)
+                            <option value="{{$grv2['project_id']}}">{{$grv2->name}}</option>
+                            @endif
+                            @endforeach
+                        </optgroup>
+                        <optgroup label="閱野">
+                            @foreach($data['rv'] as $r)
+                            @if( $r['finished']==0)
+                            <option value="{{$r['project_id']}}">{{$r->name}}</option>
+                            @endif
+                            @endforeach
+                        </optgroup>
+                        <optgroup label="綠雷德(舊)">
+                            @foreach($data['grv'] as $gr)
+                            @if($gr['name']!='其他' && $gr['finished']==0)
+                            <option value="{{$gr['project_id']}}">{{$gr->name}}</option>
+                            @endif
+
+                            @endforeach
+                        </optgroup>
+                        
                         <option value="qs8dXg88gPm">其他</option>
                     </select>
                 </div>
@@ -55,9 +73,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <li><label class="col-form-label">{{__('customize.Project')}}</label><select type="text" name="project_id" class="form-control{{ $errors->has('project_id') ? ' is-invalid' : '' }}">
-                                    @foreach ($data as $project)
-                                        <option value="{{$project['project_id']}}">{{$project['name']}}</option>
-                                    @endforeach
+                                    
                                 </select></li>
                                 <li><label class="col-form-label">{{__('customize.Name')}}</label><input autocomplete="off" type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" required></li>
                             </div>

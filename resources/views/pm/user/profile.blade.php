@@ -106,7 +106,7 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div><label class="ml-2 col-form-label font-weight-bold">{{__('customize.phone_number')}}</label></div>
-                                    <div class="d-flex justify-content-center "><label class="content-label-style col-form-label">{{$data['phone_number']==null? '-未填寫-':$data['phone_number']}}</label></div>
+                                    <div class="d-flex justify-content-center "><label class="content-label-style col-form-label">{{$data['celephone']==null? '-未填寫-':$data['celephone']}}</label></div>
                                 </div>
                             </div>
                         </div>
@@ -117,5 +117,51 @@
         </div>
     </div>
 </div>
+<!-- <div class="container-fluid">
 
+    <div class="row">
+        <div class="col-sm-4 col-md-4 col-lg-3 mb-2">
+            <div class="card border-0 shadow rounded-pill">
+                <div class="card-body">
+                    <div class="col-lg-12 form-group">
+                        <label id="photo" class="input-photo-label label-style col-form-label p-0 rounded-circle" for="photos">
+                            <small>大頭照</small>
+                            <input accept="image/*" type="file" name="photos" id="photos" class="input-photo-input py-0 form-control{{ $errors->has('photos') ? ' is-invalid' : '' }}" />
+                        </label>
+                    
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div> -->
+@stop
+
+@section('script')
+<script type="text/javascript" src="{{ URL::asset('js/jquery.min.js') }}"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#photo').height($('#photo').width())
+        $(window).resize(function() {
+            $('#photo').height($('#photo').width())
+        });
+        $('input').on('change', function(e) {
+            id = e.target.id
+            const file = this.files[0];
+
+            const fr = new FileReader();
+            fr.onload = function(e) {
+                
+                    $("#photo" ).css("background-image", "url(" + e.target.result + ")");
+                
+            };
+
+            // 使用 readAsDataURL 將圖片轉成 Base64
+            fr.readAsDataURL(file);
+        });
+    });
+</script>
 @stop

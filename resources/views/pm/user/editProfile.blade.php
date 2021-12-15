@@ -60,7 +60,7 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div><label class="ml-2 col-form-label font-weight-bold">{{__('customize.phone_number')}}(09xxxxxxxx)</label></div>
-                                        <div class="d-flex justify-content-center "><label class="content-label-style col-form-label"><input autocomplete="off" placeholder="尚未填寫" type="text" name="{{__('phone_number')}}" value="{{$data['phone_number']}}" class="form-control"></label></div>
+                                        <div class="d-flex justify-content-center "><label class="content-label-style col-form-label"><input autocomplete="off" placeholder="尚未填寫" type="text" name="{{__('celephone')}}" value="{{$data['celephone']}}" class="form-control"></label></div>
                                     </div>
                                 </div>
                             </div>

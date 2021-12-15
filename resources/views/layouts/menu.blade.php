@@ -1,80 +1,89 @@
 <?php
 include app_path() . '/Functions/Letter.php';
 $letter = new Letter();
-
 ?>
 <div class="d-flex">
-    <div class="menu px-0 position-fixed bg-dark ">
+    <div class="menu px-0 position-fixed {{\Auth::user()->status != 'general' ? 'd-none':''}}" style="z-index:98">
 
-        <div style="height:55px">
+        <div style="height:54.9px">
         </div>
-        <div>
+        <div style="width:220px">
             <ul class="navbar-nav mr-auto" style="overflow:auto;max-height:calc(100vh - 55px)">
-                <li>
-                    <a class="menu-a d-flex navbar-brand px-5 py-2 justify-content-start position-relative" href="{{ route('project.index') }}">
-                        <i class='far fa-file-alt' style="width:1.2rem"></i><span class="ml-2">@lang('customize.Project')</span>
-                        <i class='position-absolute fas fa-angle-right' style="width:1.2rem;right:3rem"></i>
+                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                    <a id="menu-project" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('project.index') }}">
+                        <i class='far fa-file-alt' style="width:50px"></i><span class="ml-2">@lang('customize.Project')</span>
+                    </a>
+                </li>
+                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                    <a id="menu-purchase" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('purchase.index') }}">
+                        <i class="fas fa-shopping-cart" style="width:50px"></i><span class="ml-2">採購</span>
+                    </a>
+                </li>
+                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                    <a id="menu-invoice" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('invoice.index') }}">
+                        <i class="fas fa-file-invoice-dollar" style="width:50px"></i> <span class="ml-2">請款</span>
+                    </a>
+                </li>
+                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                    <a id="menu-Estimate" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('estimate.index') }}">
+                        <i class='fas fa-file-invoice' style="width:50px"></i><span class="ml-2">報價單</span>
+                    </a>
+                </li>
+                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                    <a id="menu-BusinessTrip" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('businessTrip.index') }}">
+                        <i class="fas fa-business-time" style="width:50px"></i> <span class="ml-2">出差報告表</span>
                     </a>
                 </li>
                 <li>
-                    <!-- <a class="menu-a d-flex navbar-brand px-5 py-2 justify-content-start position-relative" href="{{ route('invoice.index') }}">
-                        <i class='fas fa-dollar-sign' style="width:1.2rem"></i><span class="ml-2">@lang('customize.Invoice')</span>
-                        <i class='position-absolute fas fa-angle-right' style="width:1.2rem;right:3rem"></i>
-                    </a> -->
-                    <a class="menu-a d-flex navbar-brand px-5 py-2 justify-content-start position-relative" href="javascript:void(0);">
-                        <i class='fas fa-dollar-sign' style="width:1.2rem"></i><span class="ml-2">@lang('customize.Invoice')</span>
-                        <i class='position-absolute fas fa-angle-down' style="width:1.2rem;right:3rem"></i>
-                    </a>
-                    <a class="menu-a d-flex navbar-brand px-5 py-0 justify-content-start position-relative" href="{{ route('invoice.index') }}">
-                        <span style="width:1.2rem">&nbsp;</span><span class="ml-4">請款</span>
-                    </a>
-                    <a class="menu-a d-flex navbar-brand px-5 py-0 justify-content-start position-relative" href="{{ route('purchase.index') }}">
-                        <span style="width:1.2rem">&nbsp;</span> <span class="ml-4">採購單</span>
+                    <a id="menu-goods" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('goods.index') }}">
+                        <i class='fas fa-dolly' style="width:50px"></i><span class="ml-2">貨單</span>
                     </a>
                 </li>
-                <li>
-                    <a class="menu-a d-flex navbar-brand px-5 py-2 justify-content-start position-relative" href="{{ route('todo.index') }}">
-                        <i class='far fa-calendar-check' style="width:1.2rem"></i><span class="ml-2">@lang('customize.Todo')</span>
-                        <i class='position-absolute fas fa-angle-right' style="width:1.2rem;right:3rem"></i>
+                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                    <a id="menu-todo" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('todo.index') }}">
+                        <i class="fas fa-tasks" style="width:50px"></i><span class="ml-2">@lang('customize.Todo')</span>
                     </a>
                 </li>
-                <li>
-                    <a class="menu-a d-flex navbar-brand px-5 py-2 justify-content-start position-relative" href="{{ route('calendar.index') }}">
-                        <i class='far fa-calendar-alt' style="width:1.2rem"></i><span class="ml-2">@lang('customize.Calendar')</span>
-                        <i class='position-absolute fas fa-angle-right' style="width:1.2rem;right:3rem"></i>
+                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                    <a id="menu-calendar" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('calendar.index') }}">
+                        <i class='far fa-calendar-alt' style="width:50px"></i><span class="ml-2">@lang('customize.Calendar')</span>
                     </a>
                 </li>
+                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                    <a id="menu-service" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('service.index') }}">
+                        <i class='fas fa-address-book' style="width:50px"></i><span class="ml-2">勞務單</span>
+                    </a>
+                </li>
+                
                 <!-- <li><a class="navbar-brand" href="{{ route('offDay.index') }}">@lang('customize.OffDay')</a></li> -->
-                <li>
-                    <a class="menu-a d-flex navbar-brand px-5 py-2 justify-content-start position-relative" href="{{ route('leaveDay.index') }}">
-                        <i class='far fa-address-book' style="width:1.2rem"></i><span class="ml-2">請/補假</span>
-                        <i class='position-absolute fas fa-angle-right' style="width:1.2rem;right:3rem"></i>
+                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                    <a id="menu-leaveday" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('leaveDay.show',[\Auth::user()->leaveDay->leave_day_id,date('Y').'-apply']) }}">
+                        <i class='far fa-address-book' style="width:50px"></i><span class="ml-2">請/補假</span>
                     </a>
                 </li>
-                <li>
+                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                    <a id="menu-seal" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('seal.index') }}">
+                        <i class='fas fa-stamp' style="width:50px"></i><span class="ml-2">用印申請單</span>
+                    </a>
+                </li>
+                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                    <a id="menu-projectSOP" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('projectSOP.index') }}">
+                        <i class='fas fa-cogs' style="width:50px"></i><span class="ml-2">公司資料庫</span>
+                    </a>
+                </li>
+                
+                <!-- <li>
                     <a class="menu-a d-flex navbar-brand px-5 py-2 justify-content-start position-relative" href="{{ route('businessCar.index') }}">
                         <i class='fas fa-car-alt' style="width:1.2rem"></i><span class="ml-2">公務車</span>
                         <i class='position-absolute fas fa-angle-right' style="width:1.2rem;right:3rem"></i>
                     </a>
-                </li>
-                <li>
-                    <a class="menu-a d-flex navbar-brand px-5 py-2 justify-content-start position-relative" href="{{ route('photo.index') }}">
-                        <i class='fas fa-file-image' style="width:1.2rem"></i><span class="ml-2">相簿</span>
-                        <i class='position-absolute fas fa-angle-right' style="width:1.2rem;right:3rem"></i>
-                    </a>
-                </li>
-                <li>
-                    <a class="menu-a d-flex navbar-brand px-5 py-2 justify-content-start position-relative" href="{{ route('todoRecord.index') }}">
-                        <i class='fas fa-file-image' style="width:1.2rem"></i><span class="ml-2">todoRecord</span>
-                        <i class='position-absolute fas fa-angle-right' style="width:1.2rem;right:3rem"></i>
-                    </a>
-                </li>
+                </li> -->
                 <!-- <li>
-                    <a class="menu-a d-flex navbar-brand px-5 py-2 justify-content-start position-relative" href="{{ route('grvCode') }}">
-                        <i class='fas fa-qrcode' style="width:1.2rem"></i><span class="ml-2">實名制</span>
-                        <i class='position-absolute fas fa-angle-right' style="width:1.2rem;right:3rem"></i>
+                    <a id="menu-photo" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('photo.index') }}">
+                        <i class='fas fa-file-image' style="width:50px"></i><span class="ml-2">相簿</span>
                     </a>
                 </li> -->
+                
 
             </ul>
         </div>
@@ -102,9 +111,9 @@ $letter = new Letter();
 
     </div>
 
-    <div class="content-page px-0 container-fluid">
+    <div class="px-0 container-fluid">
         @include('layouts.nav')
-        <main class="px-4" style="padding:90px 0; ">
+        <main class="px-4" style="min-height:100vh;padding:90px 0 45px 0;background-color:rgb(241 250 255); {{\Auth::user()->status == 'general'?'padding-left:74px!important':''}}">
             <section class="cd-section">
                 <div class="container-fluid p-0 ">
                     @yield('content')

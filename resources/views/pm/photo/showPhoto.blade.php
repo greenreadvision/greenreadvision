@@ -174,7 +174,7 @@
 </div> -->
 @stop
 
-@section('javascript')
+@section('script')
 <script src="{{ URL::asset('js/jquery.min.js') }}"></script>
 <script>
     function changeDisabled() {

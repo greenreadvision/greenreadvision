@@ -85,7 +85,7 @@
 </div> -->
 
 @stop
-@section('javascript')
+@section('script')
 <script src="{{ URL::asset('js/html5-qrcode.min.js') }}"></script>
 <!-- <script type="module">
     import QrScanner from "{{ URL::asset('js/qr-scanner.min.js') }}";

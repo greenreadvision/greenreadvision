@@ -2,14 +2,17 @@
     <!-- Header -->
     <header id="header">
         <div class="  text_font1">           
-            <nav id="nav">
+            <nav id="nav" >
                 <div class="logo">
-                    <a id="nav_top" class="logo"><img id="nav_logo" src="{{ URL::asset('img/綠雷德LOGO-sm.png') }}" alt="綠雷德文創"></a>
+                    <a id="nav_top" class="logo"><img id="nav_logo" src="{{ URL::asset('img/綠雷德創新logo.png') }}" alt="綠雷德文創"></a>
                 </div>
-                <a id="n1" href="javascript:void(0);"><div id="go-about" class="nav_cover">公司簡介
-                    <b class="nav_b">About us</b>
-                </div></a>
-                <!-- <a id="n1" href="javascript:void(0);"><div id="go-history" class="nav_cover">公司實蹟<b class="nav_b" >History</b></div></a> -->
+                <a id="n1" href="javascript:void(0);">
+                    <div id="go-about" class="nav_cover">
+                        公司簡介
+                        <b class="nav_b">About us</b>
+                    </div>
+                </a>
+                <!-- <a id="nav_" href="javascript:void(0);"><div id="go-history" class="nav_cover">公司實蹟<b class="nav_b" >History</b></div></a> -->
                 <a id="n1" href="javascript:void(0);"><div id="go-event" class="nav_cover">活動花絮<b class="nav_b">Highlights</b></div></a>
                 <a id="n1" href="javascript:void(0);"><div id="go-design" class="nav_cover">文創設計<b class="nav_b">Design</b></div></a>
                 <a id="n1" href="javascript:void(0);"><div id="go-video" class="nav_cover">影音專區<b class="nav_b">Videos</b></div></a>

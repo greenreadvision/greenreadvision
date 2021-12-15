@@ -1,7 +1,16 @@
 @extends('layouts.page')
 @section('css')
 <link rel="stylesheet" href="{{ URL::asset('css/main.css') }}" />
-<!-- <link rel="stylesheet" href="{{ URL::asset('css/colorbox.css') }}" /> -->
+<link rel="stylesheet" href="{{ URL::asset('css/colorbox.css') }}" />
+@stop
+@section('header')
+<header id="main_area">
+    <section id="n_img">
+        <div>
+            <img src="{{ URL::asset('img/20170728152736.jpg') }}" alt="main img" />
+        </div>
+    </section>
+</header>
 @stop
 @section('content')
     <div class="layer"></div>

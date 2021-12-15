@@ -1,82 +1,197 @@
 @extends('layouts.app')
 @section('content')
-<div class="col-lg-12">
-    <div class="row">
-        <div class="col-lg-6 mb-3">
-            <!-- <h2>
-            @if(strpos(URL::full(),'other'))
-            {{__('customize.'.$data->type)}} 
-            @else
-            {{$data->project->name}}
-            @endif
-            - {{$data['title']}}</h2> -->
-        </div>
-        <div class="col-lg-6 mb-3">
-            @if(\Auth::user()->user_id==$data['user_id']||\Auth::user()->role=='accountant')
-            @if(strpos(URL::full(),'other'))
-            <button class="float-right btn btn-primary btn-primary-style" onclick="location.href='{{route('invoice.edit.other', $data['other_invoice_id'])}}'"><i class='fas fa-edit'></i><span class="ml-3"> {{__('customize.Edit')}}</span></button>
-            @else
-            <button class="float-right btn btn-primary btn-primary-style" onclick="location.href='{{route('invoice.edit', $data['invoice_id'])}}'"><i class='fas fa-edit'></i><span class="ml-3"> {{__('customize.Edit')}}</span></button>
-            @endif
-            @endif
-        </div>
-    </div>
-</div>
-<div class="d-flex justify-content-center" style="overflow: auto;">
+
+<div class="d-flex justify-content-center">
     <div class="col-lg-11">
-        <div class="">
+        <div class="card border-0 shadow">
             <div class="card-body ">
-                <div id="print_box" name="print_box">
-                    <!--print_start-->
-                    <div style="text-align:center;color:black;font-size:1rem;min-width:1043px;height:485px;">
-                        <div class="col-md-12" style="text-align:right   ;"><label>{{__('customize.id')}} : {{$data['finished_id']}}</label></div>
-                        <div class="col-md-12" style="text-align:right   ;"><label>採購單號 : {{$data['purchase_id']}}</label></div>
-                        <div class="col-md-12 table-style" style="text-align:center;">
-                            @if($data['company_name']=='grv')
-                            <img src="{{ URL::asset('img/logo_Big.png') }}" height="50px">
-                            <label style="font-size:xx-large;">綠雷德文創股份有限公司</label>
+                @if($data['invoice']['status'] == 'delete')
+                <div style="position: absolute;width:100%;height:100%;display:flex;justify-content:center;align-items:center" >
+                    <img style="width:70%" src="{{ URL::asset('gif/cancelled.png') }}" alt=""/>
+                </div>
+                @endif
+                <div class="mb-3">
+                    <div class="col-lg-12 d-flex justify-content-end">
+
+                        <div class="col-lg-4 d-flex align-items-center justify-content-end">
+                            @if ($data['invoice']['status'] == 'waiting')
+                            <div class="w-100">
+                                <div class="w-100 text-center">
+                                    <small>第一階段審核中</small>
+                                </div>
+                                <div class='progress w-100'>
+                                    <div class='progress-bar bg-danger' role='progressbar' style='width: 0%' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100'></div>
+                                </div>
+                            </div>
+                            @elseif ($data['invoice']['status'] == 'waiting-fix')
+                            <div class="w-100">
+                                <div class="w-100 text-center">
+                                    <small>請款被撤回，請修改</small>
+                                </div>
+                                <div class='progress w-100' data-toggle='tooltip' data-placement='top' title='修改中'>
+                                    <div class='progress-bar progress-bar-striped bg-danger progress-bar-animated' role='progressbar' style='width: 25%' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100'></div>
+                                </div>
+                            </div>
+
+                            @elseif ($data['invoice']['status'] == 'check')
+                            <div class="w-100">
+                                <div class="w-100 text-center">
+                                    @if(strpos(URL::full(),'other'))
+                                        @if($data['invoice']['type'] =='other')
+                                            @if($data['invoice']['price'] >=3000 && $data['invoice']['price'] < 10000) 
+                                                <small>第二階段審核中 (1.列印紙本 2.主管簽名)</small>
+                                            @elseif($data['invoice']['price'] >=10000)
+                                                <small>第二階段審核中 (1.列印紙本 2.老闆簽名)</small>
+                                            @else
+                                                <small>第二階段審核中</small>
+                                            @endif
+                                        @else
+                                            <small>第二階段審核中</small>
+                                        @endif
+                                    @else
+                                        @if($data['invoice']['price'] >=3000 && $data['invoice']['price'] < 10000) 
+                                            <small>第二階段審核中 (1.列印紙本 2.主管簽名)</small>
+                                        @elseif($data['invoice']['price'] >=10000)
+                                            <small>第二階段審核中 (1.列印紙本 2.老闆簽名)</small>
+                                        @else
+                                            <small>第二階段審核中</small>
+                                        @endif
+                                    @endif
+
+                                </div>
+                                <div class='progress w-100'>
+                                    <div class='progress-bar bg-danger' role='progressbar' style='width: 25%' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100'></div>
+                                </div>
+                            </div>
+                            @elseif ($data['invoice']['status'] == 'check-fix')
+                            <div class="w-100">
+                                <div class="w-100 text-center">
+                                    <small>請款被撤回，請修改</small>
+                                </div>
+                                <div class='progress w-100'>
+                                    <div class='progress-bar progress-bar-striped bg-danger progress-bar-animated' role='progressbar' style='width: 50%' aria-valuenow='50' aria-valuemin='0' aria-valuemax='100'></div>
+                                </div>
+                            </div>
+
+                            @elseif ($data['invoice']['status'] == 'managed')
+                            <div class="w-100">
+                                <div class="w-100 text-center">
+                                    <small>請款中</small>
+                                </div>
+                                <div class='progress w-100'>
+                                    <div class='progress-bar bg-warning' role='progressbar' style='width: 50%' aria-valuenow='50' aria-valuemin='0' aria-valuemax='100'></div>
+                                </div>
+                            </div>
+                            @elseif ($data['invoice']['status'] == 'matched')
+                            <div class="w-100">
+                                <div class="w-100 text-center">
+                                    <small>匯款中</small>
+                                </div>
+                                <div class='progress w-100'>
+                                    <div class='progress-bar bg-success' role='progressbar' style='width: 75%' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'></div>
+                                </div>
+                            </div>
+                            @elseif ($data['invoice']['status'] == 'complete')
+                            <div class="w-100">
+                                <div class="w-100 text-center">
+                                    <small>匯款完成</small>
+                                </div>
+                                <div class='progress w-100'>
+                                    <div class='progress-bar bg-info' role='progressbar' style='width: 100%' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100'></div>
+                                </div>
+                            </div>
+                            @elseif($data['invoice']['status'] == 'delete')
+                            <div class="w-100">
+                                <div class="w-100" style="display: flex;justify-content: flex-end;">
+                                    <span>已註銷，無法使用</span>
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+                        @if ($data['invoice']['status'] != 'waiting' && $data['invoice']['status'] != 'delete')
+                        <button type="button" id="print_button" class="btn btn-blue rounded-pill"><span class="mx-2">列印</span></button>
+                        @endif
+                        @if($data['invoice']['status'] == 'delete')
+                            <button class="ml-2 btn btn-gray rounded-pill"><span class="mx-2"> 無法{{__('customize.Edit')}}</span></button>
+                        @elseif(\Auth::user()->user_id==$data['invoice']['user_id']||\Auth::user()->role=='administrator')
+                            @if(strpos(URL::full(),'other'))
+                            <button class="ml-2 btn btn-green rounded-pill" onclick="location.href='{{route('invoice.edit.other', $data['invoice']['other_invoice_id'])}}'"><span class="mx-2"> {{__('customize.Edit')}}</span></button>
                             @else
+                            <button class="ml-2 btn btn-green rounded-pill" onclick="location.href='{{route('invoice.edit', $data['invoice']['invoice_id'])}}'"><span class="mx-2"> {{__('customize.Edit')}}</span></button>
+                            @endif
+                        @endif
+                    </div>
+                </div>
+                <div class="mb-3" id="print_box" name="print_box">
+                    <!--print_start min-width:1043px;min-height:485px;-->
+                    <div style="padding:2cm 2cm;text-align:center;color:black;font-size:1rem;font-family: DFKai-sb,Times New Roman,STKaiti;">
+                        <div class="col-md-12" style="text-align:right   ;"><label>{{__('customize.id')}} : {{$data['invoice']['finished_id']}}</label></div>
+                        <div class="col-md-12" style="text-align:right   ;">
+                            <label>採購單號 :
+                                @if($data['purchase'] == '')
+                                {{$data['invoice']['purchase_id']}}
+                                @else
+                                <a style="text-decoration:none;color:black" target='_blank' href="{{ $data['purchase'] != '' ? route('purchase.review',$data['purchase']) : '' }}">{{$data['invoice']['purchase_id']}}</a>
+                                @endif
+                            </label>
+                        </div>
+                        <div class="col-md-12" style="text-align:right   ;">
+                            <label>出差報告表單號：
+                                @foreach ($data['businessTrips'] as $item)
+                                <a style="text-decoration:none;color:black" target='_blank' href="{{route('businessTrip.show',$item['businessTrip_id'])}}">{{$item['final_id']}}</a></br>
+                                @endforeach
+                            </label>
+                        </div>
+                        <div class="col-md-12 table-style" style="text-align:center;">
+                            @if($data['invoice']['company_name']=='grv')
+                            <img src="{{ URL::asset('img/綠雷德LOGO.png') }}" height="50px">
+                            <label style="font-size:xx-large;">綠雷德文創股份有限公司</label>
+                            @elseif($data['invoice']['company_name']=='rv')
                             <img src="{{ URL::asset('img/rv_logo.png') }}" height="50px">
                             <label style="font-size:xx-large;">閱野文創股份有限公司</label>
+                            @elseif($data['invoice']['company_name']=='grv_2')
+                            <img src="{{ URL::asset('img/綠雷德創新logo.png') }}" height="50px">
+                            <label style="font-size:xx-large;">綠雷德創新股份有限公司</label>
                             @endif
 
-                            <h3>請款申請書</h3>
+                            <h3 class="mb-2">請款申請書</h3>
 
-                            <table class="table table-bordered">
+                            <table class="table border border-dark">
                                 <tbody>
-                                    <tr>
-                                        <th class="align-middle text-center">請款日期</th>
-                                        <td class="align-middle text-left">{{$data['created_at']->format('Y-m-d')}}</td>
-                                        <th class="align-middle text-center">請款金額</th>
-                                        <td class="align-middle text-left">{{number_format($data['price'])}}</td>
+                                    <tr class="border border-dark">
+                                        <th width="10%" class="align-middle text-center border border-dark " style="white-space:nowrap;">請款日期</th>
+                                        <td style="font-size: 16px" width="40%" class="border border-dark align-middle text-left">{{$data['invoice']['created_at']->format('Y-m-d')}}</td>
+                                        <th width="10%" class="border border-dark align-middle text-center" style="white-space:nowrap;">請款金額</th>
+                                        <td style="font-size: 16px" width="40%" class="border border-dark align-middle text-left">
+                                            {{number_format($data['invoice']['price'])}}</td>
                                     </tr>
                                     <tr>
-                                        <th class="align-middle text-center">請款項目</th>
-                                        <td class="align-middle text-left" style="white-space: pre-line;">{{$data['title']}}</td>
-                                        <th class="align-middle text-center">請款廠商</th>
-                                        <td class="align-middle text-left">{{$data['company']}}</td>
+                                        <th class="border border-dark align-middle text-center" style="white-space:nowrap;">請款項目</th>
+                                        <td style="font-size: 16px" class="border border-dark align-middle text-left" style="white-space: pre-line;">{{$data['invoice']['title']}}</td>
+                                        <th class="border border-dark align-middle text-center" style="white-space:nowrap;">請款廠商</th>
+                                        <td style="font-size: 16px" class="border border-dark align-middle text-left">{{$data['invoice']['company']}}</td>
                                     </tr>
                                     <tr>
-                                        <th class="align-middle text-center">請款事項</th>
-                                        <td colspan="3" class="text-left">
-                                        {{$data['content']}}
+                                        <th class="border border-dark align-middle text-center" style="white-space:nowrap;">請款事項</th>
+                                        <td style="font-size: 16px" colspan="3" class="border border-dark text-left" style="word-break: break-all;">
+                                            {{$data['invoice']['content']}}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th class="align-middle text-center">銀行帳戶</th>
+                                        <th class="border border-dark align-middle text-center" style="white-space:nowrap;">銀行帳戶</th>
                                         <td colspan="3">
                                             <div class="row">
-                                                <div class="col-md-6">
-                                                    <label><b>銀行名稱：</b></label><label>{{$data['bank']}}</label>
+                                                <div class="col-lg-6">
+                                                    <label><b style="font-size: 16px">銀行名稱：</b></label><label style="font-size: 16px">{{$data['invoice']['bank']}}</label>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <label><b>分行：</b></label><label>{{$data['bank_branch']}}</label>
+                                                <div class="col-lg-6">
+                                                    <label><b style="font-size: 16px">分行：</b></label><label style="font-size: 16px">{{$data['invoice']['bank_branch']}}</label>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <label><b>帳號：</b></label><label>{{$data['bank_account_number']}}</label>
+                                                <div class="col-lg-6">
+                                                    <label><b style="font-size: 16px">帳號：</b></label><label style="font-size: 16px">{{$data['invoice']['bank_account_number']}}</label>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <label><b>戶名：</b></label><label>{{$data['bank_account_name']}}</label>
+                                                <div class="col-lg-6">
+                                                    <label><b style="font-size: 16px">戶名：</b></label><label style="font-size: 16px">{{$data['invoice']['bank_account_name']}}</label>
                                                 </div>
                                             </div>
                                         </td>
@@ -85,121 +200,123 @@
                             </table>
                         </div>
                         <div class="col-md-11 row" style="margin: auto;">
-                            @if ($data['receipt'])
-                            <div class="col-md-8" style="text-align:left;"><label>附發票/收據：有</label></div>
+                            @if ($data['invoice']['receipt'])
+                            <div class="col-md-8" style="text-align:left;"><label>附{{__('customize.receipt')}}：有</label></div>
                             @else
-                            <div class="col-md-8" style="text-align:left;"><label>附發票/收據：沒有，{{$data['receipt_date']}}補上</label></div>
+                            <div class="col-md-8" style="text-align:left;"><label>附{{__('customize.receipt')}}：沒有，{{$data['invoice']['receipt_date']}}補上</label></div>
                             @endif
                         </div>
                         <div class="col-md-12 row" style="margin: auto; display:flex">
-                            <div style="width:30%;text-align:left;"><label>匯款日期：</label><u>　{{$data['status']=='complete'? $data['remittance_date']:'　　'}}　.</u></div>
-                            <div style="width:25%;text-align:left;"><label>帳務處理：</label><u>　{{$data['status']=='complete'? $data['matched']:'　　'}}　.</u></div>
-                            <div style="width:25%;text-align:left;"><label>主管審核：</label><u>　{{$data['status']!='waiting'? $data['managed']:$data['managed']}}　.</u></div>
-                            <div style="width:20%;text-align:left;"><label>請款人：</label><u>　{{$data->user->name}}　.</u></div>
+                            <div style="width:30%;text-align:left;"><label>匯款日期：</label><u>　{{$data['invoice']['status']=='complete'? $data['invoice']['remittance_date']:'　　'}}　.</u></div>
+                            <div style="width:25%;text-align:left;"><label>帳務處理：</label><u>　{{$data['invoice']['status']=='complete'? $data['invoice']['matched']:'　　'}}　.</u></div>
+                            <div style="width:25%;text-align:left;"><label>主管審核：</label><u>　{{$data['invoice']['status']!='waiting'? $data['invoice']['managed']:$data['invoice']['managed']}}　.</u></div>
+                            <div style="width:20%;text-align:left;"><label>請款人：</label><u>　{{$data['invoice']->user->name}}　.</u></div>
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-12 mb-3 d-flex justify-content-center">
+                    <div>
+                        @if (is_array($data['invoice']['receipt_file']))
+                        <a class="btn btn-blue rounded-pill" href="{{route('invoicedownload', $data['invoice']['receipt_file'])}}">發票影本</a>
+                        @endif
+                        @if (is_array($data['invoice']['detail_file']))
+                        <a class="btn btn-blue rounded-pill ml-2" href="{{route('invoicedownload', $data['invoice']['detail_file'])}}">費用明細表</a>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-lg-12 d-flex justify-content-between">
+                    <!-- waiting -->
+                    @if($data['invoice']['status']=='waiting'&&(\Auth::user()->role=='administrator'))
+                    <div class="col-lg-8 p-0" style="text-align:center;">
+                        @if(strpos(URL::full(),'other'))
+                        <form action="../withdraw/other" method="POST">
+                            @else
+                            <form action="withdraw" method="POST">
+                                @endif
+                                @csrf
+                                <div class="form-row align-items-center">
+                                    <div class="col-lg-6 my-1">
+                                        <input autocomplete="off" type="text" class="rounded-pill form-control" name="reason" placeholder="原因" required>
+                                    </div>
+                                    <div class="float-left">
+                                        <button type="submit" class="btn btn-red rounded-pill">撤回</button>
+                                    </div>
+                                </div>
+                            </form>
+                    </div>
+
+                        @if(strpos(URL::full(),'other'))
+                        <form action="../match/other" method="POST">
+                            @else
+                            <form action="match" method="POST">
+                                @endif
+                                @csrf
+                                <!-- <input type="text" name="finished_id" class="form-control" placeholder="@lang('customize.finished_id')" required> -->
+                                <button type="submit" class="btn btn-green rounded-pill"><span class="mx-2">第一階段審核</span></button>
+                            </form>
+
+                        <!-- waiting -->
+                        <!-- check -->
+                    @elseif($data['invoice']['status']=='check'&&($data['invoice']['reviewer'] == \Auth::user()->user_id||($data['invoice']['reviewer']==''&&((\Auth::user()->role=='administrator')||($data['invoice']['price'] >= 10000&&\Auth::user()->role=='proprietor')||($data['invoice']['price'] >= 3000&&$data['invoice']['price'] < 10000&&\Auth::user()->role=='supervisor')))))
+                    <div class="col-lg-8 p-0" style="text-align:center;">
+                        @if(strpos(URL::full(),'other'))
+                        <form action="../withdraw/other" method="POST">
+                            @else
+                            <form action="withdraw" method="POST">
+                                @endif
+                                @csrf
+                                <div class="form-row align-items-center">
+                                    <div class="col-lg-6 ">
+                                        <input autocomplete="off" type="text" class="rounded-pill form-control" name="reason" placeholder="原因" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-red rounded-pill">撤回</button>
+                                </div>
+                        </form>
+                    </div>
+
+                                @if(strpos(URL::full(),'other'))
+                                <form action="../match/other" method="POST" class="d-flex justify-content-between ">
+                                    @else
+                                    <form action="match" method="POST" class="d-flex justify-content-between">
+                                        @endif
+
+                                        @csrf
+                                        <button type="submit" class="btn btn-green rounded-pill"><span class="mx-2">第二階段審核</span></button>
+                                    </form>
+
+
+                                    @elseif($data['invoice']['status']=='managed'&&(\Auth::user()->role=='administrator'||(\Auth::user()->role=='proprietor')))
+                                    <div class="w-100">
+                                        @if(strpos(URL::full(),'other'))
+                                        <form action="../match/other" method="POST" class="d-flex justify-content-end">
+                                            @else
+                                            <form action="match" method="POST" class="d-flex justify-content-end">
+                                                @endif
+
+                                                @csrf
+                                                <button type="submit" class="btn btn-green rounded-pill"><span class="mx-2">請款審核</span></button>
+                                            </form>
+                                    </div>
+                                    @elseif($data['invoice']['status']=='matched'&&(\Auth::user()->role=='administrator'||(\Auth::user()->role=='proprietor')))
+                                    <div class="w-100">
+                                        @if(strpos(URL::full(),'other'))
+                                        <form action="../match/other" method="POST" class="d-flex justify-content-end">
+                                            @else
+                                            <form action="match" method="POST" class="d-flex justify-content-end">
+                                                @endif
+
+                                                @csrf
+                                                <button type="submit" class="btn btn-green rounded-pill">匯款審核</button>
+                                            </form>
+                                    </div>
+                                    @endif
+
+                </div>
             </div>
         </div>
-        @if($data['status']=='waiting'&&\Auth::user()->role=='accountant')
-        <div class="col-lg-12 p-0" style="text-align:center;">
-        @if(strpos(URL::full(),'other'))
-                <form action="../withdraw/other" method="POST" class="mt-3">
-                    @else
-                    <form action="withdraw" method="POST" class="mt-3">
-                        @endif
 
-                        @csrf
-                        <div class="form-row align-items-center">
-                            <div class="col-lg-6 my-1">
-                                <input autocomplete="off" type="text" class="form-control" name="reason" placeholder="原因" required>
-                            </div>
-                            <button type="submit" class="btn btn-danger btn-danger-style">撤回</button>
-                        </div>
-                    </form>
-        </div>
-        <div class="float-left">
-            @if(strpos(URL::full(),'other'))
-            <form action="../match/other" method="POST">
-                @else
-                <form action="match" method="POST">
-                    @endif
 
-                    @csrf
-                    <!-- <input type="text" name="finished_id" class="form-control" placeholder="@lang('customize.finished_id')" required> -->
-                    <button type="submit" class="btn btn-primary btn-primary-style">審核</button>
-                </form>
 
-        </div>
-        @elseif($data['status']=='check'&&\Auth::user()->role=='manager')
-        <div class="col-lg-12 p-0" style="text-align:center;">
-        @if(strpos(URL::full(),'other'))
-                <form action="../withdraw/other" method="POST" class="mt-3">
-                    @else
-                    <form action="withdraw" method="POST" class="mt-3">
-                        @endif
-
-                        @csrf
-                        <div class="form-row align-items-center">
-                            <div class="col-lg-6 my-1">
-                                <input autocomplete="off" type="text" class="form-control" name="reason" placeholder="原因" required>
-                            </div>
-                            <button type="submit" class="btn btn-danger btn-danger-style">撤回</button>
-                        </div>
-                    </form>
-        </div>
-        <div class="float-left">
-            @if(strpos(URL::full(),'other'))
-            <form action="../match/other" method="POST" class="d-flex justify-content-between ">
-                @else
-                <form action="match" method="POST" class="d-flex justify-content-between">
-                    @endif
-
-                    @csrf
-                    <button type="submit" class="btn btn-primary btn-primary-style mb-2">審核</button>
-                </form>
-        </div>
-
-        @elseif($data['status']=='managed'&&\Auth::user()->role=='accountant')
-        <div class="float-left">
-            @if(strpos(URL::full(),'other'))
-            <form action="../match/other" method="POST" class="d-flex justify-content-between">
-                @else
-                <form action="match" method="POST" class="d-flex justify-content-between">
-                    @endif
-
-                    @csrf
-                    <button type="submit" class="btn btn-primary btn-primary-style">審核</button>
-                </form>
-        </div>
-        @elseif($data['status']=='matched'&&\Auth::user()->role=='accountant')
-        <div class="float-left">
-            @if(strpos(URL::full(),'other'))
-            <form action="../match/other" method="POST" class="d-flex justify-content-between">
-                @else
-                <form action="match" method="POST" class="d-flex justify-content-between">
-                    @endif
-
-                    @csrf
-                    <button type="submit" class="btn btn-primary btn-primary-style">審核</button>
-                </form>
-        </div>
-        @endif
-        <div style="float: right;">
-            <button type="button" id="print_button" class="btn btn-primary btn-primary-style">{{__('customize.Print')}}</button>
-        </div>
-
-        <div style="float: center; text-align:center;">
-            @if (is_array($data['receipt_file']))
-            <a class="btn btn-primary " href="{{route('download', $data['receipt_file'])}}">{{__('customize.receipt_file')}}</a>
-
-            @endif
-            @if (is_array($data['detail_file']))
-
-            <a class="btn btn-primary " href="{{route('download', $data['detail_file'])}}">{{__('customize.detail_file')}}</a>
-            @endif
-        </div>
-        
     </div>
 </div>
 
@@ -211,7 +328,7 @@
     $(document).ready(() => {
         $('#print_button').click(() => {
             let html = document.all['print_box'].innerHTML
-            console.log(html)
+
             let bodyHtml = document.body.innerHTML
             document.body.innerHTML = html
             window.print()

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-
+{{$test}}
 <div class="d-flex justify-content-center">
     <div class="col-lg-10">
     <form action="create/review" method="post" enctype="multipart/form-data">
@@ -48,7 +48,7 @@
 
 
 @stop
-@section('javascript')
+@section('script')
 <script src="{{ URL::asset('js/jquery.min.js') }}"></script>
 <script>
 

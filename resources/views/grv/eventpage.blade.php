@@ -33,7 +33,7 @@
                     </a>
                 </div>
                 <div class="col-lg-6 operation p-3">
-                    <a   style="text-decoration:none;" href="{{route('eventpage.show', 'operation')}}">
+                    <a style="text-decoration:none;" href="{{route('eventpage.show', 'operation')}}">
                         <div class="eventpage d-flex justify-content-center">
                             <span>營運</span>
                         </div>
@@ -43,7 +43,6 @@
         </div>
     </div>
 </div>
-
 <div id="BackTop">
     <div style="position: relative;width:100%;height:100%"><i class='fas fa-chevron-up' style='font-size:24px;position: absolute;
 	top:8px;
@@ -53,26 +52,23 @@
 
 @section('javascript')
 <style>
-    .hakka div {
-        background-color: #cff09e;
-        border-radius: 5px;
-    }
-
-    .read div {
-        background-color: #a8dba8;
-        border-radius: 5px;
-    }
-
-    .child div {
-        background-color: #79bd9a;
-        border-radius: 5px;
-    }
-
-    .operation div {
-        background-color: #3b8686;
-        border-radius: 5px;
-    }
-
+   
+.hakka div{
+	background-color: #cff09e;
+	border-radius: 5px;
+}
+.read div{
+	background-color: #a8dba8;
+	border-radius: 5px;
+}
+.child div{
+	background-color: #79bd9a;
+	border-radius: 5px;
+}
+.operation div{
+	background-color: #3b8686;
+	border-radius: 5px;
+}
     .eventpage {
         height: 250px;
         transition: .5s all;
@@ -109,9 +105,6 @@
 
         }
     }
-
-
-    
 </style>
 <script src="{{ URL::asset('js/jquery.min.js') }}"></script>
 <script>
@@ -127,24 +120,5 @@
             scrollTop: 0 // Scroll to top of body
         }, 500);
     });
-    $('.btn-posnawr')
-        .on('mouseenter', function(e) {
-            var parentOffset = $(this).offset(),
-                relX = e.pageX - parentOffset.left,
-                relY = e.pageY - parentOffset.top;
-            $(this).find('span').css({
-                top: relY,
-                left: relX
-            })
-        })
-        .on('mouseout', function(e) {
-            var parentOffset = $(this).offset(),
-                relX = e.pageX - parentOffset.left,
-                relY = e.pageY - parentOffset.top;
-            $(this).find('span').css({
-                top: relY,
-                left: relX
-            })
-        });
 </script>
 @stop

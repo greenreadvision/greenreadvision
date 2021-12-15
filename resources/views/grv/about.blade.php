@@ -1,4 +1,4 @@
-@extends('layouts.eventsPage')
+@extends('layouts.page')
 @section('css')
     <link rel="stylesheet" href="{{ URL::asset('css/main.css') }}" />
     <link rel="stylesheet" href="{{ URL::asset('css/aboutwith.css') }}" />
@@ -11,7 +11,7 @@
 <!-- main img -->
     <!--TEST-->
     <div class="inner">
-    
+
         <div class="row">
             <div class="12u 12u$(medium) heightu" ><div class="circle"></div></div>
                 <div style="margin-bottom:60px;">
@@ -24,7 +24,7 @@
                     <div class="text_font1"><h3 style="text-align:left; font-weight:bold">綠雷德文創的企業社會責任（CSR）</h3></div>
                     <div class="text_font1"><h4 style="font-weight:bold; color:#5a5858;">致力於親子教育的推廣是我們團隊多年的經驗傳承、智慧累積，更是我們貢獻和回饋於社會的最好方式。希望能夠有更多的機會前進到校園中推廣各式課程和活動、偏鄉的地區。成立的這幾年中，我們團隊用教育的理念讓我們的下一代更認識我們的台灣外，並藉由我們的力量，服務社會做公益。服務過唐氏症寶寶的課程、台北市弱勢家庭的公益2日夏令營、宜蘭偏鄉聯合5校學校到台北的北投活動等。都是我們成立來對社會的回饋，我們也會秉持的這精神繼續往前進，並推廣到國外去。</h4></div>
                 </div>
-                
+
                 <!--
                 <div id="box1" class="12u 12u$(medium) heightu scrEvent text_font1">
                     <div id="rightbox" class="rectangle hideme3 boxText"><h1 class="aboutBody">綠雷德精心舉辦許多活動，帶領著大、小朋友們一同前往各地，進行有趣的探訪，並且從中了解在地文化習俗與歷史背景，讓每個來參加的民眾滿載而歸。</h1></div>

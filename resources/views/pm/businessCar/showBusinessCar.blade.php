@@ -17,7 +17,7 @@
         <div class="card card-styl table-style">
             <table border="1">
                 <tr>
-                    <td>標案</td>
+                    <td>專案</td>
                     <td colspan="3">{{$data->project->name}}</td>
                     
                 </tr>
