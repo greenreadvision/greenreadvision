@@ -1,0 +1,100 @@
+.fileButton {
+    position: relative;
+    display: inline-block;
+    background: #D0EEFF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #1E88C7;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+}
+.fileButton input {
+    position: absolute;
+    font-size: 100px;
+    display: flex;
+    opacity: 0;
+}
+.fileButton:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}
+
+.fileButtonList {
+    position: relative;
+    display: inline-block;
+    background: #FFFFFF;
+    border: 1px solid #FFFFFF;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #000000;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+}
+
+
+.fileButtonList input {
+    position: absolute;
+    font-size: 100px;
+    display: flex;
+    opacity: 0;
+}
+.fileButtonList:hover {
+    background: #ffffff;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}
+
+.fileButtonChange input {
+    position: absolute;
+    font-size: 100px;
+    display: flex;
+    opacity: 0;
+}
+
+
+.fileButtonChange {
+    position: relative;
+    display: inline-block;
+    background: #ff6161;
+    border: 1px solid #ff6161;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #000000;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+}
+.fileButtonChange:hover {
+    background: #da2d2d;
+    border-color: #f83232;
+    color: #000000;
+    text-decoration: none;
+}
+
+
+.tableSOP tr td{
+    border:1px #000000 solid;
+}
+
+.AutoWidth{
+    display: flex;
+    justify-content: flex-start;
+    width: auto;
+}
+
+.customer-bank-edit-hover:hover{
+    background-color: #ff6161;
+}
+
+.customer-bank-edit-select{
+    background-color: #ff6161;
+}

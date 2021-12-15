@@ -1,0 +1,24 @@
+RewriteEngine On
+
+RewriteCond %{ENV:URI} ^$
+RewriteRule ^(.*)$ - [ENV=URI:$1]
+
+RewriteCond %{ENV:BASE} ^$
+RewriteCond %{ENV:URI}::%{REQUEST_URI} ^(.*)::(.*?)\1$
+RewriteRule ^ - [ENV=BASE:%2]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ %{ENV:BASE}index.php [L,QSA]
+
+Options -MultiViews +SymLinksIfOwnerMatch
+
+<Files config.ini>
+	order allow,deny
+	deny from all
+</Files>
+
+AuthType Digest
+AuthDigestProvider file
+AuthUserFile "/home/grv/www/www/laravelTest/public/gitlist/.htdigest"
+AuthName Limited!
+require valid-user

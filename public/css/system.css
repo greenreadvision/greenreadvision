@@ -1,0 +1,141 @@
+/* .table-style {
+    width: 100%;
+    overflow: auto;
+}
+
+.table-style table {
+    width: 100%;
+    
+} */
+
+
+/* .table-style th:first-child {
+    border-top-left-radius: 3px;
+}
+
+.table-style th:last-child {
+    border-top-right-radius: 3px;
+} */
+
+/* .table-style th,
+td {
+    text-align: center;
+    white-space: nowrap;
+    padding: .5rem .5rem;
+    font-size: 16px;
+    
+} */
+
+/* .table-style tr:nth-child(odd) td{
+    background: #e6f6ff;
+}
+
+.table-style tr:last-child td:first-child {
+    border-bottom-left-radius: 3px;
+}
+
+.table-style tr:last-child td:last-child {
+    border-bottom-right-radius: 3px;
+} */
+.mistake{
+    background-color: #fb8888;
+    color: black;
+}
+.correct{
+    background-color: #c7ff7e;
+    color: black;
+}
+.btn-green {
+    color: #fff;
+    background-color: #a2e044;
+    border-color: #a2e044;
+}
+
+.btn-green:hover {
+    background-color: #96cf40;
+    border-color: #96cf40;
+    box-shadow: 0 0px 10px rgb(162, 224, 68, .5);
+}
+
+.btn-blue {
+    color: #fff;
+    background-color: #2494d1;
+    border-color: #2494d1;
+}
+
+.btn-black{
+    color: #fff;
+    background-color: #000;
+    border-color: #000;
+}
+
+.btn-black:hover{
+    color: #fff;
+    background-color: #000;
+    border-color: #000;
+    box-shadow: 0 0px 10px rgba(60, 69, 75, 0.5);
+}
+
+.btn-blue:hover {
+    color: #fff;
+    background-color: #2494d1;
+    border-color: #2494d1;
+    box-shadow: 0 0px 10px rgb(36, 148, 209,.5);
+}
+.btn-red {
+    color: #fff;
+    background-color: #f8675a;
+    border-color: #f8675a
+}
+
+.btn-red:hover {
+    color: #fff;
+    background-color: #f8675a;
+    border-color: #f8675a;
+    box-shadow: 0 0px 10px rgb(248, 101, 88,.5);
+
+}
+
+
+
+.btn-red.disabled,
+.btn-red:disabled {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d
+}
+
+.btn-red:not(:disabled):not(.disabled).active,
+.btn-red:not(:disabled):not(.disabled):active,
+.show>.btn-red.dropdown-toggle {
+    color: #fff;
+    background-color: #f74434;
+    border-color: #f74434
+}
+
+
+.input-photo-label{
+    cursor: pointer;
+    background: rgb(250, 250, 250);
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   transition: all .5s ;
+   background-repeat:no-repeat;
+   background-size: 90% 90%;
+   background-position: center center;
+}
+.input-photo-label:hover{
+    background: rgb(240, 240, 240);
+    
+   transition: all .5s ;
+   background-repeat:no-repeat;
+   background-size: 90% 90%;
+   background-position: center center;
+}
+.input-photo-input{
+    display: none;
+}

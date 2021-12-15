@@ -1,0 +1,493 @@
+@charset "UTF-8";
+@import url(font-awesome.min.css);
+
+.home {
+    padding: 0 3%;
+
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+}
+#home-img {
+    /*opacity: 0;
+    transition: all .3s ease;*/
+    width: 90vw;
+    height: 54vw;
+}
+
+#home-img span{
+    font-size: 1.5vw;
+    float: left;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    font-weight: bold;
+    padding-top: 5%;
+    width: 40vw;
+    color: #514F4E;
+    
+}
+
+
+#home-content {
+    opacity: 0;
+    width: 100%;
+    padding: 0 2%;
+}
+
+#home-content p {
+    color: white;
+    font-size: 24px;
+    margin: 0;
+    transition: all .3s ease;
+}
+.title-style {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 1% 0;
+    /*opacity: 0;*/
+}
+
+.title-style h3 {
+    font-size: 36px;
+    margin: 0;
+}
+
+.title-style h4 {
+    font-size: 26px;
+    margin: 0;
+}
+
+
+#about-as {
+    width: 100%;
+    padding: 2.5% 0;
+    opacity: 1;
+}
+#about-as h1,
+h2,
+h3,
+h4,
+h5,
+p {
+    font-family: sans-serif, Microsoft JhengHei;
+    font-weight: bold;
+    color: #1d1d1d;
+}
+#about-as .about-content {
+    display: block;
+    width: 100%;
+    padding: 0 3%;
+    /*opacity: 0;*/
+}
+
+#about-as .about-content h3 {
+    font-size: 32px;
+}
+
+#about-as .about-content p{
+    font-size:24px
+}
+
+#about-as .company-creat,
+#about-as .csr {
+    width: 100%;
+    padding: 1.5%;
+    font-size: 40px;
+}
+
+
+
+#event {
+    padding: 2.5% 0;
+    width: 100%;
+}
+
+.nav-tabs a {
+    width: 378px;
+	height: 378px;
+	margin: 0 5px;
+	font-size: 25px;
+	text-decoration: none;
+	border-radius: 10px;
+	box-sizing: border-box;
+	overflow: hidden;
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+    background-size: 348px 363px;
+	display: inline-block;
+
+}
+
+.nav-tabs a:hover span{
+    background: url('../../activity/icon_magnifier.png') 50% 50% no-repeat rgba(0,0,0,.7);
+    background-size: 25%;
+}
+
+.type_Venue{
+    background-image: url("../../activity/2020農博營運.jpg");
+    
+}
+.type_culture{
+    background-image: url("../../activity/2020彰化多元閱讀.jpg");
+}
+.type_reporter{
+    background-image: url("../../activity/新竹記者會.jpg");
+}
+.type_major-activity{
+    background-image: url("../../activity/2020農博活動.jpg");
+}
+.type_Venue:hover{
+    background-image: url("../../activity/2020農博營運.jpg");
+}
+.type_culture:hover{
+    background-image: url("../../activity/culture.gif");
+}
+.type_reporter:hover{
+    background-image: url("../../activity/report.gif");
+}
+.type_major-activity:hover{
+    background-image:url("../../activity/2020農博活動.jpg");
+}
+
+
+.nav-tabs a span{
+    width: 100%;
+    height: 100%;
+    padding-top: 90%;
+    color: #fff;
+	text-shadow: 0 0 15px #fff, 0 0 15px #fff, 0 0 15px #fff;
+    box-sizing: border-box;
+	background: linear-gradient(transparent 65%, rgba(0,0,0,.7) 85%);
+    display: block;
+}
+
+
+
+#design {
+    /* height: calc(100vh - 93px); */
+    width: 100%;
+    padding: 2.5% 0;
+}
+
+#video {
+    display: block;
+    width: 100%;
+    padding: 2.5% 3%;
+}
+
+#video-mp4 {
+    background-color: #2e2e2e;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    /*opacity: 0;*/
+    box-shadow: 5px 5px 10px rgb(0, 0, 0, .5);
+}
+
+#video-content {
+    width: 50%;
+    padding: 1.5% 3%;
+    position: relative;
+    /*opacity: 0;*/
+}
+
+#videoBtn {
+    position: absolute;
+    right: 5.5%;
+    bottom: 1.5%;
+}
+
+#video-content h3 {
+    font-size: 24px;
+    margin-bottom: 1%;
+}
+
+#video-content p {
+    font-size: 20px;
+    margin-bottom: 70px;
+    padding-left: 20px;
+}
+
+.video-style {
+    width: 100%;
+
+}
+
+.video-box {
+    display: flex;
+    width: 100%
+}
+
+
+
+#contact {
+    width: 100%;
+    padding: 2.5% 3%;
+
+    /* background-color: rgb(238, 222, 131); */
+}
+
+#contact p {
+    font-size: 20px;
+    margin: 2% 0;
+}
+
+#contact-information {
+    padding: 1.5%;
+    display: flex;
+    /*opacity: 0;*/
+    justify-content: center;
+}
+
+#contact-map {
+    padding: 1.5%;
+    /*opacity: 0;*/
+}
+
+.contact1 {
+    display: flex;
+    justify-content: center;
+}
+
+@media screen and (max-width:1024px) {
+    .contact1 {
+        display: block;
+    }
+
+    #contact-map iframe {
+        width: 100%;
+        height: 100%;
+    }
+
+    #contact p {
+        font-size: 16px;
+        margin: 2% 0;
+    }
+}
+
+@media screen and (max-width:420px) {
+    #contact p {
+        font-size: 12px;
+        margin: 2% 0;
+    }
+}
+
+@media screen and (max-width:1280px) {
+    #home-content p {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width:1024px) {
+    .home {
+        display: block;
+    }
+
+    #home-content {
+        width: 100%;
+        padding-bottom: 5%;
+    }
+
+    #home-content p {
+        text-align: center;
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width:1024px) {
+    .video-box {
+        display: block;
+    }
+
+    #video {
+        display: block;
+
+    }
+
+    #video-mp4 {
+        width: 100%;
+        margin-bottom: 3%;
+    }
+
+    .video-style {
+        width: 100%;
+    }
+
+    #video-content {
+        width: 100%;
+    }
+
+    #video-content h3 {
+        font-size: 24px;
+        margin-bottom: 1%;
+    }
+
+    #video-content p {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width:420px) {
+    #video-content h3 {
+        font-size: 16px;
+    }
+
+    #video-content p {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width:768px){
+    .nav-tabs a {
+        width: 150px;
+        height: 150px;
+        background-size: 120px 135px;
+    }
+    .nav-tabs a span{
+        font-size: 12px;
+    }
+}
+
+@media screen and (min-width:768px){
+    .nav-tabs a {
+        width: 250px;
+        height: 250px;
+        background-size: 220px 235px;
+    }
+    .nav-tabs a span{
+        font-size: 14px;
+    }
+}
+@media screen and (min-width:992px){
+    .nav-tabs a {
+        width: 300px;
+        height: 300px;
+        background-size: 270px 285px;
+    }
+    .nav-tabs a span{
+        font-size: 16px;
+    }
+}
+@media screen and (min-width:1200px){
+    .nav-tabs a {
+        width: 350px;
+        height: 350px;
+        background-size: 320px 335px;
+    }
+    .nav-tabs a span{
+        font-size: 20px;
+    }
+}
+@media screen and (min-width:1024px){
+    #video-content h3 {
+        font-size: 28px;
+    }
+
+    #video-content p {
+        font-size: 24px;
+    }
+    
+}
+
+
+@media screen and (max-width:768px){
+    #about-as .about-content h3 {
+        font-size: 16px;
+    }
+    #about-as .about-content p{
+        font-size:12px
+    }
+    #about-as .about-year-book h3{
+        font-size: 16px;
+    }
+    #about-as .about-year-book p{
+        font-size:12px;
+    }
+}
+
+@media screen and (min-width:768px){
+    #about-as .about-content h3 {
+        font-size: 16px;
+    }
+    
+    #about-as .about-content p{
+        font-size:14px
+    }
+    #about-as .about-year-book h3{
+        font-size: 16px;
+    }
+    #about-as .about-year-book p{
+        font-size:14px;
+    }
+}
+@media screen and (min-width:992px){
+    #about-as .about-content h3 {
+        font-size: 20px;
+    }
+    
+    #about-as .about-content p{
+        font-size:16px
+    }
+
+    #about-as .about-year-book h3{
+        font-size: 20px;
+    }
+    #about-as .about-year-book p{
+        font-size:16px;
+    }
+}
+
+@media screen and (min-width:1200px){
+    #about-as .about-content h3 {
+        font-size: 24px;
+    }
+    
+    #about-as .about-content p{
+        font-size:20px
+    }
+    #about-as .about-year-book h3{
+        font-size: 24px;
+    }
+    #about-as .about-year-book p{
+        font-size:20px;
+    }
+}
+
+@media screen and (min-width:1600px){
+    #about-as .about-content h3 {
+        font-size: 28px;
+    }
+    
+    #about-as .about-content p{
+        font-size:24px
+    }
+    #about-as .about-year-book h3{
+        font-size: 28px;
+    }
+    #about-as .about-year-book p{
+        font-size:24px;
+    }
+}
+
+@media screen and (max-width:1024px) {
+
+    #news-board{
+        display: block;
+    }
+
+
+    #about-as .company-creat,
+    #about-as .csr {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width:420px) {
+    #about-as .company-creat,
+    #about-as .csr {
+        font-size: 12px;
+    }
+}

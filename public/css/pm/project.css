@@ -1,0 +1,35 @@
+
+table {
+    border-collapse: collapse; /* 表格邊框合併 */
+    width: 100%; /* 寬度 100% */
+    background-color: white; /* 背景白色 */
+    font-size: 1rem;
+    margin-bottom: 15px;
+    border: 1px solid #000; 
+  }
+  
+table thead th {
+    color: #ffffff; /* 表頭文字白色 */
+    background: #2f4961; /* 表頭背景白色 */
+    border: 1px solid #000;
+    
+  }
+  
+table td,
+table th {
+    text-align: center; /* 文字置中顯示 */
+    padding: 10px; /* 添加內距 */
+  }
+  
+table td {
+    border: 1px solid #000; /* 表格 td 右邊框顏色 */
+  }
+  
+table tr:nth-child(even) {
+    background: #f8f8f8; /* 表格偶數 tr 灰色背景 */
+  }
+  
+.persenLine{
+    display: flex;
+    flex-direction: row;
+}

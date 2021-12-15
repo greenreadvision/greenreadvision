@@ -1,0 +1,32 @@
+
+.table-style {
+    width: 100%;
+    overflow: auto;
+}
+
+.table-style table{
+    width: 100%;
+}
+.table-style tr:nth-child(odd){
+    background-color: #fafafa;
+}
+.table-style tr:first-child{
+    background-color: #081f2b;
+}
+
+.table-style th,
+td {
+    text-align: center;
+    word-break: break-all;
+    padding: .5rem .5rem;
+    font-size: .8rem;
+
+}
+.table-style a{
+    color: rgb(66, 66, 66);
+    text-decoration:none;
+    word-break: break-all;
+}
+.table-style a:hover{
+    color: rgb(90, 90, 90);
+}

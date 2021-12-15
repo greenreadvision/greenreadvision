@@ -614,7 +614,7 @@ pre code {
 
 @media (min-width:1200px) {
     .container {
-        max-width: 1140px
+        max-width: 1400px
     }
 }
 
@@ -721,7 +721,8 @@ pre code {
     width: 100%;
     min-height: 1px;
     padding-right: 15px;
-    padding-left: 15px
+    padding-left: 15px;
+    margin: 0 0;
 }
 
 .col {
@@ -1948,6 +1949,7 @@ pre code {
     background-color: transparent
 }
 
+
 .table td,
 .table th {
     padding: .75rem;
@@ -1962,6 +1964,10 @@ pre code {
 
 .table tbody+tbody {
     border-top: 2px solid #dee2e6
+}
+
+.table-board{
+    background-color: #ffffff;
 }
 
 .table .table {
@@ -2217,7 +2223,7 @@ pre code {
     background-color: #fff;
     background-clip: padding-box;
     border: 1px solid #ced4da;
-    border-radius: .25rem;
+    border-radius: 6px;
     -webkit-transition: border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
     transition: border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
@@ -2804,8 +2810,8 @@ select.form-control-lg:not([size]):not([multiple]) {
 .btn.focus,
 .btn:focus {
     outline: 0;
-    -webkit-box-shadow: 0 0 0 .2rem rgba(52, 144, 220, .25);
-    box-shadow: 0 0 0 .2rem rgba(52, 144, 220, .25)
+    /* -webkit-box-shadow: 0 0 0 .2rem rgba(52, 144, 220, .25);
+    box-shadow: 0 0 0 .2rem rgba(52, 144, 220, .25) */
 }
 
 .btn.disabled,
@@ -4507,36 +4513,43 @@ input[type=submit].btn-block {
     color: #6c757d
 }
 
+.nav-link .active{
+    color: #38c172;
+}
+.highlights {
+    padding: 0;
+    /*opacity: 0;*/
+}
+
 .nav-tabs {
-    border-bottom: 1px solid #dee2e6
+	text-align: center;
 }
 
 .nav-tabs .nav-item {
-    margin-bottom: -1px
+    margin-bottom: -1px;
+    display: flex;
+    justify-content: center;
 }
 
-.nav-tabs .nav-link {
-    border: 1px solid transparent;
-    border-top-left-radius: .25rem;
-    border-top-right-radius: .25rem
+
+.nav-tabs .a:focus,
+.nav-tabs .a:hover {
+    color: #fff;
+	text-shadow: 0 0 10px #DC8749, 0 0 10px #DC8749, 0 0 10px #DC8749, 0 0 10px #DC8749;
 }
 
-.nav-tabs .nav-link:focus,
-.nav-tabs .nav-link:hover {
-    border-color: #e9ecef #e9ecef #dee2e6
-}
-
-.nav-tabs .nav-link.disabled {
+.nav-tabs .a.disabled {
     color: #6c757d;
     background-color: transparent;
     border-color: transparent
 }
 
-.nav-tabs .nav-item.show .nav-link,
-.nav-tabs .nav-link.active {
-    color: #495057;
-    background-color: #f8fafc;
-    border-color: #dee2e6 #dee2e6 #f8fafc
+.nav-tabs .nav-item.show .a,
+.nav-tabs .a.active {
+    color: #fff;
+	text-shadow: 0 0 10px #DC8749, 0 0 10px #DC8749, 0 0 10px #DC8749, 0 0 10px #DC8749;
+    outline:none;
+    border:none;
 }
 
 .nav-tabs .dropdown-menu {
@@ -4573,6 +4586,12 @@ input[type=submit].btn-block {
 
 .tab-content>.tab-pane {
     display: none
+}
+
+.tab-content>.tab-pane p{
+    display: block;
+    font-size: 20px;
+    padding-left: 10px;
 }
 
 .tab-content>.active {
@@ -5385,33 +5404,38 @@ input[type=submit].btn-block {
     display: flex;
     padding-left: 0;
     list-style: none;
-    border-radius: .25rem
+    border-radius: .25rem;
+    text-align: center;
 }
 
 .page-link {
+    width: 28px;
+    height: 28px;
+    border-radius: 25px;
+
     position: relative;
     display: block;
-    padding: .5rem .75rem;
-    margin-left: -1px;
-    line-height: 1.25;
-    color: #3490dc;
-    background-color: #fff;
-    border: 1px solid #dee2e6
+    /* padding: .5rem .75rem; */
+    margin-left: 3px;
+    line-height: 28px;
+    color: #8a8a8a;
+    /* background-color: #fff; */
+    /* border: 1px solid #dee2e6 */
 }
 
 .page-link:hover {
     z-index: 2;
-    color: #1d68a7;
+    color: rgb(247, 103, 90);
     text-decoration: none;
-    background-color: #e9ecef;
+    /* background-color: #e9ecef; */
     border-color: #dee2e6
 }
 
 .page-link:focus {
     z-index: 2;
     outline: 0;
-    -webkit-box-shadow: 0 0 0 .2rem rgba(52, 144, 220, .25);
-    box-shadow: 0 0 0 .2rem rgba(52, 144, 220, .25)
+    /* -webkit-box-shadow: 0 0 0 .2rem rgba(52, 144, 220, .25);
+    box-shadow: 0 0 0 .2rem rgba(52, 144, 220, .25) */
 }
 
 .page-link:not(:disabled):not(.disabled) {
@@ -5432,16 +5456,19 @@ input[type=submit].btn-block {
 .page-item.active .page-link {
     z-index: 1;
     color: #fff;
-    background-color: #3490dc;
-    border-color: #3490dc
+    background-color: rgb(247, 103, 90);
+    /* border-color: #3490dc; */
+    border-radius: 25px;
 }
 
 .page-item.disabled .page-link {
+    width: 28px;
+    height: 28px;
     color: #6c757d;
     pointer-events: none;
     cursor: auto;
-    background-color: #fff;
-    border-color: #dee2e6
+    /* background-color: #fff; */
+    /* border-color: #dee2e6 */
 }
 
 .pagination-lg .page-link {
@@ -5757,6 +5784,7 @@ input[type=submit].btn-block {
 .alert-dark .alert-link {
     color: #040505
 }
+
 
 @-webkit-keyframes progress-bar-stripes {
     0% {
@@ -6918,7 +6946,7 @@ button.bg-info:hover {
 }
 
 .bg-warning {
-    background-color: #ffed4a !important
+    background-color: #ffc107 !important
 }
 
 a.bg-warning:focus,
@@ -7071,6 +7099,17 @@ button.bg-dark:hover {
 .rounded-left {
     border-top-left-radius: .25rem !important
 }
+
+.rounded-pill {
+    border-radius:25px !important
+}
+
+.rounded-pill-top{
+    border-radius:25px !important;
+    border-radius:25px !important
+}
+
+
 
 .rounded-circle {
     border-radius: 50% !important
@@ -10449,4 +10488,42 @@ a.text-dark:hover {
     background-color: #ffffff;
     -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
     box-shadow: 0 2px 4px rgba(0, 0, 0, .1)
+}
+
+#loading{
+    width:100vw;
+    height:100vh;
+    position:absolute;
+    z-index:2; 
+    background-color:transparent;
+    font-size:11pt;
+    display: none;
+}
+
+#loading img{
+    padding-top: 20%;
+    padding-left: 30%;
+}
+
+.about-year-book{
+    padding: 1.5%;
+}
+
+.about-year-book h3{
+    color: #DC8749;
+    font-size: 32px;
+}
+
+.about-year-book h3 i{
+    font-size:30px;
+}
+
+.about-year-book .about-year-book-modal:hover img{
+    opacity: 0.7;
+}
+
+.about-year-book .about-year-book-modal img{
+    width: 100%;
+    transition: opacity 0.3s;
+    -webkit-transition: opacity 0.3s;
 }
