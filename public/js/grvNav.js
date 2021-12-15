@@ -12,23 +12,23 @@ else{
 }
 var changeStyle = function (index) {
     document.getElementById('nav_logo').style.opacity = '1';
-    document.getElementById('nav2').style.color = "#1d1d1d";
+    document.getElementById('nav2').style.color = "#514F4E";
     $header.style.background = "rgba(253, 253, 253, 1)";
     $header.style["boxShadow"] = "0px 2px 10px rgba(0, 0, 0, .3)"
     if (window.innerWidth >= 1024) {
         for (var i = 0; i < $nav.length; i++) {
             if (i == index) {
                 navState[i]=1;
-                $nav[i].style.color = "#58c1c4";
-                $nav_b[i].style.color = "#58c1c4";
+                $nav[i].style.color = "#DC8749";
+                $nav_b[i].style.color = "#DC8749";
             } else {
                 
                     navState[i]=0;
                 
                 if(navState[i]==0){
                     
-                    $nav[i].style.color = "#1d1d1d";
-                    $nav_b[i].style.color = "#1d1d1d";
+                    $nav[i].style.color = "#514F4E";
+                    $nav_b[i].style.color = "#514F4E";
                 }
             }
         }
@@ -51,12 +51,16 @@ $(document).ready(function(){
         $("#home-img").addClass("homeImg");
         $("#home-content").addClass("homeImg");
     }
-    if ($(this).scrollTop() >= 50){
+        document.getElementById('nav_logo').style.opacity = '1';
         document.getElementById('nav2').style.color = "#1d1d1d";
-    }
-    else{
-        document.getElementById('nav2').style.color = "#fff";
-    }
+        $header.style.background = "rgba(253, 253, 253, 1)";
+        $header.style["boxShadow"] = "0px 2px 10px rgba(0, 0, 0, .3)";
+        if (window.innerWidth >= 1024) {
+            for (var i = 0; i < $nav.length; i++) {
+                $nav[i].style.color = "#514F4E";
+                $nav_b[i].style.color = "#514F4E";
+            }
+        }
     var docTop=[$('#about-as').offset().top,$('#event').offset().top,$('#design').offset().top,$('#video').offset().top,$('#contact').offset().top];
     if (window.innerWidth <= 1024) {
         document.getElementById('nav_logo').style.display = 'none';
@@ -77,15 +81,15 @@ $(document).ready(function(){
 });
 $(window).scroll(function () {
     var title=document.getElementsByClassName('title-style')
-    if ($(this).scrollTop() >= 50 && $(this).scrollTop() <=  $('#about-as').offset().top - $windowHeight / 4) { // If page is scrolled more than 50px
+    /*if ($(this).scrollTop() >= 50 && $(this).scrollTop() <=  $('#about-as').offset().top - $windowHeight / 4) { // If page is scrolled more than 50px
         document.getElementById('nav_logo').style.opacity = '1';
-        document.getElementById('nav2').style.color = "#1d1d1d";
+        document.getElementById('nav2').style.color = "#514F4E";
         $header.style.background = "rgba(253, 253, 253, 1)";
         $header.style["boxShadow"] = "0px 2px 10px rgba(0, 0, 0, .3)";
         if (window.innerWidth >= 1024) {
             for (var i = 0; i < $nav.length; i++) {
-                $nav[i].style.color = "#1d1d1d";
-                $nav_b[i].style.color = "#1d1d1d";
+                $nav[i].style.color = "#514F4E";
+                $nav_b[i].style.color = "#514F4E";
             }
         }
     } else if ($(this).scrollTop() > $('#about-as').offset().top - $windowHeight / 4 && $(this).scrollTop() <= ($('#event').offset().top - $windowHeight / 4)) { // If page is scrolled more than 50px
@@ -96,7 +100,7 @@ $(window).scroll(function () {
     } else if ($(this).scrollTop() > ($('#event').offset().top - $windowHeight / 4) && $(this).scrollTop() <= ($('#design').offset().top - $windowHeight / 4)) { // If page is scrolled more than 50px
         changeStyle(1);
         $(title[1]).addClass("titleIn");
-        setTimeout('$(".hakka,.operation,.read,.child").addClass("scaleIn")',500)
+        setTimeout('$(".highlights").addClass("scaleIn")',500)
 
     } else if ($(this).scrollTop() > ($('#design').offset().top - $windowHeight / 4) && $(this).scrollTop() <= ($('#video').offset().top - $windowHeight / 4)) { // If page is scrolled more than 50px
         changeStyle(2);
@@ -112,7 +116,7 @@ $(window).scroll(function () {
         changeStyle(4);
         $(title[4]).addClass("titleIn");
         setTimeout('$("#contact-information").addClass("leftIn");$("#contact-map").addClass("rightIn");',500)
-    } else {
+    } /*else {
         document.getElementById('nav2').style.color = "#fff";
         document.getElementById('nav_logo').style.opacity = '0';
         $header.style.background = "rgba(255, 255, 255, 0)";
@@ -124,23 +128,23 @@ $(window).scroll(function () {
                 navState[i]=0;
             }
         }
-    }
+    }*/
 
 });
 var hoverChange = function (index) {
     if ($(this).scrollTop() >= 50) {
-        $nav[index].style.color = "#58c1c4";
-        $nav_b[index].style.color = "#58c1c4";
+        $nav[index].style.color = "#DC8749";
+        $nav_b[index].style.color = "#DC8749";
     }
 }
 var hoverReapet = function (index) {
     if ($(this).scrollTop() >= 50 && navState[index]==0) {
         if (!($(this).scrollTop() > $windowHeight - $windowHeight / 4 && $(this).scrollTop() <= ($windowHeight + ($windowHeight - $headerHeight) - $windowHeight / 4) && index == 0)) {
-            $nav[index].style.color = "#1d1d1d";
-            $nav_b[index].style.color = "#1d1d1d";
+            $nav[index].style.color = "#514F4E";
+            $nav_b[index].style.color = "#514F4E";
         } else if (!($(this).scrollTop() > ($windowHeight + ($windowHeight - $headerHeight) * index - $windowHeight / 4) && $(this).scrollTop() <= ($windowHeight + ($windowHeight - $headerHeight) * (index + 1) - $windowHeight / 4))) {
-            $nav[index].style.color = "#1d1d1d";
-            $nav_b[index].style.color = "#1d1d1d";
+            $nav[index].style.color = "#514F4E";
+            $nav_b[index].style.color = "#514F4E";
         }
 
     }
