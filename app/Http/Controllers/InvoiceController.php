@@ -52,6 +52,77 @@ class InvoiceController extends Controller
         }
         $invoices = Invoice::orderby('created_at', 'desc')->with('project')->with('user')->get();
         $otherInvoices = OtherInvoice::orderby('created_at', 'desc')->with('user')->get();
+
+        $today = date("Y-m-d");
+        foreach($invoices as $invoice){
+            $Year = substr($invoice->created_at, 0,4);
+            $Mouth =substr($invoice->created_at,5,2);
+            $Mouth = intval($Mouth);
+            $Mouth = $Mouth + 2; 
+            if($Mouth > 12){
+                $Year = intval($Year);
+                $Year = $Year + 1;
+                $Year = strval($Year);
+                $Mouth = $Mouth - 12;
+                $Mouth = strval($Mouth);
+            } else if($Mouth < 10){
+                $Mouth = strval($Mouth);
+                $Mouth = '0'. $Mouth;
+            } else {
+                $Mouth = strval($Mouth);
+            }
+            if($invoice->status != 'delete' && $invoice->status != 'complete'){
+                if($today  >= $Year . '-'. $Mouth .'-10'){
+                    $invoice->status = 'matched';
+                    if($invoice->reviewer !=null){
+                        $reviewer = User::find($invoice->reviewer);
+                        $invoice->managed = $reviewer->name;
+                    }
+                    if($invoice->matched ==null){
+                        $matched = User::find('GRV00002');
+                        $invoice->matched = $matched->name;
+                    }    
+                    $invoice->save();
+                }
+            }
+        }
+        foreach($otherInvoices as $otherInvoice){
+            $Year = substr($otherInvoice->created_at, 0,4);
+            $Mouth =substr($otherInvoice->created_at,5,2);
+            $Mouth = intval($Mouth);
+            $Mouth = $Mouth + 2;  
+            if($Mouth > 12){
+                $Year = intval($Year);
+                $Year = $Year + 1;
+                $Year = strval($Year);
+                $Mouth = $Mouth - 12;
+                $Mouth = strval($Mouth);
+                $Mouth = '0'. $Mouth;
+            } else if($Mouth < 10){
+                $Mouth = strval($Mouth);
+                $Mouth = '0'. $Mouth;
+            } else {
+                $Mouth = strval($Mouth);
+            }
+            
+            
+            
+            if($otherInvoice->status != 'delete' && $otherInvoice->status != 'complete'){
+                if($today  >= $Year . '-'. $Mouth .'-10'){
+                    $otherInvoice->status = 'matched';
+                    if($otherInvoice->reviewer !=null){
+                        $reviewer = User::find($otherInvoice->reviewer);
+                        $otherInvoice->managed = $reviewer->name;
+                    }
+                    if($otherInvoice->matched ==null){
+                        $matched = User::find('GRV00002');
+                        $otherInvoice->matched = $matched->name;    
+                    }
+                    $otherInvoice->save();
+                }
+            }
+        }
+        
         return view('pm.invoice.indexInvoice', ['users' => $users, 'invoices' => $invoices,'otherInvoices' => $otherInvoices,'ZipCount' => $fileNum]);
     }
 
@@ -361,7 +432,7 @@ class InvoiceController extends Controller
         $company_name = ['grv', 'grv_2', 'rv'];
         $invoice = Invoice::find($invoice_id);
         // $invoice->content = InvoiceController::replaceEnter(false, $invoice->content);
-        $projects = Project::select('project_id', 'name', 'finished')->get()->toArray();
+        $projects = Project::select('project_id', 'name', 'status')->get()->toArray();
         foreach ($projects as $key => $project) {
             $projects[$key]['selected'] = ($project['project_id'] == $invoice->project_id) ? "selected" : " ";
         }
@@ -409,6 +480,7 @@ class InvoiceController extends Controller
             'price' => 'required|integer',
             'receipt_file' => 'nullable|file',
             'detail_file' => 'nullable|file',
+            
             'reviewer' => 'required|string'
         ]);
         if($invoice->company_name != $request->input('company_name')){  //如果有更改公司
@@ -786,7 +858,13 @@ class InvoiceController extends Controller
             $invoice->matched = \Auth::user()->name;
             $invoice->save();
         } elseif ( $invoice->status == 'matched') {
-            $nowDate = date("Ymd");
+            if($request->input('matched_date') !=null){
+                $nowDate = $request->input('matched_date');
+            }else{
+                $nowDate = date("Ymd");
+            }
+            
+            
             $invoice->status = 'complete';
             $invoice->matched = \Auth::user()->name;
 

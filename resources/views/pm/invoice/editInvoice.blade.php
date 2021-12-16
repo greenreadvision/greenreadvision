@@ -278,7 +278,7 @@
                                     </span>
                                     @endif
                                 </div>
-                                <div class="col-lg-6 form-group">
+                                <div  class="{{$data['invoice']['status'] !='complete' ? 'col-lg-6' : 'col-lg-3'}} form-group">
                                     <label class="label-style col-form-label" for="receipt_date">{{__('customize.receipt_date')}}</label>
                                     <input type="date" id="receipt_date" name="receipt_date" class="form-control rounded-pill{{ $errors->has('receipt_date') ? ' is-invalid' : '' }}" value="{{$data['invoice']['receipt_date']}}" required>
                                     @if ($errors->has('receipt_date'))
@@ -400,7 +400,7 @@
                                                 <select type="text" id="project_id" name="project_id" class="form-control rounded-pill" autofocus>
                                                     <!-- @foreach ($data['projects'] as $project)
 
-                                            @if($project['name']!='其他'&&$project['finished']==0)
+                                            @if($project['name']!='其他'&&$project['status']=='running')
                                             <option value="{{$project['project_id']}}" {{$project['selected']}}>{{$project['name']}}</option>
 
                                             @endif

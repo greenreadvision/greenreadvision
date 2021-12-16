@@ -68,7 +68,6 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/board','BoardController@index')->name('board.index');
     Route::get('/board/create','BoardController@create')->name('board.create');
     Route::post('/board/create/review','BoardController@store')->name('board.store');
-    
     Route::get('/board/{id}/review','BoardController@show')->name('board.show');
 
     Route::get('/activity_CMS','ActivityController@index')->name('activity.index');
@@ -173,13 +172,6 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::post('/businessTrip/{id}/update','BusinessTripController@update')->name('businessTrip.update');
     Route::delete('/businessTrip/{id}/delete','BusinessTripController@delete')->name('businessTrip.delete');
 
-    Route::get('/projectSOP/index','ProjectSOPController@index')->name('projectSOP.index');
-    Route::get('/projectSOP/{id}/show','ProjectSOPController@show')->name('projectSOP.show');
-    Route::get('/projectSOP/create','ProjectSOPController@create')->name('projectSOP.create');
-    Route::post('/projectSOP/create/store',"ProjectSOPController@store")->name('projectSOP.create.store');
-    Route::get('/projectSOP/{id}/edit','ProjectSOPController@edit')->name('projectSOP.edit');
-    Route::post('/projectSOP/{id}/update','ProjectSOPController@update')->name('projectSOP.update');
-    Route::delete('/projectSOP/{id}/delete','ProjectSOPController@destroy')->name('projectSOP.delete');
 
     Route::get('/estimate/index','EstimateController@index')->name('estimate.index');
     Route::get('/estimate/{id}/show','EstimateController@show')->name('estimate.show');
@@ -305,10 +297,24 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/goods/{id}', 'GoodsController@show')->name('goods.show');
     Route::get('/goods/{id}/edit', 'GoodsController@edit')->name('goods.edit');
     Route::put('/goods/{id}/update/{type}', 'GoodsController@update')->name('goods.update');
-
     Route::post('/goods/create/review', 'GoodsController@store')->name('goods.create.review');
     Route::delete('/goods/{id}/delete', 'GoodsController@destroy')->name('goods.destroy');
 });
+
+Route::group(['middleware' => ['auth', 'general']], function () {
+    Route::get('/projectSOP/index','ProjectSOPController@index')->name('projectSOP.index');
+    Route::get('/projectSOP/{id}/show','ProjectSOPController@show')->name('projectSOP.show');
+    Route::get('/projectSOP/create','ProjectSOPController@create')->name('projectSOP.create');
+    Route::post('/projectSOP/create/store',"ProjectSOPController@store")->name('projectSOP.create.store');
+    
+});
+
+Route::group(['middleware' => ['auth', 'staffManager']], function () {
+    Route::get('/projectSOP/{id}/edit','ProjectSOPController@edit')->name('projectSOP.edit');
+    Route::post('/projectSOP/{id}/update','ProjectSOPController@update')->name('projectSOP.update');
+    Route::delete('/projectSOP/{id}/delete','ProjectSOPController@destroy')->name('projectSOP.delete');
+});
+
 
 Route::group(['middleware' => ['auth', 'staffManager']], function () {
     //員工管理
@@ -321,6 +327,8 @@ Route::group(['middleware' => ['auth', 'staffManager']], function () {
     Route::put('/train/question/{id}/update', 'QuestionController@update')->name('question.update');
     Route::delete('/train/question/{id}/delete', 'QuestionController@delete')->name('question.delete');
 });
+
+
 
 Route::group(['middleware' => ['auth', 'train']], function () {
     //基礎訓練

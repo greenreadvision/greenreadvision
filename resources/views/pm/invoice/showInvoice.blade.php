@@ -306,7 +306,11 @@
                                                 @endif
 
                                                 @csrf
-                                                <button type="submit" class="btn btn-green rounded-pill">匯款審核</button>
+                                                <div class="w-25" style="display: flex;justify-content: space-around;">
+                                                    <input type="date" class="rounded-pill form-control" id="matched_date" name="matched_date" />
+                                                    <button type="submit" class="btn btn-green rounded-pill">匯款審核</button>
+                                                </div>
+                                               
                                             </form>
                                     </div>
                                     @endif

@@ -693,7 +693,11 @@ class OtherInvoiceController extends Controller
             $invoice->save();
         }
         elseif($invoice->status=='matched'){
-            $nowDate =date("Ymd");
+            if($request->input('matched_date') !=null){
+                $nowDate = $request->input('matched_date');
+            }else{
+                $nowDate = date("Ymd");
+            }
             $invoice->status = 'complete';
             $invoice->matched = \Auth::user()->name;
            
