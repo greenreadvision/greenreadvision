@@ -163,8 +163,9 @@
                                             <th class="px-2" width="5%">
                                             <th class="px-2" width="30%"><label class="label-style col-form-label" for="content">品名</label></th>
                                             <th class="px-2" width="10%"><label class="label-style col-form-label" for="quantity">數量</label></th>
-                                            <th class="px-2" width="25%"><label class="label-style col-form-label" for="price">單價</label></th>
-                                            <th class="px-2" width="25%"><label class="label-style col-form-label" for="amount">備註</label></th>
+                                            <th class="px-2" width="10%"><label class="label-style col-form-label" for="price">單價</label></th>
+                                            <th class="px-2" width="15%"><label class="label-style col-form-label" for="amount">單項總價</label></th>
+                                            <th class="px-2" width="25%"><label class="label-style col-form-label" for="note">備註</label></th>
                                         </tr>
                                     </thead>
                                     
@@ -263,6 +264,7 @@
                     '<th class="p-2"><input autocomplete="off" type="text" id="content-' + i + '" name="content-'+ i + '" class="rounded-pill form-control{{ $errors->has("content-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("content-'+ i +'") }}"></th>' +
                     '<th class="p-2"><input oninput="value=value.replace(/[^\d]/g,"")" onkeyup="calculation()" autocomplete="off" type="text" id="quantity-'+ i + '" name="quantity-'+ i +'" class="rounded-pill form-control{{ $errors->has("quantity-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("quantity-'+ i +'") }}"></th>' +
                     '<th class="p-2"><input oninput="value=value.replace(/[^\d]/g,"")" onkeyup="calculation()" autocomplete="off" type="text" id="price-'+ i +'" name="price-'+ i +'" class="rounded-pill form-control{{ $errors->has("price-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("price-'+ i +'") }}"></th>' +
+                    '<th class="p-2"><input autocomplete="off" type="text" id="amount-'+ i +'" name="amount-'+ i +'" class="rounded-pill form-control{{ $errors->has("amount-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("amount-'+ i +'") }}" readonly></th>' +
                     '<th class="p-2"><input autocomplete="off" type="text" id="note-'+ i +'" name="note-'+ i +'" class="rounded-pill form-control{{ $errors->has("note-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("note-'+ i +'") }}"></th>' +
                     '</tr>'
             }
@@ -272,6 +274,7 @@
                     '<th class="p-2"><input autocomplete="off" type="text" id="content-' + i + '" name="content-'+ i + '" class="rounded-pill form-control{{ $errors->has("content-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("content-'+ i +'") }}"></th>' +
                     '<th class="p-2"><input oninput="value=value.replace(/[^\d]/g,"")" onkeyup="calculation()" autocomplete="off" type="text" id="quantity-'+ i + '" name="quantity-'+ i +'" class="rounded-pill form-control{{ $errors->has("quantity-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("quantity-'+ i +'") }}"></th>' +
                     '<th class="p-2"><input oninput="value=value.replace(/[^\d]/g,"")" onkeyup="calculation()" autocomplete="off" type="text" id="price-'+ i +'" name="price-'+ i +'" class="rounded-pill form-control{{ $errors->has("price-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("price-'+ i +'") }}"></th>' +
+                    '<th class="p-2"><input autocomplete="off" type="text" id="amount-'+ i +'" name="amount-'+ i +'" class="rounded-pill form-control{{ $errors->has("amount-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("amount-'+ i +'") }}" readonly></th>' +
                     '<th class="p-2"><input autocomplete="off" type="text" id="note-'+ i +'" name="note-'+ i +'" class="rounded-pill form-control{{ $errors->has("note-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("note-'+ i +'") }}"></th>' +
                     '</tr>'
             }
@@ -291,9 +294,11 @@
             '<th class="p-2"><input autocomplete="off" type="text" id="content-' + item_num + '" name="content-'+ item_num + '" class="rounded-pill form-control{{ $errors->has("content-'+ item_num +'") ? " is-invalid" : "" }}" value="{{ old("content-'+ item_num +'") }}"></th>' +
             '<th class="p-2"><input oninput="value=value.replace(/[^\d]/g,"")" onkeyup="calculation()" autocomplete="off" type="text" id="quantity-'+ item_num + '" name="quantity-'+ item_num +'" class="rounded-pill form-control{{ $errors->has("quantity-'+ item_num +'") ? " is-invalid" : "" }}" value="{{ old("quantity-'+ item_num +'") }}"></th>' +
             '<th class="p-2"><input oninput="value=value.replace(/[^\d]/g,"")" onkeyup="calculation()" autocomplete="off" type="text" id="price-'+ item_num +'" name="price-'+ item_num +'" class="rounded-pill form-control{{ $errors->has("price-'+ item_num +'") ? " is-invalid" : "" }}" value="{{ old("price-'+ item_num +'") }}"></th>' +
+            '<th class="p-2"><input autocomplete="off" type="text" id="amount-'+ item_num +'" name="amount-'+ item_num +'" class="rounded-pill form-control{{ $errors->has("amount-'+ item_num +'") ? " is-invalid" : "" }}" value="{{ old("amount-'+ item_num +'") }}" readonly></th>' +
             '<th class="p-2"><input autocomplete="off" type="text" id="note-'+ item_num +'" name="note-'+ item_num +'" class="rounded-pill form-control{{ $errors->has("note-'+ item_num +'") ? " is-invalid" : "" }}" value="{{ old("note-'+ item_num +'") }}"></th>' +
             '</tr>'
         parent.appendChild(tr);
+        calculation()
     }
 
     /*function addElementDiv(obj) {
@@ -317,6 +322,9 @@
         for (var i = 0; i < item_num+1; i++) {
             quantity = document.getElementById('quantity-' + i).value
             price = document.getElementById('price-' + i).value
+            amount_one = document.getElementById('amount-' + i)
+            amount_one.value = Math.round(quantity * price)
+            console.log(amount_one)
             sum = sum + quantity * price
         }
         return sum

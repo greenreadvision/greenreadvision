@@ -110,18 +110,49 @@
                     </div>
                 </div>
             </div>
-            <div class="card card-style">   
-                <div class="card-body">
-                    <h5><b>{{__('customize.Todo')}}</b></h5>
-                    @if (count($data->todos))
-                    @foreach ($data->todos as $key => $todo)
-                    <label>{{$key+1}} | <a href="{{route('todo.review', $todo->todo_id)}}">{{$todo['deadline']}} {{$todo['name']}}</a></label><br>
-                    @endforeach
-                    @else
-                    <label>{{__('customize.None')}}</label>
-                    @endif
+            <div class="card card-style" {{$data->status == 'unacceptable'? 'hidden' : ''}}>
+                <div class="px-3">
+                    <div class="card-header bg-white">
+                        <i class='fas fa-user-circle' style="font-size:1.5rem;"></i><label class="ml-2 col-form-label ">{{__('customize.project_sop')}}</label>
+                    </div>
                 </div>
-            </div> 
+                <div class="card-body">
+                    @foreach ($data->projectSOP as $item)
+                        <table style="border:none;">
+                            <thead  >
+                                <tr style="opacity: 0;">
+                                    <th style="width:10%;border:none;"></th>
+                                    <th style="width:40%;border:none;"></th>
+                                    <th style="width:30%;border:none;"></th>
+                                    <th style="width:20%;border:none;"></th>
+                                </tr>
+                                <tr style="background-color: #fff;color:#000">
+                                    <th colspan="3" valign="top">{{$item->content}}</th>
+                                    <th><a class="btn btn-blue rounded-pill" target="_blank" href="{{route('projectSOP.show', $item->projectSOP_id)}}">查看</a></th>
+
+                                </tr>
+                                <tr>
+                                    <th valign="top">編號</th>
+                                    <th valign="top">檔案名稱</th>
+                                    <th colspan="2" valign="top">簡介</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($project_sop_item as $sop_item)
+                                    @if($sop_item->projectSOP_id == $item->projectSOP_id)
+                                    <tr>
+                                        <td>{{$sop_item->no}}</td>
+                                        <td>{{$sop_item->name}}</td>
+                                        <td colspan="2">{{$sop_item->content}}</td>
+                                    </tr>
+                                    @endif
+                                @endforeach
+                            </tbody>
+                        </table>
+                        
+                    @endforeach
+                </div>
+            </div>
         </div>
         <div class="col-lg-3">
             <div class="card card-style">   

@@ -21,18 +21,7 @@
                         <div class="col-lg-12">
                             <input type="text" name="searchContent" id="searchContent" class="form-control  rounded-pill" placeholder="請輸入所要查詢內容" autocomplete="off" onkeyup="searchContent()">
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-12 col-form-label">創建人</label>
-                        <div class="col-lg-12">
-                            <select type="text" id="select-user" name="select-user" onchange="select('user',this.options[this.options.selectedIndex].value)" class="rounded-pill form-control">
-                                <option value=""></option>
-                                @foreach($users as $user)
-                                <option value="{{$user['user_id']}}">{{$user['name']}}({{$user['nickname']}})</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>                    
+                    </div>                
                     <div class="form-group">
                         <label class="col-lg-12 col-form-label">公司</label>
                         <div class="col-lg-12">
@@ -68,14 +57,6 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-lg-12 col-form-label">建立月份</label>
-                        <div class="col-lg-12">
-                            <select type="text" id="select-month" name="select-month" onchange="select('month',this.options[this.options.selectedIndex].value)" class="rounded-pill form-control">
-                                <option value=''></option>
-                            </select>
-                        </div>
-                    </div>
 
                     <div class="col-lg-12">
                         <button class="w-100 btn btn-green rounded-pill" onclick="reset()"><span>重置</span> </button>
@@ -89,18 +70,7 @@
                             <input type="text" name="searchotherContent" id="searchotherContent" class="form-control  rounded-pill" placeholder="請輸入所要查詢內容" autocomplete="off" onkeyup="searchOtherContent()">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-lg-12 col-form-label">創建人</label>
-                        <div class="col-lg-12">
-                            <select type="text" id="select-other-user" name="select-other-user" onchange="OtherSelect('user',this.options[this.options.selectedIndex].value)" class="rounded-pill form-control">
-                                <option value=""></option>
-                                @foreach($users as $user)
-                                <option value="{{$user['user_id']}}">{{$user['name']}}({{$user['nickname']}})</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>                    
-                    <div class="form-group">
+                    <div class="form-group" >
                         <label class="col-lg-12 col-form-label">公司</label>
                         <div class="col-lg-12">
                             <select type="text" id="select-other-company" name="select-other-company" onchange="OtherSelect('company',this.options[this.options.selectedIndex].value)" class="rounded-pill form-control">
@@ -123,14 +93,6 @@
                         <label class="col-lg-12 col-form-label">建立年份</label>
                         <div class="col-lg-12">
                             <select type="text" id="select-other-year" name="select-other-year" onchange="OtherSelect('year',this.options[this.options.selectedIndex].value)" class="rounded-pill form-control">
-                                <option value=''></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-12 col-form-label">建立月份</label>
-                        <div class="col-lg-12">
-                            <select type="text" id="select-other-month" name="select-other-month" onchange="OtherSelect('month',this.options[this.options.selectedIndex].value)" class="rounded-pill form-control">
                                 <option value=''></option>
                             </select>
                         </div>
@@ -647,11 +609,12 @@
         var table = document.createElement("tbody");
         
         table.innerHTML = '<tr class="text-white">' +
-            '<th style="width:30%">專案名稱</th>' +
-            '<th style="width:10%">建立人</th>' +
+            '<th style="width:10%">隸屬公司</th>' +
+            '<th style="width:20%">專案名稱</th>' +
             '<th style="width:40%">內容</th>' +
-            '<th style="width:10%">檔案數量</th>' +
+            '<th style="width:10%">建立時間</th>' +
             '<th style="width:10%">更新時間</th>' +
+            '<th style="width:10%">查看</th>' +
             '</tr>'
         var tr, span, name, a
 
@@ -667,15 +630,20 @@
     }
 
     function setData(i) {
-        
+        if(projectSOPs[i].project['company_name'] == 'grv_2'){
+            CompanyName = '綠雷德創新'
+        }else if(projectSOPs[i].project['company_name'] == 'rv'){
+            CompanyName = '閱野文創'
+        }
         
         a = "/projectSOP/" + projectSOPs[i]['projectSOP_id'] + "/show"
         tr = "<tr>" +
-            "<td ><a href='" + a + "' target='_blank'>" + projectSOPs[i].project['name'] + "</a></td>" +
-            "<td ><a href='" + a + "' target='_blank'>" + projectSOPs[i].user['name']+"("+ projectSOPs[i].user['nickname'] +")" + "</a></td>" +
-            "<td  class='text-truncate'><a href='" + a + "' target='_blank'>" + projectSOPs[i].content + "</a></td>" +
-            "<td ><a href='" + a + "' target='_blank'>" + projectSOPs[i].item_num + "</a></td>" +
-            "<td ><a href='" + a + "' target='_blank'>" + projectSOPs[i].created_at.substr(0, 10) + "</a></td>" +
+            "<td >" + CompanyName + "</td>" +
+            "<td >" + projectSOPs[i].project['name'] + "</td>" +
+            "<td  class='text-truncate'>" + projectSOPs[i].content + "</td>" +
+            "<td >" + projectSOPs[i].created_at.substr(0, 10) + "</td>" +
+            "<td >" + projectSOPs[i].updated_at.substr(0, 10) + "</td>" +
+            "<td ><a href='" + a + "' target='_blank'><i class='fas fa-search'></i></a></td>" +
             "</tr>"
 
 
@@ -912,12 +880,12 @@
         var table = document.createElement("tbody");
         
         table.innerHTML = '<tr class="text-white">' +
-            '<th style="width:20%">類別名稱</th>' +
             '<th style="width:10%">隸屬公司</th>' +
-            '<th style="width:10%">建立人</th>' +
+            '<th style="width:20%">類別名稱</th>' +
             '<th style="width:40%">內容</th>' +
-            '<th style="width:10%">檔案數量</th>' +
+            '<th style="width:10%">建立時間</th>' +
             '<th style="width:10%">更新時間</th>' +
+            '<th style="width:10%">查看</th>' +
             '</tr>'
         var tr, span, name, a 
 
@@ -941,12 +909,12 @@
         }
         a = "/projectSOP/" + otherProjectSOPs[i]['projectSOP_id'] + "/show"
         tr = "<tr>" +
-            "<td ><a href='" + a + "' target='_blank'>" + otherProjectSOPs[i].type + "</a></td>" +
-            "<td ><a href='" + a + "' target='_blank'>" + otherCompanyName + "</a></td>" +
-            "<td ><a href='" + a + "' target='_blank'>" + otherProjectSOPs[i].user['name']+"("+ otherProjectSOPs[i].user['nickname'] +")" + "</a></td>" +
-            "<td  class='text-truncate'><a href='" + a + "' target='_blank'>" + otherProjectSOPs[i].content + "</a></td>" +
-            "<td ><a href='" + a + "' target='_blank'>" + otherProjectSOPs[i].item_num + "</a></td>" +
-            "<td ><a href='" + a + "' target='_blank'>" + otherProjectSOPs[i].created_at.substr(0, 10) + "</a></td>" +
+            "<td >" + otherCompanyName + "</td>" +
+            "<td >" + otherProjectSOPs[i].type + "</td>" +
+            "<td  class='text-truncate'>" + otherProjectSOPs[i].content + "</td>" +
+            "<td >" + otherProjectSOPs[i].created_at.substr(0, 10) + "</td>" +
+            "<td >" + otherProjectSOPs[i].updated_at.substr(0, 10) + "</td>" +
+            "<td ><a href='" + a + "' target='_blank'><i class='fas fa-search'></i></td>" +
             "</tr>"
 
 

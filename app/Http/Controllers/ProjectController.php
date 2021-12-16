@@ -16,6 +16,7 @@ use App\Invoice;
 use App\Letters;
 use App\OtherInvoice;
 use App\Performance;
+use App\ProjectSOP_item;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Letter;
@@ -110,6 +111,7 @@ class ProjectController extends Controller
     {
         //
         $project = Project::find($project_id);
+        $project_sop_item = ProjectSOP_item::all();
         if($project->performance_id!=null){
             if ($project['performance']->deposit_file != null) $project['performance']->deposit_file = explode('/', $project['performance']->deposit_file);
             if ($project['performance']->PayBack_file != null) $project['performance']->PayBack_file = explode('/',$project['performance']->PayBack_file);
@@ -119,7 +121,7 @@ class ProjectController extends Controller
         $invoice = Invoice::where('project_id','=',$project_id)->orderby('created_at','desc')->get();
         $gding = Gding::where('project_id','=',$project_id)->orderby('updated_at','desc')->get();
 
-        return view('pm.project.showProject',['data'=> $project,'invoice_table'=>$invoice,'gding_table'=>$gding]);
+        return view('pm.project.showProject',['data'=> $project,'invoice_table'=>$invoice,'gding_table'=>$gding,'project_sop_item'=>$project_sop_item]);
     }
 
     /**
@@ -133,6 +135,7 @@ class ProjectController extends Controller
         $alluser = User::all();
         $company_name = ['grv_2', 'rv','grv'];
         $project = Project::find($project_id);
+        $project_sop_item = ProjectSOP_item::all();
         $gding = Gding::where('project_id','=',$project_id)->orderby('updated_at','desc')->get();
         $invoice = Invoice::where('project_id','=',$project_id)->orderby('created_at','desc')->get();
         if($project->performance_id!=null){
@@ -146,7 +149,7 @@ class ProjectController extends Controller
                 array_push($users, $allUser);
             }
         }
-        return view('pm.project.editProject')->with('data', ['alluser'=>$alluser,'project' =>  $project,'gding_table'=>$gding, 'company_name' => $company_name,'users' => $users,'invoice_table' => $invoice]);
+        return view('pm.project.editProject')->with('data', ['alluser'=>$alluser,'project' =>  $project,'gding_table'=>$gding, 'company_name' => $company_name,'users' => $users,'invoice_table' => $invoice,'project_sop_item'=>$project_sop_item]);
     }
 
     /**

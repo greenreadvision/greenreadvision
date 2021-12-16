@@ -106,7 +106,7 @@
                             </div>
                             <label class="col-lg-12 col-form-label">整體簡介</label>
                             <div class="col-lg-12">
-                                <textarea type="text" style="resize:none;" name="content" id="content" rows="3" class="rounded-pill form-control">{{ $projectSOP->SOPtype == 'project' ? $projectSOP->content : ''  }}</textarea>
+                                <textarea type="text" style="resize:none;" name="content" id="content" rows="3" class="rounded-pill form-control" required>{{ $projectSOP->SOPtype == 'project' ? $projectSOP->content : ''  }}</textarea>
                             </div>
                             <div class="row" style="justify-content: space-between;">
                                 <div class="float-left" style="padding-top: 10px">
@@ -208,7 +208,8 @@
             document.getElementsByClassName('projectSOP')[0].style.display = "block"
             document.getElementsByClassName('otherSOP')[0].style.display = 'none'
             document.getElementById('SOPtype').value = SOPtype
-            
+            document.getElementById('otherContent').required = ""
+            document.getElementById('content').required = "required"
             
         }else if(i==1){
             SOPtype = "other"
@@ -218,6 +219,8 @@
             document.getElementsByClassName('projectSOP')[0].style.display = "none"
             document.getElementsByClassName('otherSOP')[0].style.display = 'block'
             document.getElementById('SOPtype').value = SOPtype
+            document.getElementById('otherContent').required = "required"
+            document.getElementById('content').required = ""
             
         }
         changeProject("");

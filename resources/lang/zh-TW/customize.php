@@ -118,6 +118,7 @@ return [
     'case_num' => '契約編號',
     'project_status' => '專案狀態',
     'project_color' =>'標案顏色',
+    'project_sop' => '公司專案資料',
     'company' => '公司',
     'default_fine' => '違約扣款金',
     'performance_price' => '履約保證金',

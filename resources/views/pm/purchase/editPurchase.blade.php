@@ -143,8 +143,9 @@
                                         <tr class="bg-dark text-white" style="text-align:center">
                                             <th class="px-2" width="30%"> <label class="label-style col-form-label" for="content">品名</label></th>
                                             <th class="px-2" width="10%"><label class="label-style col-form-label" for="quantity">數量</label></th>
-                                            <th class="px-2" width="25%"><label class="label-style col-form-label" for="price">單價</label></th>
-                                            <th class="px-2" width="30%"><label class="label-style col-form-label" for="amount">備註</label></th>
+                                            <th class="px-2" width="15%"><label class="label-style col-form-label" for="price">單價</label></th>
+                                            <th class="px-2" width="15%"><label class="label-style col-form-label" for="amount">單項總計</label></th>
+                                            <th class="px-2" width="30%"><label class="label-style col-form-label" for="note">備註</label></th>
                                         </tr>
                                     </thead>
                                     <tbody id="addItem">
@@ -158,6 +159,9 @@
                                             </th>
                                             <th class="p-2">
                                                 <input autocomplete="off" oninput="value=value.replace(/[^\d]/g,'')" onkeyup="calculation()" type="text" id="price-{{$item->no}}" name="price{{$item->no}}" class="rounded-pill form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" value="{{ $item->price }}" required>
+                                            </th>
+                                            <th class="p-2">
+                                                <input autocomplete="off" type="text" id="amount-{{$item->no}}" name="amount{{$item->no}}" class="rounded-pill form-control{{ $errors->has('amount') ? ' is-invalid' : '' }}" value="{{ $item->amount }}" readonly>
                                             </th>
                                             <th class="p-2">
                                                 <input autocomplete="off" type="text" id="note-{{$item->no}}" name="note{{$item->no}}" class="rounded-pill form-control{{ $errors->has('note') ? ' is-invalid' : '' }}" value="{{ $item->note }}">
@@ -174,6 +178,9 @@
                                             </th>
                                             <th class="p-2">
                                                 <input autocomplete="off" oninput="value=value.replace(/[^\d]/g,'')" onkeyup="calculation()" type="text" id="price-{{$i}}" name="price{{$i}}" class="rounded-pill form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" value="" >
+                                            </th>
+                                            <th class="p-2">
+                                                <input autocomplete="off" oninput="value=value.replace(/[^\d]/g,'')" type="text" id="amount-{{$i}}" name="amount{{$i}}" class="rounded-pill form-control{{ $errors->has('amount') ? ' is-invalid' : '' }}" value="" readonly>
                                             </th>
                                             <th class="p-2">
                                                 <input autocomplete="off" type="text" id="note-{{$i}}" name="note{{$i}}" class="rounded-pill form-control{{ $errors->has('note') ? ' is-invalid' : '' }}" value="">
@@ -320,8 +327,11 @@
         for (var i = 1; i < document.getElementsByClassName('item-num').length+1; i++) {
             quantity = document.getElementById('quantity-' + i).value
             price = document.getElementById('price-' + i).value
+            oneAmount = document.getElementById('amount-' + i)
+            oneAmount.value = Math.round(quantity * price)
             sum = sum + quantity * price
         }
+        
         return sum
     }
     
@@ -337,6 +347,7 @@
     }
 
     function calculation() {
+        console.log('sum' +  sum())
         if (texType == 'untexed') {
             
             amount.value = sum()

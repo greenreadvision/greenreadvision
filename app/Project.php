@@ -10,6 +10,7 @@ class Project extends Model
     public function todos() { return $this->hasMany('App\Todo', 'project_id', 'project_id'); }
     public function invoices() { return $this->hasMany('App\Invoice', 'project_id', 'project_id'); }
     public function gding(){return $this->hasMany('App\Gding','project_id','project_id');}
+    public function projectSOP(){return $this->hasMany('App\ProjectSOP','project_id','project_id');}
     public function purchases() { return $this->hasMany('App\Purchase', 'purchase_id', 'purchase_id'); }
     public function projectEvents() { return $this->hasMany('App\ProjectEvent', 'project_id', 'project_id'); }
     public function acceptances() { return $this->hasMany('App\Acceptance','project_id','project_id');}

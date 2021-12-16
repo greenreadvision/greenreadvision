@@ -6,7 +6,7 @@
             <div class="card border-0 shadow rounded-pill">
                 <div class="card-body d-flex justify-content-center">
                     <div class="col-lg-10">
-                        <img class="mb-3" width="100%" src="{{ URL::asset('img/綠雷德LOGO.png') }}" alt="">
+                        <img class="mb-3" width="100%" src="{{ URL::asset('img/綠雷德創新logo.png') }}" alt="">
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="form-group row">

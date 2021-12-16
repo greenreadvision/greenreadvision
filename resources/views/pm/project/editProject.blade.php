@@ -28,205 +28,252 @@
 
     <div class="col-lg-12">
         <div class="row" >
-            <div class="col-lg-3">
-                <div class="card card-style">
-                    <div class="px-3">
-                        <div class="card-header bg-white">
-                            <i class='fas fa-user-circle' style="font-size:1.5rem;"></i><label class="ml-2 col-form-label ">{{__('customize.User')}}</label>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-center"><label class="content-label-style col-form-label" style="text-align: center">{{$data['project']->user->name}}</label></div>
-                    </div>
-                </div>
-                <div class="card card-style">
-                    <div class="px-3">
-                        <div class="card-header bg-white row" style="justify-content: space-between">
-                            <div>
-                                <i class='fas fa-check-circle' style="font-size:1.5rem;"></i><label class="ml-2 col-form-label">{{__('customize.project_about')}}</label>
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card card-style">
+                            <div class="px-3">
+                                <div class="card-header bg-white">
+                                    <i class='fas fa-user-circle' style="font-size:1.5rem;"></i><label class="ml-2 col-form-label ">{{__('customize.User')}}</label>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-center"><label class="content-label-style col-form-label" style="text-align: center">{{$data['project']->user->name}}</label></div>
                             </div>
                         </div>
+                        <div class="card card-style">
+                            <div class="px-3">
+                                <div class="card-header bg-white row" style="justify-content: space-between">
+                                    <div>
+                                        <i class='fas fa-check-circle' style="font-size:1.5rem;"></i><label class="ml-2 col-form-label">{{__('customize.project_about')}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div>
+                                    <label class="ml-2 col-form-label font-weight-bold">{{__('customize.project_status')}}</label>
+                                    <div class="d-flex justify-content-center">
+                                        <label class="col-form-label" style="font-size: 1.5rem;font-weight: 700;{{$data['project']->status == 'close'? 'color:red':''}}{{$data['project']->status == 'running'? 'color:#000':''}}">{{__('customize.project_'.$data['project']->status)}}</label>
+                                    </div>
+                                </div>
+                                
+                                <div {{$data['project']->status == 'unacceptable'? 'hidden' : ''}}>
+                                    <label class="ml-2 col-form-label font-weight-bold">{{__('customize.case_num')}}</label>
+                                    <div class="d-flex justify-content-center">
+                                        <label class="content-label-style col-form-label">
+                                            <input autocomplete="off" type="text" id="case_num" name="case_num" value="{{$errors->has('case_num')? old('case_num'): $data['project']->case_num}}" class="form-control{{ $errors->has('case_num') ? ' is-invalid' : '' }}" placeholder="尚未填寫">
+                                            @if ($errors->has('case_num'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{__('customize.case_num')}}已重複</strong>
+                                            </span>
+                                            @endif
+                                        </label>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="ml-2 col-form-label font-weight-bold">{{__('customize.project_color')}}</label>
+                                    <div class="d-flex justify-content-center">
+                                        <label class="content-label-style col-form-label">
+                                        <input type="color" id="color" name="color" value="{{$data['project']->color}}" class="form-control" style="height:37px;" required>    
+                                            @if ($errors->has('color'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{__('customize.project_color')}}已重複</strong>
+                                            </span>
+                                            @endif
+                                        </label>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="ml-2 col-form-label font-weight-bold">{{__('customize.company')}}</label>
+                                    <div class="d-flex justify-content-center">
+                                        <label class="content-label-style col-form-label">
+                                        <select type="text" id="company_name" name="company_name" class="form-control" autofocus>
+                                            @foreach ($data['company_name'] as $key)
+                                            @if($data['project']->company_name==$key)
+                                            <option value="{{$key}}" selected>{{__('customize.'.$key)}}</option>
+                                            @else
+                                            <option value="{{$key}}">{{__('customize.'.$key)}}</option>
+                                            @endif
+                                            @endforeach
+                                        </select>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="ml-2 col-form-label font-weight-bold">{{__('customize.Project_name')}}</label>
+                                    <div class="d-flex justify-content-center">
+                                        <label class="content-label-style col-form-label">
+                                            <input autocomplete="off" type="text" name="name" value="{{$data['project']->name}}" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="尚未填寫">
+                                            @if ($errors->has('name'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{__('customize.Project_name')}}已重複</strong>
+                                            </span>
+                                            @endif
+                                        </label>
+                                    </div>
+                                </div>
+                                <div {{$data['project']->status == 'unacceptable'? 'hidden' : ''}}>
+                                    <label class="ml-2 col-form-label font-weight-bold">{{__('customize.Acceptance_times')}}</label>
+                                    <div class="d-flex justify-content-center">
+                                        <label class="content-label-style col-form-label">
+                                            @if($data['project']->acceptance_times != null)
+                                            <input autocomplete="off" type="text" name="Acceptance_times" id='Acceptance_times' onkeyup="acceptanceChange(this.id)" value="{{$data['project']->acceptance_times}}" class="form-control{{ $errors->has('Acceptance_times') ? ' is-invalid' : '' }}" placeholder="尚未填寫" required>
+                                            @else
+                                            <input autocomplete="off" type="text" name="Acceptance_times" id='Acceptance_times' onkeyup="acceptanceChange(this.id)" value="0" class="form-control{{ $errors->has('Acceptance_times') ? ' is-invalid' : '' }}" placeholder="尚未填寫" required>
+                                            @endif
+                                            @if ($errors->has('Acceptance_times'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{__('customize.Acceptance_times')}}未填寫</strong>
+                                            </span>
+                                            @endif
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
                     </div>
-                    <div class="card-body">
-                        <div>
-                            <label class="ml-2 col-form-label font-weight-bold">{{__('customize.project_status')}}</label>
-                            <div class="d-flex justify-content-center">
-                                <label class="col-form-label" style="font-size: 1.5rem;font-weight: 700;{{$data['project']->status == 'close'? 'color:red':''}}{{$data['project']->status == 'running'? 'color:#000':''}}">{{__('customize.project_'.$data['project']->status)}}</label>
+                    <div class="col-lg-6">
+                        <div class="card card-style">
+                            <div class="px-3">
+                                <div class="card-header bg-white">
+                                    <i class='fas fa-calendar-alt' style="font-size:1.5rem;"></i>
+                                </div>
+                            </div>
+                            <div class="card-body d-flex justify-content-center">
+                                <div>
+                                    <div class="time-line ">
+                                        <i class="time-i" style="background-color:#0acf97;"><i style="background-color:#96fde0;"></i></i>
+                                        <div class="ml-4">
+                                            <div class="ml-1">
+                                                <span style="background-color:#0acf97;">截標日期</span>
+                                                <input type="date" id="deadline_date" name="deadline_date" value="{{$data['project']->deadline_date}}" class="my-1 form-control" placeholder="">
+                                                <input type="time" id="deadline_time" name="deadline_time" value="{{$data['project']->deadline_time}}" class="my-1 form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="time-line">
+                                        <i class="time-i" style="background-color:#39afd1;"><i style="background-color:#9ae8ff;"></i></i>
+                                        <div class="ml-4">
+                                            <div class="ml-1">
+                                                <span style="background-color:#39afd1;">開標日期</span>
+                                                <input type="date" id="open_date" name="open_date" value="{{$data['project']->open_date}}" class="my-1 form-control" placeholder="">
+                                                <input type="time" id="open_time" name="open_time" value="{{$data['project']->open_time}}" class="my-1 form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="time-line" {{$data['project']->status == 'unacceptable'? 'hidden' : ''}}>
+                                        <i class="time-i" style="background-color:#ffbc00;"><i style="background-color:#fbdd87;"></i></i>
+                                        <div class="ml-4">
+                                            <div class="ml-1">
+                                                <span style="background-color:#ffbc00;">履約日期</span>
+                                                <input type="date" id="beginning_date" name="beginning_date" value="{{$data['project']->beginning_date}}" class="my-1 form-control" placeholder="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="acceptance" {{$data['project']->status == 'unacceptable'? 'hidden' : ''}}> 
+                                    @if(count($data['project']->acceptances) != 0)
+                                        @foreach ($data['project']->acceptances as $item)
+                                        
+                                        <div class="time-line">
+                                            <i class="time-i" style="background-color:#7338ff;"><i style="background-color:#b19df8;"></i></i> 
+                                            <div class="ml-4"> 
+                                                <div class="ml-1"> 
+                                                    @if($loop->last)
+                                                    <span style="background-color:#7338ff;">期末結案驗收</span> 
+                                                    @else
+                                                    <span style="background-color:#7338ff;">第{{$item->no}}次期中驗收</span> 
+                                                    @endif
+                                                    <input type="date" id="acceptance_date_{{$item->no}}"  name="acceptance_date_{{$item->no}}" value="{{$item->acceptance_date}}" class="my-1 form-control" placeholder="">
+                                                    <div style="display: flex">
+                                                        <input type="text" id="acceptance_persen_{{$item->no}}" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')" name="acceptance_persen_{{$item->no}}"  value="{{$item->persen}}" style="display: inline;width:auto" class="my-1 form-control" placeholder="標金 % 數"> 
+                                                        <p style="display: inline"> % </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
+                                        @endforeach
+                                    @else
+                                        @for($i = 1 ; $i <=$data['project']->acceptance_times  ; $i++)
+                                        <div class="time-line">
+                                            <i class="time-i" style="background-color:#7338ff;"><i style="background-color:#b19df8;"></i></i> 
+                                            <div class="ml-4"> 
+                                                <div class="ml-1"> 
+                                                    @if($i == $data['project']->acceptance_times )
+                                                    <span style="background-color:#7338ff;">期末結案驗收</span> 
+                                                    @else
+                                                    <span style="background-color:#7338ff;">第{{$i}}次期中驗收</span> 
+                                                    @endif
+                                                    <input type="date" id="acceptance_date_{{$i}}"  name="acceptance_date_{{$i}}" value="" class="my-1 form-control" placeholder="">
+                                                    <div style="display: flex">
+                                                        <input type="text" id="acceptance_persen_{{$i}}" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')" name="acceptance_persen_{{$i}}"  value="" style="display: inline;width:auto" class="my-1 form-control" placeholder="驗收標金 % 數"> 
+                                                        <p style="display: inline"> % </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endfor
+                                    @endif
+                                    </div>
+                                    <div class="time-line" {{$data['project']->status == 'unacceptable'? 'hidden' : ''}}>
+                                        <i class="time-i" style="background-color:#fa5c7c;"><i style="background-color:#ff99ad;"></i></i>
+                                        <div class="ml-4">
+                                            <div class="ml-1">
+                                                <span style="background-color:#fa5c7c;">結案日期</span>
+                                                <input type="date" id="closing_date" name="closing_date" value="{{$data['project']->closing_date}}" class="my-1 form-control" placeholder="">
+        
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         
-                        <div {{$data['project']->status == 'unacceptable'? 'hidden' : ''}}>
-                            <label class="ml-2 col-form-label font-weight-bold">{{__('customize.case_num')}}</label>
-                            <div class="d-flex justify-content-center">
-                                <label class="content-label-style col-form-label">
-                                    <input autocomplete="off" type="text" id="case_num" name="case_num" value="{{$errors->has('case_num')? old('case_num'): $data['project']->case_num}}" class="form-control{{ $errors->has('case_num') ? ' is-invalid' : '' }}" placeholder="尚未填寫">
-                                    @if ($errors->has('case_num'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{__('customize.case_num')}}已重複</strong>
-                                    </span>
-                                    @endif
-                                </label>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="ml-2 col-form-label font-weight-bold">{{__('customize.project_color')}}</label>
-                            <div class="d-flex justify-content-center">
-                                <label class="content-label-style col-form-label">
-                                <input type="color" id="color" name="color" value="{{$data['project']->color}}" class="form-control" style="height:37px;" required>    
-                                    @if ($errors->has('color'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{__('customize.project_color')}}已重複</strong>
-                                    </span>
-                                    @endif
-                                </label>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="ml-2 col-form-label font-weight-bold">{{__('customize.company')}}</label>
-                            <div class="d-flex justify-content-center">
-                                <label class="content-label-style col-form-label">
-                                <select type="text" id="company_name" name="company_name" class="form-control" autofocus>
-                                    @foreach ($data['company_name'] as $key)
-                                    @if($data['project']->company_name==$key)
-                                    <option value="{{$key}}" selected>{{__('customize.'.$key)}}</option>
-                                    @else
-                                    <option value="{{$key}}">{{__('customize.'.$key)}}</option>
-                                    @endif
-                                    @endforeach
-                                </select>
-                                </label>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="ml-2 col-form-label font-weight-bold">{{__('customize.Project_name')}}</label>
-                            <div class="d-flex justify-content-center">
-                                <label class="content-label-style col-form-label">
-                                    <input autocomplete="off" type="text" name="name" value="{{$data['project']->name}}" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="尚未填寫">
-                                    @if ($errors->has('name'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{__('customize.Project_name')}}已重複</strong>
-                                    </span>
-                                    @endif
-                                </label>
-                            </div>
-                        </div>
-                        <div {{$data['project']->status == 'unacceptable'? 'hidden' : ''}}>
-                            <label class="ml-2 col-form-label font-weight-bold">{{__('customize.Acceptance_times')}}</label>
-                            <div class="d-flex justify-content-center">
-                                <label class="content-label-style col-form-label">
-                                    @if($data['project']->acceptance_times != null)
-                                    <input autocomplete="off" type="text" name="Acceptance_times" id='Acceptance_times' onkeyup="acceptanceChange(this.id)" value="{{$data['project']->acceptance_times}}" class="form-control{{ $errors->has('Acceptance_times') ? ' is-invalid' : '' }}" placeholder="尚未填寫" required>
-                                    @else
-                                    <input autocomplete="off" type="text" name="Acceptance_times" id='Acceptance_times' onkeyup="acceptanceChange(this.id)" value="0" class="form-control{{ $errors->has('Acceptance_times') ? ' is-invalid' : '' }}" placeholder="尚未填寫" required>
-                                    @endif
-                                    @if ($errors->has('Acceptance_times'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{__('customize.Acceptance_times')}}未填寫</strong>
-                                    </span>
-                                    @endif
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>    
-            </div>
-            <div class="col-lg-3">
-                <div class="card card-style">
-                    <div class="px-3">
-                        <div class="card-header bg-white">
-                            <i class='fas fa-calendar-alt' style="font-size:1.5rem;"></i>
-                        </div>
-                    </div>
-                    <div class="card-body d-flex justify-content-center">
-                        <div>
-                            <div class="time-line ">
-                                <i class="time-i" style="background-color:#0acf97;"><i style="background-color:#96fde0;"></i></i>
-                                <div class="ml-4">
-                                    <div class="ml-1">
-                                        <span style="background-color:#0acf97;">截標日期</span>
-                                        <input type="date" id="deadline_date" name="deadline_date" value="{{$data['project']->deadline_date}}" class="my-1 form-control" placeholder="">
-                                        <input type="time" id="deadline_time" name="deadline_time" value="{{$data['project']->deadline_time}}" class="my-1 form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="time-line">
-                                <i class="time-i" style="background-color:#39afd1;"><i style="background-color:#9ae8ff;"></i></i>
-                                <div class="ml-4">
-                                    <div class="ml-1">
-                                        <span style="background-color:#39afd1;">開標日期</span>
-                                        <input type="date" id="open_date" name="open_date" value="{{$data['project']->open_date}}" class="my-1 form-control" placeholder="">
-                                        <input type="time" id="open_time" name="open_time" value="{{$data['project']->open_time}}" class="my-1 form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="time-line" {{$data['project']->status == 'unacceptable'? 'hidden' : ''}}>
-                                <i class="time-i" style="background-color:#ffbc00;"><i style="background-color:#fbdd87;"></i></i>
-                                <div class="ml-4">
-                                    <div class="ml-1">
-                                        <span style="background-color:#ffbc00;">履約日期</span>
-                                        <input type="date" id="beginning_date" name="beginning_date" value="{{$data['project']->beginning_date}}" class="my-1 form-control" placeholder="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="acceptance" {{$data['project']->status == 'unacceptable'? 'hidden' : ''}}> 
-                            @if(count($data['project']->acceptances) != 0)
-                                @foreach ($data['project']->acceptances as $item)
-                                
-                                <div class="time-line">
-                                    <i class="time-i" style="background-color:#7338ff;"><i style="background-color:#b19df8;"></i></i> 
-                                    <div class="ml-4"> 
-                                        <div class="ml-1"> 
-                                            @if($loop->last)
-                                            <span style="background-color:#7338ff;">期末結案驗收</span> 
-                                            @else
-                                            <span style="background-color:#7338ff;">第{{$item->no}}次期中驗收</span> 
-                                            @endif
-                                            <input type="date" id="acceptance_date_{{$item->no}}"  name="acceptance_date_{{$item->no}}" value="{{$item->acceptance_date}}" class="my-1 form-control" placeholder="">
-                                            <div style="display: flex">
-                                                <input type="text" id="acceptance_persen_{{$item->no}}" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')" name="acceptance_persen_{{$item->no}}"  value="{{$item->persen}}" style="display: inline;width:auto" class="my-1 form-control" placeholder="標金 % 數"> 
-                                                <p style="display: inline"> % </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                               
-                                @endforeach
-                            @else
-                                @for($i = 1 ; $i <=$data['project']->acceptance_times  ; $i++)
-                                <div class="time-line">
-                                    <i class="time-i" style="background-color:#7338ff;"><i style="background-color:#b19df8;"></i></i> 
-                                    <div class="ml-4"> 
-                                        <div class="ml-1"> 
-                                            @if($i == $data['project']->acceptance_times )
-                                            <span style="background-color:#7338ff;">期末結案驗收</span> 
-                                            @else
-                                            <span style="background-color:#7338ff;">第{{$i}}次期中驗收</span> 
-                                            @endif
-                                            <input type="date" id="acceptance_date_{{$i}}"  name="acceptance_date_{{$i}}" value="" class="my-1 form-control" placeholder="">
-                                            <div style="display: flex">
-                                                <input type="text" id="acceptance_persen_{{$i}}" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')" name="acceptance_persen_{{$i}}"  value="" style="display: inline;width:auto" class="my-1 form-control" placeholder="驗收標金 % 數"> 
-                                                <p style="display: inline"> % </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endfor
-                            @endif
-                            </div>
-                            <div class="time-line" {{$data['project']->status == 'unacceptable'? 'hidden' : ''}}>
-                                <i class="time-i" style="background-color:#fa5c7c;"><i style="background-color:#ff99ad;"></i></i>
-                                <div class="ml-4">
-                                    <div class="ml-1">
-                                        <span style="background-color:#fa5c7c;">結案日期</span>
-                                        <input type="date" id="closing_date" name="closing_date" value="{{$data['project']->closing_date}}" class="my-1 form-control" placeholder="">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
-                
+                <div class="card card-style" {{$data['project']->status == 'unacceptable'? 'hidden' : ''}}>
+                    <div class="px-3">
+                        <div class="card-header bg-white">
+                            <i class='fas fa-user-circle' style="font-size:1.5rem;"></i><label class="ml-2 col-form-label ">{{__('customize.project_sop')}}</label>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        @foreach ($data['project']->projectSOP as $item)
+                            <table style="border:none;">
+                                <thead  >
+                                    <tr style="opacity: 0;">
+                                        <th style="width:10%;border:none;"></th>
+                                        <th style="width:40%;border:none;"></th>
+                                        <th style="width:30%;border:none;"></th>
+                                        <th style="width:20%;border:none;"></th>
+                                    </tr>
+                                    <tr style="background-color: #fff;color:#000">
+                                        <th colspan="3" valign="top">{{$item->content}}</th>
+                                        <th><a class="btn btn-blue rounded-pill" target="_blank" href="{{route('projectSOP.show', $item->projectSOP_id)}}">查看</a></th>
+
+                                    </tr>
+                                    <tr>
+                                        <th valign="top">編號</th>
+                                        <th valign="top">檔案名稱</th>
+                                        <th colspan="2" valign="top">簡介</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($data['project_sop_item'] as $sop_item)
+                                        @if($sop_item->projectSOP_id == $item->projectSOP_id)
+                                        <tr>
+                                            <td>{{$sop_item->no}}</td>
+                                            <td>{{$sop_item->name}}</td>
+                                            <td colspan="2">{{$sop_item->content}}</td>
+                                        </tr>
+                                        @endif
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            
+                        @endforeach
+                    </div>
+                </div>
             </div>
             <div class="col-lg-6">
                 <div class="card card-style col-lg-12">
@@ -385,7 +432,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-6" >
                         <div class="card card-style">
                             <div class="px-3">
                                 <div class="card-header bg-white">
