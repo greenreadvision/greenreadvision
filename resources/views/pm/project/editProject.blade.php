@@ -617,62 +617,84 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-lg-4 form-group">
-                        <div>
-                            <label class="ml-2 col-form-label font-weight-bold">
-                                扣款%數
-                            </label>
+                <form action="defaultItem/create/review" method="POST" class="mb-3">
+                    @method('POST')
+                    @csrf
+                    
+                    <div class="row">
+                        <div class="col-lg-4 form-group">
+                            <div>
+                                <label class="ml-2 col-form-label font-weight-bold">
+                                    扣款%數
+                                </label>
+                            </div>
+                            <div class="d-flex justify-content-center" >
+                                <label class="content-label-style col-form-label">
+                                    <input type="text" id="default_persen" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')" name="default_persen" class="form-control {{ $errors->has('default_persen') ? ' is-invalid' : '' }}" oninput="changedefaultAmount('add')" required>
+                                    
+                                </label>
+                                @if ($errors->has('default_persen'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('default_persen') }}</strong>
+                                </span>
+                                @endif
+                            </div>
                         </div>
-                        <div class="d-flex justify-content-center" >
-                            <label class="content-label-style col-form-label">
-                                <input type="text" id="default_persen" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')" name="default_persen" class="form-control" onchange="changedefaultAmount('add')">
-                            </label>
+                        <div class="col-lg-4 form-group">
+                            <div>
+                                <label class="ml-2 col-form-label font-weight-bold">
+                                    扣款金額
+                                </label>
+                            </div>
+                            <div class="d-flex justify-content-center" >
+                                <label class="content-label-style col-form-label">
+                                    <input type="text" id="default_amount" name="default_amount" class="form-control{{ $errors->has('default_amount') ? ' is-invalid' : '' }}" readonly>
+                                </label>
+                                
+                            </div>
+                        </div>
+                        <div class="col-lg-4 form-group">
+                            <div>
+                                <label class="ml-2 col-form-label font-weight-bold">
+                                    登記日期(預設今日)
+                                </label>
+                            </div>
+                            <div class="d-flex justify-content-center" >
+                                <label class="content-label-style col-form-label">
+                                    <input type="date" id="default_date" name="default_date" class="form-control{{ $errors->has('default_date') ? ' is-invalid' : '' }}" required>
+                                </label>
+                                @if ($errors->has('default_date'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('default_date') }}</strong>
+                                </span>
+                                @endif
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 form-group">
-                        <div>
-                            <label class="ml-2 col-form-label font-weight-bold">
-                                扣款金額
-                            </label>
-                        </div>
-                        <div class="d-flex justify-content-center" >
-                            <label class="content-label-style col-form-label">
-                                <input type="text" id="default_amount" name="default_amount" class="form-control" readonly>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 form-group">
-                        <div>
-                            <label class="ml-2 col-form-label font-weight-bold">
-                                登記日期(預設今日)
-                            </label>
-                        </div>
-                        <div class="d-flex justify-content-center" >
-                            <label class="content-label-style col-form-label">
-                                <input type="date" id="default_date" name="default_date" class="form-control">
-                            </label>
+                    <div class="row">
+                        <div class="col-lg-12 form-group">
+                            <div>
+                                <label class="ml-2 col-form-label font-weight-bold">
+                                工項內容
+                                </label>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <label class="content-label-style col-form-label">
+                                    <textarea autocomplete="off" type="text" id="default_content" rows="3" name="default_content"  value="" class="form-control{{ $errors->has('default_content') ? ' is-invalid' : '' }}" placeholder="尚未填寫" required></textarea>
+                                </label>
+                                @if ($errors->has('default_content'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('default_content') }}</strong>
+                                </span>
+                                @endif
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12 form-group">
-                        <div>
-                            <label class="ml-2 col-form-label font-weight-bold">
-                            工項內容
-                            </label>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <label class="content-label-style col-form-label">
-                                <textarea autocomplete="off" type="text" id="default_content" rows="3" name="default_content"  value="" class="form-control{{ $errors->has('default_content') ? ' is-invalid' : '' }}" placeholder="尚未填寫"></textarea>
-                            </label>
-                        </div>
+                    <div class="modal-footer border-0" style="justify-content: space-between">
+                        <button type="button" class="btn btn-danger" onclick="cleandefault('add')">清空輸入</button>
+                        <button type="submit" class="btn btn-primary">新增</button>
                     </div>
-                </div>
-                <div class="modal-footer border-0" style="justify-content: space-between">
-                    <button type="button" class="btn btn-danger" onclick="cleandefault('add')">清空輸入</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="AddDefault()">新增</button>
-                </div>
+                </form>
             </div>
             
         </div>
@@ -688,101 +710,67 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <input id="edit_default_remenber" value="" type="text" hidden>
-                    <div class="col-lg-4 form-group">
-                        <div>
-                            <label class="ml-2 col-form-label font-weight-bold">
-                                扣款%數
-                            </label>
+                <form id="editDefaultForm" method="POST" class="mb-3">
+                    @method('POST')
+                    @csrf
+                    <div class="row">
+                        <input id="edit_default_remenber" value="" type="text" hidden>
+                        <div class="col-lg-4 form-group">
+                            <div>
+                                <label class="ml-2 col-form-label font-weight-bold">
+                                    扣款%數
+                                </label>
+                            </div>
+                            <div class="d-flex justify-content-center" >
+                                <label class="content-label-style col-form-label">
+                                    <input type="text" id="edit_default_persen" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')" name="edit_default_persen" class="form-control" oninput="changedefaultAmount('edit')" required>
+                                </label>
+                            </div>
                         </div>
-                        <div class="d-flex justify-content-center" >
-                            <label class="content-label-style col-form-label">
-                                <input type="text" id="edit_default_persen" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')" name="edit_default_persen" class="form-control" onchange="changedefaultAmount('edit')">
-                            </label>
+                        <div class="col-lg-4 form-group">
+                            <div>
+                                <label class="ml-2 col-form-label font-weight-bold">
+                                    扣款金額
+                                </label>
+                            </div>
+                            <div class="d-flex justify-content-center" >
+                                <label class="content-label-style col-form-label">
+                                    <input type="text" id="edit_default_amount" name="edit_default_amount" class="form-control" readonly>
+                                </label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4 form-group">
-                        <div>
-                            <label class="ml-2 col-form-label font-weight-bold">
-                                扣款金額
-                            </label>
-                        </div>
-                        <div class="d-flex justify-content-center" >
-                            <label class="content-label-style col-form-label">
-                                <input type="text" id="edit_default_amount" name="edit_default_amount" class="form-control" readonly>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 form-group">
-                        <div>
-                            <label class="ml-2 col-form-label font-weight-bold">
-                                登記日期
-                            </label>
-                        </div>
-                        <div class="d-flex justify-content-center" >
-                            <label class="content-label-style col-form-label">
-                                <input type="date" id="edit_default_date" name="edit_default_date" class="form-control">
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12 form-group">
-                        <div>
-                            <label class="ml-2 col-form-label font-weight-bold">
-                            工項內容
-                            </label>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <label class="content-label-style col-form-label">
-                                <textarea autocomplete="off" type="text" id="edit_default_content" rows="3" name="edit_default_content"  value="" class="form-control{{ $errors->has('default_content') ? ' is-invalid' : '' }}" placeholder="尚未填寫"></textarea>
-                            </label>
+                        <div class="col-lg-4 form-group">
+                            <div>
+                                <label class="ml-2 col-form-label font-weight-bold">
+                                    登記日期
+                                </label>
+                            </div>
+                            <div class="d-flex justify-content-center" >
+                                <label class="content-label-style col-form-label">
+                                    <input type="date" id="edit_default_date" name="edit_default_date" class="form-control" required>
+                                </label>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer border-0" style="justify-content: space-between">
-                    <button type="button" class="btn btn-danger" onclick="cleandefault('edit')">清空輸入</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="EditDefaultButton()">修正</button>
-                </div>
-            </div>
-            
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="returnDefaultModal" role="dialog" aria-labelledby="returnDefaultModalLabel" aria-hidden="true">
-    <div class="modal-dialog " role="document" style="max-width: 50%">
-        <div class="modal-content" >
-            <div class="modal-header border-0">
-                <h5 class="modal-title" id="signerModalLabel">錯誤訊息</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <h5 style="text-align: center">輸入不能空格喔~~~請確定</h5>
-                <div class="modal-footer border-0" style="justify-content: center">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="returnDefaultModal()">確認</button>
-                </div>
-            </div>
-            
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="returnEditDefaultModal" role="dialog" aria-labelledby="returnEditDefaultModalLabel" aria-hidden="true">
-    <div class="modal-dialog " role="document" style="max-width: 50%">
-        <div class="modal-content" >
-            <div class="modal-header border-0">
-                <h5 class="modal-title" id="signerModalLabel">錯誤訊息</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <h5 style="text-align: center">輸入不能空格喔~~~請確定</h5>
-                <div class="modal-footer border-0" style="justify-content: center">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="returnEditDefaultModal()">確認</button>
-                </div>
+                    <div class="row">
+                        <div class="col-lg-12 form-group">
+                            <div>
+                                <label class="ml-2 col-form-label font-weight-bold">
+                                工項內容
+                                </label>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <label class="content-label-style col-form-label">
+                                    <textarea autocomplete="off" type="text" id="edit_default_content" rows="3" name="edit_default_content"  value="" class="form-control{{ $errors->has('default_content') ? ' is-invalid' : '' }}" placeholder="尚未填寫" required></textarea>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0" style="justify-content: space-between">
+                        <button type="button" class="btn btn-danger" onclick="cleandefault('edit')">清空輸入</button>
+                        <button type="submit" class="btn btn-primary" >修正</button>
+                    </div>
+                </form>
             </div>
             
         </div>
@@ -802,8 +790,13 @@
                 <span id="deleteContent" style="text-align: center"></span>
                 <input type="text" id="deleteContent_id" hidden>
                 <div class="modal-footer border-0" style="justify-content: center">
-                    <button type="button" class="btn btn-gray" data-dismiss="modal" >否</button>
-                    <button type="button" class="btn btn-blue" data-dismiss="modal" onclick="deleteDefaultTr()">是</button>
+                    <form id='deleteDefaultForm'method="POST" class="mb-3">
+                        @method('DELETE')
+                        @csrf
+                        <button type="button" class="btn btn-gray" data-dismiss="modal" >否</button>
+                        <button type="submit" class="btn btn-blue">是</button>
+                    </form>
+                    
                 </div>
             </div>
             
@@ -939,7 +932,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <label class="ml-2 col-form-label font-weight-bold">細項</label>
-                                <textarea rows="3" autocomplete="off" type="text" id="EditDging_note" name="EditDging_note" class="rounded-pill form-control "  required></textarea>
+                                <textarea rows="3" autocomplete="off" type="text" id="EditDging_note" name="EditDging_note" class="rounded-pill form-control "  ></textarea>
                             </div>
                             <div class="col-lg-4">
                                 <label class="ml-2 col-form-label font-weight-bold">單項金額</label>
@@ -1197,12 +1190,14 @@
 //共用設定值-----------------------------------------------------------------------------------
     var projectData = []
     var persens = []
+    var defaults = []
     var parent = document.getElementById('default_table')
     var div = document.createElement('div')
     var default_num = 0
     var totalActualCost = 0
     var total_default = 0
     var FinalAmount = 0
+    var Today = new Date()
 </script>
 
 <script>
@@ -1212,6 +1207,7 @@
         projectData = getProjectData()
         default_num = projectData.defaults.length
         document.getElementById('default_num').value = default_num
+        
         setBoundTable()
         setDefaultTable()
         setActualCost()
@@ -1256,10 +1252,10 @@
         for(var i = 0;i<projectData.defaults.length;i++){
             
             tbody.innerHTML = tbody.innerHTML + "<tr id=\"default_tr_" + (i+1) + "\">" +
-                "<td ><textarea type=\"text\" style=\"width: 100%;text-align:center;border-style:none\"  id = \"default_content_"+ (i+1) +"\" name =\"default_content_"+ (i+1) +"\" readonly>" + projectData.defaults[i].content +"</textarea></td>" + 
-                "<td ><input type=\"text\" style=\"width: 100%;text-align:center;border-style:none\"  id = \"default_persen_"+ (i+1) +"\" name =\"default_persen_"+ (i+1) +"\" value =\"" + projectData.defaults[i].persen +"\" readonly/></td>" +
-                "<td ><input type=\"text\" style=\"width: 100%;text-align:center;border-style:none\"  id = \"default_date_"+ (i+1) +"\" name =\"default_date_"+ (i+1) +"\" value =\"" + projectData.defaults[i].default_date +"\" readonly/></td>" + 
-                "<td ><input type=\"text\" style=\"width: 100%;text-align:center;border-style:none\"  id = \"default_amount_"+ (i+1) +"\" name =\"default_amount_"+ (i+1) +"\" value =\"\" readonly/></td>" + 
+                "<td ><span style=\"width: 100%;text-align:center;border-style:none\"  id = \"default_content_"+ (i+1) +"\" name =\"default_content_"+ (i+1) +"\" readonly>" + projectData.defaults[i].content +"</span></td>" + 
+                "<td ><span style=\"width: 100%;text-align:center;border-style:none\"  id = \"default_persen_"+ (i+1) +"\" name =\"default_persen_"+ (i+1) +"\">"+ projectData.defaults[i].persen +"</span></td>" +
+                "<td ><span style=\"width: 100%;text-align:center;border-style:none\"  id = \"default_date_"+ (i+1) +"\" name =\"default_date_"+ (i+1) +"\">"+projectData.defaults[i].default_date+"</span></td>" + 
+                "<td ><span style=\"width: 100%;text-align:center;border-style:none\"  id = \"default_amount_"+ (i+1) +"\" name =\"default_amount_"+ (i+1) +"\"></span></td>" + 
                 "<td ><div style=\"display:flex;justify-content: space-around;\" class=\"mx-2 icon-red\" ><i class=\"fas fa-edit\" onclick=\"editDefault("+ i +")\"></i><i class=\"fas fa-trash-alt\" onclick=\"deleteDefaultModal("+ i +")\"></i></div></td>"
                 '</tr>'
         }
@@ -1276,12 +1272,15 @@
     function setdefault(){      //若有新增或是刪除Default，更新扣款金額
         var contract_value = document.getElementById('contract_value').value
         var default_fine = document.getElementById('default_fine')
+
         total_default = 0
 
         for(var i = 0 ; i < default_num ; i++){
-            var persen =  document.getElementById('default_persen_'+ (i+1)).value
+            var persen =  document.getElementById('default_persen_'+ (i+1)).textContent
+
             var amount = Math.round(contract_value * persen / 100)
-            $('#default_amount_' + (i+1)).val(commafy(amount))
+            $('#default_amount_' + (i+1)).text(commafy(amount))
+            console.log('default_amount_' +  (i+1) + "  " + commafy(amount))
             total_default = total_default + amount
         }
         default_fine.value = total_default
@@ -1424,43 +1423,28 @@
 <script>
 //編輯Default類---------------------------------------------------------------------------------------
     function editDefault(val){  //BUTTON(EDIT) MODAL SHOW
-        document.getElementById('edit_default_persen').value = document.getElementById('default_persen_'+(val+1)).value
-        document.getElementById('edit_default_content').value = document.getElementById('default_content_'+(val+1)).value
-        document.getElementById('edit_default_date').value = document.getElementById('default_date_'+(val+1)).value
+        document.getElementById('edit_default_persen').value = document.getElementById('default_persen_'+(val+1)).textContent
+        document.getElementById('edit_default_content').value = document.getElementById('default_content_'+(val+1)).textContent
+        document.getElementById('edit_default_date').value = document.getElementById('default_date_'+(val+1)).textContent
         document.getElementById('edit_default_remenber').value = val+1
+        $("#editDefaultForm").attr("action","defaultItem/" + projectData.defaults[val].id +"/update");
         changedefaultAmount('edit')
         $("#editDefaultModal").modal('show')
     }
 
-
-    function EditDefaultButton(){   //修正內容完畢後設定TABLE值
-        var position =  document.getElementById('edit_default_remenber').value 
-        if(document.getElementById('edit_default_content').value!="" && document.getElementById('edit_default_persen').value !="" && document.getElementById('edit_default_date').value !="" && document.getElementById('edit_default_amount').value !=""){
-            $('#default_content_'+ position).val(document.getElementById('edit_default_content').value)
-            $('#default_persen_'+ position).val(document.getElementById('edit_default_persen').value)
-            $('#default_date_'+ position).val(document.getElementById('edit_default_date').value)
-            $('#default_amount_'+ position).val(commafy(document.getElementById('edit_default_amount').value))
-        }else{
-            $('#returnEditDefaultModal').modal('show')
+    function changedefaultAmount(val){
+        if(val == 'add'){
+            var defaultAmount = document.getElementById('default_amount');
+            var defaultpersen = document.getElementById('default_persen').value;
+            var contract_value = document.getElementById('contract_value').value
+            defaultAmount.value = defaultpersen * contract_value / 100;
         }
-        update()
-    }
-
-    function returnEditDefaultModal(){  //錯誤訊息，回歸數值，展開MODAL
-        $('#editDefaultModal').modal('show')
-    }
-
-    function changedefaultAmount(val){  //若%數有做改變，更新MODAL中的扣款金額
-        var contract_value = document.getElementById('contract_value').value
-        if(val =='edit'){
-            var default_amount = document.getElementById('edit_default_amount')
-            var default_persen = document.getElementById('edit_default_persen').value
+        else if(val == 'edit'){
+            var defaultAmount = document.getElementById('edit_default_amount');
+            var defaultpersen = document.getElementById('edit_default_persen').value;
+            var contract_value = document.getElementById('contract_value').value
+            defaultAmount.value = defaultpersen * contract_value / 100;
         }
-        else if(val='add'){
-            var default_amount = document.getElementById('default_amount')
-            var default_persen = document.getElementById('default_persen').value
-        }
-        default_amount.value = Math.round(contract_value * default_persen /100)
     }
 
     
@@ -1468,78 +1452,15 @@
     
 <script>
 //新增/刪除Default類---------------------------------------------------------------------------------------
-    function AddDefault(){
-        var default_amount = document.getElementById('default_amount').value
-        var default_persen = document.getElementById('default_persen').value
-        var default_date = document.getElementById('default_date').value
-        var default_content = document.getElementById('default_content').value
-        default_num++
-        document.getElementById('default_num').value = default_num
-        //查詢沒有
-        var parent = document.getElementById('default_table')
-        var tr = document.createElement('tr')
-        tr.setAttribute("id","default_tr_"+default_num)
+    function deleteDefaultModal(val){
+        document.getElementById('deleteContent').innerHTML  = document.getElementById('default_content_' + (val+1)).innerHTML
+        document.getElementById('deleteContent_id').value = val+1
         
-        if( default_amount !="" && default_persen !="" && default_date !="" && default_content !=""){
-            tr.innerHTML = "<td><textarea type=\"text\" style=\"width: 100%;text-align:center;border-style:none\"  id = \"default_content_"+ default_num +"\" name =\"default_content_"+ default_num +"\" readonly>" + default_content +"</textarea></td>" + 
-            "<td><input type=\"text\" style=\"width: 100%;text-align:center;border-style:none\"  id = \"default_persen_"+ default_num +"\" name =\"default_persen_"+ default_num +"\" value =\"" + default_persen +"\" readonly/></td>" +
-            "<td><input type=\"text\" style=\"width: 100%;text-align:center;border-style:none\"  id = \"default_date_"+ default_num +"\" name = \"default_date_"+ default_num +"\" value =\"" + default_date +"\" readonly/></td>" + 
-            "<td><input type=\"text\" style=\"width: 100%;text-align:center;border-style:none\"  id = \"default_amount_"+ default_num +"\" name = \"default_amount_"+ default_num +"\" value =\"" + default_amount +"\" readonly/></td>" + 
-            "<td><div style=\"display:flex;justify-content: space-around;\" class=\"mx-2 icon-red\" ><i class=\"fas fa-edit\" id=\"editDefault_icon_"+ default_num  +"\" onclick=\"editDefault("+ (default_num-1) +")\"></i><i class=\"fas fa-trash-alt\" id=\"deleteDefault_icon_"+ default_num  +"\" onclick=\"deleteDefaultModal("+ (default_num-1) +")\"></i></div></td>"
-            parent.appendChild(tr)
-            update()
-        }
-        else{
-            $('#returnDefaultModal').modal('show')
-        }
-        
-    }
-
-    function returnDefaultModal(){  //錯誤訊息，回歸數值，展開MODAL
-        $('#defaultModal').modal('show')
-    }
-
-    function deleteDefaultModal(i){
-        document.getElementById('deleteContent').innerHTML  = document.getElementById('default_content_' + (i+1)).innerHTML
-        document.getElementById('deleteContent_id').value = i+1
+        $("#deleteDefaultForm").attr("action","defaultItem/" + projectData.defaults[val].id +"/delete");
         $('#deleteDefaultModal').modal('show')
         
     }
 
-    function deleteDefaultTr(){
-        var i = document.getElementById('deleteContent_id').value
-        $('#default_tr_'+i).remove()
-        for(var j = 1 ; j <= default_num ; j++){
-            if(j > i){
-                var tr = document.getElementById('default_tr_' + j)
-                var content = document.getElementById('default_content_' + j)
-                var persen = document.getElementById('default_persen_' + j)
-                var date = document.getElementById('default_date_' + j)
-                var amount = document.getElementById('default_amount_' + j)
-                var deleteDefault_icon = document.getElementById('deleteDefault_icon_'+j)
-                var editDefault_icon = document.getElementById('editDefault_icon_' + j)
-                tr.id = 'default_tr_' + (j-1);
-                content.id = 'default_content_' + (j-1)
-                persen.id = 'default_persen_' + (j-1)
-                date.id = 'default_date_' + (j-1)
-                amount.id = 'default_amount_' + (j-1)
-                deleteDefault_icon.id =  'deleteDefault_icon_'+(j-1)
-                editDefault_icon.id = 'editDefault_icon_' + (j-1)
-                
-                tr.name = 'default_tr_' + (j-1);
-                content.name = 'default_content_' + (j-1)
-                persen.name = 'default_persen_' + (j-1)
-                date.name = 'default_date_' + (j-1)
-                amount.name = 'default_amount_' + (j-1)
-                deleteDefault_icon.setAttribute("onclick",'deleteDefaultModal('+ (j-2) + ')')
-                editDefault_icon.setAttribute("onclick","editDefault("+ (j-2) + ")")
-            }
-        }
-        default_num --;
-        document.getElementById('default_num').value = default_num
-        update()
-    }
-    //$("#default_tr_"+(val+1)).remove();
 </script>
 
 <script>
@@ -1564,7 +1485,7 @@
     function openDefaultModal(){    //打開DEFAULT MODAL
         $('#default_persen').val('')
         $('#default_amount').val('')
-        $('#default_date').val('')
+        $('#default_date').val(Today.getFullYear() + '-' + (Today.getMonth()+1) +'-'+Today.getDate() )
         $('#default_content').val('')
         $('#defaultModal').modal('show')
     }
@@ -1953,10 +1874,10 @@
         if (nowDgingPage < 4) {
             for (var i = 0; i < number; i++) {
                 if (i < 5) {
-                    data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
+                    data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changeDGingPage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
                 } else {
                     data = data + '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)" ">...</a></li>'
-                    data = data + '<li class="page-item page-' + number + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + number + ')">' + number + '</a></li>'
+                    data = data + '<li class="page-item page-' + number + '"><a class="page-link" href="javascript:void(0)" onclick="changeDGingPage(' + number + ')">' + number + '</a></li>'
                     break
                 }
             }
@@ -2054,10 +1975,15 @@
     }
 
     function setDgingData(i) {
+        if(DGing_table[i].note == null){
+            var DGing_note = ''
+        }else{
+            var DGing_note = DGing_table[i].note
+        }
         tr = "<tr>" +
             "<td width='10%'>" + DGing_table[i].num + "</td>" +
             "<td width='30%'>" + DGing_table[i].title + "</td>" +
-            "<td width='40%'>" + DGing_table[i].note + "</a></td>" +
+            "<td width='40%'>" + DGing_note + "</a></td>" +
             "<td width='10%'>" + commafy(DGing_table[i].price) + "</td>" +
             "<td width='5%'><i class='fas fa-search-dollar' id=\"EditDgingModal_" + DGing_table[i].num + "\" data-id = \""+ DGing_table[i].id +"\" data-toggle=\"modal\" data-dismiss=\"modal\" data-target=\"#EditDgingModal\"></td>"+
             "<td width='5%'><i class='fas fa-trash-alt' id=\"deleteDgingModal_" + DGing_table[i].num + "\" data-id = \""+ DGing_table[i].id +"\"  data-toggle=\"modal\" data-dismiss=\"modal\" data-target=\"#deleteDgingModal\"></td>"+
@@ -2112,13 +2038,25 @@
             if(i != 5){
                 body.innerHTML = body.innerHTML + '<tr>' +
                     '<th class="p-2">' + (i+1) + '</th>' +
-                    '<th class="p-2"><input autocomplete="off" type="text" id="title-' + i + '" name="title-'+ i + '" class="rounded-pill form-control{{ $errors->has("title-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("title-'+ i +'") }}"></th>' +
+                    '<th class="p-2"><input autocomplete="off" type="text" id="title-' + i + '" name="title-'+ i + '" class="rounded-pill form-control{{ $errors->has("title-'+ i +'") ? " is-invalid" : "" }}" onkeyup="setRequired('+ i +')" value="{{ old("title-'+ i +'") }}"></th>' +
                     '<th class="p-2"><textarea autocomplete="off" rows="3" type="text" id="note-'+ i +'" name="note-'+ i +'" class="rounded-pill form-control{{ $errors->has("note-'+ i +'") ? " is-invalid" : "" }}">{{ old("note-'+ i +'") }}</textarea></th>' +
-                    '<th class="p-2"><input autocomplete="off" type="number" id="price-'+ i +'" name="price-'+ i +'" class="rounded-pill form-control{{ $errors->has("price-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("price-'+ i +'") }}"></th>' +
+                    '<th class="p-2"><input autocomplete="off" type="number" id="price-'+ i +'" name="price-'+ i +'" class="rounded-pill form-control{{ $errors->has("price-'+ i +'") ? " is-invalid" : "" }}" onkeyup="setRequired('+ i +')" value="{{ old("price-'+ i +'") }}"></th>' +
                     '</tr>'
             }
         }
         parent.appendChild(body);
+    }
+
+    function setRequired(val){
+        title = document.getElementById('title-'+val)
+        price = document.getElementById('price-'+val)
+        if(title.value != ''){
+            title.required = true;
+            price.required = true;
+        }else{
+            title.required = false;
+            price.required = false;
+        }
     }
 </script>
 <script>

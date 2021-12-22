@@ -61,6 +61,7 @@ return array(
     'App\\Http\\Controllers\\LetterController' => $baseDir . '/app/Http/Controllers/LetterController.php',
     'App\\Http\\Controllers\\OffDayController' => $baseDir . '/app/Http/Controllers/OffDayController.php',
     'App\\Http\\Controllers\\OtherInvoiceController' => $baseDir . '/app/Http/Controllers/OtherInvoiceController.php',
+    'App\\Http\\Controllers\\PerformanceController' => $baseDir . '/app/Http/Controllers/PerformanceController.php',
     'App\\Http\\Controllers\\PhotoController' => $baseDir . '/app/Http/Controllers/PhotoController.php',
     'App\\Http\\Controllers\\ProductController' => $baseDir . '/app/Http/Controllers/ProductController.php',
     'App\\Http\\Controllers\\ProjectController' => $baseDir . '/app/Http/Controllers/ProjectController.php',

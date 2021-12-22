@@ -115,6 +115,7 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::put('/project/{id}/update/status', 'ProjectController@updateStatus')->name('project.update.status');
     Route::put('/project/{id}/transfer', 'ProjectController@transfer')->name('project.transfer');
     Route::put('/project/{id}/receive/{type}', 'ProjectController@receive')->name('project.receive');
+    Route::get('project/{id}/setCost','ProjectController@setCost')->name('project.setCost');
 
     Route::post('/project/{id}/gding/create/review','GdingController@store')->name('gding.create.review');
     Route::put('/project/{id}/{gding_id}/update','GdingController@update')->name('gding.update');
@@ -122,6 +123,12 @@ Route::group(['middleware' => ['auth', 'general']], function () {
 
     Route::post('/project/{id}/performance/create/review','PerformanceController@store')->name('performance.create.review');
     Route::put('/project/{id}/performance/{performance_id}/update','PerformanceController@update')->name('performance.update');
+
+    Route::post('/project/{id}/defaultItem/create/review','DefaultController@store')->name('default.create.review');
+    Route::post('/project/{id}/defaultItem/{defaultItem_id}/update','DefaultController@update')->name('default.update');
+    Route::delete('/project/{id}/defaultItem/{defaultItem_id}/delete','DefaultController@destory')->name('default.delete');
+
+
 
 
 

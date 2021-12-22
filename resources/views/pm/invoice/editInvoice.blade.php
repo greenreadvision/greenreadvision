@@ -278,7 +278,7 @@
                                     </span>
                                     @endif
                                 </div>
-                                <div  class="{{$data['invoice']['status'] !='complete' ? 'col-lg-6' : 'col-lg-3'}} form-group">
+                                <div  class=" form-group ">
                                     <label class="label-style col-form-label" for="receipt_date">{{__('customize.receipt_date')}}</label>
                                     <input type="date" id="receipt_date" name="receipt_date" class="form-control rounded-pill{{ $errors->has('receipt_date') ? ' is-invalid' : '' }}" value="{{$data['invoice']['receipt_date']}}" required>
                                     @if ($errors->has('receipt_date'))
@@ -308,15 +308,15 @@
                                     <select type="text" id="reviewer" name="reviewer" class="form-control rounded-pill" required>
                                         <option value=""></option>
                                         <optgroup id="optgroup-1" label="3000元以下">
-                                            <option value="GRV00002" id="GRV00002">蔡貴瑄</option>
+                                            <option value="GRV00002" id="GRV00002" {{$data['invoice']['reviewer']=='GRV00002'? 'selected' : ''}}>蔡貴瑄</option>
                                         </optgroup>
                                         <optgroup id="optgroup-2" label="3000~10000元">
                                             @foreach($data['reviewers'] as $reviewer)
-                                            <option value="{{$reviewer['user_id']}}" id="{{$reviewer['user_id']}}">{{$reviewer->name}}</option>
+                                            <option value="{{$reviewer['user_id']}}" id="{{$reviewer['user_id']}}" {{$data['invoice']['reviewer']==$reviewer['user_id']? 'selected' : ''}}>{{$reviewer->name}}</option>
                                             @endforeach
                                         </optgroup>
                                         <optgroup id="optgroup-3" label="10000元以上">
-                                            <option value="GRV00001" id="GRV00001">吳奇靜</option>
+                                            <option value="GRV00001" id="GRV00001" {{$data['invoice']['reviewer']=='GRV00001'? 'selected' : ''}}>吳奇靜</option>
                                         </optgroup>
 
                                     </select>
@@ -524,12 +524,21 @@
                                         </span>
                                         @endif
                                     </div>
-                                    <div class="col-lg-6 form-group">
+                                    <div class="{{$data['invoice']['status'] !='complete' ? 'col-lg-6' : 'col-lg-3'}} form-group ">
                                         <label class="label-style col-form-label" for="receipt_date">{{__('customize.receipt_date')}}</label>
                                         <input type="date" id="receipt_date" name="receipt_date" class="form-control rounded-pill{{ $errors->has('receipt_date') ? ' is-invalid' : '' }}" value="{{$data['invoice']['receipt_date']}}" required>
                                         @if ($errors->has('receipt_date'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('receipt_date') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                    <div class="col-lg-3 form-group " {{$data['invoice']['status'] !='complete' ? 'hidden' : ''}}>
+                                        <label class="label-style col-form-label" for="remittance_date">匯款日期</label>
+                                        <input type="date" id="remittance_date" name="remittance_date" class="form-control rounded-pill{{ $errors->has('remittance_date') ? ' is-invalid' : '' }}" value="{{$data['invoice']['remittance_date']}}">
+                                        @if ($errors->has('remittance_date'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('remittance_date') }}</strong>
                                         </span>
                                         @endif
                                     </div>
@@ -554,15 +563,15 @@
                                         <select type="text" id="reviewer" name="reviewer" class="form-control rounded-pill" required>
                                             <option value=""></option>
                                             <optgroup id="optgroup-1" label="3000元以下">
-                                                <option value="GRV00002" id="GRV00002">蔡貴瑄</option>
+                                                <option value="GRV00002" id="GRV00002" {{$data['invoice']['reviewer']=='GRV00002'? 'selected' : ''}}>蔡貴瑄</option>
                                             </optgroup>
                                             <optgroup id="optgroup-2" label="3000~10000元">
                                                 @foreach($data['reviewers'] as $reviewer)
-                                                <option value="{{$reviewer['user_id']}}" id="{{$reviewer['user_id']}}">{{$reviewer->name}}</option>
+                                                <option value="{{$reviewer['user_id']}}" id="{{$reviewer['user_id']}}" {{$data['invoice']['reviewer']==$reviewer['user_id']? 'selected' : ''}}>{{$reviewer->name}}</option>
                                                 @endforeach
                                             </optgroup>
                                             <optgroup id="optgroup-3" label="10000元以上">
-                                                <option value="GRV00001" id="GRV00001">吳奇靜</option>
+                                                <option value="GRV00001" id="GRV00001" {{$data['invoice']['reviewer']=='GRV00001'? 'selected' : ''}}>吳奇靜</option>
                                             </optgroup>
 
                                         </select>
@@ -635,18 +644,15 @@
 <script>
     $(document).ready(function() {
         checkPrice()
-        var reviewer = '{{$data["invoice"]["reviewer"]}}'
-        $('#' + reviewer)[0].selected = true
     });
 
     function checkPrice() {
-        var reviewer = '{{$data["invoice"]["reviewer"]}}'
-        $('#' + reviewer)[0].selected = false
-        $('#reviewer').val('')
 
         var p = $('#price').val()
-        if ('{{strpos(URL::full(),"other")}}') {
+        if ("{{strpos(URL::full(),'other')}}") {
+            console.log($('#type').val())
             if ($('#type').val() == 'other') {
+                
                 if (p < 3000) {
                     $('#optgroup-1').show()
                     $('#optgroup-2').hide()
@@ -666,6 +672,7 @@
                 $('#optgroup-3').hide()
             }
         } else {
+           
             if (p < 3000) {
                 $('#optgroup-1').show()
                 $('#optgroup-2').hide()

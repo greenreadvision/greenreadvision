@@ -435,6 +435,7 @@ class ComposerStaticInit30aa371bde7fe78b9ba66ef4c5a40518
         'App\\Http\\Controllers\\LetterController' => __DIR__ . '/../..' . '/app/Http/Controllers/LetterController.php',
         'App\\Http\\Controllers\\OffDayController' => __DIR__ . '/../..' . '/app/Http/Controllers/OffDayController.php',
         'App\\Http\\Controllers\\OtherInvoiceController' => __DIR__ . '/../..' . '/app/Http/Controllers/OtherInvoiceController.php',
+        'App\\Http\\Controllers\\PerformanceController' => __DIR__ . '/../..' . '/app/Http/Controllers/PerformanceController.php',
         'App\\Http\\Controllers\\PhotoController' => __DIR__ . '/../..' . '/app/Http/Controllers/PhotoController.php',
         'App\\Http\\Controllers\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProductController.php',
         'App\\Http\\Controllers\\ProjectController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProjectController.php',

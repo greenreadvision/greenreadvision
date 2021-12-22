@@ -5,7 +5,7 @@
         <div id="loading">
             <img src="{{ URL::asset('gif/loadding.gif') }}" alt=""/>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-2">
             <div class="form-group">
                 <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
                     <label class="btn btn-secondary active w-50" style="border-top-left-radius: 25px;border-bottom-left-radius: 25px">
@@ -177,7 +177,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-9">
+        <div class="col-lg-10">
             <div class="card border-0 shadow" style="min-height: calc(100vh - 135px)">
                 <div class="card-body show-project-invoice">
                     <div class="form-group col-lg-12">
@@ -923,6 +923,7 @@
             '<th>請款項目</th>' +
             '<th>請款費用</th>' +
             '<th>請款日期</th>' +
+            '<th>匯款日期</th>' +
             '<th>狀態</th>' +
             '</tr>'
         var tr, span, name, a
@@ -986,16 +987,21 @@
                 "</div>"
         }
 
-
+        if(invoices[i]['remittance_date'] == null){
+            var remittance_date = '未匯款'
+        }else{
+            var remittance_date = invoices[i]['remittance_date'];
+        }
 
         a = "/invoice/" + invoices[i]['invoice_id'] + "/review"
         tr = "<tr>" +
             "<td width='11%'><a href='" + a + "' target='_blank'>" + invoices[i].finished_id + "</td>" +
             "<td width='10%'><a href='" + a + "' target='_blank'>" + invoices[i].user['name'] + "</td>" +
-            "<td width='24%'><a href='" + a + "' target='_blank'>" + invoices[i].project['name'] + "</td>" +
-            "<td width='25%'><a href='" + a + "' target='_blank'>" + invoices[i].title + "</a></td>" +
+            "<td width='20%'><a href='" + a + "' target='_blank'>" + invoices[i].project['name'] + "</td>" +
+            "<td width='20%'><a href='" + a + "' target='_blank'>" + invoices[i].title + "</a></td>" +
             "<td width='10%'><a href='" + a + "' target='_blank'>" + commafy(invoices[i].price) + "</td>" +
-            "<td width='15%'> <a href='" + a + "' target='_blank'>" + invoices[i].created_at.substr(0, 10) + "</td>" +
+            "<td width='12%'> <a href='" + a + "' target='_blank'>" + invoices[i].created_at.substr(0, 10) + "</td>" +
+            "<td width='12%'> <a href='" + a + "' target='_blank'>" + remittance_date + "</td>" +
             "<td width='5%'>" + span + "</td>" +
             "</tr>"
 
@@ -1581,6 +1587,7 @@
             '<th>請款項目</th>' +
             '<th>請款費用</th>' +
             '<th>請款日期</th>' +
+            '<th>匯款日期</th>' +
             '<th>狀態</th>' +
             '</tr>'
         var tr, span, name, a
@@ -1644,6 +1651,11 @@
                 "<img src='{{ URL::asset('gif/cancelled.png') }}' alt='' style='width:100%'/>" +
                 "</div>"
         }
+        if(other_invoices[i]['remittance_date'] == null){
+            var remittance_date = '未匯款'
+        }else{
+            var remittance_date = other_invoices[i]['remittance_date'];
+        }
 
         a = "/invoice/" + other_invoices[i]['other_invoice_id'] + "/review/other"
         tr = "<tr>" +
@@ -1652,7 +1664,8 @@
             "<td width='19%'><a href='" + a + "' target='_blank'>" + chinese[other_invoices[i].company_name] + "-" + chinese[other_invoices[i].type] + "</a></td>" +
             "<td><a href='" + a + "' target='_blank'>" + other_invoices[i].title + "</a></td>" +
             "<td width='10%'><a href='" + a + "' target='_blank'>" + commafy(other_invoices[i].price) + "</td>" +
-            "<td width='15%'><a href='" + a + "' target='_blank'>" + other_invoices[i].created_at.substr(0, 10) + "</td>" +
+            "<td width='12%'><a href='" + a + "' target='_blank'>" + other_invoices[i].created_at.substr(0, 10) + "</td>" +
+            "<td width='12%'><a href='" + a + "' target='_blank'>" + remittance_date + "</td>" +
             "<td width='5%'>" + span + "</td>" +
             "</tr>"
 

@@ -118,8 +118,9 @@ class ProjectController extends Controller
             
         }
         if ($project->income_statement != null) $project->income_statement = explode('/',$project->income_statement);
+        $gding = Gding::where('project_id','=',$project_id)->orderby('id')->get();
         $invoice = Invoice::where('project_id','=',$project_id)->orderby('created_at','desc')->get();
-        $gding = Gding::where('project_id','=',$project_id)->orderby('updated_at','desc')->get();
+        
 
         return view('pm.project.showProject',['data'=> $project,'invoice_table'=>$invoice,'gding_table'=>$gding,'project_sop_item'=>$project_sop_item]);
     }
@@ -136,7 +137,7 @@ class ProjectController extends Controller
         $company_name = ['grv_2', 'rv','grv'];
         $project = Project::find($project_id);
         $project_sop_item = ProjectSOP_item::all();
-        $gding = Gding::where('project_id','=',$project_id)->orderby('updated_at','desc')->get();
+        $gding = Gding::where('project_id','=',$project_id)->orderby('id')->get();
         $invoice = Invoice::where('project_id','=',$project_id)->orderby('created_at','desc')->get();
         if($project->performance_id!=null){
             if ($project['performance']->deposit_file != null) $project['performance']->deposit_file = explode('/', $project['performance']->deposit_file);
@@ -243,56 +244,6 @@ class ProjectController extends Controller
             }
         }
 
-        //專案Default更新
-        $default_num = $request->input('default_num');
-        $defaults = DefaultItem::where('project_id','=',$project_id)->get();
-        $default_database_num = count($defaults);
-        for( $i = 1 ; $i <= $default_num ;$i++){
-            $request->validate([
-                'content' . $i =>'nullable|date',
-                'persen' . $i =>'nullable|string|max:3'
-            ]);
-        }
-
-        if($default_num >= $default_database_num){
-            $i = 1;
-            foreach($defaults as $item){
-                $item->no = $i;
-                $item->project_id = $project_id;
-                $item->content = $request->input('default_content_' . $i);
-                $item->persen = $request->input('default_persen_' . $i);
-                $item->default_date = $request->input('default_date_' . $i);
-                $i++;
-                $item->save();
-            }
-            for($j = $default_database_num + 1 ; $j<=$default_num;$j++){
-                DefaultItem::create([
-                    'no' => $j,
-                    'project_id' => $project_id,
-                    'persen'=> $request->input('default_persen_' . $j),
-                    'content' => $request->input('default_content_' . $j),
-                    'default_date' =>$request->input('default_date_' . $j)
-                    
-                ]);
-            }
-        }
-        else if($default_num < $default_database_num){
-            $i = 1;
-            foreach($defaults as $item){
-                if($i <= $default_num){
-                    $item->no = $i;
-                    $item->persen = $request->input('default_persen_' . $i);
-                    $item->content = $request->input('default_content_' . $i);
-                    $item->default_date = $request->input('default_date_' . $i);
-                    $i++;
-                    $item->save();
-                }
-                else if($i> $default_num){
-                    $item->delete();
-                    $i++;
-                }
-            }
-        }
         $file_path =null;
         if($request->hasFile('income_statement')){
             if($request->income_statement->isValid()){
@@ -443,5 +394,32 @@ class ProjectController extends Controller
         $project->delete();
 
         return redirect()->route('project.index');
+    }
+
+    public function setCost(String $project_id){
+        
+        $project = Project::find($project_id);
+        $gding = Gding::where('project_id','=',$project_id)->get();
+        $invoices = Invoice::where('project_id','=',$project_id)->get();
+        $default = DefaultItem::where('project_id','=',$project_id)->get();
+        $performance = Performance::where('project_id','=',$project_id)->get();
+        $total_cost = 0;
+        foreach($gding as $item){
+            $total_cost += $item->price;
+        }
+        foreach($invoices as $item){
+            $total_cost += $item->price;
+        }
+        foreach($default as $item){
+            $contract_value = $project->contract_value;
+            $total_cost = $total_cost + ($contract_value*$item->persen/100);
+        }
+        foreach($performance as $item){
+            $project->actual_cost = $total_cost - $item->deposit;
+        }
+        $project->actual_profit = $project->contract_value - $total_cost;
+        $project->save();
+
+        return redirect()->route('project.edit', $project_id);
     }
 }

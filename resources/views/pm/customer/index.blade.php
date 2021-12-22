@@ -174,8 +174,8 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-lg-6">
-                                    <label class="label-style col-form-label" for="tax_id">統一編號(必填)</label>
-                                    <input autocomplete="off" type="text" id="tax_id-{{$item->id}}" name="tax_id" class="rounded-pill form-control{{ $errors->has('tax_id') ? ' is-invalid' : '' }}" value="{{$item->tax_id}}"  onkeyup="value=value.replace(/[^\d]/g,'') " required>
+                                    <label class="label-style col-form-label" for="tax_id">統一編號(隨填)</label>
+                                    <input autocomplete="off" type="text" id="tax_id-{{$item->id}}" name="tax_id" class="rounded-pill form-control{{ $errors->has('tax_id') ? ' is-invalid' : '' }}" value="{{$item->tax_id}}"  onkeyup="value=value.replace(/[^\d]/g,'') " >
                                     @if ($errors->has('tax_id'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('tax_id') }}</strong>
@@ -183,8 +183,8 @@
                                     @endif
                                 </div>
                                 <div class="col-lg-6">
-                                    <label class="label-style col-form-label" for="address">地址(必填)</label>
-                                    <input autocomplete="off" type="text" id="address-{{$item->id}}" name="address" class="rounded-pill form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" value="{{$item->address}}" required>
+                                    <label class="label-style col-form-label" for="address">地址(隨填)</label>
+                                    <input autocomplete="off" type="text" id="address-{{$item->id}}" name="address" class="rounded-pill form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" value="{{$item->address}}" 隨填>
                                     @if ($errors->has('address'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('address') }}</strong>
@@ -376,8 +376,8 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-lg-6">
-                                    <label class="label-style col-form-label" for="tax_id">統一編號(必填)</label>
-                                    <input autocomplete="off" type="text" id="tax_id-create" name="tax_id" class="rounded-pill form-control{{ $errors->has('tax_id') ? ' is-invalid' : '' }}" value=""  onkeyup="value=value.replace(/[^\d]/g,'') " required>
+                                    <label class="label-style col-form-label" for="tax_id">統一編號(隨填)</label>
+                                    <input autocomplete="off" type="text" id="tax_id-create" name="tax_id" class="rounded-pill form-control{{ $errors->has('tax_id') ? ' is-invalid' : '' }}" value=""  onkeyup="value=value.replace(/[^\d]/g,'') " >
                                     @if ($errors->has('tax_id'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('tax_id') }}</strong>
@@ -385,8 +385,8 @@
                                     @endif
                                 </div>
                                 <div class="col-lg-6">
-                                    <label class="label-style col-form-label" for="address">地址(必填)</label>
-                                    <input autocomplete="off" type="text" id="address-create" name="address" class="rounded-pill form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" value="" required>
+                                    <label class="label-style col-form-label" for="address">地址(隨填)</label>
+                                    <input autocomplete="off" type="text" id="address-create" name="address" class="rounded-pill form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" value="" >
                                     @if ($errors->has('address'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('address') }}</strong>

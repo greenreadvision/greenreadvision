@@ -230,7 +230,7 @@
                         @if($key=='contract_value'||$key=='default_fine'||$key=='')
                         <div>
                             <div><label class="ml-2 col-form-label font-weight-bold">{{__('customize.'.$key)}}</label></div>
-                            <div class="d-flex justify-content-center"><label class="content-label-style col-form-label">{{$value==null? '-未填寫-': number_format($value)}}</label></div>
+                            <div class="d-flex justify-content-center"><label class="content-label-style col-form-label" id="{{$key}}">{{$value==null? '-未填寫-': number_format($value)}}</label></div>
                         </div>
                         @endif
                     @endif
@@ -416,12 +416,12 @@
                                             @elseif($key=='estimated_cost'||$key=='estimated_profit'||$key=='actual_profit')
                                             <div {{$data->status == 'unacceptable'? 'hidden' : ''}}>
                                                 <div><label class="ml-2 col-form-label font-weight-bold">{{__('customize.'.$key)}}</label></div>
-                                                <div class="d-flex justify-content-center"><label class="content-label-style col-form-label">{{$value==null? '-未填寫-': number_format($value)}}</label></div>
+                                                <div class="d-flex justify-content-center"><label class="content-label-style col-form-label" id = "{{$key}}">{{$value==null? '-未填寫-': number_format($value)}}</label></div>
                                             </div>
                                             @else
                                             <div>
                                                 <div><label class="ml-2 col-form-label font-weight-bold">{{__('customize.'.$key)}}</label></div>
-                                                <div class="d-flex justify-content-center"><label class="content-label-style col-form-label">{{$value==null? '-未填寫-': number_format($value)}}</label></div>
+                                                <div class="d-flex justify-content-center"><label class="content-label-style col-form-label" id = "{{$key}}">{{$value==null? '-未填寫-': number_format($value)}}</label></div>
                                             </div>
                                             @endif
                                         @else
@@ -524,7 +524,7 @@
 
 <script>
     var projectData = []
-
+    var total_default = 0 
     $(document).ready(function() {
         projectData = getProjectData()
         var total = 0
@@ -534,6 +534,7 @@
         
         setInvoice()
         setGDing()
+        
         for (var i = 0; i < invoice.length; i++) {
             total += invoice[i].price
         }
@@ -549,25 +550,10 @@
         });
         setTex()
         setdefault()
+        
 
         $("#total-price").html(commafy(total))
     });
-
-    function getProjectData(){
-        var project = '{{$data}}'
-        project = project.replace(/[\n\r]/g, "")
-        project = JSON.parse(project.replace(/&quot;/g, '"'));
-        return project;
-    }
-
-    function commafy(num) {
-        num = num + "";
-        var re = /(-?\d+)(\d{3})/
-        while (re.test(num)) {
-            num = num.replace(re, "$1,$2")
-        }
-        return num;
-    }
 
     function setTex(){
         var contract_value = projectData.contract_value
@@ -588,9 +574,31 @@
         for(var i = 0 ; i < projectData.defaults.length ; i++){
             var persen = projectData.defaults[i].persen
             var amount = Math.round(contract_value * persen / 100)
+            total_default += amount
+            console.log('total_default = '+ total_default)
             $('#default_amount_' + projectData.defaults[i].no).html(commafy(amount))
+            
         }
     }
+
+    function getProjectData(){
+        var project = '{{$data}}'
+        project = project.replace(/[\n\r]/g, "")
+        project = JSON.parse(project.replace(/&quot;/g, '"'));
+        return project;
+    }
+
+    function commafy(num) {
+        num = num + "";
+        var re = /(-?\d+)(\d{3})/
+        while (re.test(num)) {
+            num = num.replace(re, "$1,$2")
+        }
+        return num;
+    }
+
+    
+    
 </script>
 <script>
     //Invoice帳務設定類---------------------------------------------------------------------------------------

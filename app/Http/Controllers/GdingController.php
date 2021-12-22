@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\DefaultItem;
 use App\Gding;
+use App\Invoice;
+use App\Performance;
+use App\Project;
 use Illuminate\Http\Request;
 
 class GdingController extends Controller
@@ -45,7 +49,7 @@ class GdingController extends Controller
             }
             
         }
-        return redirect()->route('project.edit', $project_id);
+        return redirect()->route('project.setCost', $project_id);
     }
 
     public function update(Request $request,String $project_id,String $id){
@@ -60,12 +64,13 @@ class GdingController extends Controller
         $gding_item->note = $request->input('EditDging_note');
         $gding_item->price = $request->input('EditDging_price');
         $gding_item->save();
-        return redirect()->route('project.edit', $project_id);
+
+        return redirect()->route('project.setCost', $project_id);
     }
 
     public function delete(Request $request,String $project_id,String $id){
         $gding_item = Gding::find($id);
-        $gding_all = Gding::all();
+        $gding_all = Gding::where('project_id','=',$project_id)->get();
         foreach($gding_all as $item){
             if($item['num'] > $gding_item['num']){
                 $j = $item['num'];
@@ -75,8 +80,8 @@ class GdingController extends Controller
             }
         }
         $gding_item->delete();
+        return redirect()->route('project.setCost', $project_id);
 
-        return redirect()->route('project.edit', $project_id);
     }
 
 }

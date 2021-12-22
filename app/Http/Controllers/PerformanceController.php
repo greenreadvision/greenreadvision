@@ -56,7 +56,7 @@ class PerformanceController extends Controller
         $project->performance_id = $newId;
         $project->save();
 
-        return redirect()->route('project.edit', $project_id);
+        return redirect()->route('project.setCost', $project_id);
 
 
     }
@@ -98,7 +98,7 @@ class PerformanceController extends Controller
 
         $performance->save();
 
-        return redirect()->route('project.edit', $project_id);
+        return redirect()->route('project.setCost', $project_id);
         
     }
 }
