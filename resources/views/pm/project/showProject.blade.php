@@ -577,6 +577,7 @@
             total_default += amount
             console.log('total_default = '+ total_default)
             $('#default_amount_' + projectData.defaults[i].no).html(commafy(amount))
+            console.log(commafy(amount))
             
         }
     }

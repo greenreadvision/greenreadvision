@@ -34,7 +34,7 @@ class DefaultController extends Controller
         if ($max > $j) {
             $j = $max;
         }
-
+        $j = $j+1;
         DefaultItem::create([
             'no' => $j,
             'project_id' => $project_id,
