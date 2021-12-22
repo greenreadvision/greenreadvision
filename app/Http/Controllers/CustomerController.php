@@ -23,8 +23,8 @@ class CustomerController extends Controller
         $request->validate([
             'name' => 'required|string',
             'bank_id' => 'nullable|string',
-            'tax_id' => 'required|string',
-            'address' => 'required|string',
+            'tax_id' => 'nullable|string',
+            'address' => 'nullable|string',
             'principal' => 'required|string',
             'sex' => 'required|string',
             'phone' => 'required|string',
