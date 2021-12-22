@@ -480,7 +480,7 @@ class InvoiceController extends Controller
             'price' => 'required|integer',
             'receipt_file' => 'nullable|file',
             'detail_file' => 'nullable|file',
-            
+            'remittance_date' => 'nullable|date',
             'reviewer' => 'required|string'
         ]);
         if($invoice->company_name != $request->input('company_name')){  //如果有更改公司
@@ -581,6 +581,10 @@ class InvoiceController extends Controller
             $invoice_id = $id;
         }else{
             $invoice->update($request->except('_method', '_token', 'receipt_file', 'detail_file'));
+            if($request->input('remittance_date')!=''){
+                $invoice->remittance_date = $request->input('remittance_date');
+                $invoice->save();
+            }
             if ($request->hasFile('receipt_file')) {
                 if ($request->receipt_file->isValid()) {
                     \Illuminate\Support\Facades\Storage::delete($invoice->receipt_file);

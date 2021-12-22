@@ -398,6 +398,10 @@ class OtherInvoiceController extends Controller
             $invoice_id = $id;
         }else{
             $invoice->update($request->except('_method', '_token', 'receipt_file', 'detail_file'));
+            if($request->input('remittance_date')!=''){
+                $invoice->remittance_date = $request->input('remittance_date');
+                $invoice->save();
+            }
             // Invoice::where('invoice_id', $invoice_id)->updated_at = now();
     
             if ($request->hasFile('receipt_file')){
