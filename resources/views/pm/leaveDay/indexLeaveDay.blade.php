@@ -132,33 +132,35 @@
             <div class="card border-0 shadow mb-3">
                 <div class="row">
                     <div class="col-lg-4 py-2 text-center cursor-pointer" onclick="changeStatus()">
-                        <small>應休</small>
+                        <small class="text-danger">整體未休</small>
+                        <h4 class="status-d text-danger">
+                            {{((double)$total_wait_break)}}天
+                        </h4>
+                        <h4 class="status-h text-danger" hidden>
+                            {{((double)$total_wait_break)*8}}小時
+                        </h4>
+                    </div>
+                    
+                    <div class="col-lg-4 py-2 text-center cursor-pointer" onclick="changeStatus()">
+                        <small>{{$year}}年度應休</small>
                         <h4 class="status-d">
-                            {{((double)$total_should_break)}}天
+                            {{((double)$year_should_break)}}天
                         </h4>
                         <h4 class="status-h" hidden>
-                            {{((double)$total_should_break)*8}}小時
+                            {{((double)$year_should_break)*8}}小時
                         </h4>
                     </div>
                     <div class="col-lg-4 py-2 text-center cursor-pointer" onclick="changeStatus()">
-                        <small>已休</small>
+                        <small>{{$year}}年度已休</small>
                         <h4 class="status-d">
-                            {{((double)$total_has_break['compensatory_leave_break'])}}天
+                            {{((double)$year_has_break['compensatory_leave_break'])}}天
                         </h4>
                         <h4 class="status-h" hidden>
-                            {{((double)$total_has_break['compensatory_leave_break'])*8}}小時
+                            {{((double)$year_has_break['compensatory_leave_break'])*8}}小時
                         </h4>
                     </div>
 
-                    <div class="col-lg-4 py-2 text-center cursor-pointer" onclick="changeStatus()">
-                        <small class="text-danger">未休</small>
-                        <h4 class="status-d text-danger">
-                            {{((double)$total_should_break)-((double)$total_has_break['compensatory_leave_break'])}}天
-                        </h4>
-                        <h4 class="status-h text-danger" hidden>
-                            {{(((double)$total_should_break)-((double)$total_has_break['compensatory_leave_break']))*8}}小時
-                        </h4>
-                    </div>
+                    
 
                 </div>
             </div>
