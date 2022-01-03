@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Goods extends Model
 {
     public function user() { return $this->belongsTo('App\User', 'user_id', 'user_id'); }
-    
     public function purchases() { return $this->belongsTo('App\Purchase', 'purchase_id', 'purchase_id'); }
 
     public $incrementing = false;

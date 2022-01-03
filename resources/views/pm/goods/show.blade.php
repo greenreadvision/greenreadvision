@@ -217,7 +217,7 @@
                               <div class="col-lg-12 form-group">
                                 <label class="label-style col-form-label" for="freight_name">採購單號</label>
                                 <div class="input-group mb-3">
-                                  <input readonly style="border-top-left-radius: 25px;border-bottom-left-radius: 25px" id="purchase_id" autocomplete="off" type="text" name="purchase_id" class="form-control {{ $errors->has('purchase_id') ? ' is-invalid' : '' }}" value="{{$purchase->id}}">
+                                  <input readonly style="border-top-left-radius: 25px;border-bottom-left-radius: 25px" id="purchase_id" autocomplete="off" type="text" name="purchase_id" class="form-control {{ $errors->has('purchase_id') ? ' is-invalid' : '' }}" value="{{$good->purchase['id']}}">
                                   <div class="input-group-append">
                                       <button type="submit" class="btn btn-green" id="button-addon2" style="border-top-right-radius: 25px;border-bottom-right-radius: 25px"><span class="mx-2">{{__('customize.Save')}}</span></button>
                                   </div>
@@ -495,7 +495,7 @@
         <div class="card border-0 shadow h-100">
           <div class="card-body">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $purchase->user_id)
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#signerModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#signerModal"  hidden></i>
@@ -514,7 +514,7 @@
         <div class="card border-0 shadow  h-100">
           <div class="card-body">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $purchase->user_id)
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#goodNameModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#goodNameModal"  hidden></i>
@@ -534,7 +534,7 @@
         <div class="card border-0 shadow  h-100">
           <div class="card-body">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $purchase->user_id)
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#remarkModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#remarkModal"  hidden></i>
@@ -553,7 +553,7 @@
         <div class="card border-0 shadow h-100">
           <div class="card-body">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $purchase->user_id)
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#purchaseModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#purchaseModal"  hidden></i>
@@ -563,7 +563,7 @@
               採購單號
             </div>
             <div class="col-lg-12 text-center">
-              <h3>{{$purchase->id}}</h3>
+              <h3>{{$good->purchase['id']}}</h3>
             </div>
           </div>
         </div>
@@ -572,7 +572,7 @@
         <div class="card border-0 shadow h-100">
           <div class="card-body">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $purchase->user_id)
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#freightNameModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#freightNameModal"  hidden></i>
@@ -591,7 +591,7 @@
         <div class="card border-0 shadow h-100">
           <div class="card-body">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $purchase->user_id)
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#deliveryNumberModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#deliveryNumberModal"  hidden></i>
@@ -611,7 +611,7 @@
         <div class="card border-0 shadow mb-3 " style="height:100%;max-height:100%">
           <div class="card-body" style="height:100%;max-height:100%">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $purchase->user_id)
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#quantityModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#quantityModal"  hidden></i>
@@ -630,7 +630,7 @@
         <div class="card border-0 shadow mb-3 " style="height:100%;max-height:100%">
           <div class="card-body" style="height:100%;max-height:100%">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $purchase->user_id)
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#quantityModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#quantityModal"  hidden></i>
@@ -669,7 +669,7 @@
         <div class="card border-0 shadow mb-3 " style="height:100%;max-height:100%">
           <div class="card-body" style="height:100%;max-height:100%">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $purchase->user_id)
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#allGoodModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#allGoodModal"  hidden></i>
@@ -693,7 +693,7 @@
         <div class="card border-0 shadow mb-3 " style="height:100%;max-height:100%">
           <div class="card-body" style="height:100%;max-height:100%">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $purchase->user_id)
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#singleGoodModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#singleGoodModal"  hidden></i>
@@ -716,7 +716,7 @@
         <div class="card border-0 shadow mb-3 " style="height:100%;max-height:100%">
           <div class="card-body" style="height:100%;max-height:100%">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $purchase->user_id)
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#defectGoodModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#defectGoodModal"  hidden></i>
@@ -744,7 +744,7 @@
         <div class="card border-0 shadow mb-3 " style="height:100%;max-height:100%">
           <div class="card-body" style="height:100%;max-height:100%">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $purchase->user_id)
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#freightBillModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#freightBillModal"  hidden></i>
@@ -767,7 +767,7 @@
         <div class="card border-0 shadow mb-3 " style="height:100%;max-height:100%">
           <div class="card-body" style="height:100%;max-height:100%">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $purchase->user_id)
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#freightExteriorModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#freightExteriorModal"  hidden></i>
@@ -819,9 +819,6 @@
       purchases = purchases.replace(/[\n\r]/g, "")
       purchases = JSON.parse(purchases.replace(/&quot;/g, '"'));
       reset()
-      for (var i = 0; purchases.length; i++) {
-          $("#list-purchases").append("<option value='" + purchases[i]['id'] + "'></option>");
-      }
   });
 </script>
 

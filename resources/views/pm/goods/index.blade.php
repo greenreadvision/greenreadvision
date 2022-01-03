@@ -285,10 +285,13 @@
         var temp = []
         var projectTemp = []
         for (var i = 0; i < goods.length; i++) {
-            if (temp.indexOf(goods[i].purchases.project['name']) == -1) {
-                temp.push(goods[i].purchases.project['name'])
-                projectTemp.push(goods[i].purchases.project)
+            if(goods[i].purchases!=null){
+                if (temp.indexOf(goods[i].purchases.project['name']) == -1) {
+                    temp.push(goods[i].purchases.project['name'])
+                    projectTemp.push(goods[i].purchases.project)
+                }
             }
+            
         }
         return projectTemp
     }
@@ -325,6 +328,12 @@
         if(goods[i].quantity != null){
             quantity = goods[i].quantity
         }
+        if(goods[i].purchases!=null){
+            var projectName = goods[i].purchases.project['name'];
+        }
+        else{
+            var projectName = '-未填寫-'
+        }
         a = "/goods/" + goods[i]['goods_id']
         tr = "<tr>" +
             "<td><a href='" + a + "'  target='_blank'>" + goods[i].delivery_number + "</td>" +
@@ -333,7 +342,7 @@
             "<td><a href='" + a + "' target='_blank'>" + goods[i].receipt_date + "</td>" +
             "<td><a href='" + a + "' target='_blank'>" + goods[i].good_name + "</a></td>" +
             "<td><a href='" + a + "' target='_blank'>" + quantity + "</td>" +
-            "<td><a href='" + a + "' target='_blank'>" + goods[i].purchases.project['name'] + "</td>" +
+            "<td><a href='" + a + "' target='_blank'>" + projectName + "</td>" +
             "</tr>"
 
 

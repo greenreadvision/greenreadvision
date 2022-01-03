@@ -74,7 +74,7 @@ class GoodsController extends Controller
         })->toArray();
 
         $request->validate([
-            'purchase_id' => 'required|exists:purchases,id',
+            'purchase_id' => 'nullable|exists:purchases,id',
             'freight_name' => 'required|string|min:1|max:255',
             'delivery_number' => 'required|string|min:1|max:50',
             'good_name' => 'required|string|min:1|max:255',
@@ -115,11 +115,15 @@ class GoodsController extends Controller
         //     }
         // }
         $id = RandomId::getNewId($goods_ids);
+        $purchase_id = Null;
+        if($request->input('purchase_id') != ''){
+            $purchase = Purchase::where('id', '=', $request->input('purchase_id'))->get();
+            $purchase_id = $purchase[0]->purchase_id;
+        }
 
-        $purchase = Purchase::where('id', '=', $request->input('purchase_id'))->get();
         $post = Goods::create([
             'goods_id' => $id,
-            'purchase_id' => $purchase[0]->purchase_id,
+            'purchase_id' => $purchase_id,
             'user_id' => \Auth::user()->user_id,
             'signer' => $request->input('signer'),
             'receipt_date' => $request->input('receipt_date'),
@@ -150,7 +154,6 @@ class GoodsController extends Controller
         //
         $good = Goods::find($id);
         $users = [];
-        $purchase = Purchase::find($good->purchase_id);
         $allUsers = User::orderby('nickname')->get();
         foreach ($allUsers as $allUser) {
             if ($allUser->role != 'manager' && $allUser->role != 'resigned') {
@@ -166,7 +169,7 @@ class GoodsController extends Controller
         if ($good->single_good != null) $good->single_good = explode('/', $good->single_good);
         if ($good->defect_goods != null) $good->defect_goods = explode('/', $good->defect_goods);
 
-        return view('pm.goods.show', ['good' => $good, 'users' => $users, 'purchase' => $purchase,'purchases' => $purchases]);
+        return view('pm.goods.show', ['good' => $good, 'users' => $users,'purchases' => $purchases]);
     }
 
     public function update(Request $request, String $id, String $type)
