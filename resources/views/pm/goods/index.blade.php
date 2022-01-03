@@ -338,7 +338,7 @@
         tr = "<tr>" +
             "<td><a href='" + a + "'  target='_blank'>" + goods[i].delivery_number + "</td>" +
             // "<td><a href='" + a + "'  target='_blank'>" + goods[i].purchase_id + "</td>" +
-            "<td><a href='" + a + "'  target='_blank'>" + goods[i].user['name'] + "(" + goods[i].user['nickname'] + ")" + "</td>" +
+            "<td><a href='" + a + "'  target='_blank'>" + goods[i].signer + "</td>" +
             "<td><a href='" + a + "' target='_blank'>" + goods[i].receipt_date + "</td>" +
             "<td><a href='" + a + "' target='_blank'>" + goods[i].good_name + "</a></td>" +
             "<td><a href='" + a + "' target='_blank'>" + quantity + "</td>" +

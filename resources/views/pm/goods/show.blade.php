@@ -217,7 +217,7 @@
                               <div class="col-lg-12 form-group">
                                 <label class="label-style col-form-label" for="freight_name">採購單號</label>
                                 <div class="input-group mb-3">
-                                  <input readonly style="border-top-left-radius: 25px;border-bottom-left-radius: 25px" id="purchase_id" autocomplete="off" type="text" name="purchase_id" class="form-control {{ $errors->has('purchase_id') ? ' is-invalid' : '' }}" value="{{$good->purchase['id']}}">
+                                  <input readonly style="border-top-left-radius: 25px;border-bottom-left-radius: 25px" id="purchase_id" autocomplete="off" type="text" name="purchase_id" class="form-control {{ $errors->has('purchase_id') ? ' is-invalid' : '' }}" value="{{$good->purchases['id']}}">
                                   <div class="input-group-append">
                                       <button type="submit" class="btn btn-green" id="button-addon2" style="border-top-right-radius: 25px;border-bottom-right-radius: 25px"><span class="mx-2">{{__('customize.Save')}}</span></button>
                                   </div>
@@ -312,7 +312,6 @@
       </div>
   </div>
 </div>
-
 <div class="modal fade" id="allGoodModal" tabindex="-1" role="dialog" aria-labelledby="allGoodModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -332,7 +331,7 @@
               <input type="file" name="allGood" accept="image/*" id="allGood" style="display: none">
               @if($good->all_goods != null)
 
-              <img src="{{route('download', $good->all_goods)}}" alt="" id="allGoodImg" class="mb-2" width="100%">
+              <img src="{{route('invoicedownload', $good->all_goods)}}" alt="" id="allGoodImg" class="mb-2" width="100%">
               @else
               <img src="" alt="" id="allGoodImg" class="mb-2" width="100%">
 
@@ -366,7 +365,7 @@
               <button type="button" class="btn btn-green w-100 mb-2" onclick="uploadImg('singleGood')">上傳照片</button>
               <input type="file" name="singleGood" accept="image/*" id="singleGood" style="display: none">
               @if($good->single_good != null)
-              <img src="{{route('download', $good->single_good)}}" alt="" id="singleGoodImg" class="mb-2" width="100%">
+              <img src="{{route('invoicedownload', $good->single_good)}}" alt="" id="singleGoodImg" class="mb-2" width="100%">
               @else
               <img src="" alt="" id="singleGoodImg" class="mb-2" width="100%">
 
@@ -401,7 +400,7 @@
               <input type="file" name="defectGood" accept="image/*" id="defectGood" style="display: none">
               @if($good->defect_goods != null)
 
-              <img src="{{route('download', $good->defect_goods)}}" alt="" id="defectGoodImg" class="mb-2" width="100%">
+              <img src="{{route('invoicedownload', $good->defect_goods)}}" alt="" id="defectGoodImg" class="mb-2" width="100%">
               @else
               <img src="" alt="" id="defectGoodImg" class="mb-2" width="100%">
 
@@ -417,7 +416,6 @@
     </div>
   </div>
 </div>
-
 <div class="modal fade" id="freightExteriorModal" tabindex="-1" role="dialog" aria-labelledby="freightExteriorModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -437,7 +435,7 @@
               <input type="file" name="freightExterior" accept="image/*" id="freightExterior" style="display: none">
               @if($good->freight_exterior != null)
 
-              <img src="{{route('download', $good->freight_exterior)}}" alt="" id="freightExteriorImg" class="mb-2" width="100%">
+              <img src="{{route('invoicedownload', $good->freight_exterior)}}" alt="" id="freightExteriorImg" class="mb-2" width="100%">
               @else
               <img src="" alt="" id="freightExteriorImg" class="mb-2" width="100%">
 
@@ -472,7 +470,7 @@
               <input type="file" name="freightBill" accept="image/*" id="freightBill" style="display: none">
               @if($good->freight_bill != null)
 
-              <img src="{{route('download', $good->freight_bill)}}" alt="" id="freightBillImg" class="mb-2" width="100%">
+              <img src="{{route('invoicedownload', $good->freight_bill)}}" alt="" id="freightBillImg" class="mb-2" width="100%">
               @else
               <img src="" alt="" id="freightBillImg" class="mb-2" width="100%">
 
@@ -488,14 +486,45 @@
     </div>
   </div>
 </div>
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog " role="document">
+      <div class="modal-content">
+          <div class="modal-header border-0">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body text-center ">
+              是否刪除?
+
+          </div>
+          <div class="modal-footer justify-content-center border-0">
+              <button type="button" class="btn btn-red rounded-pill" data-dismiss="modal">否</button>
+              <form action="{{$good->goods_id }}/delete" method="POST">
+                  @method('DELETE')
+                  @csrf
+                  <button type="submit" class="btn btn-blue rounded-pill">是</button>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
 <div class="row justify-content-center">
+  <div class="col-lg-12 mb-3" style="text-align: right">
+    @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchases['user_id']|| \Auth::user()->name == $good->signer)
+      <button type="button" class="btn btn-red rounded-pill" data-toggle="modal" data-target="#deleteModal">
+        <i class='ml-2 fas fa-trash-alt'></i><span class="ml-3 mr-2">{{__('customize.Delete')}}</span>
+      </button>
+    @endif
+  </div>
   <div class="col-lg-9">
     <div class="row">
       <div class="col-lg-4 mb-3">
         <div class="card border-0 shadow h-100">
           <div class="card-body">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchases['user_id']|| \Auth::user()->name == $good->signer)
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#signerModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#signerModal"  hidden></i>
@@ -514,7 +543,7 @@
         <div class="card border-0 shadow  h-100">
           <div class="card-body">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchases['user_id']|| \Auth::user()->name == $good->signer)
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#goodNameModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#goodNameModal"  hidden></i>
@@ -534,7 +563,7 @@
         <div class="card border-0 shadow  h-100">
           <div class="card-body">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchases['user_id']|| \Auth::user()->name == $good->signer)
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#remarkModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#remarkModal"  hidden></i>
@@ -553,7 +582,7 @@
         <div class="card border-0 shadow h-100">
           <div class="card-body">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchases['user_id']|| \Auth::user()->name == $good->signer)
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#purchaseModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#purchaseModal"  hidden></i>
@@ -563,7 +592,11 @@
               採購單號
             </div>
             <div class="col-lg-12 text-center">
-              <h3>{{$good->purchase['id']}}</h3>
+              @if($good->purchase_id !=null)
+              <h3>{{$good->purchases['id']}}</h3>
+              @else
+              <h3>-未填寫-<h3>
+              @endif
             </div>
           </div>
         </div>
@@ -572,7 +605,7 @@
         <div class="card border-0 shadow h-100">
           <div class="card-body">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchases['user_id']|| \Auth::user()->name == $good->signer)
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#freightNameModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#freightNameModal"  hidden></i>
@@ -591,7 +624,7 @@
         <div class="card border-0 shadow h-100">
           <div class="card-body">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchases['user_id']|| \Auth::user()->name == $good->signer)
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#deliveryNumberModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#deliveryNumberModal"  hidden></i>
@@ -611,7 +644,7 @@
         <div class="card border-0 shadow mb-3 " style="height:100%;max-height:100%">
           <div class="card-body" style="height:100%;max-height:100%">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchases['user_id']|| \Auth::user()->name == $good->signer)
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#quantityModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#quantityModal"  hidden></i>
@@ -630,7 +663,7 @@
         <div class="card border-0 shadow mb-3 " style="height:100%;max-height:100%">
           <div class="card-body" style="height:100%;max-height:100%">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchases['user_id']|| \Auth::user()->name == $good->signer)
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#quantityModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#quantityModal"  hidden></i>
@@ -669,7 +702,7 @@
         <div class="card border-0 shadow mb-3 " style="height:100%;max-height:100%">
           <div class="card-body" style="height:100%;max-height:100%">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchases['user_id']|| \Auth::user()->name == $good->signer)
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#allGoodModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#allGoodModal"  hidden></i>
@@ -680,7 +713,7 @@
             </div>
             <div class="col-lg-12 text-center">
               @if($good->all_goods != null)
-              <img src="{{route('download', $good->all_goods)}}" alt="" id="allGoodImg" class="mb-2" width="100%">
+              <img src="{{route('invoicedownload', $good->all_goods)}}" alt="" id="allGoodImg" class="mb-2" width="100%">
               @else
               <img src="" alt="" id="allGoodImg" class="mb-2" width="100%">
               @endif
@@ -693,7 +726,7 @@
         <div class="card border-0 shadow mb-3 " style="height:100%;max-height:100%">
           <div class="card-body" style="height:100%;max-height:100%">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchases['user_id']|| \Auth::user()->name == $good->signer)
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#singleGoodModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#singleGoodModal"  hidden></i>
@@ -704,7 +737,7 @@
             </div>
             <div class="col-lg-12 text-center">
               @if($good->single_good != null)
-              <img src="{{route('download', $good->single_good)}}" alt="" id="singleGoodImg" class="mb-2" width="100%">
+              <img src="{{route('invoicedownload', $good->single_good)}}" alt="" id="singleGoodImg" class="mb-2" width="100%">
               @else
               <img src="" alt="" id="singleGoodImg" class="mb-2" width="100%">
               @endif
@@ -716,7 +749,7 @@
         <div class="card border-0 shadow mb-3 " style="height:100%;max-height:100%">
           <div class="card-body" style="height:100%;max-height:100%">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchases['user_id']|| \Auth::user()->name == $good->signer)
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#defectGoodModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#defectGoodModal"  hidden></i>
@@ -727,7 +760,7 @@
             </div>
             <div class="col-lg-12 text-center">
               @if($good->defect_goods != null)
-              <img src="{{route('download', $good->defect_goods)}}" alt="" id="defectGoodImg" class="mb-2" width="100%">
+              <img src="{{route('invoicedownload', $good->defect_goods)}}" alt="" id="defectGoodImg" class="mb-2" width="100%">
               @else
               <img src="" alt="" id="defectGoodImg" class="mb-2" width="100%">
               @endif
@@ -744,7 +777,7 @@
         <div class="card border-0 shadow mb-3 " style="height:100%;max-height:100%">
           <div class="card-body" style="height:100%;max-height:100%">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchases['user_id']|| \Auth::user()->name == $good->signer)
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#freightBillModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#freightBillModal"  hidden></i>
@@ -755,7 +788,7 @@
             </div>
             <div class="col-lg-12 text-center">
               @if($good->freight_bill != null)
-              <img src="{{route('download', $good->freight_bill)}}" alt="" id="freightBillImg" class="mb-2" width="100%">
+              <img src="{{route('invoicedownload', $good->freight_bill)}}" alt="" id="freightBillImg" class="mb-2" width="100%">
               @else
               <img src="" alt="" id="freightBillImg" class="mb-2" width="100%">
               @endif
@@ -767,7 +800,7 @@
         <div class="card border-0 shadow mb-3 " style="height:100%;max-height:100%">
           <div class="card-body" style="height:100%;max-height:100%">
             <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchase['user_id'])
+              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchases['user_id']|| \Auth::user()->name == $good->signer)
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#freightExteriorModal"></i>
               @else
               <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#freightExteriorModal"  hidden></i>
@@ -778,7 +811,7 @@
             </div>
             <div class="col-lg-12 text-center">
               @if($good->freight_exterior != null)
-              <img src="{{route('download', $good->freight_exterior)}}" alt="" id="freightExteriorImg" class="mb-2" width="100%">
+              <img src="{{route('invoicedownload', $good->freight_exterior)}}" alt="" id="freightExteriorImg" class="mb-2" width="100%">
               @else
               <img src="" alt="" id="freightExteriorImg" class="mb-2" width="100%">
               @endif
