@@ -136,9 +136,9 @@ class InvoiceController extends Controller
         //
         $bank = Bank::orderby('name')->get();
         $projects = Project::select('project_id', 'name', 'status')->orderby('created_at', 'desc')->get()->toArray();
-        $rv = Project::where('company_name', '=', 'rv')->orderby('created_at', 'desc')->get();
-        $grv = Project::where('company_name', '=', 'grv')->orderby('created_at', 'desc')->get();
-        $grv2 = Project::where('company_name', '=', 'grv_2')->orderby('created_at', 'desc')->get();
+        $rv = Project::where('company_name', '=', 'rv')->where('status','=','running')->orderby('created_at', 'desc')->get();
+        $grv = Project::where('company_name', '=', 'grv')->where('status','=','running')->orderby('created_at', 'desc')->get();
+        $grv2 = Project::where('company_name', '=', 'grv_2')->where('status','=','running')->orderby('created_at', 'desc')->get();
 
         $users = [];
         $allUsers = User::orderby('user_id')->get();
@@ -436,9 +436,9 @@ class InvoiceController extends Controller
         foreach ($projects as $key => $project) {
             $projects[$key]['selected'] = ($project['project_id'] == $invoice->project_id) ? "selected" : " ";
         }
-        $rv = Project::where('company_name', '=', 'rv')->orderby('created_at', 'desc')->get();
-        $grv = Project::where('company_name', '=', 'grv')->orderby('created_at', 'desc')->get();
-        $grv2 = Project::where('company_name', '=', 'grv_2')->orderby('created_at', 'desc')->get();
+        $rv = Project::where('company_name', '=', 'rv')->where('status','=','running')->orderby('created_at', 'desc')->get();
+        $grv = Project::where('company_name', '=', 'grv')->where('status','=','running')->orderby('created_at', 'desc')->get();
+        $grv2 = Project::where('company_name', '=', 'grv_2')->where('status','=','running')->orderby('created_at', 'desc')->get();
 
         $users = [];
         $allUsers = User::orderby('user_id')->get();
