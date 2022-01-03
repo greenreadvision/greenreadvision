@@ -231,7 +231,17 @@
                         
                     </div>
                 </div>
-                <div class="card card-style" {{$data['project']->status == 'unacceptable'? 'hidden' : ''}}>
+                <div class="card card-style col-lg-12">
+                    <div class="px-3">
+                        <div class="card-header bg-white">
+                            <i class='fas fa-book-open' style="font-size:1.5rem;"></i><label class="ml-2 col-form-label ">專案備註</label>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <textarea name="project_note" id="project_note" rows="6" class="my-1 form-control" placeholder="尚未編輯" oninput="setTextArea()">{{$data['project']->project_note==null? '': $data['project']->project_note}}</textarea>
+                    </div>
+                </div>
+                <div class="card card-style col-lg-12" {{$data['project']->status == 'unacceptable'? 'hidden' : ''}}>
                     <div class="px-3">
                         <div class="card-header bg-white">
                             <i class='fas fa-user-circle' style="font-size:1.5rem;"></i><label class="ml-2 col-form-label ">{{__('customize.project_sop')}}</label>
@@ -1504,6 +1514,11 @@
             document.getElementById('default_content').value = ""
         }
        
+    }
+
+    function setTextArea(){
+        var textarea = document.getElementById('project_note').value
+        textarea = textarea.replace(/\r/ig, '').replace(/\n/ig, '<br/>')
     }
     
 

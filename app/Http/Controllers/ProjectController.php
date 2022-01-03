@@ -187,6 +187,7 @@ class ProjectController extends Controller
             'effective_interest_rate' => 'nullable|string|max:255',
             'color' => 'required|string|size:7',
             'status' => 'nullable|string',
+            'project_note' => 'nullable|string',
             'Acceptance_times' => 'required|string|size:1',
             'income_statement' => 'nullable|file'
         ]);
@@ -274,6 +275,7 @@ class ProjectController extends Controller
         $project->actual_cost = $request->input('actual_cost');
         $project->actual_profit = $request->input('actual_profit');
         $project->effective_interest_rate = $request->input('effective_interest_rate');
+        $project->project_note = $request->input('project_note');
         $project->save();
         
 

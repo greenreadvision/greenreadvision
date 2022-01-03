@@ -19,7 +19,7 @@ class Project extends Model
 
     public $incrementing = false;
     protected $primaryKey = "project_id";
-    protected $fillable = ['project_id', 'user_id','company_name', 'name', 'beginning_date', 'deadline_date', 'deadline_time','open_date', 'open_time','closing_date', 'contract_value','case_num','default_fine', 'color', 'status','estimated_cost','estimated_profit','actual_cost','actual_profit','effective_interest_rate','receiver','acceptance_times','default_num','performance_id','income_statement'];
+    protected $fillable = ['project_id', 'user_id','company_name', 'name', 'beginning_date', 'deadline_date', 'deadline_time','open_date', 'open_time','closing_date', 'contract_value','case_num','default_fine', 'color', 'status','estimated_cost','estimated_profit','actual_cost','actual_profit','effective_interest_rate','receiver','acceptance_times','default_num','performance_id','income_statement','project_note'];
     //
     // protected $project_id = "project_id";
     // protected $user_id = "user_id";

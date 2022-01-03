@@ -110,6 +110,16 @@
                     </div>
                 </div>
             </div>
+            <div class="card card-style col-lg-12">
+                <div class="px-3">
+                    <div class="card-header bg-white">
+                        <i class='fas fa-book-open' style="font-size:1.5rem;"></i><label class="ml-2 col-form-label ">專案備註</label>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="content-label-style col-form-label" id= 'project_note'>{{$data->project_note==null? '-未填寫-': $data->project_note}}</p>
+                </div>
+            </div>
             <div class="card card-style" {{$data->status == 'unacceptable'? 'hidden' : ''}}>
                 <div class="px-3">
                     <div class="card-header bg-white">
@@ -531,7 +541,6 @@
         var invoice = '{{$data->invoices}}'
         invoice = invoice.replace(/[\n\r]/g, "")
         invoice = JSON.parse(invoice.replace(/&quot;/g, '"'));
-        
         setInvoice()
         setGDing()
         
@@ -550,9 +559,10 @@
         });
         setTex()
         setdefault()
-        
-
         $("#total-price").html(commafy(total))
+
+        
+        settextArea()
     });
 
     function setTex(){
@@ -580,6 +590,15 @@
             console.log(commafy(amount))
             
         }
+    }
+
+    function settextArea(){
+        project_note = document.getElementById('project_note').textContent;
+        
+        project_note = project_note.replace(/\r?\n/g, '<br/>')
+        console.log(project_note)
+        document.getElementById('project_note').innerHTML = project_note
+        
     }
 
     function getProjectData(){
