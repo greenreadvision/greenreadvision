@@ -37,7 +37,7 @@ class LeaveDayApplyController extends Controller
         } else if ($request->input('length_long') == 'day' || $request->input('length_long') == 'half') {
             $apply_date = date("Y-m-d", strtotime($request->input('another_day')));
         } else if ($request->input('length_long') == 'hours') {
-            $apply_date = date("Y-m-d", strtotime($request->input('another_day'))) . ' ' . $request->input('start_time') . '~' . $request->input('end_time');
+            $apply_date = date("Y-m-d", strtotime($request->input('another_day'))) . ' ' . $request->input('start_time') . '~' . date("Y-m-d", strtotime($request->input('end_another_day'))). ' ' . $request->input('end_time');
         }
 
         $post = LeaveDayApply::create([

@@ -46,7 +46,7 @@ class LeaveDayBreakController extends Controller
             case 'hours':
                 $start_datetime = $request->another_day . ' ' . $request->start_time;
                 $end_datetime = $request->another_day . ' ' . $request->end_time;
-                $date = date("Y-m-d", strtotime($request->another_day)) . ' ' . $request->start_time . '~' . $request->end_time;
+                $date = date("Y-m-d", strtotime($request->another_day)) . ' ' . $request->start_time . '~' .  date("Y-m-d", strtotime($request->end_another_day)). ' ' . $request->end_time;
 
                 break;
             default:
