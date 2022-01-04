@@ -136,9 +136,9 @@ class InvoiceController extends Controller
         //
         $bank = Bank::orderby('name')->get();
         $projects = Project::select('project_id', 'name', 'status')->orderby('created_at', 'desc')->get()->toArray();
-        $rv = Project::where('company_name', '=', 'rv')->where('status','=','running')->orderby('created_at', 'desc')->get();
-        $grv = Project::where('company_name', '=', 'grv')->where('status','=','running')->orderby('created_at', 'desc')->get();
-        $grv2 = Project::where('company_name', '=', 'grv_2')->where('status','=','running')->orderby('created_at', 'desc')->get();
+        $rv = Project::where('company_name', '=', 'rv')->where('status','!=','close')->orderby('created_at', 'desc')->get();
+        $grv = Project::where('company_name', '=', 'grv')->where('status','!=','close')->orderby('created_at', 'desc')->get();
+        $grv2 = Project::where('company_name', '=', 'grv_2')->where('status','!=','close')->orderby('created_at', 'desc')->get();
 
         $users = [];
         $allUsers = User::orderby('user_id')->get();
