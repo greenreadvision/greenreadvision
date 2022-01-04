@@ -195,8 +195,16 @@
                         iDays = 24 - hour_diff
                         var endDate = new Date(another_day)
                         endDate.setDate(endDate.getDate() + 1)
-                        console.log(endDate.getFullYear() + '-' + (endDate.getMonth()+1) + '-' +  endDate.getDate())
-                        end_another_day.value = endDate.getFullYear() + '-' + (endDate.getMonth()+1) + '-' +  endDate.getDate()
+                        var end_another_day_month = endDate.getMonth()+1
+                        var end_another_day_Date = endDate.getDate()
+                        if(end_another_day_month<10){
+                            end_another_day_month = '0'+end_another_day_month
+                        }
+                        if(end_another_day_Date<10){
+                            end_another_day_Date = '0'+end_another_day_Date
+                        }
+                        end_another_day.value = endDate.getFullYear() + '-' + end_another_day_month + '-' +  end_another_day_Date
+                        console.log(end_another_day.value)
                         
                     }else if(start_time < end_time){
                         end_another_day.value = another_day
