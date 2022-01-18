@@ -217,11 +217,12 @@
                                         <option value="GRV00002">蔡貴瑄</option>
                                     </optgroup>
                                     <optgroup id="optgroup-2" label="3000~10000元">
-                                        @foreach($data['reviewers'] as $reviewer)
+                                        <!--@foreach($data['reviewers'] as $reviewer)
                                         @if($reviewer['status'] != 'resign')
                                         <option value="{{$reviewer['user_id']}}">{{$reviewer->name}}</option>
                                         @endif
-                                        @endforeach
+                                        @endforeach-->
+                                        <option value="GRV00001">吳奇靜</option>
                                     </optgroup>
                                     <optgroup id="optgroup-3" label="10000元以上">
                                         <option value="GRV00001">吳奇靜</option>

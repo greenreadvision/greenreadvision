@@ -84,6 +84,12 @@
                             <div class="col-lg-11 fileButton rounded-pill form-control">
                                 <input type="file" id="file" name="file[]" onchange="AddFile()" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"  multiple/>檔案上傳請按這
                             </div>
+                            <div class="form-group">
+                                <label class="control-label">Select File</label>
+                                <input id="input-b5" name="input-b5[]" class="file" type="file" multiple>
+                                {{ csrf_field() }}
+                            </div>
+
                             <label class="col-lg-12 col-form-label">整體簡介</label>
                             <div class="col-lg-12">
                                 <textarea type="text" style="resize:none;" name="content" id="content" rows="3" class="rounded-pill form-control"></textarea>
@@ -128,6 +134,7 @@
                             <div class="col-lg-11 fileButton rounded-pill form-control">
                                 <input type="file" id="other_file" name="other_file[]" onchange="AddFile()" class="rounded-pill form-control" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf" multiple/>檔案上傳請按這
                             </div>
+                            
                             <label class="col-lg-12 col-form-label">簡介</label>
                             <div class="col-lg-12">
                                 <textarea type="text" style="resize:none;" name="otherContent" id="otherContent" rows="3" class="rounded-pill form-control"></textarea>
@@ -147,14 +154,41 @@
                 </div>
             </div>
         </div>
+        <script type="text/javascript">
+            // initialize with defaults
+            $(function(){
+                $("#input-b5").fileinput({
+                    showCaption: false,
+                    theme: 'fas',
+                    language: 'zh-tw',
+                    uploadUrl: '../SOP',
+                    allowedFileExtensions: ['jpg', 'png', 'gif','xlsx','pdf']
+                });
+            });
+        
+        </script>
     </form>
 </div>
 
 @stop
 
 @section('script')
-<script type="text/javascript" src="{{ URL::asset('js/jquery.min.js') }}"></script>
-<script type="text/javascript" src="https://unpkg.com/xlsx@0.14.0/dist/xlsx.full.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script  type="text/javascript" src="https://unpkg.com/xlsx@0.14.0/dist/xlsx.full.min.js"></script>
+<script src="../node_modules/bootstrap-fileinput/js/fileinput.js" type="text/javascript"></script>
+<script src="../node_modules/bootstrap-fileinput/js/locales/fr.js" type="text/javascript"></script>
+<script src="../node_modules/bootstrap-fileinput/js/locales/es.js" type="text/javascript"></script>
+<script src="../node_modules/bootstrap-fileinput/themes/fas/theme.js" type="text/javascript"></script>
+<script src="../node_modules/bootstrap-fileinput/themes/explorer-fas/theme.js" type="text/javascript"></script>
+
+
+
+
+ 
+
 <script>
     var SOPtype = "project"
     var company = ""
@@ -281,12 +315,7 @@
     }
 </script>
 <script>
-    $(document).ready(function() {
-        document.getElementsByClassName('otherSOP')[0].style.display = "none";
-        resetFileList()
-        project_list = getNewProject()
-        listProject()
-    });
+    
 
     function resetFileList(){
         $('#file_table').empty()
@@ -399,6 +428,7 @@
                 }else if((fsize/1024)>1024){
                     sizeWord = ((fsize/1024)/1024).toFixed(2) + "MB"
                 }
+                console.log(sizeWord)
     
                 var contentInput = "<textarea rows=\"2\" style=\"width: 100%;text-align:left;\" id=\"file-content-"+ fileListNum +"-" + j + "\" name=\"file-content-"+ fileListNum+"-"+ j + "\">{{old('file-content-"+ fileNum +"')}}</textarea>"
                 if(j==0){
@@ -439,5 +469,5 @@
         EditContent.value =""
     }
 
-    
+
 </script>

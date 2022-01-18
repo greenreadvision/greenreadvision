@@ -43,7 +43,7 @@ class InvoiceController extends Controller
     {
         $users = [];
         $allUsers = User::orderby('user_id')->get();
-        $ZipDir = storage_path("app/"."zip/");
+        $ZipDir = storage_path("app/public/"."zip/");
         $fileNum = count(glob("$ZipDir/*.*"));
         foreach ($allUsers as $allUser) {
             if ($allUser->role != 'manager' && count($allUser->invoices) != 0) {
@@ -346,14 +346,14 @@ class InvoiceController extends Controller
      */
     public function downLoadZip(Request $request){
         $today = substr(now()->toDateTimeString('Y-m-d'), 0, 10);
-        $ZipDir = storage_path("app/"."zip/");
+        $ZipDir = storage_path("app/public/"."zip/");
         $fileNum = count(glob("$ZipDir/*.*"));
         $file = '';
         $msg = '';
         $path = [];
         $data =json_decode($request->input('file'));
         $zip = new ZipArchive();
-        $fileName = storage_path("app/"."zip/" .  $today."_". $fileNum . '.zip');
+        $fileName = storage_path("app/public/"."zip/" .  $today."_". $fileNum . '.zip');
         if ($zip->open($fileName, ZIPARCHIVE::CREATE) === TRUE){
             foreach($data as $key => $item){
                 if ($item->receipt_file != null) {
@@ -379,11 +379,11 @@ class InvoiceController extends Controller
     }
 
     public function deleteZip(){
-        $ZipDir = storage_path("app/"."zip/");
+        $ZipDir = storage_path("app/public/"."zip/");
         $fileNum = count(glob("$ZipDir/*.*"));
         if($fileNum > 0 ){
-            Storage::delete(Storage::files('zip'));
-            $dirs = Storage::directories('zip');
+            Storage::delete(Storage::files('public/zip'));
+            $dirs = Storage::directories('public/zip');
             foreach($dirs as $dir){
                 Storage::deleteDirectory($dir);
             }

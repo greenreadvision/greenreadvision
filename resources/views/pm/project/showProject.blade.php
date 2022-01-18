@@ -328,7 +328,7 @@
                         
                         <thead>
                             <tr style="font-size:1.5rem;text-align:center" >
-                                <th colspan="5">{{__('customize.default_fine')}}：{{number_format($data->default_fine)}}<i ></i></th>
+                                <th colspan="5" id='total_default'>{{__('customize.default_fine')}}：{{number_format($data->default_fine)}}<i ></i></th>
                             </tr>
                             <tr>
                                 <th style="width: 40%">違約工項說明</th>
@@ -419,9 +419,9 @@
                                     @if($key=='estimated_cost'||$key=='estimated_profit'||$key=='actual_cost'||$key=='actual_profit'||$key=='effective_interest_rate')
                                         @if(\Auth::user()->user_id==$data['user_id']||\Auth::user()->role=='manager' ||\Auth::user()->role=='pm')
                                             @if($key=='effective_interest_rate')
-                                            <div {{$data->status == 'unacceptable'? 'hidden' : ''}}>
-                                                <div><label class="ml-2 col-form-label font-weight-bold">{{__('customize.'.$key)}}(填數字)</label></div>
-                                                <div class="d-flex justify-content-center"><label class="content-label-style col-form-label">{{$value==null? '-未填寫-': $value.'%'}}</label></div>
+                                            <div {{$data->status != 'close'? 'hidden' : ''}}>
+                                                <div><label class="ml-2 col-form-label font-weight-bold">{{__('customize.'.$key)}}</label></div>
+                                                <div class="d-flex justify-content-center"><label class="content-label-style col-form-label"  id = "{{$key}}">{{$value==null? '-未填寫-': $value.'%'}}</label></div>
                                             </div>
                                             @elseif($key=='estimated_cost'||$key=='estimated_profit'||$key=='actual_profit')
                                             <div {{$data->status == 'unacceptable'? 'hidden' : ''}}>
@@ -535,18 +535,19 @@
 <script>
     var projectData = []
     var total_default = 0 
+    var InvoiceCost = 0
+    var GdingCost = 0
     $(document).ready(function() {
         projectData = getProjectData()
         var total = 0
         var invoice = '{{$data->invoices}}'
+
         invoice = invoice.replace(/[\n\r]/g, "")
         invoice = JSON.parse(invoice.replace(/&quot;/g, '"'));
+
+        DGing_table = getNewDGing()
         setInvoice()
         setGDing()
-        
-        for (var i = 0; i < invoice.length; i++) {
-            total += invoice[i].price
-        }
         $('#invoice_cost_button').click(function(){
             nowPage = 1
             setInvoiceTable()
@@ -563,6 +564,8 @@
 
         
         settextArea()
+
+        setInterestRate()
     });
 
     function setTex(){
@@ -590,6 +593,8 @@
             console.log(commafy(amount))
             
         }
+        console.log(document.getElementById('total_default').innerHTML)
+        document.getElementById('total_default').innerHTML = "{{__('customize.default_fine')}}" + "：" + commafy(total_default)
     }
 
     function settextArea(){
@@ -606,6 +611,17 @@
         project = project.replace(/[\n\r]/g, "")
         project = JSON.parse(project.replace(/&quot;/g, '"'));
         return project;
+    }
+
+    function setInterestRate(){
+        var effective_interest_rate = document.getElementById('effective_interest_rate')
+        var contract_value = projectData.contract_value * 0.95
+        var actual_profit = contract_value-total_default-InvoiceCost-GdingCost
+        document.getElementById('actual_profit').innerHTML = commafy(actual_profit)
+        document.getElementById('actual_cost').innerHTML = commafy(total_default+InvoiceCost+parseInt(GdingCost))
+        var temp =  (actual_profit/contract_value)*100
+        temp = temp.toFixed(2)
+        effective_interest_rate.innerHTML = temp + '%'
     }
 
     function commafy(num) {
@@ -640,7 +656,7 @@
         }
     
         function setInvoiceCost(){
-            var InvoiceCost = 0
+           
             var invoice = "{{$data->invoices}}"
             invoice = invoice.replace(/[\n\r]/g, "")
             invoice = JSON.parse(invoice.replace(/&quot;/g, '"'));
@@ -919,13 +935,14 @@
             return data
         }
         function setDGingCost(){
-            var GdingCost = 0
+            
             var Gding = "{{$gding_table}}"
             Gding = Gding.replace(/[\n\r]/g, "")
             Gding = JSON.parse(Gding.replace(/&quot;/g, '"'));
             for (var i = 0; i < Gding.length; i++) {
-                GdingCost += Gding[i].price
+                GdingCost += Gding[i].price*1.05
             }
+            GdingCost = GdingCost.toFixed()
             $('#dging_cost').text("$" + commafy(GdingCost));
         }
         function setDGingTable(){
@@ -1087,7 +1104,7 @@
                 "<td width='10%'>" + DGing_table[i].num + "</td>" +
                 "<td width='40%'>" + DGing_table[i].title + "</td>" +
                 "<td width='40%'>" + DGing_table[i].note + "</a></td>" +
-                "<td width='10%'>" + commafy(DGing_table[i].price) + "</td>" +
+                "<td width='10%'>" + commafy((DGing_table[i].price*1.05).toFixed()) + "</td>" +
                 "</tr>";
             
             setDGingModal(DGing_table[i].num)

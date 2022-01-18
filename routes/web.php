@@ -183,7 +183,7 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/estimate/index','EstimateController@index')->name('estimate.index');
     Route::get('/estimate/{id}/show','EstimateController@show')->name('estimate.show');
     Route::get('/estimate/create','EstimateController@create')->name('estimate.create');
-    Route::post('/estimate/create/store',"EstimateController@store")->name('estimate.create.store');
+    Route::post('/estimate/create/review',"EstimateController@store")->name('estimate.create.store');
     Route::get('/estimate/{id}/edit','EstimateController@edit')->name('estimate.edit');
     Route::post('/estimate/{id}/update','EstimateController@update')->name('estimate.update');
     Route::delete('/estimate/{id}/delete','EstimateController@destroy')->name('estimate.delete');
@@ -313,13 +313,10 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/projectSOP/{id}/show','ProjectSOPController@show')->name('projectSOP.show');
     Route::get('/projectSOP/create','ProjectSOPController@create')->name('projectSOP.create');
     Route::post('/projectSOP/create/store',"ProjectSOPController@store")->name('projectSOP.create.store');
-    
-});
-
-Route::group(['middleware' => ['auth', 'staffManager']], function () {
     Route::get('/projectSOP/{id}/edit','ProjectSOPController@edit')->name('projectSOP.edit');
     Route::post('/projectSOP/{id}/update','ProjectSOPController@update')->name('projectSOP.update');
     Route::delete('/projectSOP/{id}/delete','ProjectSOPController@destroy')->name('projectSOP.delete');
+    
 });
 
 

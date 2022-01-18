@@ -12,7 +12,7 @@
                                 
                             <div class="col-lg-6">
                                 <div class="form-group row">
-                                    <input type="text" id="customer_id" name="customer_id" class="rounded-pill form-control{{ $errors->has('customer_id') ? ' is-invalid' : '' }}" value="{{ old('customer_id') }}" required hidden>
+                                    <input type="text" id="customer_id" name="customer_id" class="rounded-pill form-control{{ $errors->has('customer_id') ? ' is-invalid' : '' }}" value="{{ old('customer_id') }}" hidden>
                                     <div class="col-lg-12 form-group">
                                         <label class="label-style col-form-label" for="estimate_id">報價單號</label>
                                         <input autocomplete="off" type="text" id="estimate_id" name="estimate_id" class="rounded-pill form-control{{ $errors->has('estimate_id') ? ' is-invalid' : '' }}" value="{{$id}}" required readOnly>
@@ -36,7 +36,7 @@
                                     </div>
                                     <div class="col-lg-6 form-group">
                                         <label class="label-style col-form-label" for="customer_name">廠商名稱</label>
-                                        <input type="text" id="customer_name" name="customer_name" class="rounded-pill form-control{{ $errors->has('customer_name') ? ' is-invalid' : '' }}" value="{{ old('customer_name') }}" required>
+                                        <input type="text" id="customer_name" name="customer_name" onkeydown="checkCustomer()" class="rounded-pill form-control{{ $errors->has('customer_name') ? ' is-invalid' : '' }}" value="{{ old('customer_name') }}" required>
                                         @if ($errors->has('customer_name'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('customer_name') }}</strong>
@@ -45,7 +45,7 @@
                                     </div>
                                     <div class="col-lg-6 form-group">
                                         <label class="label-style col-form-label" for="customer_principal">廠商負責人</label>
-                                        <input autocomplete="off" type="text" id="customer_principal" name="customer_principal" class="rounded-pill form-control{{ $errors->has('customer_principal') ? ' is-invalid' : '' }}" value="{{ old('customer_principal') }}" required>
+                                        <input autocomplete="off" type="text" id="customer_principal" name="customer_principal" onkeydown="checkCustomer()" class="rounded-pill form-control{{ $errors->has('customer_principal') ? ' is-invalid' : '' }}" value="{{ old('customer_principal') }}" required>
                                         @if ($errors->has('customer_principal'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('customer_principal') }}</strong>
@@ -54,7 +54,7 @@
                                     </div>
                                     <div class="col-lg-6 form-group">
                                         <label class="label-style col-form-label" for="customer_phone">聯絡電話</label>
-                                        <input type="text" id="customer_phone" name="customer_phone" class="rounded-pill form-control{{ $errors->has('customer_phone') ? ' is-invalid' : '' }}" value="{{ old('customer_phone') }}" required>
+                                        <input type="text" id="customer_phone" name="customer_phone" oninput="checkRequired('telephone')" class="rounded-pill form-control{{ $errors->has('customer_phone') ? ' is-invalid' : '' }}" value="{{ old('customer_phone') }}" required>
                                         @if ($errors->has('customer_phone'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('customer_phone') }}</strong>
@@ -64,7 +64,7 @@
         
                                     <div class="col-lg-6 form-group">
                                         <label class="label-style col-form-label" for="customer_mail">Email</label>
-                                        <input autocomplete="off" type="text" id="customer_mail" name="customer_mail" class="rounded-pill form-control{{ $errors->has('customer_mail') ? ' is-invalid' : '' }}" value="{{ old('customer_mail') }}" required>
+                                        <input autocomplete="off" type="text" id="customer_mail" name="customer_mail" oninput="checkRequired('Email')" class="rounded-pill form-control{{ $errors->has('customer_mail') ? ' is-invalid' : '' }}" value="{{ old('customer_mail') }}" required>
                                         @if ($errors->has('customer_mail'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('customer_mail') }}</strong>
@@ -102,6 +102,15 @@
                                         </span>
                                         @endif
                                     </div>
+                                    <div class="col-lg-12 form-group">
+                                        <label class="label-style col-form-label" for="active_title">報價大綱</label>
+                                        <input autocomplete="off" type="text" id="active_title" name="active_title" class="rounded-pill form-control{{ $errors->has('active_title') ? ' is-invalid' : '' }}" value="{{ old('active_title') }}" required>
+                                        @if ($errors->has('active_title'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('active_title') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
                                 </div> 
                             </div>
                             <div class="col-lg-6 form-group">
@@ -124,7 +133,7 @@
                                     </div>
                                 </div> 
                                 <div class="col-lg-12 ">
-                                    <table id="customer_table"  width="100%">
+                                    <table id="customer_table" class="choice_table"  width="100%">
                                         
                                         
                                     </table>
@@ -238,6 +247,28 @@
             project_select.classList.add("col-lg-12")
         }
     }
+    function checkRequired(val){
+        if(val == 'telephone'){
+            if(document.getElementById('customer_phone')!=''){
+                document.getElementById('customer_mail').required = false;
+            }
+            else if(document.getElementById('customer_phone')==''){
+                document.getElementById('customer_mail').required = true;
+            }
+        }else if(val == 'Email'){
+            if(document.getElementById('customer_mail')!=''){
+                document.getElementById('customer_phone').required = false;
+            }
+            else if(document.getElementById('customer_mail')==''){
+                document.getElementById('customer_phone').required = true;
+            }
+        }
+    }
+
+    function checkCustomer(){
+        $('#customer_id').val('');
+        console.log(document.getElementById('customer_id').value)
+    }
 </script>
 <script>
     var item_num = 9;
@@ -294,6 +325,7 @@
         $("#addItemButton").remove();
         item_num = item_num + 1;
         document.getElementById("item_total_num").value = item_num;
+        console.log('item_total_num = '+ item_num)
         tr.innerHTML = 
             '<th class="p-2"><button id="addItemButton" type="button" onclick="additem()" class="w-100 btn btn-green rounded-pill">+</button>' +
             '<th class="p-2"><input autocomplete="off" type="text" id="content-' + item_num + '" name="content-'+ item_num + '" class="rounded-pill form-control{{ $errors->has("content-'+ item_num +'") ? " is-invalid" : "" }}" value="{{ old("content-'+ item_num +'") }}"></th>' +
@@ -328,7 +360,7 @@
     function textchange(){
         for (var i = 0; i < item_num+1; i++) {
             note = document.getElementById('note-' + i).value;
-            note = note.replace(/\n/g,"<br />");
+            note = note.replace(/\r/ig, '').replace(/\n/ig, '<br/>');
         }
     }
 </script>
@@ -396,6 +428,9 @@
         $('#customer_principal').val(customers[val].principal)
         $('#customer_phone').val(customers[val].phone)
         $('#customer_mail').val(customers[val].email)
+        $('#customer_id').val(customers[val].id)
+        document.getElementById('customer_mail').required = false;
+        document.getElementById('customer_phone').required = false;
 
     }
 

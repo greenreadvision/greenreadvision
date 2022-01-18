@@ -33,8 +33,26 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/grv.css') }}" rel="stylesheet">
     <link href="{{ asset('css/tool/normal.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/tool/table.css')}}" rel="stylesheet">
     
     <link href="{{ asset('css/system.css') }}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+
+    <style type="text/css">
+        .main-section{
+            margin:0 auto;
+            padding: 20px;
+            margin-top: 100px;
+            background-color: #fff;
+            box-shadow: 0px 0px 20px #c1c1c1;
+        }
+        .fileinput-remove,
+        .fileinput-upload{
+            display: none;
+        }
+    </style>
 
     <style>
         body,

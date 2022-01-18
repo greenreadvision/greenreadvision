@@ -6,7 +6,7 @@
         <div class="row" style="justify-content: flex-end;">
             <div class="mb-3" style="padding: 10px;">
                 <div style="float: right;">
-                    <button type="button" class="btn btn-green rounded-pill" data-toggle="modal" data-target="#changeStatus">轉換狀態</button>
+                    <button type="button" class="btn btn-green rounded-pill" data-toggle="modal" data-target="#changeStatus">轉換專案狀態</button>
                 </div>
             </div>
             @if($data['project']->receiver == "")
@@ -20,6 +20,13 @@
                 <div style="float: right;">
                     <button type="button" class="btn btn-danger rounded-pill">轉讓中</button>
                 </div>
+            </div>
+            @endif
+            @if($data['project']->invoices=='[]'&&$data['project']->todos=='[]')
+            <div style="float: right;padding: 10px;" class="mb-3" >
+                <button type="button" class="btn btn-danger rounded-pill" data-toggle="modal" data-target="#deleteModal">
+                    <i class='fas fa-trash-alt'></i><span class="ml-3">{{__('customize.Delete')}}</span>
+                </button>
             </div>
             @endif
             
@@ -458,8 +465,8 @@
                                         @if($key=='estimated_cost'||$key=='estimated_profit'||$key=='actual_cost'||$key=='actual_profit'||$key=='effective_interest_rate')
                                             @if(\Auth::user()->user_id==$data['project']['user_id']||\Auth::user()->role=='manager')
         
-                                                @if($key=='effective_interest_rate' && $data['project']['status'] == 'close')
-                                                <div>
+                                                @if($key=='effective_interest_rate' )
+                                                <div {{$data['project']['status'] == 'close'?'hidden':''}}>
                                                     <div><label class="ml-2 col-form-label font-weight-bold">{{__('customize.'.$key)}}(結案後會自動顯現)</label></div>
                                                     <div class="d-flex justify-content-center">
                                                         <label class="content-label-style col-form-label">
@@ -522,14 +529,6 @@
             @csrf
             <button type="submit" class="btn btn-primary btn-primary-style">{{__('customize.Save')}}</button>
         </div>
-
-        @if($data['project']->invoices=='[]'&&$data['project']->todos=='[]')
-        <div style="float: left;">
-            <button type="button" class="btn btn-danger btn-danger-style" data-toggle="modal" data-target="#deleteModal">
-                <i class='fas fa-trash-alt'></i><span class="ml-3">{{__('customize.Delete')}}</span>
-            </button>
-        </div>
-        @endif
     </div>
 </form>
 
@@ -545,13 +544,15 @@
             <div class="modal-body text-center ">
                 <form action="update/status" method="POST">
                     <div style="text-align: center;padding: 10px">
-                        <select name="status" id="status" class="form-control">
+                        <select name="status" id="status" class="form-control" onchange="ChangeStatusOption()">
                             <option value="unacceptable" {{$data['project']->status == 'unacceptable'? 'selected':''}} >未得標</option>
                             <option value="running" {{$data['project']->status == 'running'? 'selected':''}}>執行中</option>
                             <option value="close" {{$data['project']->status == 'close'? 'selected':''}}>已結案</option>
     
                         </select>
                     </div>
+                    <input autocomplete="off" type="text" id="effective_interest_rate_change" name="effective_interest_rate_change" value="{{$errors->has('effective_interest_rate_change')? old('effective_interest_rate_change'): ''}}" class="form-control{{ $errors->has('effective_interest_rate_change') ? ' is-invalid' : '' }}" placeholder="尚未填寫" hidden>
+ 
                     <div>
                         @method('PUT')
                         @csrf
@@ -568,20 +569,22 @@
     <div class="modal-dialog " role="document">
         <div class="modal-content">
             <div class="modal-header border-0">
+                <h5>是否刪除?</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true"> &times;</span>
                 </button>
             </div>
-            <div class="modal-body text-center ">
-                是否刪除?
-            </div>
-            <div class="modal-footer justify-content-center border-0">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">否</button>
-                <form action="delete" method="POST">
-                    @method('DELETE')
-                    @csrf
-                    <button type="submit" class="btn btn-primary">是</button>
-                </form>
+            <div class="modal-body text-center row" style="justify-content: center">
+                <div style="padding: 10px">
+                    <button type="button" class="btn btn-secondary rounded-pill" data-dismiss="modal">否</button>
+                </div>
+                <div style="padding: 10px">
+                    <form action="delete" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button type="submit" class="btn btn-primary rounded-pill" >是</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -1207,6 +1210,7 @@
     var totalActualCost = 0
     var total_default = 0
     var FinalAmount = 0
+    var GdingCost = 0
     var Today = new Date()
 </script>
 
@@ -1224,6 +1228,7 @@
         setInvoice()
         setGDing()
         setInvoiceCheck()
+        ChangeStatusOption()
         $('#invoice_cost_button').click(function(){
             nowPage = 1
             setInvoiceTable()
@@ -1240,6 +1245,7 @@
         setBoundTable()
         setdefault()
         setActualCost()
+        ChangeStatusOption()
     }
     
 
@@ -1336,8 +1342,9 @@
         Gding = Gding.replace(/[\n\r]/g, "")
         Gding = JSON.parse(Gding.replace(/&quot;/g, '"'));
         for (var i = 0; i < Gding.length; i++) {
-            totalActualCost += Gding[i].price
+            GdingCost += Gding[i].price*1.05
         }
+        totalActualCost += parseInt(GdingCost.toFixed())
         totalActualCost += total_default
         actual_cost.value = totalActualCost
         setActualProfit()
@@ -1347,7 +1354,7 @@
         actualProfit = 0
         FinalAmount = document.getElementById('contract_value').value
         var actual_profit = document.getElementById('actual_profit')
-        var actualProfit = FinalAmount - totalActualCost
+        var actualProfit = FinalAmount * 0.95 - totalActualCost
         actual_profit.value = actualProfit
     }
 </script>
@@ -1520,7 +1527,17 @@
         var textarea = document.getElementById('project_note').value
         textarea = textarea.replace(/\r/ig, '').replace(/\n/ig, '<br/>')
     }
+    function setGdingTextArea(val){
+        var textarea = document.getElementById('note-'+val).value
+        textarea = textarea.replace(/\r/ig, '').replace(/\n/ig, '<br/>')
+    }
     
+    function setGdingTextArea_show(val){ 
+        console.log(val)
+        val = val.replace(/\r?\n/g, '<br/>')
+        return val;
+        
+    }
 
     
 </script>
@@ -1823,13 +1840,14 @@
         return data
     }
     function setDGingCost(){
-        var GdingCost = 0
+        
         var Gding = "{{$data['gding_table']}}"
         Gding = Gding.replace(/[\n\r]/g, "")
         Gding = JSON.parse(Gding.replace(/&quot;/g, '"'));
         for (var i = 0; i < Gding.length; i++) {
-            GdingCost += Gding[i].price
+            GdingCost += (Gding[i].price * 1.05)
         }
+        GdingCost = GdingCost.toFixed()
         $('#dging_cost').text("$" + commafy(GdingCost));
     }
     function setDGingTable(){
@@ -1972,7 +1990,7 @@
             '<th>No.</th>' +
             '<th>健豪項目</th>' +
             '<th>細項</th>' +
-            '<th>單項金額</th>' +
+            '<th>單項金額(含稅)</th>' +
             '<th>修改</th>' +
             '<th>刪除</th>' +
             '</tr>'
@@ -1995,11 +2013,12 @@
         }else{
             var DGing_note = DGing_table[i].note
         }
+        DGing_note = setGdingTextArea_show(DGing_note)
         tr = "<tr>" +
             "<td width='10%'>" + DGing_table[i].num + "</td>" +
             "<td width='30%'>" + DGing_table[i].title + "</td>" +
-            "<td width='40%'>" + DGing_note + "</a></td>" +
-            "<td width='10%'>" + commafy(DGing_table[i].price) + "</td>" +
+            "<td width='40%'>" + DGing_note + "</td>" +
+            "<td width='10%'>" + commafy((DGing_table[i].price*1.05).toFixed()) + "</td>" +
             "<td width='5%'><i class='fas fa-search-dollar' id=\"EditDgingModal_" + DGing_table[i].num + "\" data-id = \""+ DGing_table[i].id +"\" data-toggle=\"modal\" data-dismiss=\"modal\" data-target=\"#EditDgingModal\"></td>"+
             "<td width='5%'><i class='fas fa-trash-alt' id=\"deleteDgingModal_" + DGing_table[i].num + "\" data-id = \""+ DGing_table[i].id +"\"  data-toggle=\"modal\" data-dismiss=\"modal\" data-target=\"#deleteDgingModal\"></td>"+
             "</tr>";
@@ -2042,20 +2061,22 @@
         var head = document.createElement('thead')
         head.innerHTML = '<tr class="bg-dark text-white" style="text-align:center">' +
             '<th class="px-2" width="5%">' +
-            '<th class="px-2" width="30%"><label class="label-style col-form-label" for="content">項目</label></th>' +
-            '<th class="px-2" width="40%"><label class="label-style col-form-label" for="amount">細項</label></th>' +
-            '<th class="px-2" width="25%"><label class="label-style col-form-label" for="price">價錢</label></th>' +
+            '<th class="px-2" width="25%"><label class="label-style col-form-label" for="content">項目</label></th>' +
+            '<th class="px-2" width="30%"><label class="label-style col-form-label" for="amount">細項</label></th>' +
+            '<th class="px-2" width="20%"><label class="label-style col-form-label" for="price">價錢</label></th>' +
+            '<th class="px-2" width="20%"><label class="label-style col-form-label" for="price_tax">價錢(含稅價)</label></th>' +
             '</tr>'
         parent.appendChild(head);
         var body = document.createElement("tbody");
         body.setAttribute("id","Itembody");
         for(var i = 0;i<item_num;i++ ){
             if(i != 5){
-                body.innerHTML = body.innerHTML + '<tr>' +
+                body.innerHTML = body.innerHTML + '<tr style="vertical-align: top;">' +
                     '<th class="p-2">' + (i+1) + '</th>' +
                     '<th class="p-2"><input autocomplete="off" type="text" id="title-' + i + '" name="title-'+ i + '" class="rounded-pill form-control{{ $errors->has("title-'+ i +'") ? " is-invalid" : "" }}" onkeyup="setRequired('+ i +')" value="{{ old("title-'+ i +'") }}"></th>' +
-                    '<th class="p-2"><textarea autocomplete="off" rows="3" type="text" id="note-'+ i +'" name="note-'+ i +'" class="rounded-pill form-control{{ $errors->has("note-'+ i +'") ? " is-invalid" : "" }}">{{ old("note-'+ i +'") }}</textarea></th>' +
+                    '<th class="p-2"><textarea autocomplete="off" rows="3" type="text" id="note-'+ i +'" name="note-'+ i +'" oninput="setGdingTextArea('+ i + ')" class="rounded-pill form-control{{ $errors->has("note-'+ i +'") ? " is-invalid" : "" }}">{{ old("note-'+ i +'") }}</textarea></th>' +
                     '<th class="p-2"><input autocomplete="off" type="number" id="price-'+ i +'" name="price-'+ i +'" class="rounded-pill form-control{{ $errors->has("price-'+ i +'") ? " is-invalid" : "" }}" onkeyup="setRequired('+ i +')" value="{{ old("price-'+ i +'") }}"></th>' +
+                    '<th class="p-2"><input autocomplete="off" type="number" id="price-tax-'+ i +'" name="price-tax-'+ i +'" class="rounded-pill form-control{{ $errors->has("price-tax-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("price-tax-'+ i +'") }}" readonly></th>' +
                     '</tr>'
             }
         }
@@ -2065,12 +2086,17 @@
     function setRequired(val){
         title = document.getElementById('title-'+val)
         price = document.getElementById('price-'+val)
+        price_tax = document.getElementById('price-tax-'+ val)
         if(title.value != ''){
             title.required = true;
             price.required = true;
+
         }else{
             title.required = false;
             price.required = false;
+        }
+        if(price.value != ''){
+            price_tax.value = (price.value*1.05).toFixed()
         }
     }
 </script>
@@ -2377,6 +2403,17 @@
         var Statement_show = document.getElementById('Statement_show')
 
         Statement_show.innerText = '已上傳新資料'
+    }
+
+    function ChangeStatusOption(){
+        effective_interest_rate_change = document.getElementById('effective_interest_rate_change')
+        actual_profit = document.getElementById('actual_profit').value
+        contract_value = document.getElementById('contract_value').value
+        contract_value = contract_value*0.95
+        temp  =  (actual_profit/contract_value)*100
+        effective_interest_rate_change.value = temp.toFixed(2)
+        document.getElementById('effective_interest_rate').value = temp.toFixed(2)
+        console.log(document.getElementById('effective_interest_rate_change').value)
     }
 </script>
 @stop

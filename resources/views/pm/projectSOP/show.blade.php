@@ -74,7 +74,7 @@
                 </div>
             </div>
         </div>
-        @if(\Auth::user()->user_id == $projectSOP->user_id || \Auth::user()->role == 'supervisor' || \Auth::user()->role == 'proprietor')
+        @if(\Auth::user()->user_id == $projectSOP->user_id|| \Auth::user()->role == 'manager' || \Auth::user()->role == 'supervisor' || \Auth::user()->role == 'proprietor')
         <div class="col-lg-2">
             <button class="float-right btn btn-primary btn-primary-style" onclick="location.href='{{route('projectSOP.edit', $projectSOP->projectSOP_id)}}'"><i class='fas fa-edit'></i><span class="ml-3"> {{__('customize.Edit')}}</span></button>
         </div>

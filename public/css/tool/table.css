@@ -30,3 +30,12 @@ td {
 .table-style a:hover{
     color: rgb(90, 90, 90);
 }
+
+.choice_table{
+    border: 1px #000 solid;
+}
+
+
+.choice_table tbody td{
+    border-left: 1px #000 solid;
+}

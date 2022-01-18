@@ -89,7 +89,7 @@
                                         <select type="text" id="select-company" name="select-company" onchange="changeProject(this.options[this.options.selectedIndex].value)" class="rounded-pill form-control">
                                             <option value=""></option>
                                             <option value="grv_2" {{$projectSOP->company_name=='grv_2'? 'selected' : ''}}>綠雷德</option>
-                                            <option value="rv" {{$projectSOP->company_name=='rv'? 'selected' : ''}}>閱野</option>
+                                            <option value="rv"  {{$projectSOP->company_name=='rv'? 'selected' : ''}}>閱野</option>
                                             <option value="grv">綠雷德(舊)</option>
                                             
                                         </select>
@@ -198,11 +198,11 @@
     var ProjectSOP_items =[]
 </script>
 <script>
+    
+
     function changeSOP(i){
         if(i==0){
             SOPtype = "project"
-            company = ""
-            $('#select-company').val("");
             $('#other_file').val('');
             $('#otherContent').val('');
             document.getElementsByClassName('projectSOP')[0].style.display = "block"
@@ -213,7 +213,6 @@
             
         }else if(i==1){
             SOPtype = "other"
-            $('#select-other-type').val("")
             $('#file').val('');
             $('#content').val('');
             document.getElementsByClassName('projectSOP')[0].style.display = "none"
@@ -338,12 +337,13 @@
         if(ProjectSOP.SOPtype == 'project'){
             SOPtype ='project'
             document.getElementById('SOPtype').value = SOPtype
+            changeSOP(0)
             
         }
         else if(ProjectSOP.SOPtype == 'other'){
             SOPtype = 'other'
             document.getElementById('SOPtype').value = SOPtype
-            
+            changeSOP(1)
         }
         changeProject(ProjectSOP['company_name'])
         resetFileList()
