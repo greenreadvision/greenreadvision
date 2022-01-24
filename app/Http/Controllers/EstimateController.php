@@ -197,4 +197,11 @@ class EstimateController extends Controller
 
         return view('pm.estimate.index');       
     }
+
+    public function show(String $estimate_id){
+        $estimate = Estimate::find($estimate_id);
+        $estimate_item = Estimate_item::where('estimate_id','=',$estimate_id)->get();
+
+        return view('pm.estimate.show',['estimate'=>$estimate,'estimate_item'=>$estimate_item]);       
+    }
 }

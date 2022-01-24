@@ -10,9 +10,7 @@
 .table-style tr:nth-child(odd){
     background-color: #fafafa;
 }
-.table-style tr:first-child{
-    background-color: #081f2b;
-}
+
 
 .table-style th,
 td {
