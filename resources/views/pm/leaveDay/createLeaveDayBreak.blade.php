@@ -56,12 +56,12 @@
                                     </div>
                                     <div id="hours" hidden>
                                         <div class="form-group ">
-                                            <label for="start_time" class=" col-form-label ">開始時間</label>
-                                            <input autocomplete="off" onchange="calculation('hours')" type="time" name="start_time" id="start_time" class="form-control rounded-pill" value="{{old('start_time')}}">
+                                            <label for="start_time" class=" col-form-label ">開始時間(分鐘只能選擇0/15/30/45)</label>
+                                            <input autocomplete="off" onchange="calculation('hours')" type="time" step="900" name="start_time" id="start_time" class="form-control rounded-pill"  value="{{old('start_time')}}"/>
                                         </div>
                                         <div class="form-group ">
-                                            <label for="end_time" class="col-form-label ">結束時間</label>
-                                            <input autocomplete="off" onchange="calculation('hours')" type="time" name="end_time" id="end_time" class="form-control rounded-pill" value="{{old('end_time')}}">
+                                            <label for="end_time" class="col-form-label ">結束時間(分鐘只能選擇0/15/30/45)</label>
+                                            <input autocomplete="off" onchange="calculation('hours')" type="time" step="900" name="end_time" id="end_time" class="form-control rounded-pill"  value="{{old('end_time')}}"/>
                                         </div>
                                     </div>
                                 </div>
@@ -118,6 +118,7 @@
             // 使用 readAsDataURL 將圖片轉成 Base64
             fr.readAsDataURL(file);
         });
+        setFifteenMinute();
         changeLength(old_length_long)
     });
     window.onresize = (function() {
@@ -146,6 +147,9 @@
                 day.hidden = true
                 hours.hidden = true
                 $('#days_long').val(0)
+                resetRequire()
+                document.getElementById('start_day').required = true;
+                document.getElementById('end_day').required = true;
                 break
             case 'day':
                 days.hidden = true
@@ -153,6 +157,8 @@
                 hours.hidden = true
                 another_day.setAttribute('oninput',"calculation('day')")
                 $('#days_long').val(1)
+                document.getElementById('another_day').required = true;
+                resetRequire()
                 break
             case 'half':
                 days.hidden = true
@@ -160,6 +166,8 @@
                 hours.hidden = true
                 another_day.setAttribute('oninput',"calculation('day')")
                 $('#days_long').val(0.5)
+                document.getElementById('another_day').required = true;
+                resetRequire()
                 break
             case 'hours':
                 days.hidden = true
@@ -167,9 +175,22 @@
                 hours.hidden = false
                 another_day.setAttribute('oninput',"calculation('hours')")
                 $('#days_long').val(0)
+                document.getElementById('another_day').required = true;
+                document.getElementById('start_time').required = true;
+                document.getElementById('end_time').required = true;
+                resetRequire()
+
                 break
             default:
         }
+    }
+
+    function resetRequire(){
+        document.getElementById('start_day').required = false;
+        document.getElementById('end_day').required = false;
+        document.getElementById('another_day').required = false;
+        document.getElementById('start_time').required = false;
+        document.getElementById('end_time').required = false;
     }
 
     function DateDiff(sDate1, sDate2, type) { // sDate1 和 sDate2 是 2016-06-18 格式

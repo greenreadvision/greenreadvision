@@ -52,12 +52,12 @@
                                 </div>
                                 <div id="hours" hidden>
                                     <div class="form-group ">
-                                        <label for="start_time" class=" col-form-label ">開始時間</label>
-                                        <input oninput="calculation('hours')" autocomplete="off" type="time" id="start_time" name="start_time" class="form-control rounded-pill" value="{{ old('start_time') }}">
+                                        <label for="start_time" class=" col-form-label ">開始時間(分鐘只能選擇0/15/30/45)</label>
+                                        <input oninput="calculation('hours')" autocomplete="off" type="time" step="900" id="start_time" name="start_time" class="form-control rounded-pill" value="{{ old('start_time') }}">
                                     </div>
                                     <div class="form-group ">
-                                        <label for="end_time" class="col-form-label ">結束時間</label>
-                                        <input oninput="calculation('hours')" autocomplete="off" type="time" id="end_time" name="end_time" class="form-control rounded-pill" value="{{ old('end_time') }}">
+                                        <label for="end_time" class="col-form-label ">結束時間(分鐘只能選擇0/15/30/45)</label>
+                                        <input oninput="calculation('hours')" autocomplete="off" type="time" step="900" id="end_time" name="end_time" class="form-control rounded-pill" value="{{ old('end_time') }}">
                                     </div>
                                 </div>
                                 <div id="day_long">
@@ -102,6 +102,8 @@
         }
         $('#days_long').val(0)
         changeLength(old_length_long)
+
+        
     });
 
 
@@ -113,6 +115,9 @@
                 hours.hidden = true
                 content.hidden = false
                 $('#days_long').val(0)
+                resetRequire()
+                document.getElementById('start_day').required = true;
+                document.getElementById('end_day').required = true;
                 break
             case 'day':
                 days.hidden = true
@@ -120,8 +125,10 @@
                 hours.hidden = true
                 content.hidden = false
                 another_day.setAttribute('oninput',"calculation('day')")
-
                 $('#days_long').val(1)
+                resetRequire()
+                document.getElementById('another_day').required = true;
+
                 break
             case 'half':
                 days.hidden = true
@@ -131,6 +138,9 @@
                 another_day.setAttribute('oninput',"calculation('day')")
 
                 $('#days_long').val(0.5)
+                resetRequire()
+                document.getElementById('another_day').required = true;
+
                 break
             case 'hours':
                 days.hidden = true
@@ -139,9 +149,21 @@
                 content.hidden = false
                 another_day.setAttribute('oninput',"calculation('hours')")
                 $('#days_long').val(0)
+                resetRequire()
+                document.getElementById('another_day').required = true;
+                document.getElementById('start_time').required = true;
+                document.getElementById('end_time').required = true;
                 break
             default:
         }
+    }
+
+    function resetRequire(){
+        document.getElementById('start_day').required = false;
+        document.getElementById('end_day').required = false;
+        document.getElementById('another_day').required = false;
+        document.getElementById('start_time').required = false;
+        document.getElementById('end_time').required = false;
     }
 
     function DateDiff(sDate1, sDate2, type) { // sDate1 和 sDate2 是 2016-06-18 格式
