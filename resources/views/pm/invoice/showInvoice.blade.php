@@ -100,6 +100,15 @@
                                     <div class='progress-bar bg-info' role='progressbar' style='width: 100%' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100'></div>
                                 </div>
                             </div>
+                            @elseif($data['invoice']['status'] == 'complete_petty')
+                            <div class="w-100">
+                                <div class="w-100 text-center">
+                                    <small>零用金給付完成</small>
+                                </div>
+                                <div class='progress w-100'>
+                                    <div class='progress-bar bg-info' role='progressbar' style='width: 100%' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100'></div>
+                                </div>
+                            </div>
                             @elseif($data['invoice']['status'] == 'delete')
                             <div class="w-100">
                                 <div class="w-100" style="display: flex;justify-content: flex-end;">
@@ -175,6 +184,9 @@
                                         <th class="border border-dark align-middle text-center" style="white-space:nowrap;">請款事項</th>
                                         <td style="font-size: 16px" colspan="3" class="border border-dark text-left" style="word-break: break-all;">
                                             {{$data['invoice']['content']}}
+                                            @if($data['invoice']['status']=='complete_petty')
+                                            <img height="40px" src="{{ URL::asset('img/零用金給付.png') }}" alt=""/>
+                                            @endif
                                         </td>
                                     </tr>
                                     <tr>
@@ -258,9 +270,9 @@
                         <!-- waiting -->
                         <!-- check -->
                     @elseif($data['invoice']['status']=='check'&&($data['invoice']['reviewer'] == \Auth::user()->user_id||($data['invoice']['reviewer']==''&&((\Auth::user()->role=='administrator')||($data['invoice']['price'] >= 10000&&\Auth::user()->role=='proprietor')||($data['invoice']['price'] >= 3000&&$data['invoice']['price'] < 10000&&\Auth::user()->role=='supervisor')))))
-                    <div class="col-lg-8 p-0" style="text-align:center;">
-                        @if(strpos(URL::full(),'other'))
-                        <form action="../withdraw/other" method="POST">
+                        <div class="col-lg-8 p-0" style="text-align:center;">
+                            @if(strpos(URL::full(),'other'))
+                            <form action="../withdraw/other" method="POST">
                             @else
                             <form action="withdraw" method="POST">
                                 @endif
@@ -271,49 +283,64 @@
                                     </div>
                                     <button type="submit" class="btn btn-red rounded-pill">撤回</button>
                                 </div>
+                            </form>
+                        </div>
+
+                        @if(strpos(URL::full(),'other'))
+                        <form action="../match/other" method="POST" class="d-flex justify-content-between ">
+                        @else
+                        <form action="match" method="POST" class="d-flex justify-content-between">
+                        @endif
+
+                            @csrf
+                            <button type="submit" class="btn btn-green rounded-pill"><span class="mx-2">第二階段審核</span></button>
                         </form>
+
+
+                    @elseif($data['invoice']['status']=='managed'&&(\Auth::user()->role=='administrator'||(\Auth::user()->role=='proprietor')))
+                    <div class="w-100">
+                        @if(strpos(URL::full(),'other'))
+                        <form action="../match/other" method="POST" class="d-flex justify-content-end">
+                            @else
+                            <form action="match" method="POST" class="d-flex justify-content-end">
+                                @endif
+
+                                @csrf
+                                <button type="submit" class="btn btn-green rounded-pill"><span class="mx-2">請款審核</span></button>
+                            </form>
                     </div>
+                    @elseif($data['invoice']['status']=='matched'&&(\Auth::user()->role=='administrator'||(\Auth::user()->role=='proprietor')))
+                    <div class="w-100">
+                        @if(strpos(URL::full(),'other'))
+                        <form action="../match/other" method="POST" class="d-flex justify-content-end">
+                            @else
+                            <form action="match" method="POST" class="d-flex justify-content-end">
+                                @endif
 
-                                @if(strpos(URL::full(),'other'))
-                                <form action="../match/other" method="POST" class="d-flex justify-content-between ">
-                                    @else
-                                    <form action="match" method="POST" class="d-flex justify-content-between">
-                                        @endif
-
-                                        @csrf
-                                        <button type="submit" class="btn btn-green rounded-pill"><span class="mx-2">第二階段審核</span></button>
-                                    </form>
-
-
-                                    @elseif($data['invoice']['status']=='managed'&&(\Auth::user()->role=='administrator'||(\Auth::user()->role=='proprietor')))
-                                    <div class="w-100">
-                                        @if(strpos(URL::full(),'other'))
-                                        <form action="../match/other" method="POST" class="d-flex justify-content-end">
-                                            @else
-                                            <form action="match" method="POST" class="d-flex justify-content-end">
-                                                @endif
-
-                                                @csrf
-                                                <button type="submit" class="btn btn-green rounded-pill"><span class="mx-2">請款審核</span></button>
-                                            </form>
+                                @csrf
+                                <div class="row" style="display: flex;justify-content: space-around;">
+                                    <div class="form-group">
+                                        <input type="date" class="rounded-pill form-control" id="matched_date" name="matched_date" />
                                     </div>
-                                    @elseif($data['invoice']['status']=='matched'&&(\Auth::user()->role=='administrator'||(\Auth::user()->role=='proprietor')))
-                                    <div class="w-100">
-                                        @if(strpos(URL::full(),'other'))
-                                        <form action="../match/other" method="POST" class="d-flex justify-content-end">
-                                            @else
-                                            <form action="match" method="POST" class="d-flex justify-content-end">
-                                                @endif
-
-                                                @csrf
-                                                <div class="w-25" style="display: flex;justify-content: space-around;">
-                                                    <input type="date" class="rounded-pill form-control" id="matched_date" name="matched_date" />
-                                                    <button type="submit" class="btn btn-green rounded-pill">匯款審核</button>
-                                                </div>
-                                               
-                                            </form>
+                                    <div class="form-group">
+                                        <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
+                                            <input type="text" id="radio_type" name='radio_type' value="remittance"  hidden/>
+                                            <label class="btn btn-secondary active w-50" style="border-top-left-radius: 25px;border-bottom-left-radius: 25px">
+                                                <input type="radio" name="options" onchange="setMatchType(0)" autocomplete="off" checked> 匯款
+                                            </label>
+                                            <label class="btn btn-secondary w-50" style="border-top-right-radius: 25px;border-bottom-right-radius: 25px">
+                                                <input type="radio" name="options" onchange="setMatchType(1)" autocomplete="off"> 零用金
+                                            </label>
+                                        </div>
                                     </div>
-                                    @endif
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-green rounded-pill">匯款審核</button>
+                                    </div>
+                                </div>
+                                
+                            </form>
+                    </div>
+                    @endif
 
                 </div>
             </div>
@@ -340,5 +367,16 @@
             window.location.reload() //列印輸出後更新頁面
         })
     })
+
+    function setMatchType(val){
+        radio_type = document.getElementById('radio_type');
+        if(val ==0){    //匯款
+            radio_type.value = 'remittance'
+        }
+        else if(val == 1){  //零用金
+            radio_type.value = 'pettyCash'
+        }
+        console.log(radio_type.value)
+    }
 </script>
 @stop

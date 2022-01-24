@@ -702,7 +702,12 @@ class OtherInvoiceController extends Controller
             }else{
                 $nowDate = date("Ymd");
             }
-            $invoice->status = 'complete';
+            if($request->input('radio_type')=='remittance'){
+                $invoice->status = 'complete';
+            }
+            else if($request->input('radio_type')=='pettyCash'){
+                $invoice->status = 'complete_petty';
+            }
             $invoice->matched = \Auth::user()->name;
            
             $invoice->remittance_date = $nowDate;

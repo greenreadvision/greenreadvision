@@ -258,10 +258,10 @@
                     <div class="form-group col-lg-12">
                         <div class="row">
                             <div class="col-lg-2">
-                                <input type="text" name="search-seal-num" id="search-other-num" class="form-control  rounded-pill" placeholder="用印單號" autocomplete="off" onkeyup="searchNum()">
+                                <input type="text" name="search-other-num" id="search-other-num" class="form-control  rounded-pill" placeholder="請款單號" autocomplete="off" onkeyup="searchOtherNum()">
                             </div>
                             <div class=" col-lg-4">
-                                <input type="text" name="search-seal" id="search-other" class="rounded-pill form-control" placeholder="申請事項" autocomplete="off" onkeyup="searchInvoice()">
+                                <input type="text" name="search-other" id="search-other" class="rounded-pill form-control" placeholder="請款事項" autocomplete="off" onkeyup="searchOtherInvoice()">
                             </div>
                             <div class="col-lg-6 d-flex justify-content-end">
                                 <button class="btn btn-green rounded-pill" onclick="location.href='{{route('invoice.create')}}'"><span class="mx-2">{{__('customize.Add')}}</span> </button>
@@ -976,7 +976,7 @@
                 "<div class='progress-bar bg-success' role='progressbar' style='width: 75%' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'></div>" +
                 "</div>"
 
-        } else if (invoices[i].status == 'complete') {
+        } else if (invoices[i].status == 'complete' || invoices[i].status == 'complete_petty') {
 
             span = " <div class='progress' data-toggle='tooltip' data-placement='top' title='匯款完成'>" +
                 "<div class='progress-bar bg-info' role='progressbar' style='width: 100%' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100'></div>" +
@@ -992,6 +992,12 @@
         }else{
             var remittance_date = invoices[i]['remittance_date'];
         }
+        if(invoices[i]['status'] == 'complete_petty'){
+            var petty = '零-'
+        }
+        else{
+            var petty = ''
+        }
 
         a = "/invoice/" + invoices[i]['invoice_id'] + "/review"
         tr = "<tr>" +
@@ -1001,7 +1007,7 @@
             "<td width='20%'><a href='" + a + "' target='_blank'>" + invoices[i].title + "</a></td>" +
             "<td width='10%'><a href='" + a + "' target='_blank'>" + commafy(invoices[i].price) + "</td>" +
             "<td width='12%'> <a href='" + a + "' target='_blank'>" + invoices[i].created_at.substr(0, 10) + "</td>" +
-            "<td width='12%'> <a href='" + a + "' target='_blank'>" + remittance_date + "</td>" +
+            "<td width='12%'> <a href='" + a + "' target='_blank'>" + petty + remittance_date + "</td>" +
             "<td width='5%'>" + span + "</td>" +
             "</tr>"
 
@@ -1642,7 +1648,7 @@
                 "<div class='progress-bar bg-success' role='progressbar' style='width: 75%' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'></div>" +
                 "</div>"
 
-        } else if (other_invoices[i].status == 'complete') {
+        } else if (other_invoices[i].status == 'complete'||other_invoices[i].status == 'complete_petty') {
             span = " <div class='progress' data-toggle='tooltip' data-placement='top' title='已匯款'>" +
                 "<div class='progress-bar bg-info' role='progressbar' style='width: 100%' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100'></div>" +
                 "</div>"
@@ -1656,6 +1662,12 @@
         }else{
             var remittance_date = other_invoices[i]['remittance_date'];
         }
+        if(other_invoices[i]['status'] == 'complete_petty'){
+            var petty = '零-'
+        }
+        else{
+            var petty = ''
+        }
 
         a = "/invoice/" + other_invoices[i]['other_invoice_id'] + "/review/other"
         tr = "<tr>" +
@@ -1665,7 +1677,7 @@
             "<td><a href='" + a + "' target='_blank'>" + other_invoices[i].title + "</a></td>" +
             "<td width='10%'><a href='" + a + "' target='_blank'>" + commafy(other_invoices[i].price) + "</td>" +
             "<td width='12%'><a href='" + a + "' target='_blank'>" + other_invoices[i].created_at.substr(0, 10) + "</td>" +
-            "<td width='12%'><a href='" + a + "' target='_blank'>" + remittance_date + "</td>" +
+            "<td width='12%'><a href='" + a + "' target='_blank'>" + petty + remittance_date + "</td>" +
             "<td width='5%'>" + span + "</td>" +
             "</tr>"
 

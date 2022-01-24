@@ -71,7 +71,7 @@ class InvoiceController extends Controller
             } else {
                 $Mouth = strval($Mouth);
             }
-            if($invoice->status != 'delete' && $invoice->status != 'complete'){
+            if($invoice->status != 'delete' && $invoice->status != 'complete' && $invoice->status != 'complete_petty'){
                 if($today  >= $Year . '-'. $Mouth .'-10'){
                     $invoice->status = 'matched';
                     if($invoice->reviewer !=null){
@@ -107,7 +107,7 @@ class InvoiceController extends Controller
             
             
             
-            if($otherInvoice->status != 'delete' && $otherInvoice->status != 'complete'){
+            if($otherInvoice->status != 'delete' && $otherInvoice->status != 'complete' && $otherInvoice->status != 'complete_petty' ){
                 if($today  >= $Year . '-'. $Mouth .'-10'){
                     $otherInvoice->status = 'matched';
                     if($otherInvoice->reviewer !=null){
@@ -868,8 +868,13 @@ class InvoiceController extends Controller
                 $nowDate = date("Ymd");
             }
             
+            if($request->input('radio_type')=='remittance'){
+                $invoice->status = 'complete';
+            }
+            else if($request->input('radio_type')=='pettyCash'){
+                $invoice->status = 'complete_petty';
+            }
             
-            $invoice->status = 'complete';
             $invoice->matched = \Auth::user()->name;
 
             $invoice->remittance_date = $nowDate;
