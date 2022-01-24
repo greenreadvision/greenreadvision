@@ -50,6 +50,31 @@
                         </div>
                         <div class="card card-style">
                             <div class="px-3">
+                                <div class="card-header bg-white">
+                                    <i class='fas fa-user-circle' style="font-size:1.5rem;"></i><label class="ml-2 col-form-label ">{{__('customize.Agent')}}</label>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <select name="agent_id" id="agent_id" onchange="setRequireAgent(this.options[this.options.selectedIndex].value)" class="form-control rounded-pill">
+                                        <option value=""></option>
+                                        @foreach ($data['users'] as $user)
+                                        <option value="{{$user['user_id']}}" {{$user['user_id']==$data['project']->agent_id ?'selected':''}}>{{$user['name']}}({{$user['nickname']}})</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select id="agent_type" name="agent_type" class="form-control rounded-pill" >
+                                        <option value=""></option>
+                                        <option value="helper" {{$data['project']->agent_type=="helper" ?'selected':''}}>協助者</option>
+                                        <option value="teacher" {{$data['project']->agent_type=="teacher" ?'selected':''}}>導師</option>
+                                    </select>
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <div class="card card-style">
+                            <div class="px-3">
                                 <div class="card-header bg-white row" style="justify-content: space-between">
                                     <div>
                                         <i class='fas fa-check-circle' style="font-size:1.5rem;"></i><label class="ml-2 col-form-label">{{__('customize.project_about')}}</label>
@@ -604,7 +629,7 @@
                     
                     <select name="user" class="form-control">
                         <option value=""></option>
-                        @foreach($data['alluser'] as $user)
+                        @foreach($data['users'] as $user)
                         @if($user->user_id != \Auth::user()->user_id && $user->status != "resignation" && $user->role != "manager")
                         <option value="{{$user['user_id']}}">{{$user->nickname}}</option>
 
@@ -2414,6 +2439,18 @@
         effective_interest_rate_change.value = temp.toFixed(2)
         document.getElementById('effective_interest_rate').value = temp.toFixed(2)
         console.log(document.getElementById('effective_interest_rate_change').value)
+    }
+</script>
+
+<script>
+    function setRequireAgent(val){
+        if(val == ''){
+            document.getElementById('agent_type').required = false;
+
+        }
+        else{
+            document.getElementById('agent_type').required = true;
+        }
     }
 </script>
 @stop

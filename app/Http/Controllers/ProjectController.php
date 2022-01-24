@@ -33,11 +33,11 @@ class ProjectController extends Controller
         $users = [];
         $allUsers = User::orderby('nickname')->get();
         foreach ($allUsers as $allUser) {
-            if ($allUser->role != 'manager' && $allUser->role != 'resigned') {
+            if ($allUser->role != 'manager' && $allUser->status != 'resign') {
                 array_push($users, $allUser);
             }
         }
-        $projects = Project::orderby('open_date', 'desc')->with('user')->get();
+        $projects = Project::orderby('open_date', 'desc')->with('user')->with('agent')->get();
         return view('pm.project.indexProject', ['users' => $users, 'projects' => $projects]);
     }
 
@@ -48,7 +48,14 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('pm.project.createProject');
+        $users = [];
+        $allUsers = User::orderby('nickname')->get();
+        foreach ($allUsers as $allUser) {
+            if ($allUser->role != 'manager' && $allUser->status != 'resign' && $allUser->role != 'intern' ) {
+                array_push($users, $allUser);
+            }
+        }
+        return view('pm.project.createProject',['users' => $users]);
     }
 
     /**
@@ -62,6 +69,9 @@ class ProjectController extends Controller
 
         $request->validate([
             'name' => 'required|unique:projects|min:1|max:255',
+            'user_id'=> 'required',
+            'agent_id'=>'nullable',
+            'agent_type'=>'nullable',
             // 'beginning_date' => 'required|date',
             'company_name' => 'required|string|min:1|max:255',
             'deadline_date' => 'required|date',
@@ -79,7 +89,9 @@ class ProjectController extends Controller
 
         $post = Project::create([
             'project_id' => $newId,
-            'user_id' => \Auth::user()->user_id,
+            'user_id' => $request->input('user_id'),
+            'agent_id'=> $request->input('agent_id'),
+            'agent_type'=> $request->input('agent_type'),
             'name' => $request->input('name'),
             'company_name' => $request->input('company_name'),
             // 'beginning_date' => $request->input('beginning_date'),
@@ -133,7 +145,6 @@ class ProjectController extends Controller
      */
     public function edit(String $project_id)
     {
-        $alluser = User::all();
         $company_name = ['grv_2', 'rv','grv'];
         $project = Project::find($project_id);
         $project_sop_item = ProjectSOP_item::all();
@@ -146,11 +157,11 @@ class ProjectController extends Controller
         $users = [];
         $allUsers = User::orderby('user_id')->get();
         foreach ($allUsers as $allUser) {
-            if ($allUser->role != 'manager' && count($allUser->invoices) != 0) {
+            if ($allUser->role != 'manager' && $allUser->status != 'resign' && $allUser->role != 'intern' ) {
                 array_push($users, $allUser);
             }
         }
-        return view('pm.project.editProject')->with('data', ['alluser'=>$alluser,'project' =>  $project,'gding_table'=>$gding, 'company_name' => $company_name,'users' => $users,'invoice_table' => $invoice,'project_sop_item'=>$project_sop_item]);
+        return view('pm.project.editProject')->with('data', ['project' =>  $project,'gding_table'=>$gding, 'company_name' => $company_name,'users' => $users,'invoice_table' => $invoice,'project_sop_item'=>$project_sop_item]);
     }
 
     /**
@@ -170,6 +181,8 @@ class ProjectController extends Controller
         }
         $request->validate([
             'name' => ['required', 'string', 'min:1', 'max:255', Rule::unique('projects')->ignore($project_id, 'project_id')],
+            'agent_id'=>'nullable|string',
+            'agent_type' =>'nullable|string',
             'beginning_date' => 'nullable|date',
             'deadline_date' => 'required|date',
             'closing_date' => 'required|date',
@@ -276,6 +289,8 @@ class ProjectController extends Controller
         $project->actual_profit = $request->input('actual_profit');
         $project->effective_interest_rate = $request->input('effective_interest_rate');
         $project->project_note = $request->input('project_note');
+        $project->agent_id = $request->input('agent_id');
+        $project->agent_type = $request->input('agent_type');
         $project->save();
         
 
@@ -318,21 +333,33 @@ class ProjectController extends Controller
 
     public function transfer(Request $request,String $project_id){
         $project = Project::find($project_id);
-        $project->receiver = $request->input('user');
-        $project->save();
-        $letter_ids = Letters::select('letter_id')->get()->map(function ($letter) {
-            return $letter->letter_id;
-        })->toArray();
-        $newId = RandomId::getNewId($letter_ids);
-        $post = Letters::create([
-            'letter_id' => $newId,
-            'user_id' => $request->input('user'),
-            'title' => \Auth::user()->nickname . ' 將 『' . $project->name . '』 此轉讓給您，請前往查核並同意',
-            'reason' => '',
-            'content' => '前往接受轉讓專案',
-            'link' => route('project.review', $project_id),
-            'status' => 'not_read',
-        ]);
+        if($project->user_id == \Auth::user()->user_id && $request->input('user') == $project->agent_id){
+            $project->user_id = $request->input('user');
+            $project->agent_id = \Auth::user()->user_id;
+            $project->save();
+        }
+        else if($project->agent_id == \Auth::user()->user_id && $request->input('user') == $project->user_id){
+            $project->agent_id = $request->input('user');
+            $project->user_id = \Auth::user()->user_id;
+            $project->save();
+        }
+        else{
+            $project->receiver = $request->input('user');
+            $project->save();
+            $letter_ids = Letters::select('letter_id')->get()->map(function ($letter) {
+                return $letter->letter_id;
+            })->toArray();
+            $newId = RandomId::getNewId($letter_ids);
+            $post = Letters::create([
+                'letter_id' => $newId,
+                'user_id' => $request->input('user'),
+                'title' => \Auth::user()->nickname . ' 將 『' . $project->name . '』 此轉讓給您，請前往查核並同意',
+                'reason' => '',
+                'content' => '前往接受轉讓專案',
+                'link' => route('project.review', $project_id),
+                'status' => 'not_read',
+            ]);
+        }
         return redirect()->route('project.review', $project_id);
     }
 

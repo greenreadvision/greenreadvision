@@ -69,7 +69,7 @@
             @endif
         </div>
         <div class="col-lg-4 mb-3">
-            @if(\Auth::user()->user_id==$data['user_id'] || \Auth::user()->role == 'manager')
+            @if(\Auth::user()->user_id==$data['user_id'] || \Auth::user()->role == 'manager' || \Auth::user()->user_id==$data['agent_id'])
             <button class="float-right btn btn-primary btn-primary-style" onclick="location.href='{{route('project.edit', $data->project_id)}}'"><i class='fas fa-edit'></i><span class="ml-3"> {{__('customize.Edit')}}</span></button>
             @endif
             @if(\Auth::user()->user_id == $data['receiver'])
@@ -83,7 +83,7 @@
     <div class="row">
         <div class="col-lg-4">
             <div class="row">
-                <div class="{{$data->status == 'unacceptable'? 'col-lg-12' : 'col-lg-6'}}" >
+                <div class="col-lg-6" >
                     <div class="card card-style"> 
                         <div class="px-3">
                             <div class="card-header bg-white">
@@ -91,11 +91,28 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="d-flex justify-content-center"><label class="content-label-style col-form-label">{{$data->user->nickname}}</label></div>
+                            <div class="d-flex justify-content-center"><label class="content-label-style col-form-label" style="text-align: center">{{$data->user->name}}({{$data->user->nickname}})</label></div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6" {{$data->status == 'unacceptable'? 'hidden' : ''}}>
+                <div class="col-lg-6" >
+                    <div class="card card-style"> 
+                        <div class="px-3">
+                            <div class="card-header bg-white">
+                                <i class='fas fa-user-circle' style="font-size:1.5rem;"></i><label class="ml-2 col-form-label ">{{__('customize.Agent')}}{{$data->agent_type == 'teacher'?'(導師)':'(協辦者)'}}</label>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            @if($data->agent_id !=null)
+                            <div class="d-flex justify-content-center"><label class="content-label-style col-form-label" style="text-align: center">{{$data->agent->name}}({{$data->agent->nickname}})</label></div>
+                            @else
+                            <div class="d-flex justify-content-center"><label class="content-label-style col-form-label" style="text-align: center">-無代理人-</label></div>
+                            @endif
+                        
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12" {{$data->status == 'unacceptable'? 'hidden' : ''}}>
                     <div class="card card-style">   
                         <div class="px-3">
                             <div class="card-header bg-white">

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     public function user() { return $this->belongsTo('App\User', 'user_id', 'user_id'); }
+    public function agent() { return $this->belongsTo('App\User', 'agent_id', 'user_id'); }
     public function todos() { return $this->hasMany('App\Todo', 'project_id', 'project_id'); }
     public function invoices() { return $this->hasMany('App\Invoice', 'project_id', 'project_id'); }
     public function gding(){return $this->hasMany('App\Gding','project_id','project_id');}
@@ -19,7 +20,7 @@ class Project extends Model
 
     public $incrementing = false;
     protected $primaryKey = "project_id";
-    protected $fillable = ['project_id', 'user_id','company_name', 'name', 'beginning_date', 'deadline_date', 'deadline_time','open_date', 'open_time','closing_date', 'contract_value','case_num','default_fine', 'color', 'status','estimated_cost','estimated_profit','actual_cost','actual_profit','effective_interest_rate','receiver','acceptance_times','default_num','performance_id','income_statement','project_note'];
+    protected $fillable = ['project_id', 'user_id','agent_id','agent_type','company_name', 'name', 'beginning_date', 'deadline_date', 'deadline_time','open_date', 'open_time','closing_date', 'contract_value','case_num','default_fine', 'color', 'status','estimated_cost','estimated_profit','actual_cost','actual_profit','effective_interest_rate','receiver','acceptance_times','default_num','performance_id','income_statement','project_note'];
     //
     // protected $project_id = "project_id";
     // protected $user_id = "user_id";

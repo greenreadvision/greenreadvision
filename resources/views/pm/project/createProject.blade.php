@@ -8,12 +8,38 @@
                     <form action="create/review" method="post">
                         @csrf
                         <div class="form-row">
-                            <div class="col-lg-2 form-group">
+                            <div class="col-lg-3 form-group">
                                 <label class="label-style col-form-label" for="company_name">投標公司</label>
                                 <select type="text" id="company_name" name="company_name" class="form-control rounded-pill" autofocus>
                                     <option value='grv_2'>綠雷德創新</option>
                                     <option value='rv'>閱野</option>
                                     <option value='grv'>綠雷德(舊)</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label class="label-style col-form-label" for="user_id">專案負責人</label>
+                                <select id="user_id" name="user_id" class="form-control rounded-pill" autofocus>
+                                    @foreach ($users as $user)
+                                        <option value="{{$user['user_id']}}" {{$user['user_id']==\Auth::user()->user_id?'selected':''}}>{{$user['name']}}({{$user['nickname']}})</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-lg-3 form-group">
+                                <label class="label-style col-form-label" for="agent_id">專案代理人</label>
+                                <select id="agent_id" name="agent_id" class="form-control rounded-pill">
+                                    <option value=""></option>
+                                    @foreach ($users as $user)
+                                        <option value="{{$user['user_id']}}" >{{$user['name']}}({{$user['nickname']}})</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label class="label-style col-form-label" for="agent_type">代理形式</label>
+                                <select id="agent_type" name="agent_type" class="form-control rounded-pill">
+                                    <option value="helper">協助者</option>
+                                    <option value="teacher">導師</option>
                                 </select>
                             </div>
                         </div>

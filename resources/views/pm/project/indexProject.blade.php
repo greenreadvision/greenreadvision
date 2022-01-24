@@ -197,6 +197,7 @@
 
         tbody.innerHTML = '<tr class="text-white">' +
             '<th>專案負責人</th>' +
+            '<th>專案代理人</th>' + 
             '<th>專案名稱</th>' +
             '<th>截標日期</th>' +
             '<th>開標日期</th>' +
@@ -220,10 +221,16 @@
     }
 
     function setData(i) {
+        if(projects[i]['agent_id']!=null){
+            Agent =  projects[i].agent['name'] + "(" + projects[i].agent['nickname'] + ")"
+        }else{
+            Agent = '-未有代理人-'
+        }
 
         a = "/project/" + projects[i]['project_id']
         tr = "<tr >" +
             "<td><a href='" + a + "' >" + projects[i].user['name'] + "(" + projects[i].user['nickname'] + ")" + "</td>" +
+            "<td><a href='" + a + "' >" + Agent + "</td>" +
             "<td><a href='" + a + "' >" + projects[i].name + "</td>" +
             "<td><a href='" + a + "' >" + projects[i].deadline_date + "</a></td>" +
             "<td><a href='" + a + "' >" + projects[i].open_date + "</td>" +

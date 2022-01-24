@@ -57,6 +57,7 @@ return [
     'Todo' => '待辦事項',
     'Information' => '資訊',
     'User' => '專案負責人',
+    'Agent' => '專案代理人',
     'Manage' => '總覽',
     'Add' => '新增',
     'Edit' => '編輯',
