@@ -200,8 +200,73 @@ class EstimateController extends Controller
 
     public function show(String $estimate_id){
         $estimate = Estimate::find($estimate_id);
+        if ($estimate->account_file != null) $estimate->account_file = explode('/', $estimate->account_file);
+        if ($estimate->padding_file != null) $estimate->padding_file = explode('/', $estimate->padding_file);
+        if ($estimate->receipt_file != null) $estimate->receipt_file = explode('/', $estimate->receipt_file);
+        $projects = Project::where('status','=','running')->get();
+
         $estimate_item = Estimate_item::where('estimate_id','=',$estimate_id)->get();
 
-        return view('pm.estimate.show',['estimate'=>$estimate,'estimate_item'=>$estimate_item]);       
+        return view('pm.estimate.show',['estimate'=>$estimate,'estimate_item'=>$estimate_item,'projects'=>$projects]);       
+    }
+
+
+    public function updateType(Request $request,String $estimate_id,String $type){
+        $estimate = Estimate::find($estimate_id);
+        switch($type){
+            case 'account':
+                $request->validate([
+                    'account_file' => 'file|required',
+                    'account_date' => 'date|required'
+                ]);
+                if ($request->hasFile('account_file')) {
+                    $file = $request->file('account_file');
+                    $file->storeAs('public/estimate/'.$estimate->final_id,$file->getClientOriginalName());
+                    $file_path = 'estimate/'.$estimate->final_id.'/'.$file->getClientOriginalName();
+                    $estimate->account_file = $file_path;
+                    $estimate->account_date = $request->input('account_date');
+                    $estimate->save();
+                }
+                break;
+            case 'project':
+                $request->validate([
+                    'project_id' => 'string|required|min:1'
+                ]);
+                $project = Project::find($request->input('project_id'));
+                $estimate->project_id = $project->project_id;
+                $estimate->active_name = $project->name;
+                $estimate->save();
+
+                break;
+            case 'padding':
+                $request->validate([
+                    'padding_file' => 'file|required',
+                    'padding_date' => 'date|required'
+                ]);
+                if ($request->hasFile('padding_file')) {
+                    $file = $request->file('padding_file');
+                    $file->storeAs('public/estimate/'.$estimate->final_id,$file->getClientOriginalName());
+                    $file_path = 'estimate/'.$estimate->final_id.'/'.$file->getClientOriginalName();
+                    $estimate->padding_file = $file_path;
+                    $estimate->padding_date = $request->input('padding_date');
+                    $estimate->save();
+                }
+                break;
+            case 'receipt':
+                $request->validate([
+                    'receipt_file' => 'file|required',
+                    'receipt_date' => 'date|required'
+                ]);
+                if ($request->hasFile('receipt_file')) {
+                    $file = $request->file('receipt_file');
+                    $file->storeAs('public/estimate/'.$estimate->final_id,$file->getClientOriginalName());
+                    $file_path = 'estimate/'.$estimate->final_id.'/'.$file->getClientOriginalName();
+                    $estimate->receipt_file = $file_path;
+                    $estimate->receipt_date = $request->input('receipt_date');
+                    $estimate->save();
+                }
+                break;
+        }
+        return redirect()->route('estimate.show', $estimate_id);
     }
 }

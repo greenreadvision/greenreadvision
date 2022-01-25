@@ -37,3 +37,9 @@ td {
 .choice_table tbody td{
     border-left: 1px #000 solid;
 }
+
+
+
+.table_border tbody td{
+    border: 1px #000 solid;
+}

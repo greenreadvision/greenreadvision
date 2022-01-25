@@ -210,6 +210,22 @@
         document.getElementById('search-estimate').value = temp
     }
 
+    function searchNum(){
+        numTemp = document.getElementById('search-num').value
+        nowPage = 1
+        setEstimate()
+        listEstimate()
+        listEstimatePage()
+    }
+
+    function searchEstimate(){
+        temp = document.getElementById('search-estimate').value
+        nowPage = 1
+        setEstimate()
+        listEstimate()
+        listEstimatePage()
+    }
+
 //----------------------------------------------------------
     
 //list------------------------------------------------------
@@ -267,131 +283,240 @@
 //----------------------------------------
 
 //PAGE---------------------------------------
-function nextPage() {
-    var number = Math.ceil(estimate.length / 13)
+    function nextPage() {
+        var number = Math.ceil(estimate.length / 13)
 
-    if (nowPage < number) {
+        if (nowPage < number) {
+            var temp = document.getElementsByClassName('page-item')
+            $(".page-" + String(nowPage)).removeClass('active')
+            nowPage++
+            $(".page-" + String(nowPage)).addClass('active')
+            listEstimatePage()
+            listEstimate()
+        }
+
+    }
+
+    function changePage(index) {
+
         var temp = document.getElementsByClassName('page-item')
+
         $(".page-" + String(nowPage)).removeClass('active')
-        nowPage++
+        nowPage = index
         $(".page-" + String(nowPage)).addClass('active')
+
         listEstimatePage()
         listEstimate()
+
     }
 
-}
+    function previousPage() {
+        var number = Math.ceil(estimate.length / 13)
 
-function changePage(index) {
+        if (nowPage > 1) {
+            var temp = document.getElementsByClassName('page-item')
+            $(".page-" + String(nowPage)).removeClass('active')
+            nowPage--
+            $(".page-" + String(nowPage)).addClass('active')
+            listEstimatePage()
+            listEstimate()
+        }
 
-    var temp = document.getElementsByClassName('page-item')
+    }
 
-    $(".page-" + String(nowPage)).removeClass('active')
-    nowPage = index
-    $(".page-" + String(nowPage)).addClass('active')
+    function listEstimatePage() {
+        $("#page-navigation").empty();
+        var parent = document.getElementById('page-navigation');
+        var div = document.createElement("div");
+        var number = Math.ceil(estimate.length / 13)
+        var data = ''
+        if (nowPage < 4) {
+            for (var i = 0; i < number; i++) {
+                if (i < 5) {
+                    data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
+                } else {
+                    data = data + '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)" ">...</a></li>'
+                    data = data + '<li class="page-item page-' + number + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + number + ')">' + number + '</a></li>'
+                    break
+                }
+            }
+        } else if (nowPage >= 4 && nowPage - 3 <= 2) {
+            for (var i = 0; i < number; i++) {
+                if (i < nowPage + 2) {
+                    data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
+                } else {
+                    data = data + '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)" ">...</a></li>'
+                    data = data + '<li class="page-item page-' + number + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + number + ')">' + number + '</a></li>'
+                    break
+                }
+            }
+        } else if (nowPage >= 4 && nowPage - 3 > 2 && number - nowPage > 5) {
+            for (var i = 0; i < number; i++) {
+                if (i == 0) {
+                    data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
+                    data = data + '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)" ">...</a></li>'
+                } else if (i >= nowPage - 3 && i <= nowPage + 1) {
+                    data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
 
-    listEstimatePage()
-    listEstimate()
+                } else if (i > nowPage + 1) {
+                    data = data + '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)" ">...</a></li>'
+                    data = data + '<li class="page-item page-' + number + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + number + ')">' + number + '</a></li>'
+                    break
+                }
 
-}
 
-function previousPage() {
-    var number = Math.ceil(estimate.length / 13)
+            }
+        } else if (number - nowPage <= 5 && number - nowPage >= 4) {
+            for (var i = 0; i < number; i++) {
+                if (i == 0) {
+                    data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
+                    data = data + '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)" ">...</a></li>'
+                } else if (i >= nowPage - 3) {
+                    data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
+                }
+            }
+        } else if (number - nowPage < 4) {
+            for (var i = 0; i < number; i++) {
+                if (i == 0) {
+                    data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
+                    data = data + '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)" ">...</a></li>'
+                } else if (i >= number - 5) {
+                    data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
+                }
+            }
+        }
+        var previous = "previous"
+        var next = "next"
+        div.innerHTML = '<nav aria-label="Page navigation example">' +
+            '<ul class="pagination">' +
+            '<li class="page-item">' +
+            '<a class="page-link" href="javascript:void(0)" onclick="previousPage()" aria-label="Previous">' +
+            '<span aria-hidden="true"><i class="fas fa-caret-left" style="width:14.4px"></i></span>' +
+            '</a>' +
+            '</li>' +
+            data +
+            '<li class="page-item">' +
+            '<a class="page-link" href="javascript:void(0)" onclick="nextPage()" aria-label="Next">' +
+            '<span aria-hidden="true"><i class="fas fa-caret-right" style="width:14.4px"></i></span>' +
+            '</a>' +
+            '</li>' +
+            '</ul>' +
+            '</nav>'
 
-    if (nowPage > 1) {
-        var temp = document.getElementsByClassName('page-item')
-        $(".page-" + String(nowPage)).removeClass('active')
-        nowPage--
+        parent.appendChild(div);
+
         $(".page-" + String(nowPage)).addClass('active')
-        listEstimatePage()
-        listEstimate()
     }
-
-}
-
-function listEstimatePage() {
-    $("#page-navigation").empty();
-    var parent = document.getElementById('page-navigation');
-    var div = document.createElement("div");
-    var number = Math.ceil(estimate.length / 13)
-    var data = ''
-    if (nowPage < 4) {
-        for (var i = 0; i < number; i++) {
-            if (i < 5) {
-                data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
-            } else {
-                data = data + '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)" ">...</a></li>'
-                data = data + '<li class="page-item page-' + number + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + number + ')">' + number + '</a></li>'
-                break
-            }
-        }
-    } else if (nowPage >= 4 && nowPage - 3 <= 2) {
-        for (var i = 0; i < number; i++) {
-            if (i < nowPage + 2) {
-                data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
-            } else {
-                data = data + '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)" ">...</a></li>'
-                data = data + '<li class="page-item page-' + number + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + number + ')">' + number + '</a></li>'
-                break
-            }
-        }
-    } else if (nowPage >= 4 && nowPage - 3 > 2 && number - nowPage > 5) {
-        for (var i = 0; i < number; i++) {
-            if (i == 0) {
-                data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
-                data = data + '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)" ">...</a></li>'
-            } else if (i >= nowPage - 3 && i <= nowPage + 1) {
-                data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
-
-            } else if (i > nowPage + 1) {
-                data = data + '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)" ">...</a></li>'
-                data = data + '<li class="page-item page-' + number + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + number + ')">' + number + '</a></li>'
-                break
-            }
-
-
-        }
-    } else if (number - nowPage <= 5 && number - nowPage >= 4) {
-        for (var i = 0; i < number; i++) {
-            if (i == 0) {
-                data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
-                data = data + '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)" ">...</a></li>'
-            } else if (i >= nowPage - 3) {
-                data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
-            }
-        }
-    } else if (number - nowPage < 4) {
-        for (var i = 0; i < number; i++) {
-            if (i == 0) {
-                data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
-                data = data + '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)" ">...</a></li>'
-            } else if (i >= number - 5) {
-                data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
-            }
-        }
-    }
-    var previous = "previous"
-    var next = "next"
-    div.innerHTML = '<nav aria-label="Page navigation example">' +
-        '<ul class="pagination">' +
-        '<li class="page-item">' +
-        '<a class="page-link" href="javascript:void(0)" onclick="previousPage()" aria-label="Previous">' +
-        '<span aria-hidden="true"><i class="fas fa-caret-left" style="width:14.4px"></i></span>' +
-        '</a>' +
-        '</li>' +
-        data +
-        '<li class="page-item">' +
-        '<a class="page-link" href="javascript:void(0)" onclick="nextPage()" aria-label="Next">' +
-        '<span aria-hidden="true"><i class="fas fa-caret-right" style="width:14.4px"></i></span>' +
-        '</a>' +
-        '</li>' +
-        '</ul>' +
-        '</nav>'
-
-    parent.appendChild(div);
-
-    $(".page-" + String(nowPage)).addClass('active')
-}
 //------------------------------------------
+</script>
+
+<script>
+    function select(type,value){
+        switch(type){
+            case 'user':
+                user = value
+                if(value ==''){
+                    reset()
+                }else{
+                    project =''
+                    year=''
+                    month=''
+                    setEstimate()
+                    setProject()
+                    setYear()
+                    setMonth()
+                }
+                break;
+            case 'project':
+                project = value
+                if(value ==''){
+                    reset()
+                }else{
+                    year=''
+                    month=''
+                    setEstimate()
+                    setYear()
+                    setMonth()
+                }
+                break;
+            case 'year':
+                year = value
+                if(value ==''){
+                    reset()
+                }else{
+                    month=''
+                    setEstimate()
+                    setMonth()
+                }
+                break;
+            case 'month':
+                month = value
+                if(value ==''){
+                    reset()
+                }else{
+                    setEstimate()
+                }
+                break;
+            default: 
+
+        }
+        if (value != '') {
+            setSearchNum()
+            setSearch()
+            listEstimatePage()
+            listEstimate()
+        }
+    }
+
+    function setEstimate(){
+        estimate = getNewEstimate();
+        for(var i = 0 ; i < estimate.length ; i++){
+            if(user != ''){
+                if(estimate[i]['user_id'] != user){
+                    estimate.splice(i, 1)
+                    i--
+                    continue
+                }
+            }
+            if(project != ''){
+                if(estimate[i]['project_id'] != project){
+                    estimate.splice(i, 1)
+                    i--
+                    continue
+                }
+            }
+            if(year != ''){
+                if(estimate[i]['created_at'].substr(0, 4) != year){
+                    estimate.splice(i, 1)
+                    i--
+                    continue
+                }
+            }
+            if(month != ''){
+                console.log(month)
+                if(estimate[i]['created_at'].substr(5, 2) != month){
+                    estimate.splice(i, 1)
+                    i--
+                    continue
+                }
+            }
+            if (temp != '') {
+                if (estimate[i]['active_title'] == null || estimate[i]['active_title'].indexOf(temp) == -1) {
+                    estimate.splice(i, 1)
+                    i--
+                    continue
+                }
+            }
+
+            if (numTemp != '') {
+                if (estimate[i]['final_id'] == null || estimate[i]['final_id'].indexOf(numTemp) == -1) {
+                    estimate.splice(i, 1)
+                    i--
+                    continue
+                }
+            }
+        }
+    }
 </script>
 
 @stop

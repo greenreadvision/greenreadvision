@@ -185,7 +185,7 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/estimate/create','EstimateController@create')->name('estimate.create');
     Route::post('/estimate/create/review',"EstimateController@store")->name('estimate.create.store');
     Route::get('/estimate/{id}/edit','EstimateController@edit')->name('estimate.edit');
-    Route::post('/estimate/{id}/update','EstimateController@update')->name('estimate.update');
+    Route::post('/estimate/{id}/update/{type}','EstimateController@updateType')->name('estimate.updateType');
     Route::delete('/estimate/{id}/delete','EstimateController@destroy')->name('estimate.delete');
 
     Route::get('/customer/index','CustomerController@index')->name('customer.index');
