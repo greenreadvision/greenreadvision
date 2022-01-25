@@ -250,10 +250,17 @@
 
     function setData(i) {
 
-        tr = "<tr style='cursor: pointer;' class='modal-style' data-toggle='modal' data-target=#" + banks[i].bank_id + "_Modal>" +
+        tr = "<tr style='cursor: pointer;' class='modal-style' data-toggle='modal' onclick='modalShow(\""+ banks[i].bank_id +"\")'>" +
             "<td class='text-left'>" + banks[i].name + "</td>" +
             "</tr>"
         return tr
+    }
+
+
+    function modalShow(id){
+        console.log(id)
+        console.log(document.getElementById(id+'_Modal'))
+        $('#'+id+'_Modal').modal('show')
     }
 
 
