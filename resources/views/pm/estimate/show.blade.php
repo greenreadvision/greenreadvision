@@ -15,7 +15,7 @@
                             <div class='progress-bar bg-danger' role='progressbar' style='width: 0%' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100'></div>
                         </div>
                     </div>
-                    @elseif($estimate['status']== 'account')
+                    @elseif($estimate['project_id']==null && $estimate['status']== 'account')
                     <div class="w-100">
                         <div class="w-100 text-center">
                             <small>已回簽，籌畫執行中</small>
@@ -42,7 +42,7 @@
                             <div class='progress-bar bg-success' role='progressbar' style='width: 75%' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'></div>
                         </div>
                     </div>
-                    @elseif($estimate['status']=='recipt')
+                    @elseif($estimate['status']=='receipt')
                     <div class="w-100">
                         <div class="w-100 text-center">
                             <small>已開收據(存根聯)</small>
@@ -145,6 +145,119 @@
                         
                     </table>
                 </div>
+                <hr size="8px" align="center" width="100%">
+                <div class="col-lg-12 d-flex justify-content-between">
+                    <div style="color:black;font-size:1rem;font-family: DFKai-sb,Times New Roman,STKaiti;">
+                        <div class="col-md-12" style="text-align:right   ;"><label>{{__('customize.id')}} : {{$estimate->final_id}}</label></div>
+                    </div>
+                    <div>
+                        <button type="button" id="print_button" class="btn btn-blue rounded-pill"><span class="mx-2">列印</span></button>
+                    </div>
+                </div>
+                <div class="mb-3" id="print_box" name="print_box">
+                    <!--print_start min-width:1043px;min-height:485px;-->
+                    <div style="padding:2cm 0;text-align:center;color:black;font-size:1rem;font-family: DFKai-sb,Times New Roman,STKaiti;">
+                        <div class="col-md-12 table-style" style="text-align:center;">
+                            @if($estimate->company_name == 'grv')
+                                <img src="{{ URL::asset('img/綠雷德LOGO.png') }}" height="50px">
+                                <label style="font-size:xx-large;">綠雷德文創股份有限公司-報價單</label>
+                            @elseif($estimate->company_name == 'rv')
+                                <img src="{{ URL::asset('img/rv_logo.png') }}" height="50px">
+                                <label style="font-size:xx-large;">閱野文創股份有限公司-報價單</label>
+                            @elseif($estimate->company_name == 'grv_2')
+                                <img src="{{ URL::asset('img/綠雷德創新logo.png') }}" height="50px">
+                                <label style="font-size:xx-large;">綠雷德創新股份有限公司-報價單</label>
+                            @endif
+                            <div class="col-lg-12 d-flex justify-content-between">
+                                <div>
+                                    @if ($estimate->company_name == 'grv_2')
+                                    <h3>統一編號：90742969</h3>
+                                    @elseif($estimate->company_name == 'rv')
+                                    <h3>統一編號：54289140</h3>
+                                    @endif
+                                </div>
+                                <div>
+                                    <h3>地址: 臺北市大安區忠孝東路三段1號光華館3樓310室</h3>
+                                </div>
+                            </div>
+                            <table class="table border table_border" style="margin-top: 16px">
+                                <tbody>
+                                    <tr class="table_split">
+                                        <td  width="5%" colspan="1"><h5></h5></td>
+                                        <td  width="5%" colspan="1"><h5></h5></td>
+                                        <td  width="5%" colspan="1"><h5></h5></td>
+                                        <td  width="5%" colspan="1"><h5></h5></td>
+                                        <td  width="5%" colspan="1"><h5></h5></td>
+                                        <td  width="5%" colspan="1"><h5></h5></td>
+                                        <td  width="5%" colspan="1"><h5></h5></td>
+                                        <td  width="5%" colspan="1"><h5></h5></td>
+                                        <td  width="5%" colspan="1"><h5></h5></td>
+                                        <td  width="5%" colspan="1"><h5></h5></td>
+                                        <td  width="5%" colspan="1"><h5></h5></td>
+                                        <td  width="5%" colspan="1"><h5></h5></td>
+                                        <td  width="5%" colspan="1"><h5></h5></td>
+                                        <td  width="5%" colspan="1"><h5></h5></td>
+                                        <td  width="5%" colspan="1"><h5></h5></td>
+                                        <td  width="5%" colspan="1"><h5></h5></td>
+                                        <td  width="5%" colspan="1"><h5></h5></td>
+                                        <td  width="5%" colspan="1"><h5></h5></td>
+                                        <td  width="5%" colspan="1"><h5></h5></td>
+                                        <td  width="5%" colspan="1"><h5></h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="15%" colspan="3"><h5>公司名稱</h5></td>
+                                        <td width="40%" colspan="8"><h5>{{$estimate->customer->name}}</h5></td>
+                                        <td width="15%" colspan="3"><h5>電話</h5></td>
+                                        <td width="30%" colspan="6"><h5>{{$estimate->customer->phone}}</h5></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td width="15%" colspan="3"><h5>活動聯絡人</h5></td>
+                                        <td width="40%" colspan="8"><h5>{{$estimate->customer->principal}}</h5></td>
+                                        <td width="15%" colspan="3"><h5>Mail</h5></td>
+                                        <td width="30%" colspan="6"><h5>{{$estimate->customer->email}}</h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="15%" colspan="3"><h5>活動名稱</h5></td>
+                                        <td width="85%" colspan="17"><h5>{{$estimate->active_name}}</h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="15%" colspan="3"><h5>業務承辦人</h5></td>
+                                        <td width="40%" colspan="8"><h5>{{$estimate->user->name}}</h5></td>
+                                        <td width="20%" colspan="4" rowspan="2" style="vertical-align:middle;"><h5>報價日期</h5></td>
+                                        <td width="30%" colspan="6" rowspan="2" style="vertical-align:middle;"><h5></h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="15%" colspan="3"><h5>連絡電話</h5></td>
+                                        <td width="40%" colspan="8"><h5>02-8772-2160/02-8772-6321</h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="10%" colspan="2"><h5>編號</h5></td>
+                                        <td width="20%" colspan="4"><h5>項目</h5></td>
+                                        <td width="15%" colspan="3"><h5>單價</h5></td>
+                                        <td width="10%" colspan="2"><h5>數量</h5></td>
+                                        <td width="10%" colspan="2"><h5>單位</h5></td>
+                                        <td width="15%" colspan="3"><h5>金額</h5></td>
+                                        <td width="20%" colspan="4"><h5>備註</h5></td>
+                                    </tr>
+                                    @foreach ($estimate->item as $item)
+                                        <tr>
+                                            <td width="10%" colspan="2"><h5>{{$item->no}}</h5></td>
+                                            <td width="20%" colspan="4"><h5>{{$item->content}}</h5></td>
+                                            <td width="15%" colspan="3"><h5>{{number_format($item->price)}}</h5></td>
+                                            <td width="10%" colspan="2"><h5>{{$item->quantity}}</h5></td>
+                                            <td width="10%" colspan="2"><h5>{{$item->unit}}</h5></td>
+                                            <td width="15%" colspan="3"><h5>{{number_format($item->amount)}}</h5></td>
+                                            <td width="20%" colspan="4"><h5>{{$item->note}}</h5></td>
+
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -161,14 +274,18 @@
             </div>
             <div class="modal-body">
                 <div class="col-lg-12 form-group">
+                    @if ($estimate->account_file != null)
+                    <form action="update/accountUpdate" method="post" enctype="multipart/form-data">
+                    @else
                     <form action="update/account" method="post" enctype="multipart/form-data">
+                    @endif
                         @method('POST')
                         @csrf
                         <div class="col-lg-12 form-group">
                             <label class="label-style col-form-label" for="signer">檔案上傳</label>
-                            <input type="file" id="account_file" name="account_file" class="form-control rounded-pill{{ $errors->has('receipt_file') ? ' is-invalid' : '' }}">
+                            <input type="file" id="account_file" name="account_file" class="form-control rounded-pill{{ $errors->has('receipt_file') ? ' is-invalid' : '' }}" required>
                             <label class="label-style col-form-label" for="signer">回簽日期</label>
-                            <input type="date" id="account_date" name="account_date" class="form-control rounded-pill{{ $errors->has('account_date') ? ' is-invalid' : '' }}">
+                            <input type="date" id="account_date" name="account_date" class="form-control rounded-pill{{ $errors->has('account_date') ? ' is-invalid' : '' }}" value="{{$estimate->account_date}}" required>
 
                         </div>
                         <div class="col-lg-12 d-flex justify-content-end">
@@ -197,7 +314,7 @@
                         @csrf
                         <div class="col-lg-12 form-group">
                             <label class="label-style col-form-label" for="signer"></label>
-                            <select name="project_id" id="project_id" class="form-control rounded-pill">
+                            <select name="project_id" id="project_id" class="form-control rounded-pill" required>
                                 <option value=""></option>
                                 <optgroup label="綠雷德創新">
                                 @foreach ($projects as $item)
@@ -236,14 +353,18 @@
             </div>
             <div class="modal-body">
                 <div class="col-lg-12 form-group">
+                    @if ($estimate->padding_file != null)
+                    <form action="update/paddingUpdate" method="post" enctype="multipart/form-data">
+                    @else
                     <form action="update/padding" method="post" enctype="multipart/form-data">
+                    @endif
                         @method('POST')
                         @csrf
                         <div class="col-lg-12 form-group">
                             <label class="label-style col-form-label" for="signer">檔案上傳</label>
-                            <input type="file" id="padding_file" name="padding_file" class="form-control rounded-pill{{ $errors->has('padding_file') ? ' is-invalid' : '' }}">
+                            <input type="file" id="padding_file" name="padding_file" class="form-control rounded-pill{{ $errors->has('padding_file') ? ' is-invalid' : '' }}" required>
                             <label class="label-style col-form-label" for="signer">付款日期</label>
-                            <input type="date" id="padding_date" name="padding_date" class="form-control rounded-pill{{ $errors->has('padding_date') ? ' is-invalid' : '' }}">
+                            <input type="date" id="padding_date" name="padding_date" class="form-control rounded-pill{{ $errors->has('padding_date') ? ' is-invalid' : '' }}" value="{{$estimate->padding_date}}" required>
 
                         </div>
                         <div class="col-lg-12 d-flex justify-content-end">
@@ -267,14 +388,18 @@
             </div>
             <div class="modal-body">
                 <div class="col-lg-12 form-group">
+                    @if ($estimate->receipt_file != null)
+                    <form action="update/receiptUpdate" method="post" enctype="multipart/form-data">
+                    @else
                     <form action="update/receipt" method="post" enctype="multipart/form-data">
+                    @endif
                         @method('POST')
                         @csrf
                         <div class="col-lg-12 form-group">
                             <label class="label-style col-form-label" for="signer">檔案上傳</label>
-                            <input type="file" id="receipt_file" name="receipt_file" class="form-control rounded-pill{{ $errors->has('receipt_file') ? ' is-invalid' : '' }}">
+                            <input type="file" id="receipt_file" name="receipt_file" class="form-control rounded-pill{{ $errors->has('receipt_file') ? ' is-invalid' : '' }}" required>
                             <label class="label-style col-form-label" for="signer">付款日期</label>
-                            <input type="date" id="receipt_date" name="receipt_date" class="form-control rounded-pill{{ $errors->has('receipt_date') ? ' is-invalid' : '' }}">
+                            <input type="date" id="receipt_date" name="receipt_date" class="form-control rounded-pill{{ $errors->has('receipt_date') ? ' is-invalid' : '' }}" value="{{$estimate->receipt_date}}" required>
 
                         </div>
                         <div class="col-lg-12 d-flex justify-content-end">
@@ -288,6 +413,20 @@
 </div>
 
 @stop
+<script type="text/javascript" src="{{ URL::asset('js/jquery.min.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(() => {
+        $('#print_button').click(() => {
+            let html = document.all['print_box'].innerHTML
+
+            let bodyHtml = document.body.innerHTML
+            document.body.innerHTML = html
+            window.print()
+            document.body.innerHTML = bodyHtml
+            window.location.reload() //列印輸出後更新頁面
+        })
+    })
+</script>
 <script>
     function showModal(type){
         $('#'+type).modal('show');

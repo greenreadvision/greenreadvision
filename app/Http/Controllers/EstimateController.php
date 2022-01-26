@@ -195,7 +195,7 @@ class EstimateController extends Controller
 
         ]);
 
-        return view('pm.estimate.index');       
+        return redirect()->route('estimate.index');       
     }
 
     public function show(String $estimate_id){
@@ -219,6 +219,22 @@ class EstimateController extends Controller
                     'account_file' => 'file|required',
                     'account_date' => 'date|required'
                 ]);
+                if ($request->hasFile('account_file')) {
+                    $file = $request->file('account_file');
+                    $file->storeAs('public/estimate/'.$estimate->final_id,$file->getClientOriginalName());
+                    $file_path = 'estimate/'.$estimate->final_id.'/'.$file->getClientOriginalName();
+                    $estimate->account_file = $file_path;
+                    $estimate->account_date = $request->input('account_date');
+                    $estimate->status = 'account';
+                    $estimate->save();
+                }
+                break;
+            case 'accountUpdate':
+                $request->validate([
+                    'account_file' => 'file|required',
+                    'account_date' => 'date|required'
+                ]);
+                \Illuminate\Support\Facades\Storage::delete($estimate->account_file);
                 if ($request->hasFile('account_file')) {
                     $file = $request->file('account_file');
                     $file->storeAs('public/estimate/'.$estimate->final_id,$file->getClientOriginalName());
@@ -249,6 +265,22 @@ class EstimateController extends Controller
                     $file_path = 'estimate/'.$estimate->final_id.'/'.$file->getClientOriginalName();
                     $estimate->padding_file = $file_path;
                     $estimate->padding_date = $request->input('padding_date');
+                    $estimate->status = 'padding';
+                    $estimate->save();
+                }
+                break;
+            case 'paddingUpdate':
+                $request->validate([
+                    'padding_file' => 'file|required',
+                    'padding_date' => 'date|required'
+                ]);
+                \Illuminate\Support\Facades\Storage::delete($estimate->padding_file);
+                if ($request->hasFile('padding_file')) {
+                    $file = $request->file('padding_file');
+                    $file->storeAs('public/estimate/'.$estimate->final_id,$file->getClientOriginalName());
+                    $file_path = 'estimate/'.$estimate->final_id.'/'.$file->getClientOriginalName();
+                    $estimate->padding_file = $file_path;
+                    $estimate->padding_date = $request->input('padding_date');
                     $estimate->save();
                 }
                 break;
@@ -257,6 +289,22 @@ class EstimateController extends Controller
                     'receipt_file' => 'file|required',
                     'receipt_date' => 'date|required'
                 ]);
+                if ($request->hasFile('receipt_file')) {
+                    $file = $request->file('receipt_file');
+                    $file->storeAs('public/estimate/'.$estimate->final_id,$file->getClientOriginalName());
+                    $file_path = 'estimate/'.$estimate->final_id.'/'.$file->getClientOriginalName();
+                    $estimate->receipt_file = $file_path;
+                    $estimate->receipt_date = $request->input('receipt_date');
+                    $estimate->status = 'receipt';
+                    $estimate->save();
+                }
+                break;
+            case 'receiptUpdate':
+                $request->validate([
+                    'receipt_file' => 'file|required',
+                    'receipt_date' => 'date|required'
+                ]);
+                \Illuminate\Support\Facades\Storage::delete($estimate->receipt_file);
                 if ($request->hasFile('receipt_file')) {
                     $file = $request->file('receipt_file');
                     $file->storeAs('public/estimate/'.$estimate->final_id,$file->getClientOriginalName());

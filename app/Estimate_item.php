@@ -11,6 +11,7 @@ class Estimate_item extends Model
     public $incrementing = false;
     protected $fillable =[
         'id',
+        'no',
         'estimate_id',
         'content',
         'quantity',

@@ -43,3 +43,13 @@ td {
 .table_border tbody td{
     border: 1px #000 solid;
 }
+
+.table_split :nth-child(n){
+    border-top: hidden;
+    border-left:hidden;
+}
+.table_split :last-child{
+    border-top: hidden;
+    border-left:hidden;
+    border-right: hidden;
+}

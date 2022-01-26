@@ -258,7 +258,7 @@
         tr = "<tr>" +
             "<td width='10%'><a href='" + a + "'  target='_blank'>" + estimate[i].final_id + "</td>" +
             "<td width='15%'><a href='" + a + "'  target='_blank'>" + estimate[i].user['name'] + "(" + estimate[i].user['nickname'] + ")" + "</td>" +
-            "<td width='30%'><a href='" + a + "' target='_blank'>" + estimate[i].project['name'] + "</td>" +
+            "<td width='30%'><a href='" + a + "' target='_blank'>" + estimate[i].active_name + "</td>" +
             "<td width='25%'><a href='" + a + "' target='_blank'>" + estimate[i].active_title + "</a></td>" +
             "<td width='10%'><a href='" + a + "' target='_blank'>" + commafy(estimate[i].total_price) + "</td>" +
             "<td width='10%'><a href='" + a + "' target='_blank'>" + estimate[i].created_at.substr(0, 10) + "</td>" +

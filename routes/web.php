@@ -187,6 +187,7 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/estimate/{id}/edit','EstimateController@edit')->name('estimate.edit');
     Route::post('/estimate/{id}/update/{type}','EstimateController@updateType')->name('estimate.updateType');
     Route::delete('/estimate/{id}/delete','EstimateController@destroy')->name('estimate.delete');
+    Route::post('/estimate/{id}/match/{type}','EstimateController@match')->name('estimate.match');
 
     Route::get('/customer/index','CustomerController@index')->name('customer.index');
     Route::post('/customer/create/store','CustomerController@store')->name('customer.create.store');
@@ -323,6 +324,7 @@ Route::group(['middleware' => ['auth', 'general']], function () {
 Route::group(['middleware' => ['auth', 'staffManager']], function () {
     //員工管理
     Route::get('/staff', 'UserController@staff')->name('staff');
+    Route::get('/staff/intern','UserController@intern')->name('staff.intern');
     Route::put('/staff/store/{id}', 'UserController@setRole')->name('role.setting');
     Route::get('/question', 'QuestionController@index')->name('question.index');
     Route::get('/train/question/create', 'QuestionController@create')->name('question.create');

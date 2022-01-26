@@ -9,6 +9,7 @@ class Estimate extends Model
     public function project() { return $this->belongsTo('App\Project', 'project_id', 'project_id'); }
     public function user() { return $this->belongsTo('App\User', 'user_id', 'user_id'); }
     public function item() { return $this->hasMany('App\Estimate_item','estimate_id','estimate_id');}
+    public function customer(){ return $this->belongsTo('App\Customer','customer_id','id');}
 
     public $incrementing = false;
     protected $primaryKey = "estimate_id";
