@@ -140,8 +140,17 @@ class OtherInvoiceController extends Controller
             default:
                 break;
         }
+
+        $intern = '';
+        if(\Auth::user()->role =='intern'){
+            $intern = $request->input('intern_name');
+        }
+        else{
+            $intern = NULL ;
+        }
        
         $post = OtherInvoice::create([
+            'intern_name' => $intern,
             'other_invoice_id' => $id,
             'user_id' => \Auth::user()->user_id,
             'type'=>$request->input('type'),
@@ -197,7 +206,7 @@ class OtherInvoiceController extends Controller
             'content' => '前往第一階段審核',
             'link' => route('invoice.review.other', $id),
         ];
-        Mail::to($email)->send(new EventMail($maildata));
+        //Mail::to($email)->send(new EventMail($maildata));
         // fix server getting wrong timezone
         // Invoice::where('invoice_id', $id)->update(['created_at' => $created_at, 'updated_at' => $created_at,]);
         return redirect()->route('invoice.review.other', $id);
