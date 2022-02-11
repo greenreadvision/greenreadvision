@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Functions\RandomId;
+use App\Intern;
 use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Foundation\Auth\RegistersUsers;
 class UserController extends Controller
@@ -132,7 +133,15 @@ class UserController extends Controller
 
     public function intern()
     {
-        $roles = [  'intern'];
+        // $user = User::all();
+        
+        // $interns = Intern::all();
+        // foreach($user as $users){
+        //     if ($interns->user_id == $users-> user_id){
+        //         return view('pm.user.intern',['users'=>$users]);
+        //     }
+        // }
+        $roles = ['intern'];
         $statuses = ['general','train_OK','resign'];
         $users = User::where([['role','!=','manager'],['role','!=','proprietor'],['role','!=','staff'],['role','!=','supervisor'],['role','!=','administrator'],['status','!=','fill'],['status','!=','prints'],['status','!=','train']])->orderby('user_id')->get();
 

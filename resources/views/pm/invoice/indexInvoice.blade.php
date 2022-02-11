@@ -1000,10 +1000,15 @@
         }
 
         var UserName = invoices[i].user['name'] 
+<<<<<<< Updated upstream
         if(invoices[i].user['role']=='manager'){
             if (invoices[i].intern_name != null){
                 UserName = invoices[i].intern_name
             }          
+=======
+        if((invoices[i].user['role']=='intern'||invoices[i].user['role'] == 'manager')&&invoices[i].intern_name != null){
+            UserName = invoices[i].intern_name
+>>>>>>> Stashed changes
         }
 
         a = "/invoice/" + invoices[i]['invoice_id'] + "/review"

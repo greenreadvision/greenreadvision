@@ -74,14 +74,13 @@ class EstimateController extends Controller
         //判定有沒有新的Customer
         $customer_status = 0;
         $customers = Customer::all();
-        if($request->input('customer_id')==""||$request->input('customer_id')==null){   //有新版customer要新增
            
-            foreach($customers as $c){   //查看公司名稱以及負責人有完全一樣的
-                if($c->principal == $request->input('customer_name') && $c->principal == $request->input('customer_principal')){
-                    $customer_status = 1;//有相同的但有用到keydown導致$request->input('customer_id')==''
-                    $c->phone = $request->input('customer_phone');
-                    $c->email = $request->input('customer_mail');
-                }
+        foreach($customers as $c){   //查看公司名稱以及負責人有完全一樣的
+            if($c->name == $request->input('customer_name') && $c->principal == $request->input('customer_principal')){
+                $customer_status = 1;//有相同的但有用到keydown導致$request->input('customer_id')==''
+                $c->phone = $request->input('customer_phone');
+                $c->email = $request->input('customer_mail');
+                $customer_id = $c->id;
             }
         }
 
