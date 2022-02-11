@@ -130,6 +130,15 @@ class UserController extends Controller
         return view('pm.user.staff',['users'=>$users,'roles'=>$roles,'statuses'=>$statuses]);
     }
 
+    public function intern()
+    {
+        $roles = [  'intern'];
+        $statuses = ['general','train_OK','resign'];
+        $users = User::where([['role','!=','manager'],['role','!=','proprietor'],['role','!=','staff'],['role','!=','supervisor'],['role','!=','administrator'],['status','!=','fill'],['status','!=','prints'],['status','!=','train']])->orderby('user_id')->get();
+
+        return view('pm.user.intern',['users'=>$users,'roles'=>$roles,'statuses'=>$statuses]);
+    }
+
     public function setRole(Request $request,String $id)
     {
         $user = User::find($id);

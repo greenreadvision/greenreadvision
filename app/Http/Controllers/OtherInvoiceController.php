@@ -142,7 +142,7 @@ class OtherInvoiceController extends Controller
         }
 
         $intern = '';
-        if(\Auth::user()->role =='intern'){
+        if(\Auth::user()->role ==''){
             $intern = $request->input('intern_name');
         }
         else{

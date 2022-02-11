@@ -69,6 +69,9 @@
                                 <a class="dropdown-item" href="{{ route('staff') }}">
                                     員工管理
                                 </a>
+                                <a class="dropdown-item" href="{{ route('intern') }}">
+                                    實習生管理
+                                </a>
                                 <a href="{{route('question.index')}}" class="dropdown-item">
                                     員工測驗
                                 </a>

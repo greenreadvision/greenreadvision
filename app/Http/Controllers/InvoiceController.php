@@ -191,7 +191,7 @@ class InvoiceController extends Controller
         })->toArray();
 
         $request->validate([
-
+            'intern_name' => 'nullable|string',
             'project_id' => 'required|string|exists:projects,project_id|size:11',
             'title' => 'required|string|min:1|max:100',
             'content' => 'required|string|min:1|max:100',
@@ -278,7 +278,7 @@ class InvoiceController extends Controller
                 break;
         }
         $intern = '';
-        if(\Auth::user()->role =='intern'){
+        if(\Auth::user()->role =='manager'){
             $intern = $request->input('intern_name');
         }
         else{
@@ -475,6 +475,7 @@ class InvoiceController extends Controller
         $invoice = Invoice::find($invoice_id);
         //
         $request->validate([
+            'intern_name' => 'nullable|string',
             'project_id' => 'required|string|exists:projects,project_id|size:11',
             'content' => 'required|string|min:1|max:100',
             'company_name' => 'required|string|min:2|max:255',
@@ -627,6 +628,7 @@ class InvoiceController extends Controller
         $invoice = Invoice::find($invoice_id);
         //
         $request->validate([
+            'intern_name' => 'nullable|string',
             'project_id' => 'required|string|exists:projects,project_id|size:11',
             'content' => 'required|string|min:1|max:100',
             'company_name' => 'required|string|min:2|max:255',

@@ -320,9 +320,9 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     
 });
 
-
 Route::group(['middleware' => ['auth', 'staffManager']], function () {
     //員工管理
+    Route::get('/intern', 'UserController@intern')->name('intern');
     Route::get('/staff', 'UserController@staff')->name('staff');
     Route::get('/staff/intern','UserController@intern')->name('staff.intern');
     Route::put('/staff/store/{id}', 'UserController@setRole')->name('role.setting');
