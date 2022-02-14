@@ -282,7 +282,11 @@ class InvoiceController extends Controller
         }
 <<<<<<< HEAD
         $intern = '';
+<<<<<<< Updated upstream
         if(\Auth::user()->role =='manager'){
+=======
+        if(\Auth::user()->role =='intern'||\Auth::user()->role == 'manager'){
+>>>>>>> Stashed changes
             $intern = $request->input('intern_name');
         }
         else{

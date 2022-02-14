@@ -122,7 +122,7 @@
                         @endif
                         @if($data['invoice']['status'] == 'delete')
                             <button class="ml-2 btn btn-gray rounded-pill"><span class="mx-2"> 無法{{__('customize.Edit')}}</span></button>
-                        @elseif(\Auth::user()->user_id==$data['invoice']['user_id']||\Auth::user()->role=='administrator')
+                        @elseif(\Auth::user()->user_id==$data['invoice']['user_id']||\Auth::user()->role=='administrator'|| \Auth::user()->role =='manager')
                             @if(strpos(URL::full(),'other'))
                             <button class="ml-2 btn btn-green rounded-pill" onclick="location.href='{{route('invoice.edit.other', $data['invoice']['other_invoice_id'])}}'"><span class="mx-2"> {{__('customize.Edit')}}</span></button>
                             @else
@@ -222,11 +222,15 @@
                             <div style="width:30%;text-align:left;"><label>匯款日期：</label><u>　{{$data['invoice']['status']=='complete'? $data['invoice']['remittance_date']:'　　'}}　.</u></div>
                             <div style="width:25%;text-align:left;"><label>帳務處理：</label><u>　{{$data['invoice']['status']=='complete'? $data['invoice']['matched']:'　　'}}　.</u></div>
                             <div style="width:25%;text-align:left;"><label>主管審核：</label><u>　{{$data['invoice']['status']!='waiting'? $data['invoice']['managed']:$data['invoice']['managed']}}　.</u></div>
+<<<<<<< Updated upstream
                             @if($data['invoice']->user->role = 'manager' && $data['invoice']->intern_name != null )
                             <div style="width:20%;text-align:left;"><label>請款人：</label><u>　{{$data['invoice']->intern_name}}　.</u></div>
                             @else
                             <div style="width:20%;text-align:left;"><label>請款人：</label><u>　{{$data['invoice']->user->name}}　.</u></div>
                             @endif
+=======
+                            <div style="width:20%;text-align:left;"><label>請款人：</label><u>　{{($data['invoice']->user->role == 'manager' && $data['invoice']['intern_name']!=null) ? $data['invoice']['intern_name'] : $data['invoice']->user->name}}　.</u></div>
+>>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>

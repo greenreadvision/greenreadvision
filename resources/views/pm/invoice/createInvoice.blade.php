@@ -31,6 +31,25 @@
                     <form name="invoiceForm" action="create/review" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
+                            @if(\Auth::user()->role =='intern'||\Auth::user()->role =='manager')
+                            <div class="col-lg-12 col-form-label" style="padding-left: 0px">
+                                <div id = "intern_name" class="col-lg-6 form-group" >
+                                    <label class="label-style col-form-label" for="intern_name">實習生姓名</label>
+                                    <select type="text" id="intern_name" name="intern_name" class="form-control rounded-pill" autofocus>
+                                        <option value="">請選擇實習生姓名</option>
+                                        <option>柴犬</option>
+                                        <option>貓頭鷹</option>
+                                        <option>比目魚</option>
+                                        <option>北極熊</option>
+                                        <option>刺蝟</option>
+                                        <option>花貓</option>
+                                        <option>河馬</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            @endif
+
                             <div class="col-lg-6 form-group">
                                 <div id="otherCreateInvoice">
                                     <div class="row">

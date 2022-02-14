@@ -162,7 +162,7 @@
                                     <label class="label-style col-form-label" for="amount">稅率選擇</label>
                                     <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
                                         <label class="btn btn-secondary w-100 rounded-pill action">
-                                            <input type="radio" name="options" autocomplete="off"> 已含稅
+                                            <input type="radio" name="options" autocomplete="off"> 未含稅
                                         </label>
                                     </div>
                                     <!--<input class="form-check-input" type="checkbox" value="" id="texCheck" onclick="calculation()">
@@ -352,9 +352,9 @@
     }
 
     function calculation() {
-        total_amount.value = sum()
-        amount.value = Math.round(total_amount.value/1.05)
-        tex.value = Math.round(amount.value * 0.05)
+        amount.value = sum()
+        total_amount.value = Math.round(amount.value * 1.05)
+        tex.value = Math.round(total_amount.value * 0.05)
     }
 
     function textchange(){

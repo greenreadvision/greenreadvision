@@ -118,7 +118,7 @@
                                     @if($estimate['project_id']!=null)
                                         <a href="{{route('project.review',$estimate['project_id'])}}"><h5>{{$estimate->project->name}}</h5></a>
                                     @else
-                                        <h5>$estimate['active_name']</h5>
+                                        <h5>{{$estimate['active_name']}}</h5>
                                     @endif
                                 </td>
                                 
@@ -225,7 +225,7 @@
                                         <td width="15%" colspan="3"><h5>業務承辦人</h5></td>
                                         <td width="40%" colspan="8"><h5>{{$estimate->user->name}}</h5></td>
                                         <td width="20%" colspan="4" rowspan="2" style="vertical-align:middle;"><h5>報價日期</h5></td>
-                                        <td width="30%" colspan="6" rowspan="2" style="vertical-align:middle;"><h5></h5></td>
+                                        <td width="30%" colspan="6" rowspan="2" style="vertical-align:middle;"><h5>{{substr($estimate->created_at,0,4)-1911}}年{{substr($estimate->created_at,5,2)}}月{{substr($estimate->created_at,8,2)}}日</h5></td>
                                     </tr>
                                     <tr>
                                         <td width="15%" colspan="3"><h5>連絡電話</h5></td>
@@ -234,24 +234,54 @@
                                     <tr>
                                         <td width="10%" colspan="2"><h5>編號</h5></td>
                                         <td width="20%" colspan="4"><h5>項目</h5></td>
-                                        <td width="15%" colspan="3"><h5>單價</h5></td>
+                                        <td width="10%" colspan="2"><h5>單價</h5></td>
                                         <td width="10%" colspan="2"><h5>數量</h5></td>
                                         <td width="10%" colspan="2"><h5>單位</h5></td>
-                                        <td width="15%" colspan="3"><h5>金額</h5></td>
-                                        <td width="20%" colspan="4"><h5>備註</h5></td>
+                                        <td width="10%" colspan="2"><h5>金額</h5></td>
+                                        <td width="30%" colspan="6"><h5>備註</h5></td>
                                     </tr>
                                     @foreach ($estimate->item as $item)
                                         <tr>
                                             <td width="10%" colspan="2"><h5>{{$item->no}}</h5></td>
                                             <td width="20%" colspan="4"><h5>{{$item->content}}</h5></td>
-                                            <td width="15%" colspan="3"><h5>{{number_format($item->price)}}</h5></td>
+                                            <td width="10%" colspan="2"><h5>${{number_format($item->price)}}</h5></td>
                                             <td width="10%" colspan="2"><h5>{{$item->quantity}}</h5></td>
                                             <td width="10%" colspan="2"><h5>{{$item->unit}}</h5></td>
-                                            <td width="15%" colspan="3"><h5>{{number_format($item->amount)}}</h5></td>
-                                            <td width="20%" colspan="4"><h5>{{$item->note}}</h5></td>
+                                            <td width="10%" colspan="2"><h5>${{number_format($item->amount)}}</h5></td>
+                                            <td width="30%" colspan="6" style="text-align: left"><span>{{$item->note}}</span></td>
 
                                         </tr>
                                     @endforeach
+                                    <tr>
+                                        <td width="50%" colspan="10"><h5>小計</h5></td>
+                                        <td width="50%" colspan="10"><h5>${{number_format($estimate->total_price)}}</h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="50%" colspan="10"><h5>稅金</h5></td>
+                                        <td width="50%" colspan="10"><h5>${{number_format($estimate->total_price * 0.05)}}</h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="50%" colspan="10"><h5>總計</h5></td>
+                                        <td width="50%" colspan="10"><h5>${{number_format($estimate->total_price * 1.05)}}</h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="100%" colspan="20" style="text-align: left">
+                                            <h5>備註：</h5>
+                                            <span style="font-size: 1rem">
+                                                &nbsp; 1.此報價七天內有效，並請確認後回傳。<br>
+
+                                                &nbsp; 2.付款方式：報價單回簽後七天內需付款總額的50%；記者會結束後十四天內需付款總額的50%。<br>
+                                                {{$estimate->company_name == 'grv'?&nbsp; 3.匯款帳戶：華南銀行；板橋分行；帳號-160-100-086-658；戶名-綠雷德創新股份有限公司；<br>:&nbsp; 3.匯款帳戶：華南銀行；板橋分行；帳號-160-100-086-658；戶名-閱野文創股份有限公司；<br>}}
+                                                
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="5%" colspan="1" height="50px"><h5>公司蓋章處</h5></td>
+                                        <td width="45%" colspan="9" height="50px"></td>
+                                        <td width="5%" colspan="1" height="50px"><h5>客戶確認回簽處</h5></td>
+                                        <td width="45%" colspan="9" height="50px"></td>
+                                    </tr>
                                 </tbody>
 
                             </table>
