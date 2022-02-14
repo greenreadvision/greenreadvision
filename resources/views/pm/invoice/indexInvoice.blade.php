@@ -475,7 +475,7 @@
 
 
     }
-</script>
+</script type="text/javascript">
 
 <script type="text/javascript">
     function reviewCheck() {
@@ -999,6 +999,7 @@
             var petty = ''
         }
 
+<<<<<<< HEAD
         var UserName = invoices[i].user['name'] 
         if(invoices[i].user['role']=='manager'){
             if (invoices[i].intern_name != null){
@@ -1006,10 +1007,12 @@
             }          
         }
 
+=======
+>>>>>>> parent of eed112b (2/8 實習生請款select選單)
         a = "/invoice/" + invoices[i]['invoice_id'] + "/review"
         tr = "<tr>" +
             "<td width='11%'><a href='" + a + "' target='_blank'>" + invoices[i].finished_id + "</td>" +
-            "<td width='10%'><a href='" + a + "' target='_blank'>" + UserName + "</td>" +
+            "<td width='10%'><a href='" + a + "' target='_blank'>" + invoices[i].user['name'] + "</td>" +
             "<td width='20%'><a href='" + a + "' target='_blank'>" + invoices[i].project['name'] + "</td>" +
             "<td width='20%'><a href='" + a + "' target='_blank'>" + invoices[i].title + "</a></td>" +
             "<td width='10%'><a href='" + a + "' target='_blank'>" + commafy(invoices[i].price) + "</td>" +

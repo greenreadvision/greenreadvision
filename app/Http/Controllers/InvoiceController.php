@@ -191,7 +191,10 @@ class InvoiceController extends Controller
         })->toArray();
 
         $request->validate([
+<<<<<<< HEAD
             'intern_name' => 'nullable|string',
+=======
+>>>>>>> parent of eed112b (2/8 實習生請款select選單)
             'project_id' => 'required|string|exists:projects,project_id|size:11',
             'title' => 'required|string|min:1|max:100',
             'content' => 'required|string|min:1|max:100',
@@ -277,6 +280,7 @@ class InvoiceController extends Controller
             default:
                 break;
         }
+<<<<<<< HEAD
         $intern = '';
         if(\Auth::user()->role =='manager'){
             $intern = $request->input('intern_name');
@@ -285,9 +289,10 @@ class InvoiceController extends Controller
             $intern = NULL ;
         }
        
+=======
+>>>>>>> parent of eed112b (2/8 實習生請款select選單)
         
         $post = Invoice::create([
-            'intern_name' => $intern,
             'invoice_id' => $id,
             'user_id' => \Auth::user()->user_id,
             'project_id' => $request->input('project_id'),
@@ -343,7 +348,7 @@ class InvoiceController extends Controller
             'content' => '前往第一階段審核',
             'link' => route('invoice.review', $id),
         ];
-        //Mail::to($email)->send(new EventMail($maildata));
+        Mail::to($email)->send(new EventMail($maildata));
 
         return redirect()->route('invoice.review', $id);
     }
