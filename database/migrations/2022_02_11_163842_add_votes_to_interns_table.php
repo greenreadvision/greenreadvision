@@ -15,11 +15,11 @@ class AddVotesToInternsTable extends Migration
     {
         Schema::table('interns', function (Blueprint $table) {
             //
-            $table->string('intern_id')->primary();
-            $table->string('user_id')->index();
+            $table->integer('intern_id')->primary()->autoIncrement();
             $table->string('name');
             $table->string('nickname');
             $table->string('email');
+            $table->string('status');
             $table->timestamps();
         });
     }

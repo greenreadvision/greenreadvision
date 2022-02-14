@@ -133,19 +133,13 @@ class UserController extends Controller
 
     public function intern()
     {
-        // $user = User::all();
-        
-        // $interns = Intern::all();
-        // foreach($user as $users){
-        //     if ($interns->user_id == $users-> user_id){
-        //         return view('pm.user.intern',['users'=>$users]);
-        //     }
-        // }
-        $roles = ['intern'];
+        $interns = Intern::orderby('intern_id')->get();
+        $number = 1;
+        foreach($interns as $item){
+            $number++;
+        }
         $statuses = ['general','train_OK','resign'];
-        $users = User::where([['role','!=','manager'],['role','!=','proprietor'],['role','!=','staff'],['role','!=','supervisor'],['role','!=','administrator'],['status','!=','fill'],['status','!=','prints'],['status','!=','train']])->orderby('user_id')->get();
-
-        return view('pm.user.intern',['users'=>$users,'roles'=>$roles,'statuses'=>$statuses]);
+        return view('pm.user.intern',['interns' => $interns,'statuses' => $statuses,'number'=>$number]);
     }
 
     public function setRole(Request $request,String $id)
@@ -157,6 +151,17 @@ class UserController extends Controller
         
         return redirect()->route('staff');
     }
+
+    public function setRoleIntern(Request $request,String $id)
+    {
+        $intern = Intern::find($id);
+        
+
+        $intern->update($request->except('_method', '_token'));
+        
+        return redirect()->route('intern');
+    }
+
     public function setPassword(Request $request)
     {
         $request->validate([
@@ -167,7 +172,28 @@ class UserController extends Controller
         \Auth::user()->save();
         \Auth::logout();
         return redirect()->route('login');
-    }
+    } 
 
-  
+    public function createIntern(Request $request)
+    {
+        $request->validate([
+            'create_intern_id' => 'required|string|min:1',
+            'create_name' => 'required|string|min:1',
+            'create_nickname' => 'required|string|min:1',
+            'create_email' => 'required|string|min:5',
+            'create_status' => 'required|string'
+        ]);
+
+
+        $post = Intern::create([
+            'intern_id' => $request->input('create_intern_id'),
+            'name' => $request->input('create_name'),
+            'nickname' => $request->input('create_nickname'),
+            'email' => $request->input('create_email'),
+            'status' => $request->input('create_status')
+        ]);
+
+        
+       //return redirect()->route('intern');
+    }
 }

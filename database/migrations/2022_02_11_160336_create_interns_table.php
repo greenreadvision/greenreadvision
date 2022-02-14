@@ -14,11 +14,11 @@ class CreateInternsTable extends Migration
     public function up()
     {
         Schema::create('interns', function (Blueprint $table) {
-            $table->string('intern_id')->primary();
-            $table->string('user_id')->index();
+            $table->string('intern_id')->primary()->autoIncrement();
             $table->string('name');
             $table->string('nickname');
             $table->string('email');
+            $table->string('status');
             $table->timestamps();
         });
     }

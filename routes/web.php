@@ -323,8 +323,10 @@ Route::group(['middleware' => ['auth', 'general']], function () {
 Route::group(['middleware' => ['auth', 'staffManager']], function () {
     //員工管理
     Route::get('/intern', 'UserController@intern')->name('intern');
+    Route::put('/intern/store/{id}', 'UserController@setRoleIntern')->name('roleIntern.setting');
+    Route::put('/intern/create', 'UserController@createIntern')->name('intern.create');
     Route::get('/staff', 'UserController@staff')->name('staff');
-    Route::get('/staff/intern','UserController@intern')->name('staff.intern');
+    // Route::get('/staff/intern','UserController@intern')->name('staff.intern');
     Route::put('/staff/store/{id}', 'UserController@setRole')->name('role.setting');
     Route::get('/question', 'QuestionController@index')->name('question.index');
     Route::get('/train/question/create', 'QuestionController@create')->name('question.create');

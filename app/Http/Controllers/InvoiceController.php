@@ -191,10 +191,7 @@ class InvoiceController extends Controller
         })->toArray();
 
         $request->validate([
-<<<<<<< HEAD
             'intern_name' => 'nullable|string',
-=======
->>>>>>> parent of eed112b (2/8 實習生請款select選單)
             'project_id' => 'required|string|exists:projects,project_id|size:11',
             'title' => 'required|string|min:1|max:100',
             'content' => 'required|string|min:1|max:100',
@@ -280,21 +277,14 @@ class InvoiceController extends Controller
             default:
                 break;
         }
-<<<<<<< HEAD
         $intern = '';
-<<<<<<< Updated upstream
         if(\Auth::user()->role =='manager'){
-=======
-        if(\Auth::user()->role =='intern'||\Auth::user()->role == 'manager'){
->>>>>>> Stashed changes
             $intern = $request->input('intern_name');
         }
         else{
             $intern = NULL ;
         }
-       
-=======
->>>>>>> parent of eed112b (2/8 實習生請款select選單)
+    
         
         $post = Invoice::create([
             'invoice_id' => $id,

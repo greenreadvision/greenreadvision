@@ -10,11 +10,6 @@ class User extends Authenticatable
 {
     use Notifiable;
     const STATUS_Resign = 'resign';
-    public function intern()
-    {
-        return $this->hasMany('App\Intern', 'user_id', 'user_id');
-    }
-
     public function invoices()
     {
         return $this->hasMany('App\Invoice', 'user_id', 'user_id')->orderby('created_at', 'desc');
