@@ -1007,7 +1007,7 @@
         a = "/invoice/" + invoices[i]['invoice_id'] + "/review"
         tr = "<tr>" +
             "<td width='11%'><a href='" + a + "' target='_blank'>" + invoices[i].finished_id + "</td>" +
-            "<td width='10%'><a href='" + a + "' target='_blank'>" + invoices[i].user['name'] + "</td>" +
+            "<td width='10%'><a href='" + a + "' target='_blank'>" + UserName + "</td>" +
             "<td width='20%'><a href='" + a + "' target='_blank'>" + invoices[i].project['name'] + "</td>" +
             "<td width='20%'><a href='" + a + "' target='_blank'>" + invoices[i].title + "</a></td>" +
             "<td width='10%'><a href='" + a + "' target='_blank'>" + commafy(invoices[i].price) + "</td>" +
@@ -1674,10 +1674,16 @@
             var petty = ''
         }
 
+        var UserName2 = other_invoices[i].user['name'] 
+
+        if((other_invoices[i].user['role']=='intern'||other_invoices[i].user['role'] == 'manager')&&other_invoices[i].intern_name != null){
+            UserName2 = other_invoices[i].intern_name
+        }
+
         a = "/invoice/" + other_invoices[i]['other_invoice_id'] + "/review/other"
         tr = "<tr>" +
             "<td width='11%'><a href='" + a + "' target='_blank'>" + other_invoices[i].finished_id + "</td>" +
-            "<td width='10%'><a href='" + a + "' target='_blank'>" + other_invoices[i].user['name'] + "</td>" +
+            "<td width='10%'><a href='" + a + "' target='_blank'>" + UserName2 + "</td>" +
             "<td width='19%'><a href='" + a + "' target='_blank'>" + chinese[other_invoices[i].company_name] + "-" + chinese[other_invoices[i].type] + "</a></td>" +
             "<td><a href='" + a + "' target='_blank'>" + other_invoices[i].title + "</a></td>" +
             "<td width='10%'><a href='" + a + "' target='_blank'>" + commafy(other_invoices[i].price) + "</td>" +
