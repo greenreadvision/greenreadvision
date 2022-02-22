@@ -220,11 +220,13 @@
                                 </div>
                                 <div class="col-lg-6 form-group">
                                     <label class="label-style col-form-label" for="company">{{__('customize.company')}}</label>
-                                    <input autocomplete="off" type="text" id="company-" name="company" class="form-control rounded-pill{{ $errors->has('company') ? ' is-invalid' : '' }}" value="{{$errors->has('company')? old('company'): $data['invoice']['company']}}" required>
+                                    <input autocomplete="off" type="text"  list="list_fix_account"  id="company_fix" name="company_fix" class="form-control rounded-pill{{ $errors->has('company') ? ' is-invalid' : '' }}" value="{{$errors->has('company')? old('company'): $data['invoice']['company']}}" required>
                                     @if ($errors->has('company'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('company') }}</strong>
                                     </span> @endif
+                                    <datalist id="list_fix_account">
+                                    </datalist>
                                 </div>
                                 <div class="col-lg-6 form-group">
                                     <label class="label-style col-form-label" for="title">請款項目</label>
@@ -371,22 +373,6 @@
                                 @method('PUT')
                                 @csrf
                                 <div class="form-group row">
-<<<<<<< Updated upstream
-                                @if(\Auth::user()->role =='manager')
-                                    <div id = "intern_name" class="col-lg-12 form-group" style="padding :10px">
-                                        <label class="label-style col-form-label" for="intern_name">實習生姓名</label>
-                                        <select type="text" id="intern_name" name="intern_name" class="form-control rounded-pill" autofocus>
-                                            <option value="">請選擇實習生姓名</option>
-                                            <option>柴犬</option>
-                                            <option>貓頭鷹</option>
-                                            <option>比目魚</option>
-                                            <option>北極熊</option>
-                                            <option>刺蝟</option>
-                                            <option>花貓</option>
-                                            <option>河馬</option>
-                                        </select>
-                                    </div>
-=======
                                     @if(\Auth::user()->role =='intern'||\Auth::user()->role =='manager')
                                     <div class="col-lg-12 col-form-label" style="padding-left: 0px">
                                         <div id = "intern_name" class="col-lg-6 form-group" >
@@ -404,12 +390,11 @@
                                         </div>
                                     </div>
                                     
->>>>>>> Stashed changes
                                     @endif
                                     <div class="col-lg-6 form_group">
                                         <div class="row">
                                             <div class="col-lg-12">
-                                                <label class="label-style col-form-label" for="company_name">公司</label>
+                                                <label class="label-style col-form-label" for="company_name">{{__('customize.company')}}</label>
                                                 <select type="text" id="company_name" name="company_name" class="form-control rounded-pill" autofocus>
                                                     @foreach ($data['company_name'] as $key)
                                                     @if($data['invoice']['company_name']==$key)
@@ -424,8 +409,8 @@
                                     </div>
 
                                     <div class="col-lg-6 form-group">
-                                        <label class="label-style col-form-label" for="company">{{__('customize.company')}}</label>
-                                        <input autocomplete="off" type="text" id="company-" name="company" class="form-control rounded-pill{{ $errors->has('company') ? ' is-invalid' : '' }}" value="{{$errors->has('company')? old('company'): $data['invoice']['company']}}" required>
+                                        <label class="label-style col-form-label" for="company_edit">戶名</label>
+                                        <input autocomplete="off" type="text" list="list-other-account" id="company_edit" name="company" class="form-control rounded-pill{{ $errors->has('company') ? ' is-invalid' : '' }}" value="{{$errors->has('company')? old('company'): $data['invoice']['company']}}" required>
                                         @if ($errors->has('company'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('company') }}</strong>

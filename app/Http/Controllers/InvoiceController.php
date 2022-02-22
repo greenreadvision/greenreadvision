@@ -165,7 +165,7 @@ class InvoiceController extends Controller
         $bank_status = 0;
         $bank = Bank::select('name')->get();
         foreach($bank as $b){
-            if($b->name == $request->input('company')){
+            if($b->name == $request->input('company') && $b->bank_account_name == $request->input('bank_account_name')){
                 $bank_status = 1;
             }
         }
@@ -174,6 +174,15 @@ class InvoiceController extends Controller
             $bank_ids = Bank::select('bank_id')->get()->map(function ($bank) {
                 return $bank->bank_id;
             })->toArray();
+            $request->validate([
+                'company' => 'required|string|min:1|max:255',
+                'bank' => 'required|string|min:2|max:255',
+                'bank_branch' => 'required|string|min:2|max:255',
+                'bank_account_number' => 'required|string|min:2|max:255',
+                'bank_account_name' => 'required|string|min:2|max:255'
+            ]);
+
+
             $id = RandomId::getNewId($bank_ids);
             $post = Bank::create([
                 'bank_id' => $id,

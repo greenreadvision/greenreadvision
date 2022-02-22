@@ -140,7 +140,6 @@ class OtherInvoiceController extends Controller
             default:
                 break;
         }
-<<<<<<< HEAD
 
         $intern = '';
         if(\Auth::user()->role ==''){
@@ -149,8 +148,6 @@ class OtherInvoiceController extends Controller
         else{
             $intern = NULL ;
         }
-=======
->>>>>>> parent of eed112b (2/8 實習生請款select選單)
        
         $post = OtherInvoice::create([
             'other_invoice_id' => $id,

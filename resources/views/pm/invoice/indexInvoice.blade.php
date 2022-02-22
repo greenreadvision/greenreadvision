@@ -999,21 +999,11 @@
             var petty = ''
         }
 
-<<<<<<< HEAD
         var UserName = invoices[i].user['name'] 
-<<<<<<< Updated upstream
-        if(invoices[i].user['role']=='manager'){
-            if (invoices[i].intern_name != null){
-                UserName = invoices[i].intern_name
-            }          
-=======
+
         if((invoices[i].user['role']=='intern'||invoices[i].user['role'] == 'manager')&&invoices[i].intern_name != null){
             UserName = invoices[i].intern_name
->>>>>>> Stashed changes
         }
-
-=======
->>>>>>> parent of eed112b (2/8 實習生請款select選單)
         a = "/invoice/" + invoices[i]['invoice_id'] + "/review"
         tr = "<tr>" +
             "<td width='11%'><a href='" + a + "' target='_blank'>" + invoices[i].finished_id + "</td>" +
