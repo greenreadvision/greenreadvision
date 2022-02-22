@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Purchase;
 use App\Project;
 use App\Invoice;
+use App\Intern;
 use App\Bank;
 use App\BusinessTrip;
 use App\User;
@@ -148,9 +149,12 @@ class InvoiceController extends Controller
             }
         }
 
+        
+        $interns = Intern::orderby('intern_id')->get();
+
         $reviewers = User::where('role','=','supervisor')->get();
         $purchases = Purchase::orderby('purchase_date', 'desc')->with('project')->with('user')->get();
-        return view('pm.invoice.createInvoice')->with('data', ['projects' => $projects,  'bank' => $bank,  'rv' => $rv,  'grv' => $grv, 'grv2' => $grv2,'purchases'=>$purchases,'users' => $users,'reviewers'=>$reviewers]);
+        return view('pm.invoice.createInvoice')->with('data', ['projects' => $projects,  'bank' => $bank,  'rv' => $rv,  'grv' => $grv, 'grv2' => $grv2,'purchases'=>$purchases,'users' => $users,'reviewers'=>$reviewers, 'interns'=>$interns]);
     }
 
     /**
@@ -277,18 +281,20 @@ class InvoiceController extends Controller
             default:
                 break;
         }
+
         $intern = '';
         if(\Auth::user()->role =='manager'){
             $intern = $request->input('intern_name');
         }
         else{
-            $intern = NULL ;
+            $intern = NULL;
         }
     
         
         $post = Invoice::create([
             'invoice_id' => $id,
             'user_id' => \Auth::user()->user_id,
+            'intern_name' => $intern,
             'project_id' => $request->input('project_id'),
             'title' => $request->input('title'),
             'content' => $request->input('content'),
@@ -342,7 +348,7 @@ class InvoiceController extends Controller
             'content' => '前往第一階段審核',
             'link' => route('invoice.review', $id),
         ];
-        Mail::to($email)->send(new EventMail($maildata));
+        // Mail::to($email)->send(new EventMail($maildata));
 
         return redirect()->route('invoice.review', $id);
     }

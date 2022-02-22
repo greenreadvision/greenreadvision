@@ -194,6 +194,6 @@ class UserController extends Controller
         ]);
 
         
-       //return redirect()->route('intern');
+       return redirect()->route('intern');
     }
 }

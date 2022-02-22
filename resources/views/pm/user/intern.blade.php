@@ -15,7 +15,7 @@
                 <div class="form-group row">
                   <div class="form-group col-lg-6">
                     <label for="intern_id">實習生編號</label>
-                    <input autocomplete="on" type="text" class="form-control rounded-pill" id="create_intern_id" name="create_intern_id" value="{{$number}}" disabled>
+                    <input autocomplete="on" type="text" class="form-control rounded-pill" id="create_intern_id" name="create_intern_id" value="{{$number}}" readonly>
                   </div>
                   <div class="form-group col-lg-3">
                     <label for="name">姓名</label>
@@ -115,7 +115,7 @@
     <div class="card border-0 shadow rounded-pill">
       <div class="card-body">
         <div style ="text-align:right">
-          <button type="button" class="btn btn-primary" onclick="showModal('create')">
+          <button type="button" class="btn btn-primary" style="margin-bottom: 15px" onclick="showModal('create')">
             {{__('customize.Add')}}
           </button>
         </div>

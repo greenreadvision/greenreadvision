@@ -62,6 +62,7 @@ class OtherInvoiceController extends Controller
         $other_invoice_ids = OtherInvoice::select('other_invoice_id')->get()->map(function($other_invoice) { return $other_invoice->other_invoice_id; })->toArray();
 
         $request->validate([
+            'intern_name' => 'nullable|string',
             'type' => 'required|string|min:2|max:255',
             'title' => 'required|string|min:1|max:100',
             'content' => 'required|string|min:1|max:100',
@@ -140,21 +141,19 @@ class OtherInvoiceController extends Controller
             default:
                 break;
         }
-<<<<<<< HEAD
 
         $intern = '';
-        if(\Auth::user()->role ==''){
+        if(\Auth::user()->role =='manager'){
             $intern = $request->input('intern_name');
         }
         else{
             $intern = NULL ;
         }
-=======
->>>>>>> parent of eed112b (2/8 實習生請款select選單)
        
         $post = OtherInvoice::create([
             'other_invoice_id' => $id,
             'user_id' => \Auth::user()->user_id,
+            'intern_name' => $intern,
             'type'=>$request->input('type'),
             'title' => $request->input('title'),
             'content' => $request->input('content'),
@@ -208,7 +207,7 @@ class OtherInvoiceController extends Controller
             'content' => '前往第一階段審核',
             'link' => route('invoice.review.other', $id),
         ];
-        Mail::to($email)->send(new EventMail($maildata));
+        // Mail::to($email)->send(new EventMail($maildata));
         // fix server getting wrong timezone
         // Invoice::where('invoice_id', $id)->update(['created_at' => $created_at, 'updated_at' => $created_at,]);
         return redirect()->route('invoice.review.other', $id);
@@ -286,6 +285,7 @@ class OtherInvoiceController extends Controller
         $invoice = OtherInvoice::find($invoice_id);
         //
         $request->validate([
+            'intern_name' => 'nullable|string',
             'type' => 'required|string|min:2|max:255',
             'title' => 'required|string|min:1|max:100',
             'content' => 'required|string|min:1|max:100',
@@ -439,7 +439,7 @@ class OtherInvoiceController extends Controller
         $invoice = OtherInvoice::find($invoice_id);
         //
         $request->validate([
-
+            'intern_name' => 'nullable|string',
             'title' => 'required|string|min:1|max:100',
             'content' => 'required|string|min:1|max:100',
             'company_name' => 'required|string|min:2|max:255',

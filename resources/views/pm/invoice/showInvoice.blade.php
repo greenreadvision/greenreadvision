@@ -222,15 +222,11 @@
                             <div style="width:30%;text-align:left;"><label>匯款日期：</label><u>　{{$data['invoice']['status']=='complete'? $data['invoice']['remittance_date']:'　　'}}　.</u></div>
                             <div style="width:25%;text-align:left;"><label>帳務處理：</label><u>　{{$data['invoice']['status']=='complete'? $data['invoice']['matched']:'　　'}}　.</u></div>
                             <div style="width:25%;text-align:left;"><label>主管審核：</label><u>　{{$data['invoice']['status']!='waiting'? $data['invoice']['managed']:$data['invoice']['managed']}}　.</u></div>
-<<<<<<< Updated upstream
                             @if($data['invoice']->user->role = 'manager' && $data['invoice']->intern_name != null )
                             <div style="width:20%;text-align:left;"><label>請款人：</label><u>　{{$data['invoice']->intern_name}}　.</u></div>
                             @else
                             <div style="width:20%;text-align:left;"><label>請款人：</label><u>　{{$data['invoice']->user->name}}　.</u></div>
                             @endif
-=======
-                            <div style="width:20%;text-align:left;"><label>請款人：</label><u>　{{($data['invoice']->user->role == 'manager' && $data['invoice']['intern_name']!=null) ? $data['invoice']['intern_name'] : $data['invoice']->user->name}}　.</u></div>
->>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>
