@@ -58,7 +58,8 @@ class LeaveDayBreakController extends Controller
         $newId = RandomId::getNewId($leave_day_break_ids);
         if ($request->hasFile('prove_path')) {
             if ($request->prove_path->isValid()) {
-                $prove = $request->prove_path->storeAs('prove', $request->prove_path->getClientOriginalName());
+                $prove = $request->prove_path->storeAs('public/prove', $request->prove_path->getClientOriginalName());
+                $prove_route = 'prove/'. $request->prove_path->getClientOriginalName();
             }
         }
         if($request->types =='compensatory_leave_break'){
@@ -80,7 +81,8 @@ class LeaveDayBreakController extends Controller
                 'has_break' => $request->input('days_long'),
                 'types' => $request->types,
                 'type' => $request->length_long,
-                'prove' => $prove,
+                'content' => $request->content,
+                'prove' => $prove_route,
                 'status' => 'waiting'
             ]);
         }

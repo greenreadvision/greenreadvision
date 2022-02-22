@@ -31,13 +31,16 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header border-0">
+                <div class="d-flex justify-content-left">
+                    <a class="btn btn-blue rounded-pill" href="{{route('download', $leaveDayBreak['prove'])}}">下載檔案</a>
+                </div>    
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body text-center ">
               @if($leaveDayBreak['prove'] != null)
-              <img width="100%" src="{{route('download',  explode('/', $leaveDayBreak['prove']))}}" alt="">
+              <img width="100%" src="{{route('download', $leaveDayBreak['prove'])}}" alt="">
               @endif
             </div>
         </div>

@@ -32,7 +32,7 @@
                     <form name="invoiceForm" action="create/review" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
-                            {{--  @if(\Auth::user()->role =='intern'||\Auth::user()->role =='manager')  --}}
+                            @if(\Auth::user()->role =='intern'||\Auth::user()->role =='manager')
                             <div class="col-lg-12 col-form-label" style="padding-left: 0px">
                                 <div id="intern_name" name="intern_name" class="col-lg-6 form-group" >
                                     <label class="label-style col-form-label" for="intern_name">實習生姓名</label>
@@ -44,7 +44,7 @@
                                 </div>
                             </div>
                             
-                            {{--  @endif  --}}
+                            @endif
 
                             <div class="col-lg-6 form-group">
                                 <div id="otherCreateInvoice">

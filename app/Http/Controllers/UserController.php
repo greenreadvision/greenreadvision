@@ -176,6 +176,7 @@ class UserController extends Controller
 
     public function createIntern(Request $request)
     {
+        echo "<script>console.log($request->input('create_intern_id'))</script>";
         $request->validate([
             'create_intern_id' => 'required|string|min:1',
             'create_name' => 'required|string|min:1',
@@ -183,7 +184,7 @@ class UserController extends Controller
             'create_email' => 'required|string|min:5',
             'create_status' => 'required|string'
         ]);
-
+        
 
         $post = Intern::create([
             'intern_id' => $request->input('create_intern_id'),

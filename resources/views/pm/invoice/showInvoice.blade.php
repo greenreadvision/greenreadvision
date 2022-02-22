@@ -174,6 +174,21 @@
                                         <td style="font-size: 16px" width="40%" class="border border-dark align-middle text-left">
                                             {{number_format($data['invoice']['price'])}}</td>
                                     </tr>
+                                    @if(strpos(URL::full(),'other'))
+                                    <tr>
+                                        <th class="border border-dark align-middle text-center" style="white-space:nowrap;">請款類別</th>
+                                        <td style="font-size: 16px" class="border border-dark align-middle text-left" style="white-space: pre-line;">其他類</td>
+                                        <th class="border border-dark align-middle text-center" style="white-space:nowrap;">請款類型</th>
+                                        <td style="font-size: 16px" class="border border-dark align-middle text-left">{{__('customize.'.$data['invoice']['type'])}}</td>
+                                    </tr>
+                                    @else
+                                    <tr>
+                                        <th class="border border-dark align-middle text-center" style="white-space:nowrap;">請款類別</th>
+                                        <td style="font-size: 16px" class="border border-dark align-middle text-left" style="white-space: pre-line;">專案類</td>
+                                        <th class="border border-dark align-middle text-center" style="white-space:nowrap;">請款專案</th>
+                                        <td style="font-size: 16px" class="border border-dark align-middle text-left">{{$data['invoice']['project']['name']}}</td>
+                                    </tr>
+                                    @endif
                                     <tr>
                                         <th class="border border-dark align-middle text-center" style="white-space:nowrap;">請款項目</th>
                                         <td style="font-size: 16px" class="border border-dark align-middle text-left" style="white-space: pre-line;">{{$data['invoice']['title']}}</td>
@@ -222,11 +237,7 @@
                             <div style="width:30%;text-align:left;"><label>匯款日期：</label><u>　{{$data['invoice']['status']=='complete'? $data['invoice']['remittance_date']:'　　'}}　.</u></div>
                             <div style="width:25%;text-align:left;"><label>帳務處理：</label><u>　{{$data['invoice']['status']=='complete'? $data['invoice']['matched']:'　　'}}　.</u></div>
                             <div style="width:25%;text-align:left;"><label>主管審核：</label><u>　{{$data['invoice']['status']!='waiting'? $data['invoice']['managed']:$data['invoice']['managed']}}　.</u></div>
-                            @if($data['invoice']->user->role = 'manager' && $data['invoice']->intern_name != null )
-                            <div style="width:20%;text-align:left;"><label>請款人：</label><u>　{{$data['invoice']->intern_name}}　.</u></div>
-                            @else
-                            <div style="width:20%;text-align:left;"><label>請款人：</label><u>　{{$data['invoice']->user->name}}　.</u></div>
-                            @endif
+                            <div style="width:20%;text-align:left;"><label>請款人：</label><u>　{{($data['invoice']->user->role == 'manager' && $data['invoice']['intern_name']!=null) ? $data['invoice']['intern_name'] : $data['invoice']->user->name}}　.</u></div>
                         </div>
                     </div>
                 </div>

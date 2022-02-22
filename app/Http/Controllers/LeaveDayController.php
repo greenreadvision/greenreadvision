@@ -57,6 +57,9 @@ class LeaveDayController extends Controller
             if ($data['status'] == 'managed' && $data['leave_day_id'] == $id) {
                 $h += $data['has_break'];
             }
+            if($data['prove']!=null){
+                $data['prove'] = explode('/', $data['prove']);
+            }
             if (substr($leave_day_breaks[$key]['apply_date'], 0, 4) == $year) {
                 if ($data['status'] == 'managed') {
                     $year_has_break[$data->types] = $year_has_break[$data->types] + $leave_day_breaks[$key]['has_break'];
