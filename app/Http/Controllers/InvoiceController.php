@@ -168,7 +168,7 @@ class InvoiceController extends Controller
     {
         //
         $bank_status = 0;
-        $bank = Bank::select('name')->get();
+        $bank = Bank::all();
         foreach($bank as $b){
             if($b->name == $request->input('company') && $b->bank_account_name == $request->input('bank_account_name')){
                 $bank_status = 1;
