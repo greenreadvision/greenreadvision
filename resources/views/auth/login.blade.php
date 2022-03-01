@@ -11,8 +11,8 @@
                             @csrf
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <input placeholder="帳號" autocomplete="off" id="nickname" type="text" class="form-control{{ $errors->has('nickname') ? ' is-invalid' : '' }} rounded-pill" name="nickname" value="{{ old('nickname') }}" required autofocus>
-                                    @if ($errors->has('nickname'))
+                                    <input placeholder="帳號" autocomplete="off" id="account" type="text" class="form-control{{ $errors->has('account') ? ' is-invalid' : '' }} rounded-pill" name="account" value="{{ old('account') }}" required autofocus>
+                                    @if ($errors->has('account'))
                                     <span class="invalid-feedback" role="alert">
                                         <small>帳號錯誤或已被停權</small>
                                     </span>
