@@ -34,6 +34,8 @@ class LeaveDayApplyController extends Controller
         
         if ($request->input('length_long') == 'days') {
             $apply_date = date("Y-m-d", strtotime($request->input('start_day'))) . '~' . date("Y-m-d", strtotime($request->input('end_day')));
+        } else if ($request->input('length_long') == 'twoDays') {
+            $apply_date = date("Y-m-d", strtotime($request->input('another_day')));
         } else if ($request->input('length_long') == 'day' || $request->input('length_long') == 'half') {
             $apply_date = date("Y-m-d", strtotime($request->input('another_day')));
         } else if ($request->input('length_long') == 'hours') {
@@ -79,7 +81,7 @@ class LeaveDayApplyController extends Controller
     }
     public function create(String $leave_day_id)
     {
-        $selects = ['days', 'day', 'half', 'houes'];
+        $selects = ['days', 'twoDays', 'day', 'half', 'houes'];
 
         return view('pm.leaveDay.createLeaveDayApply', ["leaveDayId" => $leave_day_id, 'selects' => $selects]);
     }
