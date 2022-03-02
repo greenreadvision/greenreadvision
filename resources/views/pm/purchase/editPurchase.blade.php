@@ -141,34 +141,62 @@
                                 <table width="100%">
                                     <thead>
                                         <tr class="bg-dark text-white" style="text-align:center">
+                                            <th class="px-2" width="5%">
                                             <th class="px-2" width="30%"> <label class="label-style col-form-label" for="content">品名</label></th>
                                             <th class="px-2" width="10%"><label class="label-style col-form-label" for="quantity">數量</label></th>
-                                            <th class="px-2" width="15%"><label class="label-style col-form-label" for="price">單價</label></th>
+                                            <th class="px-2" width="10%"><label class="label-style col-form-label" for="price">單價</label></th>
                                             <th class="px-2" width="15%"><label class="label-style col-form-label" for="amount">單項總計</label></th>
-                                            <th class="px-2" width="30%"><label class="label-style col-form-label" for="note">備註</label></th>
+                                            <th class="px-2" width="25%"><label class="label-style col-form-label" for="note">備註</label></th>
                                         </tr>
                                     </thead>
                                     <tbody id="addItem">
-                                        @foreach($purchase_item as $item)
-                                        <tr>
-                                            <th class="p-2">
-                                                <input autocomplete="off" type="text" id="content-{{$item->no}}" name="content{{$item->no}}" class="item-num rounded-pill form-control{{ $errors->has('content') ? ' is-invalid' : '' }}" value="{{ $item->content }}" required>
-                                            </th>
-                                            <th class="p-2">
-                                                <input autocomplete="off" oninput="value=value.replace(/[^\d]/g,'')" onkeyup="calculation()" type="text" id="quantity-{{$item->no}}" name="quantity{{$item->no}}" class="rounded-pill form-control{{ $errors->has('quantity') ? ' is-invalid' : '' }}" value="{{ $item->quantity }}" required>
-                                            </th>
-                                            <th class="p-2">
-                                                <input autocomplete="off" oninput="value=value.replace(/[^\d]/g,'')" onkeyup="calculation()" type="text" id="price-{{$item->no}}" name="price{{$item->no}}" class="rounded-pill form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" value="{{ $item->price }}" required>
-                                            </th>
-                                            <th class="p-2">
-                                                <input autocomplete="off" type="text" id="amount-{{$item->no}}" name="amount{{$item->no}}" class="rounded-pill form-control{{ $errors->has('amount') ? ' is-invalid' : '' }}" value="{{ $item->amount }}" readonly>
-                                            </th>
-                                            <th class="p-2">
-                                                <input autocomplete="off" type="text" id="note-{{$item->no}}" name="note{{$item->no}}" class="rounded-pill form-control{{ $errors->has('note') ? ' is-invalid' : '' }}" value="{{ $item->note }}">
-                                            </th>
-                                        </tr>
+                                        @foreach($purchase_item as $key => $item)
+                                            @if($key === count($purchase_item)-1)
+                                            <tr>
+                                                <th class="p-2">
+                                                    <button id="addItemButton" type="button" onclick="additem()" class="w-100 btn btn-green rounded-pill">+</button>
+                                                </th>
+                                                <th class="p-2">
+                                                    <input autocomplete="off" type="text" id="content-{{$item->no}}" name="content-{{$item->no}}" class="item-num rounded-pill form-control{{ $errors->has('content') ? ' is-invalid' : '' }}" value="{{ $item->content }}" required>
+                                                </th>
+                                                <th class="p-2">
+                                                    <input autocomplete="off" oninput="value=value.replace(/[^\d]/g,'')" onkeyup="calculation()" type="text" id="quantity-{{$item->no}}" name="quantity-{{$item->no}}" class="rounded-pill form-control{{ $errors->has('quantity') ? ' is-invalid' : '' }}" value="{{ $item->quantity }}" required>
+                                                </th>
+                                                <th class="p-2">
+                                                    <input autocomplete="off" oninput="value=value.replace(/[^\d]/g,'')" onkeyup="calculation()" type="text" id="price-{{$item->no}}" name="price-{{$item->no}}" class="rounded-pill form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" value="{{ $item->price }}" required>
+                                                </th>
+                                                <th class="p-2">
+                                                    <input autocomplete="off" type="text" id="amount-{{$item->no}}" name="amount-{{$item->no}}" class="rounded-pill form-control{{ $errors->has('amount') ? ' is-invalid' : '' }}" value="{{ $item->amount }}" readonly>
+                                                </th>
+                                                <th class="p-2">
+                                                    <input autocomplete="off" type="text" id="note-{{$item->no}}" name="note-{{$item->no}}" class="rounded-pill form-control{{ $errors->has('note') ? ' is-invalid' : '' }}" value="{{ $item->note }}">
+                                                </th>
+                                            </tr>
+                                            @else
+                                            <tr>
+                                                <th class="p-2">
+                                                </th>
+                                                <th class="p-2">
+                                                    <input autocomplete="off" type="text" id="content-{{$item->no}}" name="content-{{$item->no}}" class="item-num rounded-pill form-control{{ $errors->has('content') ? ' is-invalid' : '' }}" value="{{ $item->content }}" required>
+                                                </th>
+                                                <th class="p-2">
+                                                    <input autocomplete="off" oninput="value=value.replace(/[^\d]/g,'')" onkeyup="calculation()" type="text" id="quantity-{{$item->no}}" name="quantity-{{$item->no}}" class="rounded-pill form-control{{ $errors->has('quantity') ? ' is-invalid' : '' }}" value="{{ $item->quantity }}" required>
+                                                </th>
+                                                <th class="p-2">
+                                                    <input autocomplete="off" oninput="value=value.replace(/[^\d]/g,'')" onkeyup="calculation()" type="text" id="price-{{$item->no}}" name="price-{{$item->no}}" class="rounded-pill form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" value="{{ $item->price }}" required>
+                                                </th>
+                                                <th class="p-2">
+                                                    <input autocomplete="off" type="text" id="amount-{{$item->no}}" name="amount-{{$item->no}}" class="rounded-pill form-control{{ $errors->has('amount') ? ' is-invalid' : '' }}" value="{{ $item->amount }}" readonly>
+                                                </th>
+                                                <th class="p-2">
+                                                    <input autocomplete="off" type="text" id="note-{{$item->no}}" name="note-{{$item->no}}" class="rounded-pill form-control{{ $errors->has('note') ? ' is-invalid' : '' }}" value="{{ $item->note }}">
+                                                </th>
+                                            </tr>
+                                            @endif
+                                        
                                         @endforeach
-                                        @for($i=count($purchase_item)+1 ; $i<=(11-count($purchase_item));$i++)
+
+                                        <!--@for($i=count($purchase_item)+1 ; $i<=(11-count($purchase_item));$i++)
                                         <tr>
                                             <th class="p-2">
                                                 <input autocomplete="off" type="text" id="content-{{$i}}" name="content{{$i}}" class="item-num rounded-pill form-control{{ $errors->has('content') ? ' is-invalid' : '' }}" value="" >
@@ -186,7 +214,7 @@
                                                 <input autocomplete="off" type="text" id="note-{{$i}}" name="note{{$i}}" class="rounded-pill form-control{{ $errors->has('note') ? ' is-invalid' : '' }}" value="">
                                             </th>
                                         </tr>
-                                        @endfor
+                                        @endfor-->
                                     </tbody>
                                 </table>
 
@@ -226,7 +254,7 @@
                             <div class="col-lg-3 form-group">
                                 <label class="label-style col-form-label" for="total_amount">總金額</label>
                                 <input autocomplete="off" type="text" id="total_amount" name="total_amount" class="rounded-pill form-control{{ $errors->has('total_amount') ? ' is-invalid' : '' }}" value="{{ old('total_amount') }}" readonly>
-
+                                <input autocomplete="off" type="text" id="item_total_num" name="item_total_num" class="rounded-pill form-control{{ $errors->has('item_total_num') ? ' is-invalid' : '' }}" value="{{count($purchase_item)}}" readonly hidden>
                             </div>
 
                         </div>
@@ -289,6 +317,12 @@
         var purchase = '{{$purchase}}'
         purchase = purchase.replace(/[\n\r]/g, "")
         purchase = JSON.parse(purchase.replace(/&quot;/g, '"'));
+        
+        var purchase_item = '{{$purchase_item}}'
+        purchase_item = purchase_item.replace(/[\n\r]/g, "")
+        purchase_item = JSON.parse(purchase_item.replace(/&quot;/g, '"'));
+        item_num = purchase_item.length
+
         var texCheck = document.getElementById('texCheck')
         var amount = document.getElementById('amount')
         var tex = document.getElementById('tex')
@@ -365,6 +399,24 @@
             tex.value = 0
         }
 
+    }
+
+    function additem(){
+        var parent = document.getElementById('addItem');
+        var tr = document.createElement('tr');
+        $("#addItemButton").remove();
+        item_num = item_num + 1;
+        document.getElementById("item_total_num").value = item_num;
+        tr.innerHTML = '<tr>' + 
+            '<th class="p-2"><button id="addItemButton" type="button" onclick="additem()" class="w-100 btn btn-green rounded-pill">+</button>' +
+            '<th class="p-2"><input autocomplete="off" type="text" id="content-' + item_num + '" name="content-'+ item_num + '" class="item-num rounded-pill form-control{{ $errors->has("content-'+ item_num +'") ? " is-invalid" : "" }}" value="{{ old("content-'+ item_num +'") }}"></th>' +
+            '<th class="p-2"><input oninput="value=value.replace(/[^\d]/g,"")" onkeyup="calculation()" autocomplete="off" type="text" id="quantity-'+ item_num + '" name="quantity-'+ item_num +'" class="rounded-pill form-control{{ $errors->has("quantity-'+ item_num +'") ? " is-invalid" : "" }}" value="{{ old("quantity-'+ item_num +'") }}"></th>' +
+            '<th class="p-2"><input oninput="value=value.replace(/[^\d]/g,"")" onkeyup="calculation()" autocomplete="off" type="text" id="price-'+ item_num +'" name="price-'+ item_num +'" class="rounded-pill form-control{{ $errors->has("price-'+ item_num +'") ? " is-invalid" : "" }}" value="{{ old("price-'+ item_num +'") }}"></th>' +
+            '<th class="p-2"><input autocomplete="off" type="text" id="amount-'+ item_num +'" name="amount-'+ item_num +'" class="rounded-pill form-control{{ $errors->has("amount-'+ item_num +'") ? " is-invalid" : "" }}" value="{{ old("amount-'+ item_num +'") }}" readonly></th>' +
+            '<th class="p-2"><input autocomplete="off" type="text" id="note-'+ item_num +'" name="note-'+ item_num +'" class="rounded-pill form-control{{ $errors->has("note-'+ item_num +'") ? " is-invalid" : "" }}" value="{{ old("note-'+ item_num +'") }}"></th>' +
+            '</tr>'
+        parent.appendChild(tr);
+        calculation()
     }
 </script>
 <script src="{{ URL::asset('js/grv.js') }}"></script>

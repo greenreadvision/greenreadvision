@@ -256,28 +256,30 @@ class PurchaseController extends Controller
         $purchase_item = PurchaseItem::where('purchase_id', $purchase_id)->get();
         $i = 1;
         foreach ($purchase_item as $item) {
-            if ($request->input('content' . $i) != null) {
-                $item->content = $request->input('content' . $i);
-                $item->quantity = $request->input('quantity' . $i);
-                $item->price = $request->input('price' . $i);
-                $item->amount = $request->input('quantity' . $i) * $request->input('price' . $i);
-                $item->note = $request->input('note' . $i);
+            if ($request->input('content-' . $i) != null) {
+                $item->content = $request->input('content-' . $i);
+                $item->quantity = $request->input('quantity-' . $i);
+                $item->price = $request->input('price-' . $i);
+                $item->amount = $request->input('quantity-' . $i) * $request->input('price' . $i);
+                $item->note = $request->input('note-' . $i);
                 $i++;
                 $item->save();
             } else {
                 $i++;
             }
         }
-        for($j=count($purchase_item)+1 ; $j <= (11-count($purchase_item)); $j++){
-            if ($request->input('content' . $j) != null) {
+        $item_total_num = $request->input('item_total_num'); 
+        for($j=count($purchase_item)+1 ; $j <= $item_total_num; $j++){
+              
+            if ($request->input('content-' . $j) != null) {
                 PurchaseItem::create([
                     'purchase_id' => $purchase_id,
                     'no' => $j,
-                    'content' => $request->input('content' . $j),
-                    'quantity' => $request->input('quantity' . $j),
-                    'price' => $request->input('price' . $j),
-                    'amount' => $request->input('quantity' . $j) * $request->input('price' . $j),
-                    'note' => $request->input('note' . $j)
+                    'content' => $request->input('content-' . $j),
+                    'quantity' => $request->input('quantity-' . $j),
+                    'price' => $request->input('price-' . $j),
+                    'amount' => $request->input('quantity-' . $j) * $request->input('price-' . $j),
+                    'note' => $request->input('note-' . $j)
                 ]);
             }
         }

@@ -291,10 +291,11 @@ class InvoiceController extends Controller
             default:
                 break;
         }
-
         $intern = '';
+        
         if(\Auth::user()->role =='manager'){
             $intern = $request->input('intern_name');
+            echo "<script>console.log($intern)</script>";
         }
         else{
             $intern = NULL;
