@@ -177,7 +177,7 @@ class UserController extends Controller
     public function setAccount(Request $request)
     {
         $request->validate([
-            'account' => 'required|string|min:1|confirmed',
+            'account' => 'required|string|min:1',
         ]);
         \Auth::user()->account = $request->input('account');
         \Auth::user()->save();

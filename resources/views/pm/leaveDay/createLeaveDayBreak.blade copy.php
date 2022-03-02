@@ -45,7 +45,7 @@
                                     </div>
                                     <div class="form-group ">
                                         <label for="end_day" class="col-form-label ">結束日期</label>
-                                        <input autocomplete="off" onchange="calculation('days')" type="date" name="end_day" id="end_day" class="form-control rounded-pill" value="{{old('end_day')}}" >
+                                        <input autocomplete="off" onchange="calculation('days')" type="date" name="end_day" id="end_day" class="form-control rounded-pill" value="{{old('end_day')}}">
                                     </div>
                                 </div>
                                 <div id="day" hidden>
@@ -151,7 +151,6 @@
                 resetRequire()
                 document.getElementById('start_day').required = true;
                 document.getElementById('end_day').required = true;
-                document.getElementById('end_day').disabled = false;
                 break
             case 'twoDays':
                 days.hidden = false
@@ -161,8 +160,7 @@
                 document.getElementById('end_day').readonly = true;
                 //document.getElementById('end_day').readonly = true;
                 //document.getElementById('end_day').disabled = true;
-                //document.getElementById('start_day').onchange = "calculation('twoDays')"
-                document.getElementById('start_day').setAttribute('onchange',"calculation('twoDays')");
+                document.getElementById('start_day').onchange = "calculation('twoDays')";
                 resetRequire()
                 break
             case 'day':
@@ -231,7 +229,7 @@
         var result = new Date(_date);
         result.setDate(result.getDate() + days);
         return result;
-    };
+    }
 
     function calculation(type) {
         var start_day = document.getElementById('start_day').value
@@ -247,12 +245,11 @@
                 }
                 break
             case 'twoDays':
-                if (length_long.value == 'twoDays') { 
+                if (length_long.value == 'twoDays') {
                     $('#days_long').val(2)
                     var end_time_twoDays = new Date(start_day.getFullYear(), start_day.getMonth(), (start_day.getDate());     
                     var end_time_twoDays_new = DateAddDays(end_time_twoDays, 1);
-                    //end_time_twoDays.setDate(end_time_twoDays.getDate() + 1)
-                    //alert(end_time_twoDays.getFullYear() + '-' + end_time_twoDays.getMonth() + '-' + (end_time_twoDays.getDate()+1))             
+                    alert(end_time_twoDays_new);
                 } 
                 break
             case 'day':

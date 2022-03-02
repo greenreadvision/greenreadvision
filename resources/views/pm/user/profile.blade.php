@@ -73,11 +73,12 @@
             <div class="modal-body">
                 <form action="account" method="POST">
                     @method('PUT')
+                    @csrf
                     <div class="form-group row">
                         <label for="account" class="col-md-4 col-form-label text-md-right">新{{ __('customize.account') }}</label>
 
                         <div class="col-md-6">
-                            <input id="account" type="account" class="form-control{{ $errors->has('account') ? ' is-invalid' : '' }}" name="account" required>
+                            <input id="account" type="text" class="form-control{{ $errors->has('account') ? ' is-invalid' : '' }}" name="account" required>
 
                             @if ($errors->has('account'))
                             <span class="invalid-feedback" role="alert">
@@ -91,7 +92,7 @@
                         <label for="account-confirm" class="col-md-4 col-form-label text-md-right">{{ __('customize.Confirm account') }}</label>
 
                         <div class="col-md-6">
-                            <input id="account-confirm" type="account" class="form-control" name="account_confirmation" required>
+                            <input id="account-confirm" type="text" class="form-control" name="account_confirmation" required>
                         </div>
                     </div>
                     <div style="float: right;">

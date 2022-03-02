@@ -216,7 +216,7 @@
                 }
                 break
             case 'twoDays':
-                if (length_long.value == 'day') {
+                if (length_long.value == 'twoDays') {
                     $('#days_long').val(1)
                 } else if (length_long.value == 'half') {
                     $('#days_long').val(0.5)
