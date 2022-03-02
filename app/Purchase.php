@@ -8,8 +8,8 @@ class Purchase extends Model
 {
     public function user() { return $this->belongsTo('App\User', 'user_id', 'user_id'); }
     public function project() { return $this->belongsTo('App\Project', 'project_id', 'project_id'); }
-    public function purchaseItem() { return $this->hasmany('App\PurchaseItem', 'purchase_id', 'purchase_id'); }
-    public function goods() { return $this->hasmany('App\Goods', 'purchase_id', 'purchase_id')->orderby('created_at','desc'); }
+    public function purchaseItem() { return $this->hasMany('App\PurchaseItem', 'purchase_id', 'purchase_id'); }
+    public function goods() { return $this->hasMany('App\Goods', 'purchase_id', 'purchase_id')->orderby('created_at','desc'); }
 
     public $incrementing = false;
     protected $primaryKey = "purchase_id";

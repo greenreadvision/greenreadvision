@@ -34,11 +34,11 @@
                         <div class="form-group row">
                             @if(\Auth::user()->role =='intern'||\Auth::user()->role =='manager')
                             <div class="col-lg-12 col-form-label" style="padding-left: 0px">
-                                <div id="intern_name" name="intern_name" class="col-lg-6 form-group" >
+                                <div  class="col-lg-6 form-group" >
                                     <label class="label-style col-form-label" for="intern_name">實習生姓名</label>
                                     <select type="text" id="intern_name" name="intern_name" class="form-control rounded-pill" autofocus>
                                     @foreach ($data['interns'] as $intern)
-                                        <option>{{$intern->nickname}}</option>
+                                        <option value="{{$intern->intern_id}}">{{$intern->nickname}}</option>
                                     @endforeach
                                     </select>
                                 </div>
