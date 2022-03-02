@@ -83,6 +83,8 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::put('/profile/update', 'UserController@update')->name('updateProfile');
 
     Route::put('/password', 'UserController@setPassword')->name('password.setting');
+    Route::put('/account', 'UserController@setAccount')->name('account.setting');
+
 
     Route::get('/p-index', 'PhotoController@index')->name('photo.index');
     Route::get('/p/create', 'PhotoController@create')->name('photo.create');

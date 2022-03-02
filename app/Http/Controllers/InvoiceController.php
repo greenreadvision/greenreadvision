@@ -51,6 +51,7 @@ class InvoiceController extends Controller
                 array_push($users, $allUser);
             }
         }
+        $interns = Intern::orderby('intern_id')->get();
         $invoices = Invoice::orderby('created_at', 'desc')->with('project')->with('user')->get();
         $otherInvoices = OtherInvoice::orderby('created_at', 'desc')->with('user')->get();
 
@@ -124,7 +125,7 @@ class InvoiceController extends Controller
             }
         }
         
-        return view('pm.invoice.indexInvoice', ['users' => $users, 'invoices' => $invoices,'otherInvoices' => $otherInvoices,'ZipCount' => $fileNum]);
+        return view('pm.invoice.indexInvoice', ['users' => $users, 'invoices' => $invoices,'otherInvoices' => $otherInvoices,'ZipCount' => $fileNum, 'interns'=>$interns]);
     }
 
     /**
@@ -167,7 +168,7 @@ class InvoiceController extends Controller
     {
         //
         $bank_status = 0;
-        $bank = Bank::select('name')->get();
+        $bank = Bank::all();
         foreach($bank as $b){
             if($b->name == $request->input('company') && $b->bank_account_name == $request->input('bank_account_name')){
                 $bank_status = 1;
@@ -378,7 +379,7 @@ class InvoiceController extends Controller
         $path = [];
         $data =json_decode($request->input('file'));
         $zip = new ZipArchive();
-        $fileName = storage_path("app/public/"."zip/" .  $today."_". $fileNum . '.zip');
+        $fileName = storage_path("a pp/public/"."zip/" .  $today."_". $fileNum . '.zip');
         if ($zip->open($fileName, ZIPARCHIVE::CREATE) === TRUE){
             foreach($data as $key => $item){
                 if ($item->receipt_file != null) {
@@ -473,9 +474,9 @@ class InvoiceController extends Controller
             }
         }
         $reviewers = User::where('role','=','supervisor')->get();
-
+        $interns = Intern::orderby('intern_id')->get();
         $purchases = Purchase::orderby('purchase_date', 'desc')->with('project')->with('user')->get();
-        return view('pm.invoice.editInvoice')->with('data', ['invoice' => $invoice->toArray(), 'projects' => $projects, 'type' => $type, 'company_name' => $company_name,'rv' => $rv,  'grv' => $grv , 'grv2' =>$grv2 ,'purchases'=>$purchases,'users'=>$users,'reviewers'=>$reviewers]);
+        return view('pm.invoice.editInvoice')->with('data', ['invoice' => $invoice->toArray(), 'projects' => $projects, 'type' => $type, 'company_name' => $company_name,'rv' => $rv,  'grv' => $grv , 'grv2' =>$grv2 ,'purchases'=>$purchases,'users'=>$users,'reviewers'=>$reviewers, 'interns'=>$interns]);
     }
 
     /**

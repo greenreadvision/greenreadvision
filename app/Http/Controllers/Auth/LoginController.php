@@ -59,7 +59,7 @@ class LoginController extends Controller
      */
     public function username()
     {
-        return 'nickname';
+        return 'account';
     }
 
     protected function attemptLogin(Request $request)

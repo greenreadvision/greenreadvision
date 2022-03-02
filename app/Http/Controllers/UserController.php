@@ -174,6 +174,17 @@ class UserController extends Controller
         return redirect()->route('login');
     } 
 
+    public function setAccount(Request $request)
+    {
+        $request->validate([
+            'account' => 'required|string|min:1|confirmed',
+        ]);
+        \Auth::user()->account = $request->input('account');
+        \Auth::user()->save();
+        \Auth::logout();
+        return redirect()->route('login');
+    } 
+
     public function createIntern(Request $request)
     {
         echo "<script>console.log($request->input('create_intern_id'))</script>";

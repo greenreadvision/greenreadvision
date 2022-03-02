@@ -33,6 +33,12 @@ class LeaveDayBreakController extends Controller
                 $end_datetime = $request->end_day;
                 $date = date("Y-m-d", strtotime(substr($start_datetime, 0, 10))) . '~' . date("Y-m-d", strtotime(substr($end_datetime, 0, 10)));
                 break;
+            case 'twoDays':
+                $start_datetime = $request->another_day;
+                $end_datetime = $request->another_day;
+                $date = date("Y-m-d", strtotime(substr($start_datetime, 0, 10)));
+                // $date = date("Y-m-d", strtotime(substr($start_datetime, 0, 10))) . '~' . date("Y-m-d", strtotime("$start_datetime +1 day"));
+                break;
             case 'day':
                 $start_datetime = $request->another_day;
                 $end_datetime = $request->another_day;
@@ -87,12 +93,12 @@ class LeaveDayBreakController extends Controller
             ]);
         }
 
-        if ($request->length_long == "days" || $request->length_long == "twoDays") {
+        if ($request->length_long == "days") {
             $period = \Carbon\CarbonPeriod::create($request->start_day, $request->end_day);
             foreach ($period as $date) {
                 EventController::create($date->format('Y-m-d'), __('customize.LeaveDay'),  $request->input('days_long') . '天', __('customize.LeaveDay'), 'leaveDay', $newId);
             }
-        } else if ($request->length_long == "hours") {
+        } else if ($request->length_long == "hours" || $request->length_long == "twoDays") {
 
             EventController::create(substr($start_datetime, 0, 10), __('customize.LeaveDay'), $request->input('days_long') . '天', __('customize.LeaveDay'), 'leaveDay', $newId);
         } else {
@@ -105,7 +111,7 @@ class LeaveDayBreakController extends Controller
     {
         //
         $types = ['compensatory_leave_break', 'bereavement_leave'];
-        $selects = ['days','day', 'half', 'hours'];
+        $selects = ['days','twoDays', 'day', 'half', 'hours'];
         return view('pm.leaveDay.createLeaveDayBreak', ["leaveDayId" => $leave_day_id, 'types' => $types, 'selects' => $selects]);
     }
 

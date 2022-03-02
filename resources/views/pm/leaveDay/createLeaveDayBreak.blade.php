@@ -15,7 +15,7 @@
                                         @foreach($types as $type)
                                         <option value="{{$type}}" {{old('type')==$type?'selected':''}}>{{__('customize.'.$type)}}</option>
                                         @endforeach
-                                    </select>
+                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="lengths" class="col-form-label">時間長度</label>
@@ -95,6 +95,7 @@
     $(document).ready(function() {
         var bereavement_leave = document.getElementById('bereavement_leave')
         var days = document.getElementById('days')
+        var twoDays = document.getElementById('twoDays')
         var day = document.getElementById('day')
         var hours = document.getElementById('hours')
         var old_length_long = "{{old('length_long')}}"
@@ -150,6 +151,15 @@
                 resetRequire()
                 document.getElementById('start_day').required = true;
                 document.getElementById('end_day').required = true;
+                break
+            case 'twoDays':
+                days.hidden = true
+                day.hidden = false
+                hours.hidden = true
+                another_day.setAttribute('oninput',"calculation('twoDays')")
+                $('#days_long').val(2)
+                document.getElementById('another_day').required = true;
+                resetRequire()
                 break
             case 'day':
                 days.hidden = true
@@ -224,6 +234,11 @@
                 if (start_day != '' && end_day != '') {
                     $('#days_long').val(DateDiff(start_day, end_day, 'd') + 1)
                 }
+                break
+            case 'twoDays':
+                if (length_long.value == 'twoDays') {
+                    $('#days_long').val(2)
+                } 
                 break
             case 'day':
                 if (length_long.value == 'day') {

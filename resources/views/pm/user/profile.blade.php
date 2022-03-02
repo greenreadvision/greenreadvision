@@ -3,12 +3,17 @@
 @section('content')
 <div class="col-lg-12">
     <div class="row">
-        <div class="col-lg-6 mb-3">
+        <div class="col-lg-1 mb-4">
             <button type="button" class="btn btn-primary btn-primary-style" data-toggle="modal" data-target="#passsword">
                 更改密碼
             </button>
         </div>
-        <div class="col-lg-6 mb-3">
+        <div class="col-lg-1 mb-4">
+            <button type="button" class="btn btn-primary btn-primary-style" data-toggle="modal" data-target="#acccount">
+                編輯帳號
+            </button>
+        </div>
+        <div class="col-lg-10 mb-4">
             <button class="float-right btn btn-primary btn-primary-style" onclick="location.href='{{route('editProfile')}}'"><i class='fas fa-edit'></i><span class="ml-3"> {{__('customize.Edit')}} </button>
         </div>
     </div>
@@ -45,6 +50,48 @@
 
                         <div class="col-md-6">
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                        </div>
+                    </div>
+                    <div style="float: right;">
+                        <button type="submit" class="btn btn-primary">{{__('customize.Save')}}</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="acccount" tabindex="-1" role="dialog" aria-labelledby="acccount" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="acccount">編輯帳號</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="account" method="POST">
+                    @method('PUT')
+                    <div class="form-group row">
+                        <label for="account" class="col-md-4 col-form-label text-md-right">新{{ __('customize.account') }}</label>
+
+                        <div class="col-md-6">
+                            <input id="account" type="account" class="form-control{{ $errors->has('account') ? ' is-invalid' : '' }}" name="account" required>
+
+                            @if ($errors->has('account'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('account') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="account-confirm" class="col-md-4 col-form-label text-md-right">{{ __('customize.Confirm account') }}</label>
+
+                        <div class="col-md-6">
+                            <input id="account-confirm" type="account" class="form-control" name="account_confirmation" required>
                         </div>
                     </div>
                     <div style="float: right;">

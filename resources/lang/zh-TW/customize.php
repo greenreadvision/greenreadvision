@@ -5,6 +5,7 @@ return [
     'All rights reserved.' => '版權所有。',
     'Before proceeding, please check your email for a verification link.' => '在繼續之前請先驗證您的 E-mail。',
     'click here to request another' => '點擊重新發送 E-mail',
+    'Confirm account' => '確認帳號',
     'Confirm Password' => '確認密碼',
     'E-Mail Address' => '電子信箱',
     'Error' => '錯誤',

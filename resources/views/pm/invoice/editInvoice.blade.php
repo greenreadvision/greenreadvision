@@ -378,14 +378,9 @@
                                         <div id = "intern_name" class="col-lg-6 form-group" >
                                             <label class="label-style col-form-label" for="intern_name">實習生姓名</label>
                                             <select type="text" id="intern_name" name="intern_name" class="form-control rounded-pill" autofocus>
-                                                <option value="">請選擇實習生姓名</option>
-                                                <option {{$data['invoice']['intern_name'] == '柴犬'? 'selected':''}}>柴犬</option>
-                                                <option {{$data['invoice']['intern_name'] == '貓頭鷹'? 'selected':''}}>貓頭鷹</option>
-                                                <option {{$data['invoice']['intern_name'] == '比目魚'? 'selected':''}}>比目魚</option>
-                                                <option {{$data['invoice']['intern_name'] == '北極熊'? 'selected':''}}>北極熊</option>
-                                                <option {{$data['invoice']['intern_name'] == '刺蝟'? 'selected':''}}>刺蝟</option>
-                                                <option {{$data['invoice']['intern_name'] == '花貓'? 'selected':''}}>花貓</option>
-                                                <option {{$data['invoice']['intern_name'] == '河馬'? 'selected':''}}>河馬</option>
+                                                @foreach ($data['interns'] as $intern)
+                                                    <option {{$data['invoice']['intern_name'] == $intern->nickname? 'selected':''}}>{{$intern->nickname}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>

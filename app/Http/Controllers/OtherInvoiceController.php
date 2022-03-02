@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\BusinessTrip;
 use App\User;
 use App\Invoice;
+use App\Intern;
 use App\Letters;
 use App\Purchase;
 use App\OtherInvoice;
@@ -268,9 +269,9 @@ class OtherInvoiceController extends Controller
             }
         }
         $reviewers = User::where('role','=','supervisor')->get();
-
+        $interns = Intern::orderby('intern_id')->get();
         $purchases = Purchase::orderby('purchase_date', 'desc')->with('project')->with('user')->get();
-        return view('pm.invoice.editInvoice')->with('data', ['invoice' => $invoice->toArray(),'type' => $type,'types'=>$types,'company_name'=>$company_name,'purchases'=>$purchases,'users'=>$users,'reviewers'=>$reviewers]);
+        return view('pm.invoice.editInvoice')->with('data', ['invoice' => $invoice->toArray(),'type' => $type,'types'=>$types,'company_name'=>$company_name,'purchases'=>$purchases,'users'=>$users,'reviewers'=>$reviewers,  'interns'=>$interns]);
     }
 
     /**

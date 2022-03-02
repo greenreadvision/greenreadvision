@@ -22,6 +22,7 @@
                                     <label for="length_long" class='col-form-label'>時間長度</label>
                                     <select name="length_long" id="length_long" class="form-control rounded-pill" onchange="changeLength(this.options[this.options.selectedIndex].value)">
                                         <option value="days" {{old('length_long')=='days'?'selected':''}}>多天</option>
+                                        <option value="twoDays" {{old('length_long')=='twoDays'?'selected':''}}>兩天</option>
                                         <option value="day" {{old('length_long')=='day'?'selected':''}}>一天</option>
                                         <option value="half" {{old('length_long')=='half'?'selected':''}}>半天</option>
                                         <option value="hours" {{old('length_long')=='hours'?'selected':''}}>小時</option>
@@ -90,6 +91,7 @@
 <script>
     $(document).ready(function() {
         var days = document.getElementById('days')
+        var twoDays = document.getElementById('twoDays')
         var day = document.getElementById('day')
         var hours = document.getElementById('hours')
         var lengths = document.getElementById('lengths')
@@ -118,6 +120,17 @@
                 resetRequire()
                 document.getElementById('start_day').required = true;
                 document.getElementById('end_day').required = true;
+                break
+            case 'twoDays':
+                days.hidden = true
+                day.hidden = false
+                hours.hidden = true
+                content.hidden = false
+                another_day.setAttribute('oninput',"calculation('twoDays')")
+                $('#days_long').val(2)
+                resetRequire()
+                document.getElementById('another_day').required = true;
+
                 break
             case 'day':
                 days.hidden = true
@@ -200,6 +213,13 @@
             case 'days':
                 if (start_day != '' && end_day != '') {
                     $('#days_long').val(DateDiff(start_day, end_day, 'd') + 1)
+                }
+                break
+            case 'twoDays':
+                if (length_long.value == 'day') {
+                    $('#days_long').val(1)
+                } else if (length_long.value == 'half') {
+                    $('#days_long').val(0.5)
                 }
                 break
             case 'day':
