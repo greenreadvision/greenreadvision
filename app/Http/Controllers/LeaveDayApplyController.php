@@ -32,10 +32,8 @@ class LeaveDayApplyController extends Controller
 
         
         
-        if ($request->input('length_long') == 'days') {
+        if ($request->input('length_long') == 'days' || $request->input('length_long') == 'twoDays'){
             $apply_date = date("Y-m-d", strtotime($request->input('start_day'))) . '~' . date("Y-m-d", strtotime($request->input('end_day')));
-        } else if ($request->input('length_long') == 'twoDays') {
-            $apply_date = date("Y-m-d", strtotime($request->input('another_day')));
         } else if ($request->input('length_long') == 'day' || $request->input('length_long') == 'half') {
             $apply_date = date("Y-m-d", strtotime($request->input('another_day')));
         } else if ($request->input('length_long') == 'hours') {

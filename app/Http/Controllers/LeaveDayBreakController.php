@@ -34,9 +34,9 @@ class LeaveDayBreakController extends Controller
                 $date = date("Y-m-d", strtotime(substr($start_datetime, 0, 10))) . '~' . date("Y-m-d", strtotime(substr($end_datetime, 0, 10)));
                 break;
             case 'twoDays':
-                $start_datetime = $request->another_day;
-                $end_datetime = $request->another_day;
-                $date = date("Y-m-d", strtotime(substr($start_datetime, 0, 10)));
+                $start_datetime = $request->start_day;
+                $end_datetime = $request->end_day;
+                $date = date("Y-m-d", strtotime(substr($start_datetime, 0, 10))) . '~' . date("Y-m-d", strtotime(substr($end_datetime, 0, 10)));
                 // $date = date("Y-m-d", strtotime(substr($start_datetime, 0, 10))) . '~' . date("Y-m-d", strtotime("$start_datetime +1 day"));
                 break;
             case 'day':
@@ -93,12 +93,12 @@ class LeaveDayBreakController extends Controller
             ]);
         }
 
-        if ($request->length_long == "days") {
+        if ($request->length_long == "days" || $request->length_long == "twoDays") {
             $period = \Carbon\CarbonPeriod::create($request->start_day, $request->end_day);
             foreach ($period as $date) {
                 EventController::create($date->format('Y-m-d'), __('customize.LeaveDay'),  $request->input('days_long') . '天', __('customize.LeaveDay'), 'leaveDay', $newId);
             }
-        } else if ($request->length_long == "hours" || $request->length_long == "twoDays") {
+        } else if ($request->length_long == "hours") {
 
             EventController::create(substr($start_datetime, 0, 10), __('customize.LeaveDay'), $request->input('days_long') . '天', __('customize.LeaveDay'), 'leaveDay', $newId);
         } else {

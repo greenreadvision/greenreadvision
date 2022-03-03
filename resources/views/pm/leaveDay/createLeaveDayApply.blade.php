@@ -120,17 +120,22 @@
                 resetRequire()
                 document.getElementById('start_day').required = true;
                 document.getElementById('end_day').required = true;
+                document.getElementById('start_day').setAttribute('onchange', "calculation('days')");
+                document.getElementById('start_day').value = ""
+                document.getElementById('end_day').removeAttribute('readonly')
+                document.getElementById('end_day').value = ""
                 break
             case 'twoDays':
-                days.hidden = true
-                day.hidden = false
+                days.hidden = false
+                day.hidden = true
                 hours.hidden = true
                 content.hidden = false
-                another_day.setAttribute('oninput',"calculation('twoDays')")
+                document.getElementById('start_day').setAttribute('onchange', "calculation('twoDays')");
+                document.getElementById('start_day').value = ""
+                document.getElementById('end_day').setAttribute('readonly', true)
+                document.getElementById('end_day').value = ""
                 $('#days_long').val(2)
                 resetRequire()
-                document.getElementById('another_day').required = true;
-
                 break
             case 'day':
                 days.hidden = true
@@ -202,6 +207,12 @@
 
     };
 
+    function DateAddDays(_date, days){
+        var result = new Date(_date);
+        result.setDate(result.getDate() + days);
+        return result;
+    };
+
     function calculation(type) {
         var start_day = document.getElementById('start_day').value
         var end_day = document.getElementById('end_day').value
@@ -217,9 +228,29 @@
                 break
             case 'twoDays':
                 if (length_long.value == 'twoDays') {
-                    $('#days_long').val(1)
-                } else if (length_long.value == 'half') {
-                    $('#days_long').val(0.5)
+                    $('#days_long').val(2)
+                    //因怕過日會有跨月份情況發生，所以採取new Date方式來做AddDays
+
+                    //產生 new Date，擷取start_day的value來做分割，分割成年分、月份、日期
+                    var end_time_twoDays = new Date(start_day.substr(0,4), start_day.substr(5,2), start_day.substr(8,2));
+                    //使用DateAddDay，產生下一天的值
+                    end_time_twoDays = DateAddDays(end_time_twoDays, 1);
+
+                    //確定月份是否小於10，若是的話，字串前面增加 0
+                    var end_time_month = end_time_twoDays.getMonth()
+                    if(end_time_month < 10){
+                        end_time_month = "0" + end_time_month
+                    }
+                    //確定日期是否小於10，若是的話，字串前面增加 0
+                    var end_time_date = end_time_twoDays.getDate()
+                    if(end_time_date < 10){
+                        end_time_date = "0" + end_time_date
+                    }
+
+                    //統整上述字串，讓字串改變成input(type="date")會吃的形式(yyyy-mm-dd)
+                    end_time_twoDays = end_time_twoDays.getFullYear() + "-" + end_time_month + "-" + end_time_date
+                    //回傳第二天的值以做顯示
+                    document.getElementById('end_day').value = end_time_twoDays
                 }
                 break
             case 'day':
