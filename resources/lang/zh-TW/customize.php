@@ -243,4 +243,17 @@ return [
     'compensatory_leave' => '補休假',
     'bereavement_leave' => '喪假',
     'compensatory_leave_break' =>'事假、病假',
+
+    //地區
+    'taipei' => '台北',
+    'ntc' => '新北',
+    'taoyuan' => '桃園',
+    'hsinchu' => '新竹',
+    'miaoli' => '苗栗',
+
+    //年齡分段
+    'children' => '幼年',
+    'teen' => '青年',
+    'adult' => '中年',
+    'elderly' => '老年'
 ];

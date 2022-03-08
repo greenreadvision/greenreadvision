@@ -192,7 +192,7 @@ class UserController extends Controller
             'create_intern_id' => 'required|string|min:1',
             'create_name' => 'required|string|min:1',
             'create_nickname' => 'required|string|min:1',
-            'create_email' => 'required|string|min:5',
+            'create_email' => 'nullable|string|min:5',
             'create_status' => 'required|string'
         ]);
         

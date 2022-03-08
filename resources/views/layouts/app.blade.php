@@ -31,6 +31,7 @@
     <!-- Styles -->
     
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/hulk.css') }}" rel="stylesheet">
     <link href="{{ asset('css/grv.css') }}" rel="stylesheet">
     <link href="{{ asset('css/tool/normal.css')}}" rel="stylesheet">
     <link href="{{ asset('css/tool/table.css')}}" rel="stylesheet">
