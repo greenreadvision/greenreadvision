@@ -64,7 +64,7 @@
                 <h5 class="modal-title">確認資料</h5>
             </div>
             <div class="modal-body">
-                <form action="confirm" method="POST">
+                <form action="hulk/store" method="POST">
                     @method('PUT')
                     @csrf
                     <div class="form-group row">
@@ -75,22 +75,21 @@
                             </select>
                         </div>
                         <div class="col">
-                            <select name="select_age" id="select_age">
-                                @foreach($ages as $age)
-                                <option id="{{$age}}" value="{{$age}}">{{__('customize.'.$age)}}</option>
-                                @endforeach
-                            </select>
-                            
-                        </div>
-                        <div class="col">
                             <select  name="select_area" id="select_area">
                                 @foreach($areas as $area)
                                 <option id="{{$area}}" value="{{$area}}">{{__('customize.'.$area)}}</option>
                                 @endforeach
                             </select>
                         </div>
+                        <div class="col">
+                            <select name="select_age" id="select_age">
+                                @foreach($ages as $age)
+                                <option id="{{$age}}" value="{{$age}}">{{__('customize.'.$age)}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                    <button class="btn btn-red rounded-pill " type="submit"><span class="mx-2">確認</span></button>
+                    <button class="btn btn-red rounded-pill " type="submit" ><span class="mx-2">確認</span></button>
                 </form>
             </div>
         </div>
@@ -141,7 +140,6 @@
         document.getElementById(sex).setAttribute('selected',true);
         document.getElementById(area).setAttribute('selected',true);
         document.getElementById(age).setAttribute('selected',true);
-
     }
 </script>
 @stop
