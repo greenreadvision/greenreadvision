@@ -98,6 +98,7 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/letter/{id}', 'LetterController@show')->name('letter.show');
 
     Route::get('/hulk', 'HulkController@index')->name('hulk');
+    Route::get('/hulk/store', 'HulkController@store')->name('hulk.store');
 
     Route::get('/home', 'HomeController@index')->name('home.index');
     Route::get('/home/create', 'HomeController@create')->name('home.create');
