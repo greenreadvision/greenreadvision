@@ -465,6 +465,7 @@ class ComposerStaticInit30aa371bde7fe78b9ba66ef4c5a40518
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Intern' => __DIR__ . '/../..' . '/app/Intern.php',
         'App\\Invoice' => __DIR__ . '/../..' . '/app/Invoice.php',
         'App\\InvoiceEvent' => __DIR__ . '/../..' . '/app/InvoiceEvent.php',
         'App\\LeaveDay' => __DIR__ . '/../..' . '/app/LeaveDay.php',
