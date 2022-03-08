@@ -90,6 +90,7 @@
                             </select>
                         </div>
                     </div>
+                    <button class="btn btn-red rounded-pill " type="submit"><span class="mx-2">確認</span></button>
                 </form>
             </div>
         </div>
