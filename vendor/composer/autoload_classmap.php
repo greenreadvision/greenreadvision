@@ -91,6 +91,7 @@ return array(
     'App\\Http\\Middleware\\TrimStrings' => $baseDir . '/app/Http/Middleware/TrimStrings.php',
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
+    'App\\Intern' => $baseDir . '/app/Intern.php',
     'App\\Invoice' => $baseDir . '/app/Invoice.php',
     'App\\InvoiceEvent' => $baseDir . '/app/InvoiceEvent.php',
     'App\\LeaveDay' => $baseDir . '/app/LeaveDay.php',
