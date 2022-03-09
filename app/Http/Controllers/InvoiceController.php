@@ -223,20 +223,6 @@ class InvoiceController extends Controller
             'purchase_id' => 'nullable|string',
             'reviewer' => 'required|string'
         ]);
-        $receipt_file_path = null;
-        $detail_file_path = null;
-
-        if ($request->hasFile('receipt_file')) {
-            if ($request->receipt_file->isValid()) {
-                $receipt_file_path = $request->receipt_file->storeAs('receipts',$request->receipt_file->getClientOriginalName());
-            }
-        }
-        if ($request->hasFile('detail_file')) {
-            if ($request->detail_file->isValid()) {
-                $detail_file_path = $request->detail_file->storeAs('details',$request->detail_file->getClientOriginalName())    ;
-            }
-        }
-        
         
 
         //查看流水號相關變數
@@ -299,6 +285,20 @@ class InvoiceController extends Controller
         }
         else{
             $intern = NULL;
+        }
+
+        $receipt_file_path = null;
+        $detail_file_path = null;
+
+        if ($request->hasFile('receipt_file')) {
+            if ($request->receipt_file->isValid()) {
+                $receipt_file_path = $request->receipt_file->storeAs('receipts', $finished_id.'_'.$request->receipt_file->getClientOriginalName());
+            }
+        }
+        if ($request->hasFile('detail_file')) {
+            if ($request->detail_file->isValid()) {
+                $detail_file_path = $request->detail_file->storeAs('details', $finished_id.'_'.$request->detail_file->getClientOriginalName())    ;
+            }
         }
     
         

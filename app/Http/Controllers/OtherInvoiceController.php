@@ -57,8 +57,6 @@ class OtherInvoiceController extends Controller
     public function store(Request $request)
     {
         //
-        $receipt_file_path = null;
-        $detail_file_path = null;
         // $created_at = now();
         $other_invoice_ids = OtherInvoice::select('other_invoice_id')->get()->map(function($other_invoice) { return $other_invoice->other_invoice_id; })->toArray();
 
@@ -82,17 +80,6 @@ class OtherInvoiceController extends Controller
             'purchase_id' => 'nullable|string',
             'reviewer' => 'required|string'
         ]);
-
-        if ($request->hasFile('receipt_file')){
-            if ($request->receipt_file->isValid()){
-                $receipt_file_path = $request->receipt_file->store('receipts');
-            }
-        }
-        if ($request->hasFile('detail_file')){
-            if ($request->detail_file->isValid()){
-                $detail_file_path = $request->detail_file->store('details');
-            }
-        }
 
         $id = RandomId::getNewId($other_invoice_ids);
         $numbers = Invoice::all();
@@ -150,6 +137,21 @@ class OtherInvoiceController extends Controller
         else{
             $intern = NULL ;
         }
+
+        $receipt_file_path = null;
+        $detail_file_path = null;
+
+        if ($request->hasFile('receipt_file')) {
+            if ($request->receipt_file->isValid()) {
+                $receipt_file_path = $request->receipt_file->storeAs('receipts', $finished_id.'_'.$request->receipt_file->getClientOriginalName());
+            }
+        }
+        if ($request->hasFile('detail_file')) {
+            if ($request->detail_file->isValid()) {
+                $detail_file_path = $request->detail_file->storeAs('details', $finished_id.'_'.$request->detail_file->getClientOriginalName())    ;
+            }
+        }
+    
        
         $post = OtherInvoice::create([
             'other_invoice_id' => $id,
