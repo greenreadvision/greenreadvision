@@ -58,34 +58,43 @@ Route::get('/activity/{type}/{id}','ActivityController@showContent')->name('acti
 
 Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/CMS','CMSController@index')->name('CMS');
+});
 
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/product','ProductController@index')->name('product.index');
     Route::post('/product/create/review','ProductController@store')->name('product.create.review');
     Route::put('/product/{i}/{id}/update','ProductController@update')->name('product.update');
     Route::delete('/product/{id}/delete', 'ProductController@destroy')->name('product.destroy');
     Route::delete('/product/multipleDestroy', 'ProductController@multipleDestroy')->name('product.multipleDestroy');
-    
+});
+
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/board','BoardController@index')->name('board.index');
     Route::get('/board/create','BoardController@create')->name('board.create');
     Route::post('/board/create/review','BoardController@store')->name('board.store');
     Route::get('/board/{id}/review','BoardController@show')->name('board.show');
+});
 
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/activity_CMS','ActivityController@index')->name('activity.index');
     Route::get('/activity_CMS/create','ActivityController@create')->name('activity.create');
     Route::post('/activity_CMS/create/review','ActivityController@store')->name('activity.store');
     Route::get('/activity_CMS/{id}/show','ActivityController@show')->name('activity.show');
     Route::put('/activity_CMS/{id}/update/{type}','ActivityController@update')->name('activity.update');
+});
     
-    
-
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/profile', 'UserController@index')->name('profile');
     Route::get('/profile/edit', 'UserController@edit')->name('editProfile');
     Route::put('/profile/update', 'UserController@update')->name('updateProfile');
+});
 
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::put('/password', 'UserController@setPassword')->name('password.setting');
     Route::put('/account', 'UserController@setAccount')->name('account.setting');
+});
 
-
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/p-index', 'PhotoController@index')->name('photo.index');
     Route::get('/p/create', 'PhotoController@create')->name('photo.create');
     Route::post('/p/create/review', 'PhotoController@store')->name('photo.create.review');
@@ -93,13 +102,19 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::post('/p/{id}/show/review', 'PhotoController@showCreate')->name('photo.show.review');
     Route::delete('/p/{id}/delete', 'PhotoController@destroy')->name('photo.destroy');
     Route::delete('/p/{id}/delete/image', 'PhotoController@destroyImage')->name('photo.destroy.image');
+});
 
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/letter', 'LetterController@index')->name('letter.index');
     Route::get('/letter/{id}', 'LetterController@show')->name('letter.show');
+});
 
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/hulk', 'HulkController@index')->name('hulk');
     Route::get('/hulk/store', 'HulkController@store')->name('hulk.store');
+});
 
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/home', 'HomeController@index')->name('home.index');
     Route::get('/home/create', 'HomeController@create')->name('home.create');
     Route::post('/home/create/review', 'HomeController@store')->name('home.create.review');
@@ -107,10 +122,9 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/home/{id}/edit', 'HomeController@edit')->name('home.edit');
     Route::put('/home/{id}/update', 'HomeController@update')->name('home.update');
     Route::delete('/home/{id}/delete', 'HomeController@destroy')->name('home.destroy');
-    // Route::resource('project', 'ProjectController')->parameters(['project' => 'project_id'])->names(['show' => 'project.review']);
-    // Route::resource('invoice', 'InvoiceController')->parameters(['invoice' => 'invoice_id'])->names(['show' => 'invoice.review']);
-    // Route::resource('todo', 'TodoController')->parameters(['todo' => 'todo_id'])->names(['show' => 'todo.review']);
+});
 
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/project', 'ProjectController@index')->name('project.index');
     Route::get('/project/create', 'ProjectController@create')->name('project.create');
     Route::post('/project/create/review', 'ProjectController@store')->name('project.create.review');
@@ -121,24 +135,27 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::put('/project/{id}/transfer', 'ProjectController@transfer')->name('project.transfer');
     Route::put('/project/{id}/receive/{type}', 'ProjectController@receive')->name('project.receive');
     Route::get('project/{id}/setCost','ProjectController@setCost')->name('project.setCost');
+    Route::delete('/project/{id}/delete', 'ProjectController@destroy')->name('project.destroy');
+});
 
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::post('/project/{id}/gding/create/review','GdingController@store')->name('gding.create.review');
     Route::put('/project/{id}/{gding_id}/update','GdingController@update')->name('gding.update');
     Route::delete('/project/{id}/{gding_id}/delete','GdingController@delete')->name('gding.delete');
+});
 
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::post('/project/{id}/performance/create/review','PerformanceController@store')->name('performance.create.review');
     Route::put('/project/{id}/performance/{performance_id}/update','PerformanceController@update')->name('performance.update');
+});
 
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::post('/project/{id}/defaultItem/create/review','DefaultController@store')->name('default.create.review');
     Route::post('/project/{id}/defaultItem/{defaultItem_id}/update','DefaultController@update')->name('default.update');
     Route::delete('/project/{id}/defaultItem/{defaultItem_id}/delete','DefaultController@destory')->name('default.delete');
+});
 
-
-
-
-
-    Route::delete('/project/{id}/delete', 'ProjectController@destroy')->name('project.destroy');
-
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/businessCar', 'BusinessCarController@index')->name('businessCar.index');
     Route::get('/businessCar/create', 'BusinessCarController@create')->name('businessCar.create');
     Route::post('/businessCar/create/review', 'BusinessCarController@store')->name('businessCar.create.review');
@@ -146,14 +163,9 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/businessCar/{id}/edit', 'BusinessCarController@edit')->name('businessCar.edit');
     Route::put('/businessCar/{id}/update', 'BusinessCarController@update')->name('businessCar.update');
     Route::delete('/businessCar/{id}/delete', 'BusinessCarController@destroy')->name('businessCar.destroy');
+});
 
-    // Route::get('/finance', 'FinanceController@index')->name('finance.index');
-    // Route::get('/finance/create', 'FinanceController@create')->name('finance.create');
-    // Route::post('/finance/create/review', 'FinanceController@store')->name('finance.create.review');
-    // Route::get('/finance/{id}/review', 'FinanceController@show')->name('finance.review');
-    // Route::get('/finance/{id}/edit', 'FinanceController@edit')->name('finance.edit');
-    // Route::delete('/finance/{id}/delete', 'FinanceController@destroy')->name('finance.destroy');
-
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/invoice', 'InvoiceController@index')->name('invoice.index');
     Route::get('/invoice/create', 'InvoiceController@create')->name('invoice.create');
     Route::post('/invoice/create/review', 'InvoiceController@store')->name('invoice.create.review');
@@ -175,7 +187,9 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::delete('/invoice/{id}/delete/other', 'OtherInvoiceController@destroy')->name('invoice.destroy.other');
     Route::post('/invoice/Zip','InvoiceController@downLoadZip')->name('invoice.zip');
     Route::any('/deleteZip','InvoiceController@deleteZip')->name('deleteZip');
+});
 
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/businessTrip/index','BusinessTripController@index')->name('businessTrip.index');
     Route::get('/businessTrip/{id}/show','BusinessTripController@show')->name('businessTrip.show');
     Route::get('/businessTrip/create','BusinessTripController@create')->name('businessTrip.create');
@@ -183,8 +197,9 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/businessTrip/{id}/edit','BusinessTripController@edit')->name('businessTrip.edit');
     Route::post('/businessTrip/{id}/update','BusinessTripController@update')->name('businessTrip.update');
     Route::delete('/businessTrip/{id}/delete','BusinessTripController@delete')->name('businessTrip.delete');
+});
 
-
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/estimate/index','EstimateController@index')->name('estimate.index');
     Route::get('/estimate/{id}/show','EstimateController@show')->name('estimate.show');
     Route::get('/estimate/create','EstimateController@create')->name('estimate.create');
@@ -193,14 +208,17 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::post('/estimate/{id}/update/{type}','EstimateController@updateType')->name('estimate.updateType');
     Route::delete('/estimate/{id}/delete','EstimateController@destroy')->name('estimate.delete');
     Route::post('/estimate/{id}/match/{type}','EstimateController@match')->name('estimate.match');
+});
 
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/customer/index','CustomerController@index')->name('customer.index');
     Route::post('/customer/create/store','CustomerController@store')->name('customer.create.store');
     Route::post('/customer/{id}/update','CustomerController@update')->name('customer.update');
     Route::delete('/customer/{id}/delete','CustomerController@destroy')->name('customer.delete');
+});
 
     
-
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/purchase', 'PurchaseController@index')->name('purchase.index');
     Route::get('/purchase/{id}/list', 'PurchaseController@list')->name('purchase.list');
     Route::get('/purchase/create', 'PurchaseController@create')->name('purchase.create');
@@ -210,7 +228,9 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/purchase/{id}/review', 'PurchaseController@show')->name('purchase.review');
     Route::delete('/purchase/{id}/delete', 'PurchaseController@destroy')->name('purchase.destroy');
     Route::delete('/purchase/{id}/delete/{no}', 'PurchaseController@destroyItem')->name('purchase.destroy.item');
+});
 
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/seal', 'SealController@index')->name('seal.index');
     Route::get('/seal/create','SealController@create')->name('seal.create');
     Route::post('/seal/create/review','SealController@store')->name('seal.create.review');
@@ -222,8 +242,9 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::post('seal/{id}/match','SealController@match')->name('seal.match');
     Route::post('seal/{id}/withdraw','SealController@withdraw')->name('seal.withdraw');
     Route::delete('seal/{id}/delete','SealController@destory')->name('seal.delete');
+});
 
-
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/quotation','QuotationController@index')->name('quotation.index');
     Route::get('/quotationProduct','QuotationProductController@index')->name('quotationProduct.index');
     Route::get('/quotation/create','QuotationController@create')->name('quotation.create');
@@ -232,32 +253,62 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::post('/quotationProduct/create/review','QuotationProductController@store')->name('quotationProduct.create.review');
     Route::get('/quotation/{id}/show','QuotationController@show')->name('quotation.show');
     Route::get('/quotationProduct/{id}/show','QuotationProductController@show')->name('quotationProduct.show');
+});
 
+Route::group(['middleware' => ['auth', 'general']], function () {
+    Route::get('/reserve/index','ReserveController@index')->name('reserve.index');
+    Route::get('/reserve/create','ReserveController@create')->name('reserve.create');
+    Route::post('/reserve/create/store','ReserveController@store')->name('reserve.create.review');
+    Route::get('reserve/{id}/show','ReserveController@show')->name('reserve.show');
+    Route::get('reserve/{id}/edit','ReserveController@edit')->name('reserve.edit');
+    Route::put('reserve/{id}/update','ReserveController@update')->name('reserve.update');
+    Route::delete('reserve/{id}/delete','ReserveController@delete')->name('reserve.delete');
+
+    Route::get('/rent/index','RentController@index')->name('rent.index');
+    Route::get('/rent/create','RentController@create')->name('rent.create');
+    Route::post('/rent/create/store','RentController@store')->name('rent.create.store');
+    Route::get('/rent/{id}/show','RentController@show')->name('rent.show');
+    Route::get('/rent/{id}/edit','RentController@edit')->name('rent.edit');
+    Route::put('/rent/{id}/upadte','RentController@update')->name('rent.update');
+    Route::get('/rent/{id}/match','RentController@match')->name('rent.match');
+});
+
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('service', 'ServiceController@index')->name('service.index');
+});
 
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/bank', 'BankController@index')->name('bank.index');
     Route::post('/bank/create', 'BankController@store')->name('bank.create');
     Route::put('/bank/{id}/update', 'BankController@update')->name('bank.update');
     Route::delete('/bank/{id}/delete', 'BankController@destroy')->name('bank.destroy');
+});
 
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/company', 'CompanyController@index')->name('company.index');
     Route::get('/company/create', 'CompanyController@create')->name('company.create');
     Route::post('/company/create/review', 'CompanyController@store')->name('company.create.review');
     Route::get('/company/{id}/edit', 'CompanyController@edit')->name('company.edit');
     Route::put('/company/{id}/update', 'CompanyController@update')->name('company.update');
     Route::delete('/company/{id}/delete', 'CompanyController@destroy')->name('company.destroy');
+});
 
-
-
-
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/calendar', 'EventController@index')->name('calendar.index');
+    Route::get('/calendar/{year}/{month}', 'EventController@show')->name('calendar.show');
+
+});
+
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/offDay', 'OffDayController@index')->name('offDay.index');
     Route::get('/createOffDay', 'OffDayController@create')->name('offDay.create');
     Route::post('/create/content', 'OffDayController@createTwo')->name('offDay.createTwo');
     Route::post('/create/review', 'OffDayController@store')->name('offDay.create.review');
     Route::post('/offDay/{id}/match', 'OffDayController@match')->name('offDay.match');
     Route::delete('/offDay/{id}/delete', 'OffDayController@destroy')->name('offDay.destroy');
+});
 
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/leaveDay/{id}/{year}', 'LeaveDayController@show')->name('leaveDay.show');
     Route::get('/leaveDayBreak/{id}/create', 'LeaveDayBreakController@create')->name('leaveDayBreak.create');
 
@@ -280,7 +331,10 @@ Route::group(['middleware' => ['auth', 'general']], function () {
 
     Route::get('/leaveDayBreak/{id}/add', 'LeaveDayBreakController@add')->name('leaveDayBreak.add');
     Route::post('/leaveDayBreak/{id}/add/review', 'LeaveDayBreakController@addStore')->name('leaveDayBreak.add.review');
+});
 
+
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/todo', 'TodoController@index')->name('todo.index');
     Route::get('/todo/create', 'TodoController@create')->name('todo.create');
     Route::post('/todo/create/review', 'TodoController@store')->name('todo.create.review');
@@ -292,19 +346,9 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/todoRecord', 'TodoRecordController@index')->name('todoRecord.index');
     Route::post('/todoRecord/create/today', 'TodoRecordController@createToday')->name('todoRecord.create.today');
     Route::post('/todoRecord/create/nextDay', 'TodoRecordController@createNextDay')->name('todoRecord.create.NextDay');
+});
 
-
-    Route::get('/calendar/{year}/{month}', 'EventController@show')->name('calendar.show');
-
-
-    Route::get('/tool/authCheck', function () {
-        return dump(\Auth::user());
-    });
-
-    Route::any('/back', function () {
-        return back()->withInput();
-    })->name('back');
-
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/goods', 'GoodsController@index')->name('goods.index');
     Route::get('/goods/create', 'GoodsController@create')->name('goods.create');
     Route::get('/goods/{id}', 'GoodsController@show')->name('goods.show');
@@ -313,6 +357,17 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::post('/goods/create/review', 'GoodsController@store')->name('goods.create.review');
     Route::delete('/goods/{id}/delete', 'GoodsController@destroy')->name('goods.destroy');
 });
+    
+Route::group(['middleware' => ['auth', 'general']], function () {
+    Route::get('/tool/authCheck', function () {
+        return dump(\Auth::user());
+    });
+
+    Route::any('/back', function () {
+        return back()->withInput();
+    })->name('back');
+});
+
 
 Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/projectSOP/index','ProjectSOPController@index')->name('projectSOP.index');

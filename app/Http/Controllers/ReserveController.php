@@ -8,6 +8,6 @@ use PDO;
 class ReserveController extends Controller
 {
     function index(){
-        
+        return view('pm.reserve.indexReserve');
     }
 }
