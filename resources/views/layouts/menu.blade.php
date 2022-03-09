@@ -24,14 +24,19 @@ $letter = new Letter();
                         <i class="fas fa-file-invoice-dollar" style="width:50px"></i> <span class="ml-2">請款</span>
                     </a>
                 </li>
-                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                <!--<li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
                     <a id="menu-Estimate" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('estimate.index') }}">
                         <i class='fas fa-file-invoice' style="width:50px"></i><span class="ml-2">報價單</span>
                     </a>
-                </li>
+                </li>-->
                 <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
                     <a id="menu-BusinessTrip" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('businessTrip.index') }}">
                         <i class="fas fa-business-time" style="width:50px"></i> <span class="ml-2">出差報告表</span>
+                    </a>
+                </li>
+                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                    <a id="menu-reserve" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('reserve.index') }}">
+                        <i class="fas fa-box-open" style="width:50px"></i> <span class="ml-2">倉儲查詢</span>
                     </a>
                 </li>
                 <li>
@@ -39,7 +44,7 @@ $letter = new Letter();
                         <i class='fas fa-dolly' style="width:50px"></i><span class="ml-2">貨單</span>
                     </a>
                 </li>
-                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                <!--<li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
                     <a id="menu-todo" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('todo.index') }}">
                         <i class="fas fa-tasks" style="width:50px"></i><span class="ml-2">@lang('customize.Todo')</span>
                     </a>
@@ -48,7 +53,7 @@ $letter = new Letter();
                     <a id="menu-calendar" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('calendar.index') }}">
                         <i class='far fa-calendar-alt' style="width:50px"></i><span class="ml-2">@lang('customize.Calendar')</span>
                     </a>
-                </li>
+                </li>-->
                 <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
                     <a id="menu-service" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('service.index') }}">
                         <i class='fas fa-address-book' style="width:50px"></i><span class="ml-2">勞務單</span>
@@ -71,18 +76,6 @@ $letter = new Letter();
                         <i class='fas fa-cogs' style="width:50px"></i><span class="ml-2">公司資料庫</span>
                     </a>
                 </li>
-                
-                <!-- <li>
-                    <a class="menu-a d-flex navbar-brand px-5 py-2 justify-content-start position-relative" href="{{ route('businessCar.index') }}">
-                        <i class='fas fa-car-alt' style="width:1.2rem"></i><span class="ml-2">公務車</span>
-                        <i class='position-absolute fas fa-angle-right' style="width:1.2rem;right:3rem"></i>
-                    </a>
-                </li> -->
-                <!-- <li>
-                    <a id="menu-photo" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('photo.index') }}">
-                        <i class='fas fa-file-image' style="width:50px"></i><span class="ml-2">相簿</span>
-                    </a>
-                </li> -->
                 
 
             </ul>
