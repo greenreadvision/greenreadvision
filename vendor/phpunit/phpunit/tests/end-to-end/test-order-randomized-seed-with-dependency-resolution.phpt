@@ -4,11 +4,12 @@ phpunit --random-order --random-order-seed=54321 --resolve-dependencies ../_file
 <?php
 $_SERVER['argv'][1] = '--no-configuration';
 $_SERVER['argv'][2] = '--debug';
-$_SERVER['argv'][3] = '--random-order';
-$_SERVER['argv'][4] = '--random-order-seed=54321';
-$_SERVER['argv'][5] = '--resolve-dependencies';
-$_SERVER['argv'][6] = 'MultiDependencyTest';
-$_SERVER['argv'][7] = __DIR__ . '/../_files/MultiDependencyTest.php';
+$_SERVER['argv'][3] = '--verbose';
+$_SERVER['argv'][4] = '--random-order';
+$_SERVER['argv'][5] = '--random-order-seed=54321';
+$_SERVER['argv'][6] = '--resolve-dependencies';
+$_SERVER['argv'][7] = 'MultiDependencyTest';
+$_SERVER['argv'][8] = __DIR__ . '/../_files/MultiDependencyTest.php';
 
 require __DIR__ . '/../bootstrap.php';
 PHPUnit\TextUI\Command::main();
@@ -16,6 +17,7 @@ PHPUnit\TextUI\Command::main();
 --EXPECTF--
 PHPUnit %s by Sebastian Bergmann and contributors.
 
+Runtime:       %s
 Random seed:   54321
 
 Test 'MultiDependencyTest::testTwo' started

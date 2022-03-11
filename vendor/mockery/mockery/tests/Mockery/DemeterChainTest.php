@@ -30,12 +30,12 @@ class DemeterChainTest extends MockeryTestCase
     /** @var  Mockery\Mock $this->mock */
     private $mock;
 
-    public function mockeryTestSetUp()
+    public function setUp()
     {
         $this->mock = $this->mock = Mockery::mock()->shouldIgnoreMissing();
     }
 
-    public function mockeryTestTearDown()
+    public function tearDown()
     {
         $this->mock->mockery_getContainer()->mockery_close();
     }

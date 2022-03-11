@@ -17,12 +17,12 @@ class TestEventDispatcher extends TraceableEventDispatcher
 {
     public function getCalledListeners()
     {
-        return ['foo'];
+        return array('foo');
     }
 
     public function getNotCalledListeners()
     {
-        return ['bar'];
+        return array('bar');
     }
 
     public function reset()
@@ -31,6 +31,6 @@ class TestEventDispatcher extends TraceableEventDispatcher
 
     public function getOrphanedEvents()
     {
-        return [];
+        return array();
     }
 }

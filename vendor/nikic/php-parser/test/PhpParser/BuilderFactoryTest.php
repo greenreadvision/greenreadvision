@@ -2,6 +2,7 @@
 
 namespace PhpParser;
 
+use PhpParser\Builder;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\BinaryOp\Concat;
@@ -9,8 +10,10 @@ use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 use PhpParser\Node\Scalar\LNumber;
 use PhpParser\Node\Scalar\String_;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Yaml\Tests\A;
 
-class BuilderFactoryTest extends \PHPUnit\Framework\TestCase
+class BuilderFactoryTest extends TestCase
 {
     /**
      * @dataProvider provideTestFactory

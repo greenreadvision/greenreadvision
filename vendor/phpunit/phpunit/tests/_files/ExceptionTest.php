@@ -16,21 +16,21 @@ class ExceptionTest extends TestCase
      *
      * @var string
      */
-    public const ERROR_MESSAGE = 'Exception message';
+    const ERROR_MESSAGE = 'Exception message';
 
     /**
      * Exception message
      *
      * @var string
      */
-    public const ERROR_MESSAGE_REGEX = '#regex#';
+    const ERROR_MESSAGE_REGEX = '#regex#';
 
     /**
      * Exception code
      *
      * @var int
      */
-    public const ERROR_CODE = 500;
+    const ERROR_CODE = 500;
 
     /**
      * @expectedException FooBarBaz

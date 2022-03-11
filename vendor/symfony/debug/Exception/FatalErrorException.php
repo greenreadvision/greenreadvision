@@ -61,7 +61,7 @@ class FatalErrorException extends \ErrorException
                 unset($frame);
                 $trace = array_reverse($trace);
             } else {
-                $trace = [];
+                $trace = array();
             }
 
             $this->setTrace($trace);

@@ -21,14 +21,16 @@
 
 namespace Mockery\Generator\StringManipulation\Pass;
 
-use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Mockery as m;
 use Mockery\Generator\MockConfiguration;
+use Mockery\Generator\StringManipulation\Pass\ClassNamePass;
+use PHPUnit\Framework\TestCase;
 
-class ClassNamePassTest extends MockeryTestCase
+class ClassNamePassTest extends TestCase
 {
     const CODE = "namespace Mockery; class Mock {}";
 
-    public function mockeryTestSetUp()
+    public function setup()
     {
         $this->pass = new ClassNamePass();
     }
@@ -40,7 +42,7 @@ class ClassNamePassTest extends MockeryTestCase
     {
         $config = new MockConfiguration(array(), array(), array(), "Dave\Dave");
         $code = $this->pass->apply(static::CODE, $config);
-        $this->assertTrue(\mb_strpos($code, 'namespace Mockery;') === false);
+        $this->assertNotContains('namespace Mockery;', $code);
     }
 
     /**
@@ -50,8 +52,8 @@ class ClassNamePassTest extends MockeryTestCase
     {
         $config = new MockConfiguration(array(), array(), array(), "Dave\Dave");
         $code = $this->pass->apply(static::CODE, $config);
-        $this->assertTrue(\mb_strpos($code, 'namespace Mockery;') === false);
-        $this->assertTrue(\mb_strpos($code, 'namespace Dave;') !== false);
+        $this->assertNotContains('namespace Mockery;', $code);
+        $this->assertContains('namespace Dave;', $code);
     }
 
     /**
@@ -61,7 +63,7 @@ class ClassNamePassTest extends MockeryTestCase
     {
         $config = new MockConfiguration(array(), array(), array(), "Dave");
         $code = $this->pass->apply(static::CODE, $config);
-        $this->assertTrue(\mb_strpos($code, 'class Dave') !== false);
+        $this->assertContains('class Dave', $code);
     }
 
     /**
@@ -71,6 +73,6 @@ class ClassNamePassTest extends MockeryTestCase
     {
         $config = new MockConfiguration(array(), array(), array(), "\Dave\Dave");
         $code = $this->pass->apply(static::CODE, $config);
-        $this->assertTrue(\mb_strpos($code, 'namespace Dave;') !== false);
+        $this->assertContains('namespace Dave;', $code);
     }
 }

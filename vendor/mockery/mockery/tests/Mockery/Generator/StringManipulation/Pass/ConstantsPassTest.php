@@ -47,6 +47,6 @@ class ConstantsPassTest extends TestCase
             ['ClassWithConstants' => ['FOO' => 'test']]
         );
         $code = $pass->apply(static::CODE, $config);
-        $this->assertTrue(\mb_strpos($code, "const FOO = 'test'") !== false);
+        $this->assertContains("const FOO = 'test'", $code);
     }
 }

@@ -23,7 +23,7 @@ use Throwable;
 /**
  * A TestSuite is a composite of Tests. It runs a collection of test cases.
  */
-class TestSuite implements IteratorAggregate, SelfDescribing, Test
+class TestSuite implements Test, SelfDescribing, IteratorAggregate
 {
     /**
      * Enable or disable the backup and restoration of the $GLOBALS array.
@@ -339,7 +339,7 @@ class TestSuite implements IteratorAggregate, SelfDescribing, Test
             $argumentsValid = true;
         } elseif (\is_string($theClass) &&
             $theClass !== '' &&
-            \class_exists($theClass, true)) {
+            \class_exists($theClass, false)) {
             $argumentsValid = true;
 
             if ($name == '') {
@@ -358,9 +358,9 @@ class TestSuite implements IteratorAggregate, SelfDescribing, Test
         }
 
         if (!$theClass->isSubclassOf(TestCase::class)) {
-            $this->setName($theClass);
-
-            return;
+            throw new Exception(
+                'Class "' . $theClass->name . '" does not extend PHPUnit\Framework\TestCase.'
+            );
         }
 
         if ($name != '') {
@@ -703,11 +703,13 @@ class TestSuite implements IteratorAggregate, SelfDescribing, Test
                     \call_user_func([$this->name, $beforeClassMethod]);
                 }
             }
-        } catch (SkippedTestSuiteError $error) {
-            foreach ($this->tests() as $test) {
-                $result->startTest($test);
-                $result->addFailure($test, $error, 0);
-                $result->endTest($test, 0);
+        } catch (SkippedTestSuiteError $e) {
+            $numTests = \count($this);
+
+            for ($i = 0; $i < $numTests; $i++) {
+                $result->startTest($this);
+                $result->addFailure($this, $e, 0);
+                $result->endTest($this, 0);
             }
 
             $this->tearDown();
@@ -715,14 +717,16 @@ class TestSuite implements IteratorAggregate, SelfDescribing, Test
 
             return $result;
         } catch (Throwable $t) {
-            foreach ($this->tests() as $test) {
+            $numTests = \count($this);
+
+            for ($i = 0; $i < $numTests; $i++) {
                 if ($result->shouldStop()) {
                     break;
                 }
 
-                $result->startTest($test);
-                $result->addError($test, $t, 0);
-                $result->endTest($test, 0);
+                $result->startTest($this);
+                $result->addError($this, $t, 0);
+                $result->endTest($this, 0);
             }
 
             $this->tearDown();
@@ -746,25 +750,10 @@ class TestSuite implements IteratorAggregate, SelfDescribing, Test
             $test->run($result);
         }
 
-        try {
-            foreach ($hookMethods['afterClass'] as $afterClassMethod) {
-                if ($this->testCase === true && \class_exists($this->name, false) && \method_exists(
-                    $this->name,
-                    $afterClassMethod
-                )) {
-                    \call_user_func([$this->name, $afterClassMethod]);
-                }
+        foreach ($hookMethods['afterClass'] as $afterClassMethod) {
+            if ($this->testCase === true && \class_exists($this->name, false) && \method_exists($this->name, $afterClassMethod)) {
+                \call_user_func([$this->name, $afterClassMethod]);
             }
-        } catch (Throwable $t) {
-            $message = "Exception in {$this->name}::$afterClassMethod" . \PHP_EOL . $t->getMessage();
-            $error   = new SyntheticError($message, 0, $t->getFile(), $t->getLine(), $t->getTrace());
-
-            $placeholderTest = clone $test;
-            $placeholderTest->setName($afterClassMethod);
-
-            $result->startTest($placeholderTest);
-            $result->addFailure($placeholderTest, $error, 0);
-            $result->endTest($placeholderTest, 0);
         }
 
         $this->tearDown();

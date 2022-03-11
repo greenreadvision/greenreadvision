@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
  */
 class BeforeAfterClassPidTest extends TestCase
 {
-    public const PID_VARIABLE = 'current_pid';
+    const PID_VARIABLE = 'current_pid';
 
     /**
      * @beforeClass

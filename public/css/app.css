@@ -28,6 +28,7 @@
     --danger: #e3342f;
     --light: #f8f9fa;
     --dark: #343a40;
+    --male:#4D80E6;
     --breakpoint-xs: 0;
     --breakpoint-sm: 576px;
     --breakpoint-md: 768px;
@@ -2832,6 +2833,7 @@ a.btn.disabled,
 fieldset:disabled a.btn {
     pointer-events: none
 }
+
 
 .btn-primary {
     color: #fff;
@@ -10527,3 +10529,4 @@ a.text-dark:hover {
     transition: opacity 0.3s;
     -webkit-transition: opacity 0.3s;
 }
+

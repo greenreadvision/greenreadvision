@@ -27,8 +27,6 @@ class PresetCommand extends Command
      * Execute the console command.
      *
      * @return void
-     *
-     * @throws \InvalidArgumentException
      */
     public function handle()
     {

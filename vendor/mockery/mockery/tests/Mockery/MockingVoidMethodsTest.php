@@ -28,7 +28,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class MockingVoidMethodsTest extends MockeryTestCase
 {
-    protected function mockeryTestSetUp()
+    protected function setUp()
     {
         require_once __DIR__."/Fixtures/MethodWithVoidReturnType.php";
     }

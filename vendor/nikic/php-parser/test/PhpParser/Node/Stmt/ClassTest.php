@@ -2,7 +2,9 @@
 
 namespace PhpParser\Node\Stmt;
 
-class ClassTest extends \PHPUnit\Framework\TestCase
+use PHPUnit\Framework\TestCase;
+
+class ClassTest extends TestCase
 {
     public function testIsAbstract() {
         $class = new Class_('Foo', ['type' => Class_::MODIFIER_ABSTRACT]);

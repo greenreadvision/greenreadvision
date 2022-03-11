@@ -22,7 +22,7 @@ class PendingCommand
     /**
      * The application instance.
      *
-     * @var \Illuminate\Contracts\Foundation\Application
+     * @var \Illuminate\Foundation\Application
      */
     protected $app;
 
@@ -58,7 +58,7 @@ class PendingCommand
      * Create a new pending console command run.
      *
      * @param  \PHPUnit\Framework\TestCase  $test
-     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     * @param  \Illuminate\Foundation\Application  $app
      * @param  string  $command
      * @param  array  $parameters
      * @return void
@@ -135,11 +135,9 @@ class PendingCommand
         try {
             $exitCode = $this->app[Kernel::class]->call($this->command, $this->parameters);
         } catch (NoMatchingExpectationException $e) {
-            if ($e->getMethodName() === 'askQuestion') {
+            if ($e->getMethodName() == 'askQuestion') {
                 $this->test->fail('Unexpected question "'.$e->getActualArguments()[0]->getQuestion().'" was asked.');
             }
-
-            throw $e;
         }
 
         if ($this->expectedExitCode !== null) {

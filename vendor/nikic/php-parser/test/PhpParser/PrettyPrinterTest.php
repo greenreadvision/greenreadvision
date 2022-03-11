@@ -12,6 +12,8 @@ use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt;
 use PhpParser\PrettyPrinter\Standard;
 
+require_once __DIR__ . '/CodeTestAbstract.php';
+
 class PrettyPrinterTest extends CodeTestAbstract
 {
     protected function doTestPrettyPrintMethod($method, $name, $code, $expected, $modeLine) {

@@ -26,12 +26,12 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class Mockery_AdhocTest extends MockeryTestCase
 {
-    public function mockeryTestSetUp()
+    public function setup()
     {
         $this->container = new \Mockery\Container(\Mockery::getDefaultGenerator(), \Mockery::getDefaultLoader());
     }
 
-    public function mockeryTestTearDown()
+    public function teardown()
     {
         $this->container->mockery_close();
     }

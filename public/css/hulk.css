@@ -1,0 +1,65 @@
+.buttons{
+    position: absolute;
+    padding:3vh;
+    font-size: 28px;
+}
+
+.male{
+    color:#000;
+    background-color: #4D80E6;
+    border: #4D80E6;
+    width:80%
+}
+
+.female{
+    color:#000;
+    background-color: #FF0000;
+    border: #FF0000;
+    width:80%
+}
+
+.male:hover{
+    background-color: #9db1da;
+    border:#9db1da;
+}
+
+.female:hover{
+    background-color: #d89c9c;
+    border: #d89c9c;
+}
+
+.area{
+    color: #000;
+    background-color: #79FF79;
+    border: #79FF79;
+}
+
+.area:hover{
+    background-color: #BBFFBB;
+    border: #BBFFBB;
+}
+
+.age{
+    color:#000;
+    background-color:#F9F900;
+    border:#F9F900;
+}
+
+.age:hover{
+    background-color:#FFFFB9;
+    border: #FFFFB9;
+}
+
+.containerr{
+    text-align:left;
+    margin:0 auto 0;
+    width:98%;
+    max-width:100vh;
+    min-width:500px;
+    height:50vh
+}
+
+.confirm-sel{
+    width: 50%;
+    font-size: large;
+}

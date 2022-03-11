@@ -21,7 +21,7 @@ use Symfony\Component\Console\Terminal;
  */
 class ConsoleSectionOutput extends StreamOutput
 {
-    private $content = [];
+    private $content = array();
     private $lines = 0;
     private $sections;
     private $terminal;
@@ -53,7 +53,7 @@ class ConsoleSectionOutput extends StreamOutput
             \array_splice($this->content, -($lines * 2)); // Multiply lines by 2 to cater for each new line added between content
         } else {
             $lines = $this->lines;
-            $this->content = [];
+            $this->content = array();
         }
 
         $this->lines -= $lines;
@@ -113,7 +113,7 @@ class ConsoleSectionOutput extends StreamOutput
     private function popStreamContentUntilCurrentSection(int $numberOfLinesToClearFromCurrentSection = 0): string
     {
         $numberOfLinesToClear = $numberOfLinesToClearFromCurrentSection;
-        $erasedContent = [];
+        $erasedContent = array();
 
         foreach ($this->sections as $section) {
             if ($section === $this) {

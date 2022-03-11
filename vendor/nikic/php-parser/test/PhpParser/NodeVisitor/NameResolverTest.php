@@ -7,15 +7,16 @@ use PhpParser\Node;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt;
+use PHPUnit\Framework\TestCase;
 
-class NameResolverTest extends \PHPUnit\Framework\TestCase
+class NameResolverTest extends TestCase
 {
     private function canonicalize($string) {
         return str_replace("\r\n", "\n", $string);
     }
 
     /**
-     * @covers \PhpParser\NodeVisitor\NameResolver
+     * @covers PhpParser\NodeVisitor\NameResolver
      */
     public function testResolveNames() {
         $code = <<<'EOC'
@@ -94,13 +95,6 @@ namespace Baz {
     C;
     E;
     K;
-
-    class ClassWithTypeProperties
-    {
-        public float $php = 7.4;
-        public ?Foo $person;
-        protected static ?bool $probability;
-    }
 }
 EOC;
         $expectedCode = <<<'EOC'
@@ -169,12 +163,6 @@ namespace Baz {
     \Y\T\B\C;
     \Y\T\D\E;
     \Z\T\K;
-    class ClassWithTypeProperties
-    {
-        public float $php = 7.4;
-        public ?\Baz\Foo $person;
-        protected static ?bool $probability;
-    }
 }
 EOC;
 
@@ -193,7 +181,7 @@ EOC;
     }
 
     /**
-     * @covers \PhpParser\NodeVisitor\NameResolver
+     * @covers PhpParser\NodeVisitor\NameResolver
      */
     public function testResolveLocations() {
         $code = <<<'EOC'
@@ -212,8 +200,8 @@ interface A extends C, D {
     public function a(A $a) : A;
 }
 
-function f(A $a) : A {}
-function f2(array $a) : array {}
+function fn(A $a) : A {}
+function fn2(array $a) : array {}
 function(A $a) : A {};
 
 function fn3(?A $a) : ?A {}
@@ -249,10 +237,10 @@ interface A extends \NS\C, \NS\D
 {
     public function a(\NS\A $a) : \NS\A;
 }
-function f(\NS\A $a) : \NS\A
+function fn(\NS\A $a) : \NS\A
 {
 }
-function f2(array $a) : array
+function fn2(array $a) : array
 {
 }
 function (\NS\A $a) : \NS\A {

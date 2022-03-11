@@ -97,7 +97,6 @@ class PrettyPageHandler extends Handler
         "idea"     => "idea://open?file=%file&line=%line",
         "vscode"   => "vscode://file/%file:%line",
         "atom"     => "atom://core/open/file?filename=%file&line=%line",
-        "espresso" => "x-espresso://open?filepath=%file&lines=%line",
     ];
 
     /**
@@ -392,7 +391,7 @@ class PrettyPageHandler extends Handler
      *       return "http://stackoverflow.com";
      *   });
      * @param string $identifier
-     * @param string|callable $resolver
+     * @param string $resolver
      */
     public function addEditor($identifier, $resolver)
     {
@@ -705,7 +704,7 @@ class PrettyPageHandler extends Handler
 
         $values = $superGlobal;
         foreach ($blacklisted as $key) {
-            if (isset($superGlobal[$key]) && is_string($superGlobal[$key])) {
+            if (isset($superGlobal[$key])) {
                 $values[$key] = str_repeat('*', strlen($superGlobal[$key]));
             }
         }

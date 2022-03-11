@@ -63,7 +63,7 @@ class SymfonyStyle extends OutputStyle
      */
     public function block($messages, $type = null, $style = null, $prefix = ' ', $padding = false, $escape = true)
     {
-        $messages = \is_array($messages) ? array_values($messages) : [$messages];
+        $messages = \is_array($messages) ? array_values($messages) : array($messages);
 
         $this->autoPrependBlock();
         $this->writeln($this->createBlock($messages, $type, $style, $prefix, $padding, $escape));
@@ -76,10 +76,10 @@ class SymfonyStyle extends OutputStyle
     public function title($message)
     {
         $this->autoPrependBlock();
-        $this->writeln([
+        $this->writeln(array(
             sprintf('<comment>%s</>', OutputFormatter::escapeTrailingBackslash($message)),
             sprintf('<comment>%s</>', str_repeat('=', Helper::strlenWithoutDecoration($this->getFormatter(), $message))),
-        ]);
+        ));
         $this->newLine();
     }
 
@@ -89,10 +89,10 @@ class SymfonyStyle extends OutputStyle
     public function section($message)
     {
         $this->autoPrependBlock();
-        $this->writeln([
+        $this->writeln(array(
             sprintf('<comment>%s</>', OutputFormatter::escapeTrailingBackslash($message)),
             sprintf('<comment>%s</>', str_repeat('-', Helper::strlenWithoutDecoration($this->getFormatter(), $message))),
-        ]);
+        ));
         $this->newLine();
     }
 
@@ -117,7 +117,7 @@ class SymfonyStyle extends OutputStyle
     {
         $this->autoPrependText();
 
-        $messages = \is_array($message) ? array_values($message) : [$message];
+        $messages = \is_array($message) ? array_values($message) : array($message);
         foreach ($messages as $message) {
             $this->writeln(sprintf(' %s', $message));
         }
@@ -154,7 +154,7 @@ class SymfonyStyle extends OutputStyle
      */
     public function warning($message)
     {
-        $this->block($message, 'WARNING', 'fg=black;bg=yellow', ' ', true);
+        $this->block($message, 'WARNING', 'fg=white;bg=red', ' ', true);
     }
 
     /**
@@ -307,7 +307,7 @@ class SymfonyStyle extends OutputStyle
     public function writeln($messages, $type = self::OUTPUT_NORMAL)
     {
         if (!is_iterable($messages)) {
-            $messages = [$messages];
+            $messages = array($messages);
         }
 
         foreach ($messages as $message) {
@@ -322,7 +322,7 @@ class SymfonyStyle extends OutputStyle
     public function write($messages, $newline = false, $type = self::OUTPUT_NORMAL)
     {
         if (!is_iterable($messages)) {
-            $messages = [$messages];
+            $messages = array($messages);
         }
 
         foreach ($messages as $message) {
@@ -392,7 +392,7 @@ class SymfonyStyle extends OutputStyle
     {
         $indentLength = 0;
         $prefixLength = Helper::strlenWithoutDecoration($this->getFormatter(), $prefix);
-        $lines = [];
+        $lines = array();
 
         if (null !== $type) {
             $type = sprintf('[%s] ', $type);

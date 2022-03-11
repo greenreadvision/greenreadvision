@@ -168,11 +168,10 @@ class XmlFileLoader extends FileLoader
 
         $this->setCurrentDir(\dirname($path));
 
-        /** @var RouteCollection[] $imported */
         $imported = $this->import($resource, ('' !== $type ? $type : null), false, $file);
 
         if (!\is_array($imported)) {
-            $imported = [$imported];
+            $imported = array($imported);
         }
 
         foreach ($imported as $subCollection) {
@@ -262,14 +261,13 @@ class XmlFileLoader extends FileLoader
      */
     private function parseConfigs(\DOMElement $node, $path)
     {
-        $defaults = [];
-        $requirements = [];
-        $options = [];
+        $defaults = array();
+        $requirements = array();
+        $options = array();
         $condition = null;
-        $prefixes = [];
-        $paths = [];
+        $prefixes = array();
+        $paths = array();
 
-        /** @var \DOMElement $n */
         foreach ($node->getElementsByTagNameNS(self::NAMESPACE_URI, '*') as $n) {
             if ($node !== $n->parentNode) {
                 continue;
@@ -294,7 +292,7 @@ class XmlFileLoader extends FileLoader
                     $requirements[$n->getAttribute('key')] = trim($n->textContent);
                     break;
                 case 'option':
-                    $options[$n->getAttribute('key')] = XmlUtils::phpize(trim($n->textContent));
+                    $options[$n->getAttribute('key')] = trim($n->textContent);
                     break;
                 case 'condition':
                     $condition = trim($n->textContent);
@@ -313,17 +311,8 @@ class XmlFileLoader extends FileLoader
 
             $defaults['_controller'] = $controller;
         }
-        if ($node->hasAttribute('locale')) {
-            $defaults['_locale'] = $node->getAttribute('locale');
-        }
-        if ($node->hasAttribute('format')) {
-            $defaults['_format'] = $node->getAttribute('format');
-        }
-        if ($node->hasAttribute('utf8')) {
-            $options['utf8'] = XmlUtils::phpize($node->getAttribute('utf8'));
-        }
 
-        return [$defaults, $requirements, $options, $condition, $paths, $prefixes];
+        return array($defaults, $requirements, $options, $condition, $paths, $prefixes);
     }
 
     /**
@@ -387,7 +376,7 @@ class XmlFileLoader extends FileLoader
             case 'string':
                 return trim($node->nodeValue);
             case 'list':
-                $list = [];
+                $list = array();
 
                 foreach ($node->childNodes as $element) {
                     if (!$element instanceof \DOMElement) {
@@ -403,7 +392,7 @@ class XmlFileLoader extends FileLoader
 
                 return $list;
             case 'map':
-                $map = [];
+                $map = array();
 
                 foreach ($node->childNodes as $element) {
                     if (!$element instanceof \DOMElement) {

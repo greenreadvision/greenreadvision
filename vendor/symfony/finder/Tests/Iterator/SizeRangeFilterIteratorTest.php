@@ -30,19 +30,18 @@ class SizeRangeFilterIteratorTest extends RealIteratorTestCase
 
     public function getAcceptData()
     {
-        $lessThan1KGreaterThan05K = [
+        $lessThan1KGreaterThan05K = array(
             '.foo',
             '.git',
             'foo',
-            'qux',
             'test.php',
             'toto',
             'toto/.git',
-        ];
+        );
 
-        return [
-            [[new NumberComparator('< 1K'), new NumberComparator('> 0.5K')], $this->toAbsolute($lessThan1KGreaterThan05K)],
-        ];
+        return array(
+            array(array(new NumberComparator('< 1K'), new NumberComparator('> 0.5K')), $this->toAbsolute($lessThan1KGreaterThan05K)),
+        );
     }
 }
 

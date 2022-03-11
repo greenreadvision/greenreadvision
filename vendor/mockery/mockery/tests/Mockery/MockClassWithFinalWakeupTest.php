@@ -25,12 +25,12 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 class MockClassWithFinalWakeupTest extends MockeryTestCase
 {
-    protected function mockeryTestSetUp()
+    protected function setUp()
     {
         $this->container = new \Mockery\Container;
     }
 
-    protected function mockeryTestTearDown()
+    protected function tearDown()
     {
         $this->container->mockery_close();
     }

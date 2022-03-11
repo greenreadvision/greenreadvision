@@ -29,7 +29,7 @@ final class Run implements RunInterface
     /**
      * @var HandlerInterface[]
      */
-    private $handlerQueue = [];
+    private $handlerStack = [];
 
     private $silencedPatterns = [];
 
@@ -41,52 +41,13 @@ final class Run implements RunInterface
     }
 
     /**
-     * Prepends a handler to the start of the queue
+     * Pushes a handler to the end of the stack
      *
      * @throws InvalidArgumentException  If argument is not callable or instance of HandlerInterface
      * @param  Callable|HandlerInterface $handler
      * @return Run
-     * @deprecated use appendHandler and prependHandler instead
      */
     public function pushHandler($handler)
-    {
-        return $this->prependHandler($handler);
-    }
-
-    /**
-     * Appends a handler to the end of the queue
-     *
-     * @throws InvalidArgumentException  If argument is not callable or instance of HandlerInterface
-     * @param  Callable|HandlerInterface $handler
-     * @return Run
-     */
-    public function appendHandler($handler)
-    {
-        array_push($this->handlerQueue, $this->resolveHandler($handler));
-        return $this;
-    }
-
-    /**
-     * Prepends a handler to the start of the queue
-     *
-     * @throws InvalidArgumentException  If argument is not callable or instance of HandlerInterface
-     * @param  Callable|HandlerInterface $handler
-     * @return Run
-     */
-    public function prependHandler($handler)
-    {
-        array_unshift($this->handlerQueue, $this->resolveHandler($handler));
-        return $this;
-    }
-
-    /**
-     * Create a CallbackHandler from callable and throw if handler is invalid
-     *
-     * @throws InvalidArgumentException  If argument is not callable or instance of HandlerInterface
-     * @param Callable|HandlerInterface $handler
-     * @return HandlerInterface
-     */
-    private function resolveHandler($handler)
     {
         if (is_callable($handler)) {
             $handler = new CallbackHandler($handler);
@@ -94,52 +55,43 @@ final class Run implements RunInterface
 
         if (!$handler instanceof HandlerInterface) {
             throw new InvalidArgumentException(
-                "Argument to " . __METHOD__ . " must be a callable, or instance of "
+                  "Argument to " . __METHOD__ . " must be a callable, or instance of "
                 . "Whoops\\Handler\\HandlerInterface"
             );
         }
 
-        return $handler;
+        $this->handlerStack[] = $handler;
+        return $this;
     }
 
     /**
-     * Removes the last handler in the queue and returns it.
+     * Removes the last handler in the stack and returns it.
      * Returns null if there"s nothing else to pop.
      * @return null|HandlerInterface
      */
     public function popHandler()
     {
-        return array_pop($this->handlerQueue);
-    }
-
-    /**
-     * Removes the first handler in the queue and returns it.
-     * Returns null if there"s nothing else to shift.
-     * @return null|HandlerInterface
-     */
-    public function shiftHandler()
-    {
-        return array_shift($this->handlerQueue);
+        return array_pop($this->handlerStack);
     }
 
     /**
      * Returns an array with all handlers, in the
-     * order they were added to the queue.
+     * order they were added to the stack.
      * @return array
      */
     public function getHandlers()
     {
-        return $this->handlerQueue;
+        return $this->handlerStack;
     }
 
     /**
-     * Clears all handlers in the handlerQueue, including
+     * Clears all handlers in the handlerStack, including
      * the default PrettyPage handler.
      * @return Run
      */
     public function clearHandlers()
     {
-        $this->handlerQueue = [];
+        $this->handlerStack = [];
         return $this;
     }
 
@@ -308,7 +260,7 @@ final class Run implements RunInterface
         $handlerResponse = null;
         $handlerContentType = null;
 
-        foreach ($this->handlerQueue as $handler) {
+        foreach (array_reverse($this->handlerStack) as $handler) {
             $handler->setRun($this);
             $handler->setInspector($inspector);
             $handler->setException($exception);
@@ -423,7 +375,6 @@ final class Run implements RunInterface
         if ($error && Misc::isLevelFatal($error['type'])) {
             // If there was a fatal error,
             // it was not handled in handleError yet.
-            $this->allowQuit = false;
             $this->handleError(
                 $error['type'],
                 $error['message'],

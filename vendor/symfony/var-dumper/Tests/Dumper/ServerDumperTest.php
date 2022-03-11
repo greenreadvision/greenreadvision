@@ -44,14 +44,14 @@ class ServerDumperTest extends TestCase
 
         $cloner = new VarCloner();
         $data = $cloner->cloneVar('foo');
-        $dumper = new ServerDumper(self::VAR_DUMPER_SERVER, $wrappedDumper, [
+        $dumper = new ServerDumper(self::VAR_DUMPER_SERVER, $wrappedDumper, array(
             'foo_provider' => new class() implements ContextProviderInterface {
                 public function getContext(): ?array
                 {
-                    return ['foo'];
+                    return array('foo');
                 }
             },
-        ]);
+        ));
 
         $dumped = null;
         $process = $this->getServerProcess();
@@ -84,10 +84,10 @@ DUMP
 
     private function getServerProcess(): Process
     {
-        $process = new PhpProcess(file_get_contents(__DIR__.'/../Fixtures/dump_server.php'), null, [
+        $process = new PhpProcess(file_get_contents(__DIR__.'/../Fixtures/dump_server.php'), null, array(
             'COMPONENT_ROOT' => __DIR__.'/../../',
             'VAR_DUMPER_SERVER' => self::VAR_DUMPER_SERVER,
-        ]);
+        ));
         $process->inheritEnvironmentVariables(true);
 
         return $process->setTimeout(9);

@@ -9,7 +9,7 @@
  */
 namespace PHPUnit\Runner;
 
-final class ResultCacheExtension implements AfterIncompleteTestHook, AfterLastTestHook, AfterRiskyTestHook, AfterSkippedTestHook, AfterSuccessfulTestHook, AfterTestErrorHook, AfterTestFailureHook, AfterTestWarningHook
+final class ResultCacheExtension implements AfterSuccessfulTestHook, AfterSkippedTestHook, AfterRiskyTestHook, AfterIncompleteTestHook, AfterTestErrorHook, AfterTestWarningHook, AfterTestFailureHook, AfterLastTestHook
 {
     /**
      * @var TestResultCacheInterface
@@ -95,8 +95,8 @@ final class ResultCacheExtension implements AfterIncompleteTestHook, AfterLastTe
     {
         $matches = [];
 
-        if (\preg_match('/^(?<name>\S+::\S+)(?:(?<dataname> with data set (?:#\d+|"[^"]+"))\s\()?/', $test, $matches)) {
-            $test = $matches['name'] . ($matches['dataname'] ?? '');
+        if (\preg_match('/^(?:\S+::)?(?<name>\S+)(?:(?<data> with data set (?:#\d+|"[^"]+"))\s\()?/', $test, $matches)) {
+            $test = $matches['name'] . ($matches['data'] ?? '');
         }
 
         return $test;

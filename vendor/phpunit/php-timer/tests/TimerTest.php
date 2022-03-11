@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 /*
  * This file is part of phpunit/php-timer.
  *
@@ -7,6 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace SebastianBergmann\Timer;
 
 use PHPUnit\Framework\TestCase;
@@ -14,34 +15,48 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \SebastianBergmann\Timer\Timer
  */
-final class TimerTest extends TestCase
+class TimerTest extends TestCase
 {
-    public function testCanBeStartedAndStopped(): void
+    public function testStartStop(): void
     {
-        $this->assertIsFloat(Timer::stop());
-    }
-
-    public function testCanFormatTimeSinceStartOfRequest(): void
-    {
-        $this->assertStringMatchesFormat('%f %s', Timer::timeSinceStartOfRequest());
+        $this->assertInternalType('float', Timer::stop());
     }
 
     /**
-     * @backupGlobals enabled
+     * @dataProvider secondsProvider
      */
-    public function testCanFormatSinceStartOfRequestWhenRequestTimeIsNotAvailableAsFloat(): void
+    public function testSecondsToTimeString(string $string, string $seconds): void
+    {
+        $this->assertEquals(
+            $string,
+            Timer::secondsToTimeString($seconds)
+        );
+    }
+
+    public function testTimeSinceStartOfRequest(): void
+    {
+        $this->assertStringMatchesFormat(
+            '%f %s',
+            Timer::timeSinceStartOfRequest()
+        );
+    }
+
+    public function testTimeSinceStartOfRequest2(): void
     {
         if (isset($_SERVER['REQUEST_TIME_FLOAT'])) {
             unset($_SERVER['REQUEST_TIME_FLOAT']);
         }
 
-        $this->assertStringMatchesFormat('%f %s', Timer::timeSinceStartOfRequest());
+        $this->assertStringMatchesFormat(
+            '%f %s',
+            Timer::timeSinceStartOfRequest()
+        );
     }
 
     /**
-     * @backupGlobals enabled
+     * @backupGlobals     enabled
      */
-    public function testCannotFormatTimeSinceStartOfRequestWhenRequestTimeIsNotAvailable(): void
+    public function testTimeSinceStartOfRequest3(): void
     {
         if (isset($_SERVER['REQUEST_TIME_FLOAT'])) {
             unset($_SERVER['REQUEST_TIME_FLOAT']);
@@ -56,20 +71,15 @@ final class TimerTest extends TestCase
         Timer::timeSinceStartOfRequest();
     }
 
-    public function testCanFormatResourceUsage(): void
+    public function testResourceUsage(): void
     {
-        $this->assertStringMatchesFormat('Time: %s, Memory: %f %s', Timer::resourceUsage());
+        $this->assertStringMatchesFormat(
+            'Time: %s, Memory: %fMB',
+            Timer::resourceUsage()
+        );
     }
 
-    /**
-     * @dataProvider secondsProvider
-     */
-    public function testCanFormatSecondsAsString(string $string, float $seconds): void
-    {
-        $this->assertEquals($string, Timer::secondsToTimeString($seconds));
-    }
-
-    public function secondsProvider(): array
+    public function secondsProvider()
     {
         return [
             ['0 ms', 0],
@@ -106,29 +116,6 @@ final class TimerTest extends TestCase
             ['1.01 hours', 3659.001],
             ['1.01 hours', 3659.01],
             ['2 hours', 7199.9999],
-        ];
-    }
-
-    /**
-     * @dataProvider bytesProvider
-     */
-    public function testCanFormatBytesAsString(string $string, float $bytes): void
-    {
-        $this->assertEquals($string, Timer::bytesToString($bytes));
-    }
-
-    public function bytesProvider(): array
-    {
-        return [
-            ['0 bytes', 0],
-            ['1 byte', 1],
-            ['1023 bytes', 1023],
-            ['1.00 KB', 1024],
-            ['1.50 KB', 1.5 * 1024],
-            ['2.00 MB', 2 * 1048576],
-            ['2.50 MB', 2.5 * 1048576],
-            ['3.00 GB', 3 * 1073741824],
-            ['3.50 GB', 3.5 * 1073741824],
         ];
     }
 }

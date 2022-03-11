@@ -40,7 +40,7 @@ class ClassNotFoundFatalErrorHandler implements FatalErrorHandlerInterface
             return;
         }
 
-        foreach (['class', 'interface', 'trait'] as $typeName) {
+        foreach (array('class', 'interface', 'trait') as $typeName) {
             $prefix = ucfirst($typeName).' \'';
             $prefixLen = \strlen($prefix);
             if (0 !== strpos($error['message'], $prefix)) {
@@ -86,11 +86,11 @@ class ClassNotFoundFatalErrorHandler implements FatalErrorHandlerInterface
     private function getClassCandidates(string $class): array
     {
         if (!\is_array($functions = spl_autoload_functions())) {
-            return [];
+            return array();
         }
 
         // find Symfony and Composer autoloaders
-        $classes = [];
+        $classes = array();
 
         foreach ($functions as $function) {
             if (!\is_array($function)) {
@@ -127,10 +127,10 @@ class ClassNotFoundFatalErrorHandler implements FatalErrorHandlerInterface
     private function findClassInPath(string $path, string $class, string $prefix): array
     {
         if (!$path = realpath($path.'/'.strtr($prefix, '\\_', '//')) ?: realpath($path.'/'.\dirname(strtr($prefix, '\\_', '//'))) ?: realpath($path)) {
-            return [];
+            return array();
         }
 
-        $classes = [];
+        $classes = array();
         $filename = $class.'.php';
         foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS), \RecursiveIteratorIterator::LEAVES_ONLY) as $file) {
             if ($filename == $file->getFileName() && $class = $this->convertFileToClass($path, $file->getPathName(), $prefix)) {
@@ -143,9 +143,9 @@ class ClassNotFoundFatalErrorHandler implements FatalErrorHandlerInterface
 
     private function convertFileToClass(string $path, string $file, string $prefix): ?string
     {
-        $candidates = [
+        $candidates = array(
             // namespaced class
-            $namespacedClass = str_replace([$path.\DIRECTORY_SEPARATOR, '.php', '/'], ['', '', '\\'], $file),
+            $namespacedClass = str_replace(array($path.\DIRECTORY_SEPARATOR, '.php', '/'), array('', '', '\\'), $file),
             // namespaced class (with target dir)
             $prefix.$namespacedClass,
             // namespaced class (with target dir and separator)
@@ -156,7 +156,7 @@ class ClassNotFoundFatalErrorHandler implements FatalErrorHandlerInterface
             str_replace('\\', '_', $prefix.$namespacedClass),
             // PEAR class (with target dir and separator)
             str_replace('\\', '_', $prefix.'\\'.$namespacedClass),
-        ];
+        );
 
         if ($prefix) {
             $candidates = array_filter($candidates, function ($candidate) use ($prefix) { return 0 === strpos($candidate, $prefix); });
@@ -171,11 +171,7 @@ class ClassNotFoundFatalErrorHandler implements FatalErrorHandlerInterface
             }
         }
 
-        try {
-            require_once $file;
-        } catch (\Throwable $e) {
-            return null;
-        }
+        require_once $file;
 
         foreach ($candidates as $candidate) {
             if ($this->classExists($candidate)) {

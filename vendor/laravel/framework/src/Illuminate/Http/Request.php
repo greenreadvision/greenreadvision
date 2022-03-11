@@ -108,7 +108,7 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
     {
         $query = $this->getQueryString();
 
-        $question = $this->getBaseUrl().$this->getPathInfo() === '/' ? '/?' : '?';
+        $question = $this->getBaseUrl().$this->getPathInfo() == '/' ? '/?' : '?';
 
         return $query ? $this->url().$question.$query : $this->url();
     }
@@ -121,7 +121,7 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
      */
     public function fullUrlWithQuery(array $query)
     {
-        $question = $this->getBaseUrl().$this->getPathInfo() === '/' ? '/?' : '?';
+        $question = $this->getBaseUrl().$this->getPathInfo() == '/' ? '/?' : '?';
 
         return count($this->query()) > 0
             ? $this->url().$question.Arr::query(array_merge($this->query(), $query))
@@ -179,15 +179,13 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
     /**
      * Determine if the current request URI matches a pattern.
      *
-     * @param  mixed  ...$patterns
+     * @param  dynamic  $patterns
      * @return bool
      */
     public function is(...$patterns)
     {
-        $path = $this->decodedPath();
-
         foreach ($patterns as $pattern) {
-            if (Str::is($pattern, $path)) {
+            if (Str::is($pattern, $this->decodedPath())) {
                 return true;
             }
         }
@@ -198,7 +196,7 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
     /**
      * Determine if the route name matches a given pattern.
      *
-     * @param  mixed  ...$patterns
+     * @param  dynamic  $patterns
      * @return bool
      */
     public function routeIs(...$patterns)
@@ -209,7 +207,7 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
     /**
      * Determine if the current request URL and query string matches a pattern.
      *
-     * @param  mixed  ...$patterns
+     * @param  dynamic  $patterns
      * @return bool
      */
     public function fullUrlIs(...$patterns)
@@ -246,17 +244,6 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
     }
 
     /**
-     * Determine if the request is the result of an prefetch call.
-     *
-     * @return bool
-     */
-    public function prefetch()
-    {
-        return strcasecmp($this->server->get('HTTP_X_MOZ'), 'prefetch') === 0 ||
-               strcasecmp($this->headers->get('Purpose'), 'prefetch') === 0;
-    }
-
-    /**
      * Determine if the request is over HTTPS.
      *
      * @return bool
@@ -269,7 +256,7 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
     /**
      * Get the client IP address.
      *
-     * @return string|null
+     * @return string
      */
     public function ip()
     {
@@ -300,7 +287,7 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
      * Merge new input into the current request's input array.
      *
      * @param  array  $input
-     * @return $this
+     * @return \Illuminate\Http\Request
      */
     public function merge(array $input)
     {
@@ -313,7 +300,7 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
      * Replace the input for the current request.
      *
      * @param  array  $input
-     * @return $this
+     * @return \Illuminate\Http\Request
      */
     public function replace(array $input)
     {
@@ -339,7 +326,7 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
     /**
      * Get the JSON payload for the request.
      *
-     * @param  string|null  $key
+     * @param  string  $key
      * @param  mixed   $default
      * @return \Symfony\Component\HttpFoundation\ParameterBag|mixed
      */
@@ -395,8 +382,6 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
             $from->getContent()
         );
 
-        $request->headers->replace($from->headers->all());
-
         $request->setJson($from->json());
 
         if ($session = $from->getSession()) {
@@ -414,7 +399,7 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
      * Create an Illuminate request from a Symfony instance.
      *
      * @param  \Symfony\Component\HttpFoundation\Request  $request
-     * @return static
+     * @return \Illuminate\Http\Request
      */
     public static function createFromBase(SymfonyRequest $request)
     {
@@ -424,18 +409,16 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
 
         $content = $request->content;
 
-        $newRequest = (new static)->duplicate(
+        $request = (new static)->duplicate(
             $request->query->all(), $request->request->all(), $request->attributes->all(),
             $request->cookies->all(), $request->files->all(), $request->server->all()
         );
 
-        $newRequest->headers->replace($request->headers->all());
+        $request->content = $content;
 
-        $newRequest->content = $content;
+        $request->request = $request->getInputSource();
 
-        $newRequest->request = $newRequest->getInputSource();
-
-        return $newRequest;
+        return $request;
     }
 
     /**

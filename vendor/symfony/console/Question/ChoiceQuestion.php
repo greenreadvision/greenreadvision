@@ -139,12 +139,12 @@ class ChoiceQuestion extends Question
                 }
                 $selectedChoices = explode(',', $selectedChoices);
             } else {
-                $selectedChoices = [$selected];
+                $selectedChoices = array($selected);
             }
 
-            $multiselectChoices = [];
+            $multiselectChoices = array();
             foreach ($selectedChoices as $value) {
-                $results = [];
+                $results = array();
                 foreach ($choices as $key => $choice) {
                     if ($choice === $value) {
                         $results[] = $key;

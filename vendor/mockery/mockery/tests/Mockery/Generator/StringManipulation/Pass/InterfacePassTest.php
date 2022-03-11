@@ -61,6 +61,6 @@ class InterfacePassTest extends TestCase
 
         $code = $pass->apply(static::CODE, $config);
 
-        $this->assertTrue(\mb_strpos($code, "implements MockInterface, \Dave\Dave, \Paddy\Paddy") !== false);
+        $this->assertContains("implements MockInterface, \Dave\Dave, \Paddy\Paddy", $code);
     }
 }

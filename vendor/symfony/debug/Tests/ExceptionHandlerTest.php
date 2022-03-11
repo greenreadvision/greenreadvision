@@ -48,17 +48,8 @@ class ExceptionHandlerTest extends TestCase
         $handler->sendPhpResponse(new \RuntimeException('Foo'));
         $response = ob_get_clean();
 
-        $this->assertContains('<h1 class="break-long-words exception-message">Foo</h1>', $response);
+        $this->assertContains('Whoops, looks like something went wrong.', $response);
         $this->assertContains('<div class="trace trace-as-html">', $response);
-
-        // taken from https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
-        $htmlWithXss = '<body onload=alert(\'test1\')> <b onmouseover=alert(\'Wufff!\')>click me!</b> <img src="j&#X41vascript:alert(\'test2\')"> <meta http-equiv="refresh"
-content="0;url=data:text/html;base64,PHNjcmlwdD5hbGVydCgndGVzdDMnKTwvc2NyaXB0Pg">';
-        ob_start();
-        $handler->sendPhpResponse(new \RuntimeException($htmlWithXss));
-        $response = ob_get_clean();
-
-        $this->assertContains(sprintf('<h1 class="break-long-words exception-message">%s</h1>', htmlspecialchars($htmlWithXss, ENT_COMPAT | ENT_SUBSTITUTE, 'UTF-8')), $response);
     }
 
     public function testStatusCode()
@@ -71,10 +62,10 @@ content="0;url=data:text/html;base64,PHNjcmlwdD5hbGVydCgndGVzdDMnKTwvc2NyaXB0Pg"
 
         $this->assertContains('Sorry, the page you are looking for could not be found.', $response);
 
-        $expectedHeaders = [
-            ['HTTP/1.0 404', true, null],
-            ['Content-Type: text/html; charset=iso8859-1', true, null],
-        ];
+        $expectedHeaders = array(
+            array('HTTP/1.0 404', true, null),
+            array('Content-Type: text/html; charset=iso8859-1', true, null),
+        );
 
         $this->assertSame($expectedHeaders, testHeader());
     }
@@ -84,14 +75,14 @@ content="0;url=data:text/html;base64,PHNjcmlwdD5hbGVydCgndGVzdDMnKTwvc2NyaXB0Pg"
         $handler = new ExceptionHandler(false, 'iso8859-1');
 
         ob_start();
-        $handler->sendPhpResponse(new MethodNotAllowedHttpException(['POST']));
+        $handler->sendPhpResponse(new MethodNotAllowedHttpException(array('POST')));
         $response = ob_get_clean();
 
-        $expectedHeaders = [
-            ['HTTP/1.0 405', true, null],
-            ['Allow: POST', false, null],
-            ['Content-Type: text/html; charset=iso8859-1', true, null],
-        ];
+        $expectedHeaders = array(
+            array('HTTP/1.0 405', true, null),
+            array('Allow: POST', false, null),
+            array('Content-Type: text/html; charset=iso8859-1', true, null),
+        );
 
         $this->assertSame($expectedHeaders, testHeader());
     }
@@ -110,7 +101,7 @@ content="0;url=data:text/html;base64,PHNjcmlwdD5hbGVydCgndGVzdDMnKTwvc2NyaXB0Pg"
     {
         $exception = new \Exception('foo');
 
-        $handler = $this->getMockBuilder('Symfony\Component\Debug\ExceptionHandler')->setMethods(['sendPhpResponse'])->getMock();
+        $handler = $this->getMockBuilder('Symfony\Component\Debug\ExceptionHandler')->setMethods(array('sendPhpResponse'))->getMock();
         $handler
             ->expects($this->exactly(2))
             ->method('sendPhpResponse');
@@ -128,7 +119,7 @@ content="0;url=data:text/html;base64,PHNjcmlwdD5hbGVydCgndGVzdDMnKTwvc2NyaXB0Pg"
     {
         $exception = new OutOfMemoryException('foo', 0, E_ERROR, __FILE__, __LINE__);
 
-        $handler = $this->getMockBuilder('Symfony\Component\Debug\ExceptionHandler')->setMethods(['sendPhpResponse'])->getMock();
+        $handler = $this->getMockBuilder('Symfony\Component\Debug\ExceptionHandler')->setMethods(array('sendPhpResponse'))->getMock();
         $handler
             ->expects($this->once())
             ->method('sendPhpResponse');

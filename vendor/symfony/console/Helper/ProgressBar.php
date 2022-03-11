@@ -39,7 +39,7 @@ final class ProgressBar
     private $stepWidth;
     private $percent = 0.0;
     private $formatLineCount;
-    private $messages = [];
+    private $messages = array();
     private $overwrite = true;
     private $terminal;
     private $firstRun = true;
@@ -244,24 +244,6 @@ final class ProgressBar
     }
 
     /**
-     * Returns an iterator that will automatically update the progress bar when iterated.
-     *
-     * @param int|null $max Number of steps to complete the bar (0 if indeterminate), if null it will be inferred from $iterable
-     */
-    public function iterate(iterable $iterable, ?int $max = null): iterable
-    {
-        $this->start($max ?? (\is_countable($iterable) ? \count($iterable) : 0));
-
-        foreach ($iterable as $key => $value) {
-            yield $key => $value;
-
-            $this->advance();
-        }
-
-        $this->finish();
-    }
-
-    /**
      * Starts the progress output.
      *
      * @param int|null $max Number of steps to complete the bar (0 if indeterminate), null to leave unchanged
@@ -399,17 +381,20 @@ final class ProgressBar
                     $lines = floor(Helper::strlen($message) / $this->terminal->getWidth()) + $this->formatLineCount + 1;
                     $this->output->clear($lines);
                 } else {
+                    // Move the cursor to the beginning of the line
+                    $this->output->write("\x0D");
+
+                    // Erase the line
+                    $this->output->write("\x1B[2K");
+
                     // Erase previous lines
                     if ($this->formatLineCount > 0) {
-                        $message = str_repeat("\x1B[1A\x1B[2K", $this->formatLineCount).$message;
+                        $this->output->write(str_repeat("\x1B[1A\x1B[2K", $this->formatLineCount));
                     }
-
-                    // Move the cursor to the beginning of the line and erase the line
-                    $message = "\x0D\x1B[2K$message";
                 }
             }
         } elseif ($this->step > 0) {
-            $message = PHP_EOL.$message;
+            $this->output->writeln('');
         }
 
         $this->firstRun = false;
@@ -434,8 +419,8 @@ final class ProgressBar
 
     private static function initPlaceholderFormatters(): array
     {
-        return [
-            'bar' => function (self $bar, OutputInterface $output) {
+        return array(
+            'bar' => function (ProgressBar $bar, OutputInterface $output) {
                 $completeBars = floor($bar->getMaxSteps() > 0 ? $bar->getProgressPercent() * $bar->getBarWidth() : $bar->getProgress() % $bar->getBarWidth());
                 $display = str_repeat($bar->getBarCharacter(), $completeBars);
                 if ($completeBars < $bar->getBarWidth()) {
@@ -445,10 +430,10 @@ final class ProgressBar
 
                 return $display;
             },
-            'elapsed' => function (self $bar) {
+            'elapsed' => function (ProgressBar $bar) {
                 return Helper::formatTime(time() - $bar->getStartTime());
             },
-            'remaining' => function (self $bar) {
+            'remaining' => function (ProgressBar $bar) {
                 if (!$bar->getMaxSteps()) {
                     throw new LogicException('Unable to display the remaining time if the maximum number of steps is not set.');
                 }
@@ -461,7 +446,7 @@ final class ProgressBar
 
                 return Helper::formatTime($remaining);
             },
-            'estimated' => function (self $bar) {
+            'estimated' => function (ProgressBar $bar) {
                 if (!$bar->getMaxSteps()) {
                     throw new LogicException('Unable to display the estimated time if the maximum number of steps is not set.');
                 }
@@ -474,24 +459,24 @@ final class ProgressBar
 
                 return Helper::formatTime($estimated);
             },
-            'memory' => function (self $bar) {
+            'memory' => function (ProgressBar $bar) {
                 return Helper::formatMemory(memory_get_usage(true));
             },
-            'current' => function (self $bar) {
+            'current' => function (ProgressBar $bar) {
                 return str_pad($bar->getProgress(), $bar->getStepWidth(), ' ', STR_PAD_LEFT);
             },
-            'max' => function (self $bar) {
+            'max' => function (ProgressBar $bar) {
                 return $bar->getMaxSteps();
             },
-            'percent' => function (self $bar) {
+            'percent' => function (ProgressBar $bar) {
                 return floor($bar->getProgressPercent() * 100);
             },
-        ];
+        );
     }
 
     private static function initFormats(): array
     {
-        return [
+        return array(
             'normal' => ' %current%/%max% [%bar%] %percent:3s%%',
             'normal_nomax' => ' %current% [%bar%]',
 
@@ -503,7 +488,7 @@ final class ProgressBar
 
             'debug' => ' %current%/%max% [%bar%] %percent:3s%% %elapsed:6s%/%estimated:-6s% %memory:6s%',
             'debug_nomax' => ' %current% [%bar%] %elapsed:6s% %memory:6s%',
-        ];
+        );
     }
 
     private function buildLine(): string
@@ -511,7 +496,7 @@ final class ProgressBar
         $regex = "{%([a-z\-_]+)(?:\:([^%]+))?%}i";
         $callback = function ($matches) {
             if ($formatter = $this::getPlaceholderFormatterDefinition($matches[1])) {
-                $text = $formatter($this, $this->output);
+                $text = \call_user_func($formatter, $this, $this->output);
             } elseif (isset($this->messages[$matches[1]])) {
                 $text = $this->messages[$matches[1]];
             } else {

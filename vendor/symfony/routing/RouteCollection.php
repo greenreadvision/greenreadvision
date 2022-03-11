@@ -28,12 +28,12 @@ class RouteCollection implements \IteratorAggregate, \Countable
     /**
      * @var Route[]
      */
-    private $routes = [];
+    private $routes = array();
 
     /**
      * @var array
      */
-    private $resources = [];
+    private $resources = array();
 
     public function __clone()
     {
@@ -138,7 +138,7 @@ class RouteCollection implements \IteratorAggregate, \Countable
      * @param array  $defaults     An array of default values
      * @param array  $requirements An array of requirements
      */
-    public function addPrefix($prefix, array $defaults = [], array $requirements = [])
+    public function addPrefix($prefix, array $defaults = array(), array $requirements = array())
     {
         $prefix = trim(trim($prefix), '/');
 
@@ -158,7 +158,7 @@ class RouteCollection implements \IteratorAggregate, \Countable
      */
     public function addNamePrefix(string $prefix)
     {
-        $prefixedRoutes = [];
+        $prefixedRoutes = array();
 
         foreach ($this->routes as $name => $route) {
             $prefixedRoutes[$prefix.$name] = $route;
@@ -177,7 +177,7 @@ class RouteCollection implements \IteratorAggregate, \Countable
      * @param array  $defaults     An array of default values
      * @param array  $requirements An array of requirements
      */
-    public function setHost($pattern, array $defaults = [], array $requirements = [])
+    public function setHost($pattern, array $defaults = array(), array $requirements = array())
     {
         foreach ($this->routes as $route) {
             $route->setHost($pattern);

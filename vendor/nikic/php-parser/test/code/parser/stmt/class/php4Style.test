@@ -20,7 +20,6 @@ array(
         stmts: array(
             0: Stmt_Property(
                 flags: 0
-                type: null
                 props: array(
                     0: Stmt_PropertyProperty(
                         name: VarLikeIdentifier(

@@ -37,7 +37,7 @@ class Command
     private $application;
     private $name;
     private $processTitle;
-    private $aliases = [];
+    private $aliases = array();
     private $definition;
     private $hidden = false;
     private $help;
@@ -46,8 +46,8 @@ class Command
     private $applicationDefinitionMerged = false;
     private $applicationDefinitionMergedWithArgs = false;
     private $code;
-    private $synopsis = [];
-    private $usages = [];
+    private $synopsis = array();
+    private $usages = array();
     private $helperSet;
 
     /**
@@ -250,7 +250,7 @@ class Command
         $input->validate();
 
         if ($this->code) {
-            $statusCode = ($this->code)($input, $output);
+            $statusCode = \call_user_func($this->code, $input, $output);
         } else {
             $statusCode = $this->execute($input, $output);
         }
@@ -301,13 +301,14 @@ class Command
 
         $this->definition->addOptions($this->application->getDefinition()->getOptions());
 
-        $this->applicationDefinitionMerged = true;
-
         if ($mergeArgs) {
             $currentArguments = $this->definition->getArguments();
             $this->definition->setArguments($this->application->getDefinition()->getArguments());
             $this->definition->addArguments($currentArguments);
+        }
 
+        $this->applicationDefinitionMerged = true;
+        if ($mergeArgs) {
             $this->applicationDefinitionMergedWithArgs = true;
         }
     }
@@ -360,12 +361,10 @@ class Command
     /**
      * Adds an argument.
      *
-     * @param string               $name        The argument name
-     * @param int|null             $mode        The argument mode: InputArgument::REQUIRED or InputArgument::OPTIONAL
-     * @param string               $description A description text
-     * @param string|string[]|null $default     The default value (for InputArgument::OPTIONAL mode only)
-     *
-     * @throws InvalidArgumentException When argument mode is not valid
+     * @param string $name        The argument name
+     * @param int    $mode        The argument mode: InputArgument::REQUIRED or InputArgument::OPTIONAL
+     * @param string $description A description text
+     * @param mixed  $default     The default value (for InputArgument::OPTIONAL mode only)
      *
      * @return $this
      */
@@ -379,13 +378,11 @@ class Command
     /**
      * Adds an option.
      *
-     * @param string                        $name        The option name
-     * @param string|array|null             $shortcut    The shortcuts, can be null, a string of shortcuts delimited by | or an array of shortcuts
-     * @param int|null                      $mode        The option mode: One of the InputOption::VALUE_* constants
-     * @param string                        $description A description text
-     * @param string|string[]|int|bool|null $default     The default value (must be null for InputOption::VALUE_NONE)
-     *
-     * @throws InvalidArgumentException If option mode is invalid or incompatible
+     * @param string $name        The option name
+     * @param string $shortcut    The shortcut (can be null)
+     * @param int    $mode        The option mode: One of the InputOption::VALUE_* constants
+     * @param string $description A description text
+     * @param mixed  $default     The default value (must be null for InputOption::VALUE_NONE)
      *
      * @return $this
      */
@@ -525,16 +522,15 @@ class Command
     public function getProcessedHelp()
     {
         $name = $this->name;
-        $isSingleCommand = $this->application && $this->application->isSingleCommand();
 
-        $placeholders = [
+        $placeholders = array(
             '%command.name%',
             '%command.full_name%',
-        ];
-        $replacements = [
+        );
+        $replacements = array(
             $name,
-            $isSingleCommand ? $_SERVER['PHP_SELF'] : $_SERVER['PHP_SELF'].' '.$name,
-        ];
+            $_SERVER['PHP_SELF'].' '.$name,
+        );
 
         return str_replace($placeholders, $replacements, $this->getHelp() ?: $this->getDescription());
     }

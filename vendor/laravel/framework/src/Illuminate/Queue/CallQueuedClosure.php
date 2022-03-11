@@ -29,7 +29,7 @@ class CallQueuedClosure implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @param  \Illuminate\Queue\SerializableClosure  $closure
+     * @param  \Illuminate\Queue\SerializableClosure
      * @return void
      */
     public function __construct(SerializableClosure $closure)

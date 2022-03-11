@@ -19,16 +19,12 @@ use Illuminate\Foundation\Console\MailMakeCommand;
 use Illuminate\Foundation\Console\OptimizeCommand;
 use Illuminate\Foundation\Console\RuleMakeCommand;
 use Illuminate\Foundation\Console\TestMakeCommand;
-use Illuminate\Foundation\Console\EventListCommand;
 use Illuminate\Foundation\Console\EventMakeCommand;
 use Illuminate\Foundation\Console\ModelMakeCommand;
 use Illuminate\Foundation\Console\RouteListCommand;
 use Illuminate\Foundation\Console\ViewCacheCommand;
 use Illuminate\Foundation\Console\ViewClearCommand;
 use Illuminate\Session\Console\SessionTableCommand;
-use Illuminate\Contracts\Support\DeferrableProvider;
-use Illuminate\Foundation\Console\EventCacheCommand;
-use Illuminate\Foundation\Console\EventClearCommand;
 use Illuminate\Foundation\Console\PolicyMakeCommand;
 use Illuminate\Foundation\Console\RouteCacheCommand;
 use Illuminate\Foundation\Console\RouteClearCommand;
@@ -76,8 +72,15 @@ use Illuminate\Database\Console\Migrations\InstallCommand as MigrateInstallComma
 use Illuminate\Database\Console\Migrations\RefreshCommand as MigrateRefreshCommand;
 use Illuminate\Database\Console\Migrations\RollbackCommand as MigrateRollbackCommand;
 
-class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvider
+class ArtisanServiceProvider extends ServiceProvider
 {
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = true;
+
     /**
      * The commands to be registered.
      *
@@ -92,9 +95,6 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
         'ConfigClear' => 'command.config.clear',
         'Down' => 'command.down',
         'Environment' => 'command.environment',
-        'EventCache' => 'command.event.cache',
-        'EventClear' => 'command.event.clear',
-        'EventList' => 'command.event.list',
         'KeyGenerate' => 'command.key.generate',
         'Migrate' => 'command.migrate',
         'MigrateFresh' => 'command.migrate.fresh',
@@ -413,42 +413,6 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
      *
      * @return void
      */
-    protected function registerEventCacheCommand()
-    {
-        $this->app->singleton('command.event.cache', function () {
-            return new EventCacheCommand;
-        });
-    }
-
-    /**
-     * Register the command.
-     *
-     * @return void
-     */
-    protected function registerEventClearCommand()
-    {
-        $this->app->singleton('command.event.clear', function ($app) {
-            return new EventClearCommand($app['files']);
-        });
-    }
-
-    /**
-     * Register the command.
-     *
-     * @return void
-     */
-    protected function registerEventListCommand()
-    {
-        $this->app->singleton('command.event.list', function () {
-            return new EventListCommand();
-        });
-    }
-
-    /**
-     * Register the command.
-     *
-     * @return void
-     */
     protected function registerJobMakeCommand()
     {
         $this->app->singleton('command.job.make', function ($app) {
@@ -650,7 +614,7 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
      */
     protected function registerOptimizeCommand()
     {
-        $this->app->singleton('command.optimize', function () {
+        $this->app->singleton('command.optimize', function ($app) {
             return new OptimizeCommand;
         });
     }
@@ -674,7 +638,7 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
      */
     protected function registerOptimizeClearCommand()
     {
-        $this->app->singleton('command.optimize.clear', function () {
+        $this->app->singleton('command.optimize.clear', function ($app) {
             return new OptimizeClearCommand;
         });
     }

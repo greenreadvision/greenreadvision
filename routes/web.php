@@ -51,6 +51,9 @@ Route::get('/activity/{type}','ActivityController@showList')->name('activity.sho
 Route::get('/activity/{type}/{id}','ActivityController@showContent')->name('activity.showContent');
 
 
+Route::get('/hulk', 'HulkController@index')->name('hulk');
+Route::put('/hulk/store', 'HulkController@store')->name('hulk.store');
+
 
 
 
@@ -109,10 +112,7 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/letter/{id}', 'LetterController@show')->name('letter.show');
 });
 
-Route::group(['middleware' => ['auth', 'general']], function () {
-    Route::get('/hulk', 'HulkController@index')->name('hulk');
-    Route::get('/hulk/store', 'HulkController@store')->name('hulk.store');
-});
+   
 
 Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/home', 'HomeController@index')->name('home.index');

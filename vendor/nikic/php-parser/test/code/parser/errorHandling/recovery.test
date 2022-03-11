@@ -756,7 +756,6 @@ array(
             )
             3: Stmt_Property(
                 flags: MODIFIER_PUBLIC (1)
-                type: null
                 props: array(
                     0: Stmt_PropertyProperty(
                         name: VarLikeIdentifier(
@@ -976,7 +975,6 @@ array(
         stmts: array(
             0: Stmt_Property(
                 flags: MODIFIER_PUBLIC (1)
-                type: null
                 props: array(
                     0: Stmt_PropertyProperty(
                         name: VarLikeIdentifier(
@@ -1304,7 +1302,6 @@ array(
                             )
                         )
                         byRef: false
-                        unpack: false
                     )
                     1: Expr_ArrayItem(
                         key: null
@@ -1319,7 +1316,6 @@ array(
                             )
                         )
                         byRef: false
-                        unpack: false
                     )
                 )
             )
@@ -1338,7 +1334,6 @@ array(
                             name: value
                         )
                         byRef: false
-                        unpack: false
                     )
                     1: Expr_ArrayItem(
                         key: null
@@ -1346,7 +1341,6 @@ array(
                             name: oopsAnotherValue
                         )
                         byRef: false
-                        unpack: false
                     )
                 )
             )
@@ -1367,7 +1361,6 @@ array(
                             name: value
                         )
                         byRef: false
-                        unpack: false
                     )
                     1: Expr_ArrayItem(
                         key: null
@@ -1375,43 +1368,9 @@ array(
                             name: oopsAnotherValue
                         )
                         byRef: false
-                        unpack: false
                     )
                 )
             )
         )
     )
 )
------
-<?php
-function foo() :
-{
-    return $a;
-}
------
-!!php7
-Syntax error, unexpected '{' from 3:1 to 3:1
-array(
-    0: Stmt_Function(
-        byRef: false
-        name: Identifier(
-            name: foo
-        )
-        params: array(
-        )
-        returnType: null
-        stmts: array(
-            0: Stmt_Return(
-                expr: Expr_Variable(
-                    name: a
-                )
-            )
-        )
-    )
-)
------
-<?php
-$a = ["a "thing"];
------
-!!php7
-Syntax error, unexpected T_STRING, expecting ',' or ')' or ']' from 2:11 to 2:15

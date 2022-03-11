@@ -15,6 +15,6 @@ class RedisArraySessionHandlerTest extends AbstractRedisSessionHandlerTestCase
 {
     protected function createRedisClient(string $host): \RedisArray
     {
-        return new \RedisArray([$host]);
+        return new \RedisArray(array($host));
     }
 }

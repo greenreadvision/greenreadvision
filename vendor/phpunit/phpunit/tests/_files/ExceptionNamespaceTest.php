@@ -16,14 +16,14 @@ class ExceptionNamespaceTest extends \PHPUnit\Framework\TestCase
      *
      * @var string
      */
-    public const ERROR_MESSAGE = 'Exception namespace message';
+    const ERROR_MESSAGE = 'Exception namespace message';
 
     /**
      * Exception code
      *
      * @var int
      */
-    public const ERROR_CODE = 200;
+    const ERROR_CODE = 200;
 
     /**
      * @expectedException Class

@@ -175,7 +175,7 @@ class Mock implements MockInterface
 
         if (!\Mockery::getConfiguration()->mockingNonExistentMethodsAllowed()) {
             foreach ($this->mockery_getMethods() as $method) {
-                if ($method->isPublic()) {
+                if ($method->isPublic() && !$method->isStatic()) {
                     $this->_mockery_mockableMethods[] = $method->getName();
                 }
             }
@@ -185,7 +185,7 @@ class Mock implements MockInterface
     /**
      * Set expected method calls
      *
-     * @param mixed ...$methodNames one or many methods that are expected to be called in this mock
+     * @param array ...$methodNames one or many methods that are expected to be called in this mock
      *
      * @return \Mockery\ExpectationInterface|\Mockery\Expectation|\Mockery\HigherOrderMessage
      */
@@ -315,14 +315,6 @@ class Mock implements MockInterface
      */
     public function shouldAllowMockingProtectedMethods()
     {
-        if (!\Mockery::getConfiguration()->mockingNonExistentMethodsAllowed()) {
-            foreach ($this->mockery_getMethods() as $method) {
-                if ($method->isProtected()) {
-                    $this->_mockery_mockableMethods[] = $method->getName();
-                }
-            }
-        }
-
         $this->_mockery_allowMockingProtectedMethods = true;
         return $this;
     }

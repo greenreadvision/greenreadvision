@@ -36,7 +36,7 @@ class NativeSessionStorageTest extends TestCase
     protected function setUp()
     {
         $this->iniSet('session.save_handler', 'files');
-        $this->iniSet('session.save_path', $this->savePath = sys_get_temp_dir().'/sftest');
+        $this->iniSet('session.save_path', $this->savePath = sys_get_temp_dir().'/sf2test');
         if (!is_dir($this->savePath)) {
             mkdir($this->savePath);
         }
@@ -56,7 +56,7 @@ class NativeSessionStorageTest extends TestCase
     /**
      * @return NativeSessionStorage
      */
-    protected function getStorage(array $options = [])
+    protected function getStorage(array $options = array())
     {
         $storage = new NativeSessionStorage($options);
         $storage->registerBag(new AttributeBag());
@@ -157,27 +157,23 @@ class NativeSessionStorageTest extends TestCase
     {
         $this->iniSet('session.cache_limiter', 'nocache');
 
-        $storage = new NativeSessionStorage(['cache_limiter' => 'public']);
+        $storage = new NativeSessionStorage(array('cache_limiter' => 'public'));
         $this->assertEquals('public', ini_get('session.cache_limiter'));
     }
 
     public function testCookieOptions()
     {
-        $options = [
+        $options = array(
             'cookie_lifetime' => 123456,
             'cookie_path' => '/my/cookie/path',
             'cookie_domain' => 'symfony.example.com',
             'cookie_secure' => true,
             'cookie_httponly' => false,
-        ];
-
-        if (\PHP_VERSION_ID >= 70300) {
-            $options['cookie_samesite'] = 'lax';
-        }
+        );
 
         $this->getStorage($options);
         $temp = session_get_cookie_params();
-        $gco = [];
+        $gco = array();
 
         foreach ($temp as $key => $value) {
             $gco['cookie_'.$key] = $value;
@@ -192,10 +188,10 @@ class NativeSessionStorageTest extends TestCase
             $this->markTestSkipped('HHVM is not handled in this test case.');
         }
 
-        $options = [
+        $options = array(
             'url_rewriter.tags' => 'a=href',
             'cache_expire' => '200',
-        ];
+        );
 
         $this->getStorage($options);
 
@@ -276,9 +272,9 @@ class NativeSessionStorageTest extends TestCase
     public function testSetSessionOptionsOnceSessionStartedIsIgnored()
     {
         session_start();
-        $this->getStorage([
+        $this->getStorage(array(
             'name' => 'something-else',
-        ]);
+        ));
 
         // Assert no exception has been thrown by `getStorage()`
         $this->addToAssertionCount(1);

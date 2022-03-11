@@ -49,11 +49,6 @@ class PlainTextHandler extends Handler
     /**
      * @var bool
      */
-    private $addPreviousToOutput = true;
-
-    /**
-     * @var bool
-     */
     private $loggerOnly = false;
 
     /**
@@ -120,21 +115,6 @@ class PlainTextHandler extends Handler
     }
 
     /**
-     * Add previous exceptions to output.
-     * @param  bool|null $addPreviousToOutput
-     * @return bool|$this
-     */
-    public function addPreviousToOutput($addPreviousToOutput = null)
-    {
-        if (func_num_args() == 0) {
-            return $this->addPreviousToOutput;
-        }
-
-        $this->addPreviousToOutput = (bool) $addPreviousToOutput;
-        return $this;
-    }
-
-    /**
      * Add error trace function arguments to output.
      * Set to True for all frame args, or integer for the n first frame args.
      * @param  bool|integer|null $addTraceFunctionArgsToOutput
@@ -171,18 +151,14 @@ class PlainTextHandler extends Handler
     public function generateResponse()
     {
         $exception = $this->getException();
-        $message = $this->getExceptionOutput($exception);
-
-        if ($this->addPreviousToOutput) {
-            $previous = $exception->getPrevious();
-            while ($previous) {
-                $message .= "\n\nCaused by\n" . $this->getExceptionOutput($previous);
-                $previous = $previous->getPrevious();
-            }
-        }
-
-
-        return $message . $this->getTraceOutput() . "\n";
+        return sprintf(
+            "%s: %s in file %s on line %d%s\n",
+            get_class($exception),
+            $exception->getMessage(),
+            $exception->getFile(),
+            $exception->getLine(),
+            $this->getTraceOutput()
+        );
     }
 
     /**
@@ -306,22 +282,6 @@ class PlainTextHandler extends Handler
         }
 
         return $response;
-    }
-
-    /**
-     * Get the exception as plain text.
-     * @param \Throwable $exception
-     * @return string
-     */
-    private function getExceptionOutput($exception)
-    {
-        return sprintf(
-            "%s: %s in file %s on line %d",
-            get_class($exception),
-            $exception->getMessage(),
-            $exception->getFile(),
-            $exception->getLine()
-        );
     }
 
     /**

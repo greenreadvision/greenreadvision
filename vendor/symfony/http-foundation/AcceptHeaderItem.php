@@ -21,9 +21,9 @@ class AcceptHeaderItem
     private $value;
     private $quality = 1.0;
     private $index = 0;
-    private $attributes = [];
+    private $attributes = array();
 
-    public function __construct(string $value, array $attributes = [])
+    public function __construct(string $value, array $attributes = array())
     {
         $this->value = $value;
         foreach ($attributes as $name => $value) {
@@ -49,7 +49,7 @@ class AcceptHeaderItem
     }
 
     /**
-     * Returns header value's string representation.
+     * Returns header  value's string representation.
      *
      * @return string
      */

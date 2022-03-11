@@ -3,8 +3,9 @@
 namespace PhpParser\ErrorHandler;
 
 use PhpParser\Error;
+use PHPUnit\Framework\TestCase;
 
-class CollectingTest extends \PHPUnit\Framework\TestCase
+class CollectingTest extends TestCase
 {
     public function testHandleError() {
         $errorHandler = new Collecting();

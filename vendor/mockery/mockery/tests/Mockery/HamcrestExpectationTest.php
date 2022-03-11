@@ -23,17 +23,17 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 class HamcrestExpectationTest extends MockeryTestCase
 {
-    public function mockeryTestSetUp()
+    public function setUp()
     {
-        parent::mockeryTestSetUp();
+        parent::setUp();
         $this->mock = mock('foo');
     }
 
 
-    public function mockeryTestTearDown()
+    public function tearDown()
     {
         \Mockery::getConfiguration()->allowMockingNonExistentMethods(true);
-        parent::mockeryTestTearDown();
+        parent::tearDown();
     }
 
     /** Just a quickie roundup of a few Hamcrest matchers to check nothing obvious out of place **/
@@ -50,10 +50,12 @@ class HamcrestExpectationTest extends MockeryTestCase
         $this->mock->foo(2);
     }
 
+    /**
+     * @expectedException Mockery\Exception
+     */
     public function testGreaterThanConstraintNotMatchesArgument()
     {
         $this->mock->shouldReceive('foo')->with(greaterThan(1));
-        $this->expectException(\Mockery\Exception::class);
         $this->mock->foo(1);
         Mockery::close();
     }

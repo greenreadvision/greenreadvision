@@ -112,18 +112,14 @@ class Frame implements Serializable
     public function getFileContents()
     {
         if ($this->fileContentsCache === null && $filePath = $this->getFile()) {
-            // Leave the stage early when 'Unknown' or '[internal]' is passed
+            // Leave the stage early when 'Unknown' is passed
             // this would otherwise raise an exception when
             // open_basedir is enabled.
-            if ($filePath === "Unknown" || $filePath === '[internal]') {
+            if ($filePath === "Unknown") {
                 return null;
             }
 
-            try {
-                $this->fileContentsCache = file_get_contents($filePath);
-            } catch (ErrorException $exception) {
-                // Internal file paths of PHP extensions cannot be opened
-            }
+            $this->fileContentsCache = file_get_contents($filePath);
         }
 
         return $this->fileContentsCache;

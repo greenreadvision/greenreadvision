@@ -32,12 +32,14 @@ if (!function_exists('dump')) {
 }
 
 if (!function_exists('dd')) {
-    function dd(...$vars)
+    function dd($var, ...$moreVars)
     {
-        foreach ($vars as $v) {
+        VarDumper::dump($var);
+
+        foreach ($moreVars as $v) {
             VarDumper::dump($v);
         }
 
-        die(1);
+        exit(1);
     }
 }

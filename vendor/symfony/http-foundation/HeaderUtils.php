@@ -18,9 +18,6 @@ namespace Symfony\Component\HttpFoundation;
  */
 class HeaderUtils
 {
-    public const DISPOSITION_ATTACHMENT = 'attachment';
-    public const DISPOSITION_INLINE = 'inline';
-
     /**
      * This class should not be instantiated.
      */
@@ -34,7 +31,7 @@ class HeaderUtils
      * Example:
      *
      *     HeaderUtils::split("da, en-gb;q=0.8", ",;")
-     *     // => ['da'], ['en-gb', 'q=0.8']]
+     *     // => array(array('da'), array('en-gb', 'q=0.8'))
      *
      * @param string $header     HTTP header value
      * @param string $separators List of characters to split on, ordered by
@@ -78,12 +75,12 @@ class HeaderUtils
      *
      * Example:
      *
-     *     HeaderUtils::combine([["foo", "abc"], ["bar"]])
-     *     // => ["foo" => "abc", "bar" => true]
+     *     HeaderUtils::combine(array(array("foo", "abc"), array("bar")))
+     *     // => array("foo" => "abc", "bar" => true)
      */
     public static function combine(array $parts): array
     {
-        $assoc = [];
+        $assoc = array();
         foreach ($parts as $part) {
             $name = strtolower($part[0]);
             $value = $part[1] ?? true;
@@ -102,12 +99,12 @@ class HeaderUtils
      *
      * Example:
      *
-     *     HeaderUtils::toString(["foo" => "abc", "bar" => true, "baz" => "a b c"], ",")
+     *     HeaderUtils::toString(array("foo" => "abc", "bar" => true, "baz" => "a b c"), ",")
      *     // => 'foo=abc, bar, baz="a b c"'
      */
     public static function toString(array $assoc, string $separator): string
     {
-        $parts = [];
+        $parts = array();
         foreach ($assoc as $name => $value) {
             if (true === $value) {
                 $parts[] = $name;
@@ -146,61 +143,13 @@ class HeaderUtils
         return preg_replace('/\\\\(.)|"/', '$1', $s);
     }
 
-    /**
-     * Generates a HTTP Content-Disposition field-value.
-     *
-     * @param string $disposition      One of "inline" or "attachment"
-     * @param string $filename         A unicode string
-     * @param string $filenameFallback A string containing only ASCII characters that
-     *                                 is semantically equivalent to $filename. If the filename is already ASCII,
-     *                                 it can be omitted, or just copied from $filename
-     *
-     * @return string A string suitable for use as a Content-Disposition field-value
-     *
-     * @throws \InvalidArgumentException
-     *
-     * @see RFC 6266
-     */
-    public static function makeDisposition(string $disposition, string $filename, string $filenameFallback = ''): string
-    {
-        if (!\in_array($disposition, [self::DISPOSITION_ATTACHMENT, self::DISPOSITION_INLINE])) {
-            throw new \InvalidArgumentException(sprintf('The disposition must be either "%s" or "%s".', self::DISPOSITION_ATTACHMENT, self::DISPOSITION_INLINE));
-        }
-
-        if ('' === $filenameFallback) {
-            $filenameFallback = $filename;
-        }
-
-        // filenameFallback is not ASCII.
-        if (!preg_match('/^[\x20-\x7e]*$/', $filenameFallback)) {
-            throw new \InvalidArgumentException('The filename fallback must only contain ASCII characters.');
-        }
-
-        // percent characters aren't safe in fallback.
-        if (false !== strpos($filenameFallback, '%')) {
-            throw new \InvalidArgumentException('The filename fallback cannot contain the "%" character.');
-        }
-
-        // path separators aren't allowed in either.
-        if (false !== strpos($filename, '/') || false !== strpos($filename, '\\') || false !== strpos($filenameFallback, '/') || false !== strpos($filenameFallback, '\\')) {
-            throw new \InvalidArgumentException('The filename and the fallback cannot contain the "/" and "\\" characters.');
-        }
-
-        $params = ['filename' => $filenameFallback];
-        if ($filename !== $filenameFallback) {
-            $params['filename*'] = "utf-8''".rawurlencode($filename);
-        }
-
-        return $disposition.'; '.self::toString($params, ';');
-    }
-
     private static function groupParts(array $matches, string $separators): array
     {
         $separator = $separators[0];
         $partSeparators = substr($separators, 1);
 
         $i = 0;
-        $partMatches = [];
+        $partMatches = array();
         foreach ($matches as $match) {
             if (isset($match['separator']) && $match['separator'] === $separator) {
                 ++$i;
@@ -209,7 +158,7 @@ class HeaderUtils
             }
         }
 
-        $parts = [];
+        $parts = array();
         if ($partSeparators) {
             foreach ($partMatches as $matches) {
                 $parts[] = self::groupParts($matches, $partSeparators);

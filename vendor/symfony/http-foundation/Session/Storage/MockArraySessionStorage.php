@@ -50,7 +50,7 @@ class MockArraySessionStorage implements SessionStorageInterface
     /**
      * @var array
      */
-    protected $data = [];
+    protected $data = array();
 
     /**
      * @var MetadataBag
@@ -60,7 +60,7 @@ class MockArraySessionStorage implements SessionStorageInterface
     /**
      * @var array|SessionBagInterface[]
      */
-    protected $bags = [];
+    protected $bags = array();
 
     public function __construct(string $name = 'MOCKSESSID', MetadataBag $metaBag = null)
     {
@@ -166,7 +166,7 @@ class MockArraySessionStorage implements SessionStorageInterface
         }
 
         // clear out the session
-        $this->data = [];
+        $this->data = array();
 
         // reconnect the bags to the session
         $this->loadSession();
@@ -238,11 +238,11 @@ class MockArraySessionStorage implements SessionStorageInterface
 
     protected function loadSession()
     {
-        $bags = array_merge($this->bags, [$this->metadataBag]);
+        $bags = array_merge($this->bags, array($this->metadataBag));
 
         foreach ($bags as $bag) {
             $key = $bag->getStorageKey();
-            $this->data[$key] = isset($this->data[$key]) ? $this->data[$key] : [];
+            $this->data[$key] = isset($this->data[$key]) ? $this->data[$key] : array();
             $bag->initialize($this->data[$key]);
         }
 

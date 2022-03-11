@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\Concerns\SupportsDefaultModels;
 
+/**
+ * @mixin \Illuminate\Database\Eloquent\Builder
+ */
 class BelongsTo extends Relation
 {
     use SupportsDefaultModels;
@@ -35,7 +38,7 @@ class BelongsTo extends Relation
      *
      * @var string
      */
-    protected $relationName;
+    protected $relation;
 
     /**
      * The count of self joins.
@@ -51,14 +54,13 @@ class BelongsTo extends Relation
      * @param  \Illuminate\Database\Eloquent\Model  $child
      * @param  string  $foreignKey
      * @param  string  $ownerKey
-     * @param  string  $relationName
-     *
+     * @param  string  $relation
      * @return void
      */
-    public function __construct(Builder $query, Model $child, $foreignKey, $ownerKey, $relationName)
+    public function __construct(Builder $query, Model $child, $foreignKey, $ownerKey, $relation)
     {
         $this->ownerKey = $ownerKey;
-        $this->relationName = $relationName;
+        $this->relation = $relation;
         $this->foreignKey = $foreignKey;
 
         // In the underlying base relationship class, this variable is referred to as
@@ -76,10 +78,6 @@ class BelongsTo extends Relation
      */
     public function getResults()
     {
-        if (is_null($this->child->{$this->foreignKey})) {
-            return $this->getDefaultFor($this->parent);
-        }
-
         return $this->query->first() ?: $this->getDefaultFor($this->parent);
     }
 
@@ -113,9 +111,7 @@ class BelongsTo extends Relation
         // our eagerly loading query so it returns the proper models from execution.
         $key = $this->related->getTable().'.'.$this->ownerKey;
 
-        $whereIn = $this->whereInMethod($this->related, $this->ownerKey);
-
-        $this->query->{$whereIn}($key, $this->getEagerModelKeys($models));
+        $this->query->whereIn($key, $this->getEagerModelKeys($models));
     }
 
     /**
@@ -135,6 +131,13 @@ class BelongsTo extends Relation
             if (! is_null($value = $model->{$this->foreignKey})) {
                 $keys[] = $value;
             }
+        }
+
+        // If there are no keys that were not null we will just return an array with null
+        // so this query wont fail plus returns zero results, which should be what the
+        // developer expects to happen in this situation. Otherwise we'll sort them.
+        if (count($keys) === 0) {
+            return [null];
         }
 
         sort($keys);
@@ -217,9 +220,7 @@ class BelongsTo extends Relation
         $this->child->setAttribute($this->foreignKey, $ownerKey);
 
         if ($model instanceof Model) {
-            $this->child->setRelation($this->relationName, $model);
-        } elseif ($this->child->isDirty($this->foreignKey)) {
-            $this->child->unsetRelation($this->relationName);
+            $this->child->setRelation($this->relation, $model);
         }
 
         return $this->child;
@@ -234,7 +235,7 @@ class BelongsTo extends Relation
     {
         $this->child->setAttribute($this->foreignKey, null);
 
-        return $this->child->setRelation($this->relationName, null);
+        return $this->child->setRelation($this->relation, null);
     }
 
     /**
@@ -252,7 +253,7 @@ class BelongsTo extends Relation
         }
 
         return $query->select($columns)->whereColumn(
-            $this->getQualifiedForeignKeyName(), '=', $query->qualifyColumn($this->ownerKey)
+            $this->getQualifiedForeignKey(), '=', $query->qualifyColumn($this->ownerKey)
         );
     }
 
@@ -273,7 +274,7 @@ class BelongsTo extends Relation
         $query->getModel()->setTable($hash);
 
         return $query->whereColumn(
-            $hash.'.'.$this->ownerKey, '=', $this->getQualifiedForeignKeyName()
+            $hash.'.'.$this->ownerKey, '=', $this->getQualifiedForeignKey()
         );
     }
 
@@ -310,21 +311,11 @@ class BelongsTo extends Relation
     }
 
     /**
-     * Get the child of the relationship.
-     *
-     * @return \Illuminate\Database\Eloquent\Model
-     */
-    public function getChild()
-    {
-        return $this->child;
-    }
-
-    /**
      * Get the foreign key of the relationship.
      *
      * @return string
      */
-    public function getForeignKeyName()
+    public function getForeignKey()
     {
         return $this->foreignKey;
     }
@@ -334,7 +325,7 @@ class BelongsTo extends Relation
      *
      * @return string
      */
-    public function getQualifiedForeignKeyName()
+    public function getQualifiedForeignKey()
     {
         return $this->child->qualifyColumn($this->foreignKey);
     }
@@ -344,7 +335,7 @@ class BelongsTo extends Relation
      *
      * @return string
      */
-    public function getOwnerKeyName()
+    public function getOwnerKey()
     {
         return $this->ownerKey;
     }
@@ -364,19 +355,8 @@ class BelongsTo extends Relation
      *
      * @return string
      */
-    public function getRelationName()
-    {
-        return $this->relationName;
-    }
-
-    /**
-     * Get the name of the relationship.
-     *
-     * @return string
-     * @deprecated The getRelationName() method should be used instead. Will be removed in Laravel 5.9.
-     */
     public function getRelation()
     {
-        return $this->relationName;
+        return $this->relation;
     }
 }

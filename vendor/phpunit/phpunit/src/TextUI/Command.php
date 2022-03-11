@@ -778,17 +778,7 @@ class Command
             }
 
             if (isset($this->options[1][1])) {
-                $testFile = \realpath($this->options[1][1]);
-
-                if ($testFile === false) {
-                    $this->exitWithErrorMessage(
-                        \sprintf(
-                            'Cannot open file "%s".',
-                            $this->options[1][1]
-                        )
-                    );
-                }
-                $this->arguments['testFile'] = $testFile;
+                $this->arguments['testFile'] = \realpath($this->options[1][1]);
             } else {
                 $this->arguments['testFile'] = '';
             }
@@ -1183,7 +1173,7 @@ Configuration Options:
   --include-path <path(s)>    Prepend PHP's include_path with given path(s)
   -d key[=value]              Sets a php.ini value
   --generate-configuration    Generate configuration file with suggested settings
-  --cache-result-file=<file>  Specify result cache path and filename
+  --cache-result-file==<FILE> Specify result cache path and filename
 
 Miscellaneous Options:
 

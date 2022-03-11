@@ -141,39 +141,14 @@ class BelongsToMany extends Relation
     public function __construct(Builder $query, Model $parent, $table, $foreignPivotKey,
                                 $relatedPivotKey, $parentKey, $relatedKey, $relationName = null)
     {
+        $this->table = $table;
         $this->parentKey = $parentKey;
         $this->relatedKey = $relatedKey;
         $this->relationName = $relationName;
         $this->relatedPivotKey = $relatedPivotKey;
         $this->foreignPivotKey = $foreignPivotKey;
-        $this->table = $this->resolveTableName($table);
 
         parent::__construct($query, $parent);
-    }
-
-    /**
-     * Attempt to resolve the intermediate table name from the given string.
-     *
-     * @param  string  $table
-     * @return string
-     */
-    protected function resolveTableName($table)
-    {
-        if (! Str::contains($table, '\\') || ! class_exists($table)) {
-            return $table;
-        }
-
-        $model = new $table;
-
-        if (! $model instanceof Model) {
-            return $table;
-        }
-
-        if ($model instanceof Pivot) {
-            $this->using($table);
-        }
-
-        return $model->getTable();
     }
 
     /**
@@ -234,12 +209,7 @@ class BelongsToMany extends Relation
      */
     public function addEagerConstraints(array $models)
     {
-        $whereIn = $this->whereInMethod($this->parent, $this->parentKey);
-
-        $this->query->{$whereIn}(
-            $this->getQualifiedForeignPivotKeyName(),
-            $this->getKeys($models, $this->parentKey)
-        );
+        $this->query->whereIn($this->getQualifiedForeignPivotKeyName(), $this->getKeys($models, $this->parentKey));
     }
 
     /**
@@ -390,7 +360,7 @@ class BelongsToMany extends Relation
      *
      * In addition, new pivot records will receive this value.
      *
-     * @param  string|array  $column
+     * @param  string  $column
      * @param  mixed  $value
      * @return $this
      */
@@ -544,7 +514,7 @@ class BelongsToMany extends Relation
             return $result;
         }
 
-        throw (new ModelNotFoundException)->setModel(get_class($this->related), $id);
+        throw (new ModelNotFoundException)->setModel(get_class($this->related));
     }
 
     /**
@@ -584,9 +554,7 @@ class BelongsToMany extends Relation
      */
     public function getResults()
     {
-        return ! is_null($this->parent->{$this->parentKey})
-                ? $this->get()
-                : $this->related->newCollection();
+        return $this->get();
     }
 
     /**
@@ -706,32 +674,6 @@ class BelongsToMany extends Relation
     }
 
     /**
-     * Chunk the results of a query by comparing numeric IDs.
-     *
-     * @param  int  $count
-     * @param  callable  $callback
-     * @param  string|null  $column
-     * @param  string|null  $alias
-     * @return bool
-     */
-    public function chunkById($count, callable $callback, $column = null, $alias = null)
-    {
-        $this->query->addSelect($this->shouldSelect());
-
-        $column = $column ?? $this->getRelated()->qualifyColumn(
-            $this->getRelatedKeyName()
-        );
-
-        $alias = $alias ?? $this->getRelatedKeyName();
-
-        return $this->query->chunkById($count, function ($results) use ($callback) {
-            $this->hydratePivotRelation($results->all());
-
-            return $callback($results);
-        }, $column, $alias);
-    }
-
-    /**
      * Execute a callback over each item while chunking.
      *
      * @param  callable  $callback
@@ -824,7 +766,7 @@ class BelongsToMany extends Relation
      */
     protected function guessInverseRelation()
     {
-        return Str::camel(Str::pluralStudly(class_basename($this->getParent())));
+        return Str::camel(Str::plural(class_basename($this->getParent())));
     }
 
     /**
@@ -846,7 +788,7 @@ class BelongsToMany extends Relation
         // the related model's timestamps, to make sure these all reflect the changes
         // to the parent models. This will help us keep any caching synced up here.
         if (count($ids = $this->allRelatedIds()) > 0) {
-            $this->getRelated()->newQueryWithoutRelationships()->whereIn($key, $ids)->update($columns);
+            $this->getRelated()->newQuery()->whereIn($key, $ids)->update($columns);
         }
     }
 
@@ -1075,16 +1017,6 @@ class BelongsToMany extends Relation
     }
 
     /**
-     * Get the parent key for the relationship.
-     *
-     * @return string
-     */
-    public function getParentKeyName()
-    {
-        return $this->parentKey;
-    }
-
-    /**
      * Get the fully qualified parent key name for the relation.
      *
      * @return string
@@ -1092,16 +1024,6 @@ class BelongsToMany extends Relation
     public function getQualifiedParentKeyName()
     {
         return $this->parent->qualifyColumn($this->parentKey);
-    }
-
-    /**
-     * Get the related key for the relationship.
-     *
-     * @return string
-     */
-    public function getRelatedKeyName()
-    {
-        return $this->relatedKey;
     }
 
     /**

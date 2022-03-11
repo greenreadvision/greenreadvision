@@ -27,11 +27,6 @@ final class ChunkTest extends TestCase
         $this->chunk = new Chunk;
     }
 
-    public function testHasInitiallyNoLines(): void
-    {
-        $this->assertSame([], $this->chunk->getLines());
-    }
-
     public function testCanBeCreatedWithoutArguments(): void
     {
         $this->assertInstanceOf(Chunk::class, $this->chunk);
@@ -64,10 +59,10 @@ final class ChunkTest extends TestCase
 
     public function testLinesCanBeSet(): void
     {
-        $lines = [new Line(Line::ADDED, 'added'), new Line(Line::REMOVED, 'removed')];
+        $this->assertSame([], $this->chunk->getLines());
 
-        $this->chunk->setLines($lines);
-
-        $this->assertSame($lines, $this->chunk->getLines());
+        $testValue = ['line0', 'line1'];
+        $this->chunk->setLines($testValue);
+        $this->assertSame($testValue, $this->chunk->getLines());
     }
 }

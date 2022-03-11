@@ -41,7 +41,7 @@ class CallTypeHintPassTest extends TestCase
             "requiresCallTypeHintRemoval" => true,
         ))->makePartial();
         $code = $pass->apply(static::CODE, $config);
-        $this->assertTrue(\mb_strpos($code, '__call($method, $args)') !== false);
+        $this->assertContains('__call($method, $args)', $code);
     }
 
     /**
@@ -54,6 +54,6 @@ class CallTypeHintPassTest extends TestCase
             "requiresCallStaticTypeHintRemoval" => true,
         ))->makePartial();
         $code = $pass->apply(static::CODE, $config);
-        $this->assertTrue(\mb_strpos($code, '__callStatic($method, $args)') !== false);
+        $this->assertContains('__callStatic($method, $args)', $code);
     }
 }

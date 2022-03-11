@@ -3,8 +3,9 @@
 namespace PhpParser;
 
 use PhpParser\Node\Expr;
+use PHPUnit\Framework\TestCase;
 
-class NodeFinderTest extends \PHPUnit\Framework\TestCase
+class NodeFinderTest extends TestCase
 {
     private function getStmtsAndVars() {
         $assign = new Expr\Assign(new Expr\Variable('a'), new Expr\BinaryOp\Concat(

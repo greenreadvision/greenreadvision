@@ -24,7 +24,6 @@ array(
         stmts: array(
             0: Stmt_Property(
                 flags: 0
-                type: null
                 props: array(
                     0: Stmt_PropertyProperty(
                         name: VarLikeIdentifier(
@@ -36,7 +35,6 @@ array(
             )
             1: Stmt_Property(
                 flags: MODIFIER_STATIC (8)
-                type: null
                 props: array(
                     0: Stmt_PropertyProperty(
                         name: VarLikeIdentifier(

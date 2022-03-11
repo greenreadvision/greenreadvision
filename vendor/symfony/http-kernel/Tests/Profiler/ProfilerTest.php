@@ -44,7 +44,7 @@ class ProfilerTest extends TestCase
     public function testReset()
     {
         $collector = $this->getMockBuilder(DataCollectorInterface::class)
-            ->setMethods(['collect', 'getName', 'reset'])
+            ->setMethods(array('collect', 'getName', 'reset'))
             ->getMock();
         $collector->expects($this->any())->method('getName')->willReturn('mock');
         $collector->expects($this->once())->method('reset');
@@ -84,7 +84,7 @@ class ProfilerTest extends TestCase
 
     protected function setUp()
     {
-        $this->tmp = tempnam(sys_get_temp_dir(), 'sf_profiler');
+        $this->tmp = tempnam(sys_get_temp_dir(), 'sf2_profiler');
         if (file_exists($this->tmp)) {
             @unlink($this->tmp);
         }

@@ -15,9 +15,6 @@ use Symfony\Component\Routing\Matcher\Dumper\PhpMatcherDumper;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
 
-/**
- * @group legacy
- */
 class DumpedUrlMatcherTest extends UrlMatcherTest
 {
     protected function getUrlMatcher(RouteCollection $routes, RequestContext $context = null)
@@ -26,7 +23,7 @@ class DumpedUrlMatcherTest extends UrlMatcherTest
 
         $class = 'DumpedUrlMatcher'.++$i;
         $dumper = new PhpMatcherDumper($routes);
-        eval('?>'.$dumper->dump(['class' => $class]));
+        eval('?>'.$dumper->dump(array('class' => $class)));
 
         return new $class($context ?: new RequestContext());
     }

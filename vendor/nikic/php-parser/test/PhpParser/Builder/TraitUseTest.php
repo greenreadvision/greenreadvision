@@ -2,10 +2,13 @@
 
 namespace PhpParser\Builder;
 
+use PhpParser\Comment;
+use PhpParser\Node;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt;
+use PHPUnit\Framework\TestCase;
 
-class TraitUseTest extends \PHPUnit\Framework\TestCase
+class TraitUseTest extends TestCase
 {
     protected function createTraitUseBuilder(...$traits) {
         return new TraitUse(...$traits);

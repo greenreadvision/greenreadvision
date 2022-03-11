@@ -21,7 +21,7 @@
 
 namespace tests\Mockery\Adapter\Phpunit;
 
-use Mockery\Adapter\Phpunit\MockeryTestCase;
+use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestResult;
 use Mockery\Adapter\Phpunit\TestListener;
 
@@ -33,9 +33,9 @@ if (class_exists('PHPUnit_Runner_Version') && version_compare(\PHPUnit_Runner_Ve
     class_alias('test\Mockery\Fixtures\EmptyTestCaseV7', 'tests\Mockery\Adapter\Phpunit\EmptyTestCase');
 }
 
-class TestListenerTest extends MockeryTestCase
+class TestListenerTest extends TestCase
 {
-    protected function mockeryTestSetUp()
+    protected function setUp()
     {
         /**
          * Skip all tests here if PHPUnit is less than 6.0.0

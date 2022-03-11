@@ -46,10 +46,6 @@ class Grammar extends BaseGrammar
      */
     public function compileSelect(Builder $query)
     {
-        if ($query->unions && $query->aggregate) {
-            return $this->compileUnionAggregate($query);
-        }
-
         // If the query does not have any columns set, we'll set the columns to the
         // * character to just get all of the columns from the database. Then we
         // can build the query and concatenate all the pieces together as one.
@@ -163,9 +159,7 @@ class Grammar extends BaseGrammar
 
             $nestedJoins = is_null($join->joins) ? '' : ' '.$this->compileJoins($query, $join->joins);
 
-            $tableAndNestedJoins = is_null($join->joins) ? $table : '('.$table.$nestedJoins.')';
-
-            return trim("{$join->type} join {$tableAndNestedJoins} {$this->compileWheres($join)}");
+            return trim("{$join->type} join {$table}{$nestedJoins} {$this->compileWheres($join)}");
         })->implode(' ');
     }
 
@@ -280,24 +274,6 @@ class Grammar extends BaseGrammar
     }
 
     /**
-     * Compile a "where not in raw" clause.
-     *
-     * For safety, whereIntegerInRaw ensures this method is only used with integer values.
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  array  $where
-     * @return string
-     */
-    protected function whereNotInRaw(Builder $query, $where)
-    {
-        if (! empty($where['values'])) {
-            return $this->wrap($where['column']).' not in ('.implode(', ', $where['values']).')';
-        }
-
-        return '1 = 1';
-    }
-
-    /**
      * Compile a where in sub-select clause.
      *
      * @param  \Illuminate\Database\Query\Builder  $query
@@ -319,24 +295,6 @@ class Grammar extends BaseGrammar
     protected function whereNotInSub(Builder $query, $where)
     {
         return $this->wrap($where['column']).' not in ('.$this->compileSelect($where['query']).')';
-    }
-
-    /**
-     * Compile a "where in raw" clause.
-     *
-     * For safety, whereIntegerInRaw ensures this method is only used with integer values.
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  array  $where
-     * @return string
-     */
-    protected function whereInRaw(Builder $query, $where)
-    {
-        if (! empty($where['values'])) {
-            return $this->wrap($where['column']).' in ('.implode(', ', $where['values']).')';
-        }
-
-        return '0 = 1';
     }
 
     /**
@@ -540,24 +498,6 @@ class Grammar extends BaseGrammar
     }
 
     /**
-     * Compile a "where JSON boolean" clause.
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  array  $where
-     * @return string
-     */
-    protected function whereJsonBoolean(Builder $query, $where)
-    {
-        $column = $this->wrapJsonBooleanSelector($where['column']);
-
-        $value = $this->wrapJsonBooleanValue(
-            $this->parameter($where['value'])
-        );
-
-        return $column.' '.$where['operator'].' '.$value;
-    }
-
-    /**
      * Compile a "where JSON contains" clause.
      *
      * @param  \Illuminate\Database\Query\Builder  $query
@@ -666,8 +606,6 @@ class Grammar extends BaseGrammar
         // clause into SQL based on the components that make it up from builder.
         if ($having['type'] === 'Raw') {
             return $having['boolean'].' '.$having['sql'];
-        } elseif ($having['type'] === 'between') {
-            return $this->compileHavingBetween($having);
         }
 
         return $this->compileBasicHaving($having);
@@ -686,25 +624,6 @@ class Grammar extends BaseGrammar
         $parameter = $this->parameter($having['value']);
 
         return $having['boolean'].' '.$column.' '.$having['operator'].' '.$parameter;
-    }
-
-    /**
-     * Compile a "between" having clause.
-     *
-     * @param  array  $having
-     * @return string
-     */
-    protected function compileHavingBetween($having)
-    {
-        $between = $having['not'] ? 'not between' : 'between';
-
-        $column = $this->wrap($having['column']);
-
-        $min = $this->parameter(head($having['values']));
-
-        $max = $this->parameter(last($having['values']));
-
-        return $having['boolean'].' '.$column.' '.$between.' '.$min.' and '.$max;
     }
 
     /**
@@ -733,7 +652,9 @@ class Grammar extends BaseGrammar
     protected function compileOrdersToArray(Builder $query, $orders)
     {
         return array_map(function ($order) {
-            return $order['sql'] ?? $this->wrap($order['column']).' '.$order['direction'];
+            return ! isset($order['sql'])
+                        ? $this->wrap($order['column']).' '.$order['direction']
+                        : $order['sql'];
         }, $orders);
     }
 
@@ -815,21 +736,6 @@ class Grammar extends BaseGrammar
     }
 
     /**
-     * Compile a union aggregate query into SQL.
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @return string
-     */
-    protected function compileUnionAggregate(Builder $query)
-    {
-        $sql = $this->compileAggregate($query, $query->aggregate);
-
-        $query->aggregate = null;
-
-        return $sql.' from ('.$this->compileSelect($query).') as '.$this->wrapTable('temp_table');
-    }
-
-    /**
      * Compile an exists statement into SQL.
      *
      * @param  \Illuminate\Database\Query\Builder  $query
@@ -883,19 +789,6 @@ class Grammar extends BaseGrammar
     public function compileInsertGetId(Builder $query, $values, $sequence)
     {
         return $this->compileInsert($query, $values);
-    }
-
-    /**
-     * Compile an insert statement using a subquery into SQL.
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  array  $columns
-     * @param  string  $sql
-     * @return string
-     */
-    public function compileInsertUsing(Builder $query, array $columns, string $sql)
-    {
-        return "insert into {$this->wrapTable($query->from)} ({$this->columnize($columns)}) $sql";
     }
 
     /**
@@ -1070,28 +963,6 @@ class Grammar extends BaseGrammar
     }
 
     /**
-     * Wrap the given JSON selector for boolean values.
-     *
-     * @param  string  $value
-     * @return string
-     */
-    protected function wrapJsonBooleanSelector($value)
-    {
-        return $this->wrapJsonSelector($value);
-    }
-
-    /**
-     * Wrap the given JSON boolean value.
-     *
-     * @param  string  $value
-     * @return string
-     */
-    protected function wrapJsonBooleanValue($value)
-    {
-        return $value;
-    }
-
-    /**
      * Split the given JSON selector into the field and the optional path and wrap them separately.
      *
      * @param  string  $column
@@ -1103,7 +974,7 @@ class Grammar extends BaseGrammar
 
         $field = $this->wrap($parts[0]);
 
-        $path = count($parts) > 1 ? ', '.$this->wrapJsonPath($parts[1], '->') : '';
+        $path = count($parts) > 1 ? ', '.$this->wrapJsonPath($parts[1]) : '';
 
         return [$field, $path];
     }
@@ -1112,14 +983,11 @@ class Grammar extends BaseGrammar
      * Wrap the given JSON path.
      *
      * @param  string  $value
-     * @param  string  $delimiter
      * @return string
      */
-    protected function wrapJsonPath($value, $delimiter = '->')
+    protected function wrapJsonPath($value)
     {
-        $value = preg_replace("/([\\\\]+)?\\'/", "\\'", $value);
-
-        return '\'$."'.str_replace($delimiter, '"."', $value).'"\'';
+        return '\'$."'.str_replace('->', '"."', $value).'"\'';
     }
 
     /**

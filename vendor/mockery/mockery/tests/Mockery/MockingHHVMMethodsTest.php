@@ -32,13 +32,13 @@ class MockingHHVMMethodsTest extends MockeryTestCase
      */
     private $container;
 
-    protected function mockeryTestSetUp()
+    protected function setUp()
     {
         if (!$this->isHHVM()) {
             $this->markTestSkipped('For HHVM test only');
         }
 
-        parent::mockeryTestSetUp();
+        parent::setUp();
 
         require_once __DIR__."/Fixtures/MethodWithHHVMReturnType.php";
     }

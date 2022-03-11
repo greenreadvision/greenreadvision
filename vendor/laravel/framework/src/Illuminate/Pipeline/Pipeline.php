@@ -105,18 +105,6 @@ class Pipeline implements PipelineContract
     }
 
     /**
-     * Run the pipeline and return the result.
-     *
-     * @return mixed
-     */
-    public function thenReturn()
-    {
-        return $this->then(function ($passable) {
-            return $passable;
-        });
-    }
-
-    /**
      * Get the final piece of the Closure onion.
      *
      * @param  \Closure  $destination
@@ -164,7 +152,7 @@ class Pipeline implements PipelineContract
                                 : $pipe(...$parameters);
 
                 return $response instanceof Responsable
-                            ? $response->toResponse($this->getContainer()->make(Request::class))
+                            ? $response->toResponse($this->container->make(Request::class))
                             : $response;
             };
         };

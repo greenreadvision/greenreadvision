@@ -84,8 +84,6 @@ function assertArrayHasKey($key, $array, string $message = ''): void
  *
  * @throws ExpectationFailedException
  * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
- *
- * @deprecated https://github.com/sebastianbergmann/phpunit/issues/3494
  */
 function assertArraySubset($subset, $array, bool $checkForObjectIdentity = false, string $message = ''): void
 {

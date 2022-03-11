@@ -12,8 +12,8 @@ PHPUnit\TextUI\Command::main();
 --EXPECTF--
 PHPUnit %s by Sebastian Bergmann and contributors.
 
-Issue3107\Issue3107
- ✘ One
+Issue3107\Issue3107Test
+ ✘ Error bootstapping suite (most likely in Issue3107\Issue3107Test::setUpBeforeClass)
    │
    │ Error: Call to undefined function %Sdoes_not_exist()
    │ 
