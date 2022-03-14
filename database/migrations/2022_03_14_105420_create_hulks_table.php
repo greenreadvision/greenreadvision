@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHulkTable extends Migration
+class CreateHulksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateHulkTable extends Migration
      */
     public function up()
     {
-        Schema::create('hulk', function (Blueprint $table) {
-            $table->integer('id')->autoIncrement();
+        Schema::create('hulks', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('sex');
             $table->string('area');
             $table->string('age');
@@ -29,6 +29,6 @@ class CreateHulkTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hulk');
+        Schema::dropIfExists('hulks');
     }
 }

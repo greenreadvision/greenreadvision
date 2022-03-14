@@ -1,7 +1,7 @@
 @extends('layouts.hulk')
 
 @section('content')
-<button type="button" class="btn btn-blue rounded-pill" onclick='tableToExcel()'><span class="mx-2">匯出 Excel</span></button>
+<button type="button" class="btn btn-blue rounded-pill" onclick="tableToExcel()"><span class="mx-2">匯出 Excel</span></button>
 <div class="col-lg-12" style="position: relative" id="sex" tabindex="-1" role="dialog" aria-labelledby="sex" aria-hidden="false">
     <div class="modal-dialog containerr" role="document" >
         <div class="modal-content" style="height:450px">
@@ -95,6 +95,7 @@
 
 @section('script')
 <script type="text/javascript" src="{{ URL::asset('js/jquery.min.js') }}"></script>
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.14.0/dist/xlsx.full.min.js"></script>
 
 <script>
     var sex = ""
@@ -137,7 +138,7 @@
     }
 </script>
 
-<script type="text/javascript" src="https://unpkg.com/xlsx@0.14.0/dist/xlsx.full.min.js">
+<script type="text/javascript">
     function getData(){
         data = "{{$datas}}"
         data = data.replace(/[\n\r]/g, "")
@@ -146,8 +147,7 @@
     }
 
     function tableToExcel(){
-        console.log('test')
-         /*var excel=[
+        var excel=[
             ['資料提交日期', '性別', '地區', '年齡']
         ];
         var data = getData();
@@ -157,12 +157,12 @@
             excel.push([submitDate, data[i]['sex'], data[i]['area'], data[i]['age']])
         }
 
-       var filename = "農博資料.xlsx";
+        var filename = "農博資料.xlsx";
         var ws_name = "工作表1";
         var wb = XLSX.utils.book_new(),
             ws = XLSX.utils.aoa_to_sheet(excel);
         XLSX.utils.book_append_sheet(wb, ws, ws_name);
-        XLSX.writeFile(wb, filename);*/
+        XLSX.writeFile(wb, filename);
     }
     
 </script>
