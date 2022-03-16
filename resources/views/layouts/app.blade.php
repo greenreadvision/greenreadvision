@@ -33,6 +33,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/hulk.css') }}" rel="stylesheet">
     <link href="{{ asset('css/grv.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/grv/menu.css') }}" rel="stylesheet">
     <link href="{{ asset('css/tool/normal.css')}}" rel="stylesheet">
     <link href="{{ asset('css/tool/table.css')}}" rel="stylesheet">
     
@@ -108,7 +109,7 @@
         @include('layouts.nav')
         <main style="padding:90px 0; height:100vh;">
             <section class="cd-section">
-                <div class="container p-0">
+                <div class="container p-0 ">
                     @yield('content')
                 </div>
                 <div id="cd-loading-bar" data-scale="1" class="index"></div> <!-- lateral loading bar -->

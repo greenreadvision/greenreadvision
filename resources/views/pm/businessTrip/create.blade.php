@@ -2,7 +2,7 @@
 @section('content')
 
 <section class="d-flex justify-content-center">
-    <div class="col-lg-8 col-md-12">
+    <div class="col-lg-12 col-md-12">
         <div class="card border-0 shadow rounded-pill">
             <div class="card-body">
                 <div class="business-create-form">

@@ -8,6 +8,7 @@ use App\Hulk;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Functions\RandomId;
+use App\Random;
 use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -26,5 +27,6 @@ class HulkController extends Controller{
             'age' => $request -> input('select_age')
         ]);
         return redirect()->route('hulk');
-    }
+    }   
+
 }

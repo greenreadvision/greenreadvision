@@ -2,7 +2,7 @@
 @section('content')
 <div class="col-lg-12">
     <div class="row">
-        <div class="col-lg-3  col-12">
+        <div class="col-lg-2  col-12">
             <div class="card border-0 shadow rounded-pill">
                 <div class="card-body">
                     <div class="col-12 form-group">
@@ -61,7 +61,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-9 col-12">
+        <div class="col-lg-10 col-12">
             <div class="card border-0 shadow" style="min-height: calc(100vh - 135px)">
                 <div class="card-body">
                     <div class="form-group col-lg-12">
