@@ -63,3 +63,25 @@
     width: 50%;
     font-size: large;
 }
+
+
+.hulk_modal {
+    position: relative;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: row;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: .3rem;
+    outline: 0
+}
+
+.export_btn{
+    display:flex;
+    align-items: center;
+    justify-content: center
+}

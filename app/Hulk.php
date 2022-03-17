@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Hulk extends Model
 {
+    protected $table = 'hulk';
     public $incrementing = false;
     
     protected $primaryKey = "id";
