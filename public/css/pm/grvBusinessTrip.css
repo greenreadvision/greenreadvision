@@ -8,7 +8,7 @@
 .business_allPage .business_search{
     position: absolute;
     left: 0;
-    width: 25%;
+    width: 16.67%;
     padding: 0 15px;
 }
 
@@ -29,8 +29,8 @@
 }
 .business_allPage .businessTrip_list{
     position: absolute;
-    margin-left: 25%;
-    width: 75%;
+    margin-left: 16.67%;
+    width: 83.3%;
     padding: 0 15px;
 }
 
