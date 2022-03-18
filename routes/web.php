@@ -77,6 +77,7 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/board/create','BoardController@create')->name('board.create');
     Route::post('/board/create/review','BoardController@store')->name('board.store');
     Route::get('/board/{id}/review','BoardController@show')->name('board.show');
+    Route::put('/board/{id}/update/{type}','BoardController@update')->name('board.update');
 });
 
 Route::group(['middleware' => ['auth', 'general']], function () {

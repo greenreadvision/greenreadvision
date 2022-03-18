@@ -31,6 +31,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/editor.css') }}" rel="stylesheet">
     <link href="{{ asset('css/grv.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/grv/menu.css') }}" rel="stylesheet">
     <link href="{{ asset('css/system.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('css/grv/showExternally.css') }}" rel="stylesheet">
     

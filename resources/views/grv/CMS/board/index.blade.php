@@ -359,12 +359,7 @@
     function getNewBoard(){
         data = "{{$board}}"
         data = data.replace(/[\n\r]/g, "")
-        data = data.replace(/&lt;/g, '<')
-        data = data.replace(/&gt;/g, '>')
-        data = data.replace(/&quot;/g, '"')
-        data = data.replace(/	/g,"")
-        console.log(data)
-        data = JSON.parse(data)
+        data = JSON.parse(data.replace(/&quot;/g, '"'));
         return data
     }
 

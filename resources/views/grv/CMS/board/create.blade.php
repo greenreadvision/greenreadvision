@@ -69,7 +69,7 @@
 <script>
     setTimeout(function(){
         var editor = CKEDITOR.replace( 'ckeditor',{
-            filebrowserUploadUrl: "{{route('board.upload', ['_token' => csrf_token() ])}}",
+            filebrowserUploadUrl: "{{route('ckeditor.upload', ['_token' => csrf_token() ])}}",
             filebrowserUploadMethod: 'form',
             language: 'zh-cn',
             

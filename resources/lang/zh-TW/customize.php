@@ -255,5 +255,10 @@ return [
     'children' => '幼年',
     'teen' => '青年',
     'adult' => '中年',
-    'elderly' => '老年'
+    'elderly' => '老年',
+
+    //board公告類型
+    'news' => '最近項目',
+    'service' => '服務項目',
+    'question' => '常見問題'
 ];
