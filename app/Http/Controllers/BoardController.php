@@ -126,7 +126,7 @@ class BoardController extends Controller
         ]);
         
 
-        return redirect()->route('board.index');
+        return redirect()->route('board.show', $finished_id);
     }
 
     public function update(Request $request, String $id,string $type)

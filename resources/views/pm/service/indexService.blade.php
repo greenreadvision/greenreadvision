@@ -94,12 +94,12 @@
                                     <td rowspan="4"  style="text-align: center" width="5%" colspan="1">領 款 金 額</td>
                                     <td style="text-align: left;margin:0px;padding:0px;font-size:10.5pt" width=15% colspan="3" rowspan="1">　
                                         <div>□非固定薪資(50)</div>
-                                        <div>(工讀生/義交)</div>
+                                        <div>(攝影師/工作人員/工讀生/車馬費等)</div>
                                     </td>
                                     <td style="text-align: left" width="80%"colspan="16" rowspan="1">
                                         <div>領款總額：新台幣<u>　　　　　</u>元</div>
-                                        <div>所得總額超過84,501元，需代扣5％所得稅，新台幣<u>　　　　　　</u>元。</div>
-                                        <div>所得總額超過23,800元，需代扣2.11％二代健保補充保費，新台幣<u>　　　　　</u>元。</div>
+                                        <div>所得總額超過86,001元，需代扣5％所得稅，新台幣<u>　　　　　　</u>元。</div>
+                                        <div>所得總額超過25,250元，需代扣2.11％二代健保補充保費，新台幣<u>　　　　　</u>元。</div>
                                         <div>領款淨額：新台幣<u>　　　　　</u>元</div>
                                     </td>
                                 </tr>
@@ -134,7 +134,7 @@
                                         <div>稿費所得(9B)</div>
                                         <div>□98非自行出版</div>
                                         <div>□99自行出版</div>
-                                        <div>Ex.稿費、演講費(導覽老師)</div>
+                                        <div>Ex.稿費/演講費/導覽老師</div>
                                     </td>
                                 </tr>
                                 <tr>

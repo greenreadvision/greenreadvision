@@ -135,19 +135,19 @@
                             </div>
                         </div>
                         <div class="col-lg-3">
-                            <div class="row">
+                            <div class="row" id="img_row">
                                 <div class="col-lg-12">
                                     <label class="label-style col-form-label" for="title">主視覺</label>
-                                    <label onclick="uploadImg()" id="view_lable" class="label-style col-form-label input-photo-label w-100">
+                                    <!--<label  id="view_lable" class="label-style col-form-label input-photo-label w-100">
                                         <small>上傳主視覺</small>
-                                    </label>
+                                    </label>-->
                                 </div>
                                 <div class="col-lg-12">
-                                    <input type="file" name="img_path" accept="image/*" id="imgReader" data-target="view_image"> 
-                                    <div class="activity-img" id= 'activity-img'>
-                                        <div class="view_image" id="view_image">
+                                    <input type="file" name="img_path" accept="image/*" id="imgReader" data-target="view_image"   required> 
+                                    <div onclick="uploadImg()" class="activity-img" id= 'activity-img'>
+                                        <a href="javascript:void(0)" class="view_image" id="view_image">
                                             <span id="view_span"></span>
-                                        </div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -166,7 +166,7 @@
                                 <button onclick="showPreview()" class="w-15 btn btn-blue rounded-pill" type="button" id="previewButton">預覽</button>
                             </div>
                             <div class="col-lg-12" style="padding-top: 20px;text-align: end">
-                                <button type="submit" class="w-15 btn btn-green rounded-pill">{{__('customize.Add')}}</button>
+                                <button type="submit" onclick="checkValid()" class="w-15 btn btn-green rounded-pill">{{__('customize.Add')}}</button>
                             </div>
                         </div>
                     </div>
@@ -194,6 +194,13 @@
 </script>
 
 <style>
+    .valid{
+        border:2px solid green;
+    }
+    .invalid{
+        border:2px solid red;
+    }
+
     #imgReader {
         display: none;
 
@@ -233,6 +240,21 @@
         
         view_input.addEventListener('change',function(e){
             readURL(e.target)
+        })
+
+        var imgReader = document.getElementById('imgReader')
+        var img_row = document.getElementById('img_row')
+        imgReader.addEventListener('input', function(){
+            if(imgReader.checkValidity()){
+                img_row.classList.remove('invalid')
+            }else{
+                img_row.classList.add('invalid')
+                if(imgReader.validity.valueMissing){
+                    imgReader.setCustomValidity('此欄位為必填，請重新確認');
+                    return
+                }
+                console.log('???')
+            }
         })
 
     });
@@ -337,6 +359,24 @@
             document.getElementById("Added-time-labal").hidden = false
         }
     }
+</script>
+
+<script type="text/javascript">
+    function checkValid(){
+        /*var imgReader = document.getElementById("imgReader")
+        if (imgReader.validity.valueMissing) {
+            console.log('請輸入')
+            imgReader.classList.remove('valid')
+            imgReader.classList.add('invalid')
+            imgReader.setCustomValidity('此欄位為必填，請重新確認');
+        } else {
+            imgReader.classList.add('valid')
+            imgReader.classList.remove('invalid')
+        } */
+        
+       
+    }
+
 </script>
 
 @stop
