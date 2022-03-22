@@ -9,21 +9,48 @@ $letter = new Letter();
         </div>
         <div style="width:220px">
             <ul class="navbar-nav mr-auto" style="overflow:auto;max-height:calc(100vh - 55px)">
-                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
-                    <a id="menu-project" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('project.index') }}">
-                        <i class='far fa-file-alt' style="width:40px"></i><span class="ml-2">@lang('customize.Project')</span>
-                    </a>
-                </li>
-                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
-                    <div id="menu-money-manager" class="icon-link">
-                        <a  class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative">
-                            <i class="fas fa-file-invoice-dollar" style="width:40px"></i> 
-                            <span class="ml-2">款項管理</span>
-                        </a>
-                        <i class="fas fa-chevron-down arrow" style="width: 20%"></i>
+                
+                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}" >
+                    <div id="menu-project-manager" class="icon-link" >
+                        <a href="javascript:void(0);" onclick="dropMenu(this)" class="d-flex justify-content-between" style="display: flex;">
+                            <div  class="menu-a d-flex navbar-brand py-2 align-items-center justify-content-start position-relative"  >
+                                <i class="fas fa-building" style="width:40px"></i> 
+                                <span class="ml-2">公司文案</span>
+                            </div>
+                            <i class="fas fa-chevron-down arrow"></i>
+                        </a>                        
                     </div>
                     
-                    <ul class="Dropdown_item close-dropdown" id="menu-money-dropdown">
+                    <ul class="Dropdown_item" id="menu-project-dropdown" >
+                        <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                            <a id="menu-project" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('project.index') }}">
+                                <span class="ml-2">@lang('customize.Project')</span>
+                            </a>
+                        </li>
+                        <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                            <a id="menu-seal" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('seal.index') }}">
+                                <span class="ml-2">用印申請單</span>
+                            </a>
+                        </li>
+                        <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                            <a id="menu-projectSOP" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('projectSOP.index') }}">
+                                <span class="ml-2">公司資料庫</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}" >
+                    <div id="menu-money-manager" class="icon-link" >
+                        <a href="javascript:void(0);" onclick="dropMenu(this)" class="d-flex justify-content-between" style="display: flex;">
+                            <div  class="menu-a d-flex navbar-brand py-2 align-items-center justify-content-start position-relative"  >
+                                <i class="fas fa-file-invoice-dollar" style="width:40px"></i> 
+                                <span class="ml-2">款項管理</span>
+                            </div>
+                            <i class="fas fa-chevron-down arrow"></i>
+                        </a>                        
+                    </div>
+                    
+                    <ul class="Dropdown_item" id="menu-money-dropdown" >
                         <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
                             <a id="menu-invoice" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('invoice.index') }}">
                                 <span class="ml-2">請款單</span>
@@ -39,60 +66,62 @@ $letter = new Letter();
                                 <span class="ml-2">勞務單</span>
                             </a>
                         </li>
+                        <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                            <a id="menu-BusinessTrip" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('businessTrip.index') }}">
+                                <span class="ml-2">出差報告表</span>
+                            </a>
+                        </li>
+                        <!--<li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                            <a id="menu-Estimate" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('estimate.index') }}">
+                                <i class='fas fa-file-invoice' style="width:40px"></i><span class="ml-2">報價單</span>
+                            </a>
+                        </li>-->
                     </ul>
                 </li>
-                
-                
-                
-                <!--<li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
-                    <a id="menu-Estimate" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('estimate.index') }}">
-                        <i class='fas fa-file-invoice' style="width:40px"></i><span class="ml-2">報價單</span>
-                    </a>
-                </li>-->
-                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
-                    <a id="menu-BusinessTrip" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('businessTrip.index') }}">
-                        <i class="fas fa-business-time" style="width:40px"></i> <span class="ml-2">出差報告表</span>
-                    </a>
+                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}" >
+                    <div id="menu-people-manager" class="icon-link" >
+                        <a href="javascript:void(0);" onclick="dropMenu(this)" class="d-flex justify-content-between" style="display: flex;">
+                            <div  class="menu-a d-flex navbar-brand py-2 align-items-center justify-content-start position-relative"  >
+                                <i class="fas fa-user" style="width:40px"></i> 
+                                <span class="ml-2">人事管理</span>
+                            </div>
+                            <i class="fas fa-chevron-down arrow"></i>
+                        </a>                        
+                    </div>
+                    
+                    <ul class="Dropdown_item" id="menu-people-dropdown" >
+                        <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                            <a id="menu-leaveday" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('leaveDay.show',[\Auth::user()->leaveDay->leave_day_id,date('Y').'-apply']) }}">
+                                <span class="ml-2">請/補假</span>
+                            </a>
+                        </li>
+                        
+                    </ul>
                 </li>
-                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
-                    <a id="menu-reserve" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('reserve.index') }}">
-                        <i class="fas fa-box-open" style="width:40px"></i> <span class="ml-2">倉儲查詢</span>
-                    </a>
+                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}" >
+                    <div id="menu-hardward-manager" class="icon-link" >
+                        <a href="javascript:void(0);" onclick="dropMenu(this)" class="d-flex justify-content-between" style="display: flex;">
+                            <div  class="menu-a d-flex navbar-brand py-2 align-items-center justify-content-start position-relative"  >
+                                <i class="fas fa-box" style="width:40px"></i> 
+                                <span class="ml-2">硬體管理</span>
+                            </div>
+                            <i class="fas fa-chevron-down arrow"></i>
+                        </a>                        
+                    </div>
+                    
+                    <ul class="Dropdown_item" id="menu-hardward-dropdown" >
+                        <!--<li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                            <a id="menu-reserve" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('reserve.index') }}">
+                                <span class="ml-2">倉儲查詢</span>
+                            </a>
+                        </li>-->
+                        <li>
+                            <a id="menu-goods" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('goods.index') }}">
+                               <span class="ml-2">貨單</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-                <li>
-                    <a id="menu-goods" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('goods.index') }}">
-                        <i class='fas fa-dolly' style="width:40px"></i><span class="ml-2">貨單</span>
-                    </a>
-                </li>
-                <!--<li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
-                    <a id="menu-todo" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('todo.index') }}">
-                        <i class="fas fa-tasks" style="width:40px"></i><span class="ml-2">@lang('customize.Todo')</span>
-                    </a>
-                </li>
-                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
-                    <a id="menu-calendar" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('calendar.index') }}">
-                        <i class='far fa-calendar-alt' style="width:40px"></i><span class="ml-2">@lang('customize.Calendar')</span>
-                    </a>
-                </li>-->
-                
-                
-                <!-- <li><a class="navbar-brand" href="{{ route('offDay.index') }}">@lang('customize.OffDay')</a></li> -->
-                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
-                    <a id="menu-leaveday" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('leaveDay.show',[\Auth::user()->leaveDay->leave_day_id,date('Y').'-apply']) }}">
-                        <i class='far fa-address-book' style="width:40px"></i><span class="ml-2">請/補假</span>
-                    </a>
-                </li>
-                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
-                    <a id="menu-seal" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('seal.index') }}">
-                        <i class='fas fa-stamp' style="width:40px"></i><span class="ml-2">用印申請單</span>
-                    </a>
-                </li>
-                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
-                    <a id="menu-projectSOP" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('projectSOP.index') }}">
-                        <i class='fas fa-cogs' style="width:40px"></i><span class="ml-2">公司資料庫</span>
-                    </a>
-                </li>
-                
 
             </ul>
         </div>
