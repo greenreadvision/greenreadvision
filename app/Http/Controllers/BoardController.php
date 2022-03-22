@@ -37,7 +37,7 @@ class BoardController extends Controller
     {
         $users=[];
         $allUsers = User::orderby('user_id')->get();
-        $board = Board::orderby('created_at', 'desc')->with('user')->get();
+        $board = Board::select('board_id','user_id','title','newTypes','updata_date')->orderby('created_at', 'desc')->with('user')->get();
         
         foreach($allUsers as $allUser){
             //if ($allUser->role != 'manager' &&count($allUser->boards) != 0) {
@@ -66,9 +66,8 @@ class BoardController extends Controller
 
     public function show(String $board_id){
         $board = Board::find($board_id);
-        
-
-        return view('grv.CMS.board.show')->with(['board'=>$board]);
+        $types = ['news', 'service', 'question'];
+        return view('grv.CMS.board.show')->with(['board'=>$board, 'types'=>$types]);
     }
 
     public function store(Request $request)
@@ -127,12 +126,32 @@ class BoardController extends Controller
         ]);
         
 
-        return redirect()->route('board.index');
+        return redirect()->route('board.show', $finished_id);
     }
 
-    public function update(Request $request, String $bank_id)
+    public function update(Request $request, String $id,string $type)
     {
-        
+        $board = Board::find($id);
+        switch($type){
+            case 'title':
+                $board->title = $request->input('title');
+                $board->save();
+                break;
+            case 'type':
+                $board->newTypes = $request->input('type');
+                $board->save();
+                break;
+            case 'content':
+                $request->validate([
+                    'ckeditor' => 'required|string|max:5000'
+                ]);
+                $board->content = $request->input('ckeditor');
+                $board->save();
+                break;
+            default:
+                break;
+        }
+        return redirect()->route('board.show', $id);
     }
     public function destroy(String $bank_id)
     {
