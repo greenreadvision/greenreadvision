@@ -11,9 +11,9 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="type" class=" col-form-label">類別</label>
-                                    <select type="text" id="type" name="type" class="form-control rounded-pill">
+                                    <select type="text" id="type" name="type" class="form-control rounded-pill" onchange="setDayLongFree(this.options[this.options.selectedIndex].value)">
                                         <option value="compensatory_leave" {{old('type')=='compensatory_leave'?'selected':''}}>補休假</option>
-                                        @if(\Auth::user()->role == 'administrator')
+                                        @if(\Auth::user()->role == 'administrator' || \Auth::user()->role == 'manager' )
                                         <option value="special_leave" {{old('type')=='special_leave'?'selected':''}}>特休假</option>
                                         @endif
                                     </select>
@@ -122,7 +122,7 @@
                 document.getElementById('end_day').required = true;
                 document.getElementById('start_day').setAttribute('onchange', "calculation('days')");
                 document.getElementById('start_day').value = ""
-                document.getElementById('end_day').removeAttribute('readonly')
+                document.getElementById('end_day').removeAttribute('readonly')                
                 document.getElementById('end_day').value = ""
                 break
             case 'twoDays':
@@ -211,6 +211,15 @@
         var result = new Date(_date);
         result.setDate(result.getDate() + days);
         return result;
+    };
+
+    function setDayLongFree(type){
+        if(type == 'special_leave'){
+            document.getElementById('days_long').removeAttribute('readonly')
+        }
+        else{
+            document.getElementById('days_long').setAttribute('readonly', true)
+        }
     };
 
     function calculation(type) {
