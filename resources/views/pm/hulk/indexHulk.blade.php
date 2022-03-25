@@ -18,7 +18,7 @@
                     <input type="date" id="end_date" class="form-control rounded-pill" onchange="end_date = this.value" >
                 </div>
                 <div class="col-12 export_btn" style=" border-bottom-style:dotted;border-width:thin">
-                    <button type="button" class="btn btn-blue rounded-pill" onclick="tableToExcel(0)"><span class="mx-2">匯出所選範圍(如無選擇，則匯出所有資料)</span></button>
+                    <button type="button" class="btn btn-blue rounded-pill" onclick="tableToExcel(0)"><span class="mx-2">匯出所選範圍</span></button>
                 </div>
                 <div class="col-6 export_btn" style="text-align:center">
                     <button type="button" class="btn btn-blue rounded-pill" onclick="tableToExcel(1)"><span class="mx-2">匯出上月 Excel</span></button>
@@ -206,7 +206,7 @@
         var submitDate = ''
         console.log('data = '+data)
         for(var i=0; i<data.length; i++){
-            if (type == 0 && start_date !='' && end_date !=''){ //匯出所選日期
+            if (type == 0){ //匯出所選日期
                 if (data[i]['created_at'] < start_date){
                     data.splice(i,1)
                     i--
