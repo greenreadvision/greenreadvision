@@ -40,7 +40,7 @@
         <div class="col-2">
         </div>
         <div id="about-us" class="col col-md-12 col-log-10"  style="float:none;margin:auto;">
-            <div class="title-style">
+            <div id="about-as" class="title-style">
                 <h3>公司簡介</h3>
                 <h4>&nbsp;About us</h4>
             </div>
