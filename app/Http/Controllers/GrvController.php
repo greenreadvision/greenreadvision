@@ -65,7 +65,7 @@ class GrvController extends Controller
 
     public function index()
     {
-        $boards = Board::orderby('created_at', 'desc')->get();
+        $board = Board::select('board_id','user_id','title','newTypes','updata_date')->orderby('created_at', 'desc')->with('user')->get();
         $products = Products::orderby('order')->get();
         foreach($products as $data){
             $data->path = explode('/', $data->path);
@@ -77,7 +77,7 @@ class GrvController extends Controller
             $data->img_path = explode('/', $data->img_path);
  
         }
-        return view('grv.index',['products'=>$products,'board'=>$boards,'types'=>$activity_type,'activities' =>$activities]);
+        return view('grv.index',['products'=>$products,'board'=>$board,'types'=>$activity_type,'activities' =>$activities]);
     }
     public function about()
     {

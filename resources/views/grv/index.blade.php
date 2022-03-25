@@ -19,49 +19,51 @@
     </div>
 </div>
 <div id="home-total" class="home" >
-        <div id="home-img" >
-            <!--<img src="{{ URL::asset('img/綠雷德創新.png') }}" alt="綠雷德創新">-->
-            
-            <span>綠雷德帶領著國內外小朋友<br/>&emsp;一起「玩感動、感動玩」台灣！<br/>&emsp;&emsp;台北、新竹時光機出發囉！<br/>&emsp;&emsp;&emsp;帶你穿越古時候的小故事。</span>
-        </div>
+    <div id="home-img" >
+        <!--<img src="{{ URL::asset('img/綠雷德創新.png') }}" alt="綠雷德創新">-->
+        
+        <span>綠雷德帶領著國內外小朋友<br/>&emsp;一起「玩感動、感動玩」台灣！<br/>&emsp;&emsp;台北、新竹時光機出發囉！<br/>&emsp;&emsp;&emsp;帶你穿越古時候的小故事。</span>
+    </div>
 </div>
 <div style="padding:0 7.5%;padding-top:5%;background-color: rgb(255, 255, 255)">
     <div class="row">
-        <!--<div id="news-board" class="col col-md-6 table-style-board">
+        <div class="col-2">
+        </div>
+        <div id="news-board" class="col-8 table-style-board">
             <table class="table-home-board" cellpadding="10" border='1' id="board-table">
                 <thead>
-                    <td><b style="color:black;font-size: 32px">NEWS</b><b style="color:black;font-size: 20px">/最新消息</b></td>
+                    <td><b style="color:black;font-size: 32px">最新消息</b><b style="color:black;font-size: 20px">/News</b></td>
                     <td><b style="color:black;">more</b></td>
                 </thead>
             </table>
-        </div>-->
-        <div class="col col-md-12 col-log-10"  style="float:none;margin:auto;">
-            <div id="about-as" class="">
-                <div class="title-style">
-                    <h3>公司簡介</h3>
-                    <h4>&nbsp;About us</h4>
+        </div>
+        <div class="col-2">
+        </div>
+        <div id="about-us" class="col col-md-12 col-log-10"  style="float:none;margin:auto;">
+            <div class="title-style">
+                <h3>公司簡介</h3>
+                <h4>&nbsp;About us</h4>
+            </div>
+            <div class="row">
+                <div class="about-content col-lg-8 col-md-8 col-sm-8" id="about-content">
+                    <div class="company-creat">
+                        <h3 style="color: #DC8749"><i class="fas fa-seedling"></i>&nbsp;綠雷德創新成立</h3>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;綠雷德名字的由來，是從英文『Green Readvision』直接用音譯過來的。綠亦即是『Green』、雷德亦即是『Read』音譯。創辦人的精神是：希望在大自然的環境中，讓親子家庭閱讀到世界的無限視野。
+                            我們有感於我們下一代，對於大自然的接觸越來越少，期望用我們團隊的小小力量能夠，帶領著親子家庭從台灣出發，認識台灣的生態、人文、科技、文化等各地方的美麗故事。也從台北出發，發展出台北時光機、桃園時光機、新竹時光機、台南時光機等各地的在地故事系列課程。
+                            更藉由服務各縣市的政府單位，推廣更多的在地活動、小旅行、環境教育推廣等讓更多的民眾，認識自己的家鄉、認識在地的環境、認識自己生活的故事。
+                        </p>
+                    </div>
+                    <div class="csr">
+                        <h3 style="color: #DC8749"><i class="fas fa-users"></i>&nbsp;綠雷德創新的企業社會責任（CSR）</h3>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;致力於親子教育的推廣是我們團隊多年的經驗傳承、智慧累積，更是我們貢獻和回饋於社會的最好方式。希望能夠有更多的機會前進到校園中推廣各式課程和活動、偏鄉的地區。成立的這幾年中，我們團隊用教育的理念讓我們的下一代更認識我們的台灣外，並藉由我們的力量，服務社會做公益。服務過唐氏症寶寶的課程、台北市弱勢家庭的公益2日夏令營、宜蘭偏鄉聯合5校學校到台北的北投活動等。都是我們成立來對社會的回饋，我們也會秉持的這精神繼續往前進，並推廣到國外去。
+                        </p>
+                    </div>
                 </div>
-                <div class="row">
-                    <div class="about-content col-lg-8 col-md-8 col-sm-8" id="about-content">
-                        <div class="company-creat">
-                            <h3 style="color: #DC8749"><i class="fas fa-seedling"></i>&nbsp;綠雷德創新成立</h3>
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;綠雷德名字的由來，是從英文『Green Readvision』直接用音譯過來的。綠亦即是『Green』、雷德亦即是『Read』音譯。創辦人的精神是：希望在大自然的環境中，讓親子家庭閱讀到世界的無限視野。
-                                我們有感於我們下一代，對於大自然的接觸越來越少，期望用我們團隊的小小力量能夠，帶領著親子家庭從台灣出發，認識台灣的生態、人文、科技、文化等各地方的美麗故事。也從台北出發，發展出台北時光機、桃園時光機、新竹時光機、台南時光機等各地的在地故事系列課程。
-                                更藉由服務各縣市的政府單位，推廣更多的在地活動、小旅行、環境教育推廣等讓更多的民眾，認識自己的家鄉、認識在地的環境、認識自己生活的故事。
-                            </p>
-                        </div>
-                        <div class="csr">
-                            <h3 style="color: #DC8749"><i class="fas fa-users"></i>&nbsp;綠雷德創新的企業社會責任（CSR）</h3>
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;致力於親子教育的推廣是我們團隊多年的經驗傳承、智慧累積，更是我們貢獻和回饋於社會的最好方式。希望能夠有更多的機會前進到校園中推廣各式課程和活動、偏鄉的地區。成立的這幾年中，我們團隊用教育的理念讓我們的下一代更認識我們的台灣外，並藉由我們的力量，服務社會做公益。服務過唐氏症寶寶的課程、台北市弱勢家庭的公益2日夏令營、宜蘭偏鄉聯合5校學校到台北的北投活動等。都是我們成立來對社會的回饋，我們也會秉持的這精神繼續往前進，並推廣到國外去。
-                            </p>
-                        </div>
-                    </div>
-                    <div class="about-year-book col-lg-4 col-md-4 col-sm-4">
-                        <h3 style="color: #DC8749;"><i class="fas fa-book"></i>&nbsp;綠雷德創新2021回顧</h3>
-                        <a onclick="AddBook()" class="about-year-book-modal" href="#" data-toggle="modal" data-target='#myModal'>
-                            <img  src="{{ URL::asset('years/年刊封面.JPG') }}">
-                        </a>
-                    </div>
+                <div class="about-year-book col-lg-4 col-md-4 col-sm-4">
+                    <h3 style="color: #DC8749;"><i class="fas fa-book"></i>&nbsp;綠雷德創新2021回顧</h3>
+                    <a onclick="AddBook()" class="about-year-book-modal" href="#" data-toggle="modal" data-target='#myModal'>
+                        <img  src="{{ URL::asset('years/年刊封面.JPG') }}">
+                    </a>
                 </div>
             </div>
         </div>
@@ -228,6 +230,8 @@
 
 @stop
 
+<link href="{{ URL::asset('css/grv/board.css') }}" rel="stylesheet">
+
 @section('javascript')
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script type="text/javascript" src="{{ URL::asset('js/jquery.min.js') }}"></script>
@@ -280,13 +284,17 @@
         
     });
     
-   /*$(window).scroll(function(){
-       var board = document.getElementById("news-board");
-       var home = document.getElementById("home-total");
-        if($(this).scrollTop()>= home.offsetHeight){
+    $(window).scroll(function(){
+        var board = document.getElementById("news-board");
+        var home = document.getElementById("home-total");
+        var about = document.getElementById("about-us")
+        if($(this).scrollTop()>= board.offsetHeight){
             board.classList.add("leftIn")
         }
-   });*/
+        if($(this).scrollTop()>= about.offsetHeight){
+            about.classList.add("leftIn")
+        }
+    });
 
 
    
