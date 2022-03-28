@@ -110,11 +110,11 @@ $letter = new Letter();
                     </div>
                     
                     <ul class="Dropdown_item" id="menu-hardward-dropdown" >
-                        <!--<li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                        <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
                             <a id="menu-reserve" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('reserve.index') }}">
                                 <span class="ml-2">倉儲查詢</span>
                             </a>
-                        </li>-->
+                        </li>
                         <li>
                             <a id="menu-goods" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('goods.index') }}">
                                <span class="ml-2">貨單</span>
