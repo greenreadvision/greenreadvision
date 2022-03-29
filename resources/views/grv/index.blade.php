@@ -33,7 +33,7 @@
             <table class="table-home-board" cellpadding="10" border='1' id="board-table">
                 <thead>
                     <td><b style="color:black;font-size: 32px">最新消息</b><b style="color:black;font-size: 20px">/News</b></td>
-                    <td><b style="color:black;">more</b></td>
+                    <td><a href="{{route('news.index')}}"><b style="color:black;">more</b></a></td>
                 </thead>
             </table>
         </div>
@@ -230,7 +230,7 @@
 
 @stop
 
-<link href="{{ URL::asset('css/grv/board.css') }}" rel="stylesheet">
+{{--  <link href="{{ URL::asset('css/grv/board.css') }}" rel="stylesheet">  --}}
 
 @section('javascript')
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>

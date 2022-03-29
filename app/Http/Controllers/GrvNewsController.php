@@ -15,7 +15,9 @@ class GrvNewsController extends Controller
      */
     public function index()
     {
-        //
+        $board = Board::select('board_id','user_id','title','newTypes','updata_date')->orderby('created_at', 'desc')->with('user')->get();
+        
+        return view('grv.news.newsIndex')->with(['board'=>$board]);
     }
 
     /**
@@ -47,9 +49,9 @@ class GrvNewsController extends Controller
      */
     public function show(String $board_id)
     {
-        
         $board = Board::find($board_id);
-        return view('grv.news.newsShow')->with(['board'=>$board]);
+        $types = ['news', 'service', 'question'];
+        return view('grv.news.newsShow')->with(['board'=>$board, 'types'=>$types]);
     }
 
     /**
