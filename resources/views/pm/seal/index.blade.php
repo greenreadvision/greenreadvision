@@ -1,7 +1,15 @@
 @extends('layouts.app')
 @section('content')
-
-<div class="col-lg-12">
+<div class="page_level">
+    <div class="page_show">
+        <div class="page_title" id="page_title">
+            <span class="page_title_span">公司文案</span>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <a  href="/seal" class="page_title_a" >用印申請單</a>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12" >
     <div class="row">
         <div class="col-lg-3 mb-2">
             <div class="card border-0 shadow rounded-pill">

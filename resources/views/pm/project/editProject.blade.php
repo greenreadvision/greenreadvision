@@ -1,6 +1,19 @@
 @extends('layouts.app')
 @section('content')
-<form action="update" method="POST" enctype="multipart/form-data">
+<div class="page_level">
+    <div class="page_show">
+        <div class="page_title" id="page_title">
+            <span class="page_title_span">公司文案</span>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <a  href="/project" class="page_title_a" >專案管理</a>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <a  href="/project/{{$data['project']->id}}" class="page_title_a">{{$data['project']->name}}</a>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <span class="page_title_span">編輯專案</span>
+        </div>
+    </div>
+</div>
+<form action="update" method="POST" enctype="multipart/form-data" >
     @csrf
     <div class="col-lg-12">
         <div class="row" style="justify-content: flex-end;">

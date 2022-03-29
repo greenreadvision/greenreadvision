@@ -1,6 +1,15 @@
 @extends('layouts.app')
 @section('content')
-<div class="col-lg-12">
+<div class="page_level">
+    <div class="page_show">
+        <div class="page_title" id="page_title">
+            <span class="page_title_span">款項管理</span>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <a  href="/purchase" class="page_title_a" >採購單</a>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12" >
     <div class="row">
         <div class="col-lg-2  col-12">
             <div class="card border-0 shadow rounded-pill">

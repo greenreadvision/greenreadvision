@@ -1,7 +1,15 @@
 @extends('layouts.app')
 @section('content')
-
-<section class="business_allPage">
+<div class="page_level">
+    <div class="page_show">
+        <div class="page_title" id="page_title">
+            <span class="page_title_span">款項管理</span>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <a  href="/businessTrip/index" class="page_title_a" >出差報告表</a>
+        </div>
+    </div>
+</div>
+<section class="business_allPage" >
     <div class="business_search">
         <div class="card border-0 shadow rounded-pill">
             <div class="card-body show-project-invoice">

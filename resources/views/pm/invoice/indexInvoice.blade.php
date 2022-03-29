@@ -1,6 +1,15 @@
 @extends('layouts.app')
 @section('content')
-<div class="col-lg-12 ">
+<div class="page_level">
+    <div class="page_show">
+        <div class="page_title" id="page_title">
+            <span class="page_title_span">款項管理</span>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <a  href="/invoice" class="page_title_a" >請款單</a>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12 " >
     <div class="row">
         <div id="loading">
             <img src="{{ URL::asset('gif/loadding.gif') }}" alt=""/>
@@ -368,7 +377,10 @@
 <script type="text/javascript" src="{{ URL::asset('js/jquery.min.js') }}"></script>
 <script type="text/javascript" src="https://unpkg.com/xlsx@0.14.0/dist/xlsx.full.min.js"></script>
 
+
 <script  type="text/javascript" charset="UTF-8">
+    var url = window.location.href
+    url = new URL(url)
     function ShowDiv() {
             $("#loading").show();
         }
@@ -520,7 +532,7 @@
     $(document).ready(function() {
         resetOther()
         reset()
-        
+
         setAccount()
         setOtherAccount()
         document.getElementsByClassName('show-other-invoice')[0].style.display = "none"

@@ -34,22 +34,37 @@ $(document).ready(function () {
         project.style.backgroundColor = '#666B8D'
         menu_project_manager.style.backgroundColor = '#666B8D'
         menu_project_manager.parentElement.classList.add('showMenu')
+        
     } 
     else if (location.pathname.split('/')[1] == 'seal') {
         seal.style.backgroundColor = '#666B8D'
         menu_project_manager.style.backgroundColor = '#666B8D'
         menu_project_manager.parentElement.classList.add('showMenu')
+
+
+        span_setting = "<span class=\"page_title_span\">公司文案</span>"
+        span_setting += "<i class=\"fas fa-chevron-right page_title_arrow\"></i>"
+        span_setting += "<a  href=\"/seal\" class=\"page_title_a\">用印管理</a>"
+        page_title_span.innerHTML = span_setting
     } 
     else if (location.pathname.split('/')[1] == 'projectSOP') {
         projectSOP.style.backgroundColor = '#666B8D'
         menu_project_manager.style.backgroundColor = '#666B8D'
         menu_project_manager.parentElement.classList.add('showMenu')
+
+
+        span_setting = "<span class=\"page_title_span\">公司文案</span>"
+        span_setting += "<i class=\"fas fa-chevron-right page_title_arrow\"></i>"
+        span_setting += "<a  href=\"/projectSOP/index\" class=\"page_title_a\">公司資料</a>"
+        page_title_span.innerHTML = span_setting
+
     }
 
     else if (location.pathname.split('/')[1] == 'purchase') {
         purchase.style.backgroundColor = '#666B8D'
         menu_money_manager.style.backgroundColor = '#666B8D'
         menu_money_manager.parentElement.classList.add('showMenu')
+
     } 
     else if (location.pathname.split('/')[1] == 'invoice') {
         invoice.style.backgroundColor = '#666B8D'
@@ -100,5 +115,4 @@ function dropMenu(el){
     var icon_link_Parent = el.parentElement.parentElement
     icon_link_Parent.classList.toggle('showMenu');
     console.log(icon_link_Parent.classList)
-
 }

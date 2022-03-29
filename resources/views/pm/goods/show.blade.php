@@ -509,7 +509,17 @@
       </div>
   </div>
 </div>
-
+<div class="page_level">
+  <div class="page_show">
+      <div class="page_title" id="page_title">
+          <span class="page_title_span">硬體管理</span>
+          <i class="fas fa-chevron-right page_title_arrow"></i>
+          <a  href="/goods" class="page_title_a" >貨單</a>
+          <i class="fas fa-chevron-right page_title_arrow"></i>
+          <span class="page_title_span">{{$good->good_name}}</span>
+      </div>
+  </div>
+</div>
 <div class="row justify-content-center">
   <div class="col-lg-12 mb-3" style="text-align: right">
     @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchases['user_id']|| \Auth::user()->name == $good->signer)

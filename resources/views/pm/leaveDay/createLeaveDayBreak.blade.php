@@ -1,6 +1,17 @@
 @extends('layouts.app')
 @section('content')
-<div class="d-flex justify-content-center">
+<div class="page_level">
+    <div class="page_show">
+        <div class="page_title" id="page_title">
+            <span class="page_title_span">人事管理</span>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <a  href="{{ route('leaveDay.show',[\Auth::user()->leaveDay->leave_day_id,date('Y').'-apply']) }}" class="page_title_a" >請/補假</a>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <span class="page_title_span">申請請假</span>
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-center" >
     <div class="col-lg-8">
         <div class="card border-0 shadow rounded-pill">
             <div class="card-body">

@@ -1,6 +1,21 @@
 @extends('layouts.app')
 @section('content')
-<div class="col-lg-12" style="margin: auto">
+<div class="page_level">
+    <div class="page_show">
+        <div class="page_title" id="page_title">
+            <span class="page_title_span">公司文案</span>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <a  href="/projectSOP/index" class="page_title_a" >公司資料庫</a>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            @if($projectSOP->SOPtype == 'project')
+            <span class="page_title_span">{{$projectSOP->project->name}}</span>
+            @elseif($projectSOP->SOPtype == 'other')
+            <span class="page_title_span">{{$projectSOP->type}}</span>
+            @endif
+        </div>
+    </div>
+</div>
+<div class="col-lg-12" style="margin: auto" >
     <div class="row" style="text-align: center">
         <div class="col-lg-3">
             <div class="card card-style col-lg-12">

@@ -110,3 +110,46 @@ a:not([href]):not([tabindex]):hover {
         display: block;
     }
 }
+
+.page_level{
+    background-color: #FFF;
+}
+
+.page_level .page_show{
+    padding: 9px 20px 2px;
+    margin-top: -10px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.page_level .page_show .page_title{
+
+}
+
+.page_level .page_show .page_title .page_title_span{
+    font-family: "Open Sans", Arial, sans-serif;
+    font-size: 1.125rem;
+    font-weight: bolder;
+}
+
+.page_level .page_show .page_title .page_title_arrow{
+    padding: 0px 4px;
+    width: auto;
+    font-size: 1.125rem;
+    margin-bottom: 5px;
+}
+
+.page_level .page_show .page_title .page_title_a{
+    font-family: "Open Sans", Arial, sans-serif;
+    font-size: 1.125rem;
+    font-weight: bolder;
+    color: black;
+}
+
+.page_level .page_show .page_title .page_title_a:hover{
+    color:rgb(0, 60, 150);
+}
+
+

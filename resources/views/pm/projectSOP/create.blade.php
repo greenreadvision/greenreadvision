@@ -40,6 +40,17 @@
         </div>
     </div>
 </div>
+<div class="page_level">
+    <div class="page_show">
+        <div class="page_title" id="page_title">
+            <span class="page_title_span">公司文案</span>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <a  href="/projectSOP/index" class="page_title_a" >公司資料庫</a>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <span class="page_title_span">建立資料庫</span>
+        </div>
+    </div>
+</div>
 <div class="col-lg-10" style="margin: auto">
     <form name="projectSOP_Form" action="create/store" method="post" enctype="multipart/form-data">
     @csrf
