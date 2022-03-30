@@ -1,6 +1,16 @@
 @extends('layouts.app')
 @section('content')
-
+<div class="page_level">
+    <div class="page_show">
+        <div class="page_title" id="page_title">
+            <span class="page_title_span">款項管理</span>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <a  href="/invoice" class="page_title_a" >請款單</a>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <span class="page_title_span">建立請款單</span>
+        </div>
+    </div>
+</div>
 <div class="d-flex justify-content-center">
     <div class="col-lg-10">
         <div class="card border-0 shadow rounded-pill">

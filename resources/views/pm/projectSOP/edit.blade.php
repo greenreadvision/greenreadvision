@@ -63,7 +63,24 @@
         </div>
     </div>
 </div>
-<div class="col-lg-10" style="margin: auto">
+<div class="page_level">
+    <div class="page_show">
+        <div class="page_title" id="page_title">
+            <span class="page_title_span">公司文案</span>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <a  href="/projectSOP/index" class="page_title_a" >公司資料庫</a>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            @if($projectSOP->SOPtype == 'project')
+            <a  href="/projectSOP/{{$projectSOP->projectSOP_id}}/show" class="page_title_a" >{{$projectSOP->project->name}}</a>
+            @elseif($projectSOP->SOPtype == 'other')
+            <a  href="/projectSOP/{{$projectSOP->projectSOP_id}}/show" class="page_title_a" >{{$projectSOP->type}}</a>
+            @endif
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <span class="page_title_span">編輯資料</span>
+        </div>
+    </div>
+</div>
+<div class="col-lg-10" style="margin: auto;">
     <form name="projectSOP_Form" action="update" method="post" enctype="multipart/form-data">
     @csrf
         <div class="row" style="text-align: center">

@@ -1,5 +1,14 @@
 @extends('layouts.app')
 @section('content')
+<div class="page_level">
+    <div class="page_show">
+        <div class="page_title" id="page_title">
+            <span class="page_title_span">款項管理</span>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <span class="page_title_span">建立勞務單</span>
+        </div>
+    </div>
+</div>
 <div class="col-lg-12">
     <div class="row">
         <div class="col-lg-3 mb-2">

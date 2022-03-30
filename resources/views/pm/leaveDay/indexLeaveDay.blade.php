@@ -74,8 +74,16 @@
     </div>
 </div>
 @endforeach
-
-<div class="col-lg-12 ">
+<div class="page_level">
+    <div class="page_show">
+        <div class="page_title" id="page_title">
+            <span class="page_title_span">人事管理</span>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <a  href="{{ route('leaveDay.show',[\Auth::user()->leaveDay->leave_day_id,date('Y').'-apply']) }}" class="page_title_a" >請/補假</a>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12 " >
     <div class="row">
         <div class="col-lg-3 mb-3">
             <div class="btn-group btn-group-toggle w-100 mb-3" data-toggle="buttons">

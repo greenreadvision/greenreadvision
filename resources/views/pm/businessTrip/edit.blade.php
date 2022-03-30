@@ -1,7 +1,19 @@
 @extends('layouts.app')
 @section('content')
-
-<section class="d-flex justify-content-center">
+<div class="page_level">
+    <div class="page_show">
+        <div class="page_title" id="page_title">
+            <span class="page_title_span">款項管理</span>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <a  href="/businessTrip/index" class="page_title_a" >出差報告表</a>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <a  href="/businessTrip/{{$businessTrip->businessTrip_id}}/show" class="page_title_a" >{{$businessTrip->final_id}}</a>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <span class="page_title_span">編輯資料</span>
+        </div>
+    </div>
+</div>
+<section class="d-flex justify-content-center" >
     <div class="col-lg-12 col-md-12">
         <div class="card border-0 shadow rounded-pill">
             <div class="card-body">

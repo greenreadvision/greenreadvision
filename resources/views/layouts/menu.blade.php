@@ -151,8 +151,8 @@ $letter = new Letter();
 
     <div class="px-0 container-fluid">
         @include('layouts.nav')
-        <main class="px-4" style="min-height:100vh;padding:90px 0 45px 0;background-color:rgb(241 250 255); {{\Auth::user()->status == 'general'?'padding-left:220px!important':''}}">
-            <section class="cd-section">
+        <main>
+            <section class="cd-section" style="min-height:100vh;padding: 55px 0 45px 0;background-color:rgb(241 250 255); {{\Auth::user()->status == 'general'?'padding-left:220px!important':''}}">
                 <div class="container-fluid p-0 ">
                     @yield('content')
                 </div>

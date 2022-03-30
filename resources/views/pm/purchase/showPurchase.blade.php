@@ -379,8 +379,18 @@
 </div>
 </div>
 @endforeach
-
-<div class="row">
+<div class="page_level">
+    <div class="page_show">
+        <div class="page_title" id="page_title">
+            <span class="page_title_span">款項管理</span>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <a  href="/purchase" class="page_title_a" >採購單</a>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <span class="page_title_span">{{$purchase->id}}</span>
+        </div>
+    </div>
+</div>
+<div class="row" >
     <div class="col-lg-9">
         <div class="card border-0 shadow">
             <div class="card-body">

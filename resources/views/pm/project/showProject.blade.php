@@ -48,7 +48,18 @@
     </div>
 </div>
 
-<div class="col-lg-12">
+<div class="page_level">
+    <div class="page_show">
+        <div class="page_title" id="page_title">
+            <span class="page_title_span">公司文案</span>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <a  href="/project" class="page_title_a" >專案管理</a>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <span class="page_title_span">{{$data->name}}</span>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12" >
     <div class="row">
         <div class="col-lg-8 mb-3 d-flex">
             <h2>
@@ -69,7 +80,7 @@
             @endif
         </div>
         <div class="col-lg-4 mb-3">
-            @if(\Auth::user()->user_id==$data['user_id'] || \Auth::user()->role == 'manager' || \Auth::user()->user_id==$data['agent_id'])
+            @if(\Auth::user()->user_id==$data['user_id'] || \Auth::user()->user_id == $data['agent_id'] || \Auth::user()->role == 'manager' || \Auth::user()->user_id==$data['agent_id'])
             <button class="float-right btn btn-primary btn-primary-style" onclick="location.href='{{route('project.edit', $data->project_id)}}'"><i class='fas fa-edit'></i><span class="ml-3"> {{__('customize.Edit')}}</span></button>
             @endif
             @if(\Auth::user()->user_id == $data['receiver'])

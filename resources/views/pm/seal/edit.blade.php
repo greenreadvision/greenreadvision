@@ -23,7 +23,20 @@
         </div>
     </div>
 </div>
+<div class="page_level">
+    <div class="page_show">
+        <div class="page_title" id="page_title">
+            <span class="page_title_span">公司文案</span>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <a  href="/seal" class="page_title_a" >用印申請單</a>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <a  href="/seal/{{$seal->seal_id}}/show" class="page_title_a" >{{$seal->final_id}}</a>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <span class="page_title_span">編輯用印單</span>
 
+        </div>
+    </div>
+</div>
 <div class="d-flex justify-content-center">
     <div class="col-lg-8">
         <div class="card border-0 shadow rounded-pill">
