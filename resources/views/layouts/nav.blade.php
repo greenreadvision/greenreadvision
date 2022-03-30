@@ -19,28 +19,28 @@
                 <a href="{{ route('CMS')}}" class="d-flex align-items-center">官網管理</a>
                 @endauth
                 <!-- <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="menu-a nav-link" href="{{ route('project.index') }}"><span >@lang('customize.Project')</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="menu-a nav-link" href="#">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dropdown link
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </li>
-                </ul>
-            </div> -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="menu-a nav-link" href="{{ route('project.index') }}"><span >@lang('customize.Project')</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="menu-a nav-link" href="#">Features</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Pricing</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Dropdown link
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div> -->
                 <!-- RWD 選單按鈕 -->
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -96,9 +96,8 @@
                     </li>
                     @endguest
                 </ul>
-
         </div>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">   <!-- 手機排版NAV -->
             <div class="menu-rwd px-0">
                 <div>
                     <ul class="navbar-nav mr-auto" style="overflow:auto;max-height:calc(100vh - 55px)">
