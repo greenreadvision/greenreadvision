@@ -7,7 +7,7 @@
             <i class="fas fa-chevron-right page_title_arrow"></i>
             <a  href="/project" class="page_title_a" >專案管理</a>
             <i class="fas fa-chevron-right page_title_arrow"></i>
-            <a  href="/project/{{$data['project']->project_id}}" class="page_title_a">{{$data['project']->name}}</a>
+            <a  href="/project/{{$data['project']->id}}" class="page_title_a">{{$data['project']->name}}</a>
             <i class="fas fa-chevron-right page_title_arrow"></i>
             <span class="page_title_span">編輯專案</span>
         </div>
@@ -674,18 +674,6 @@
                     
                     <div class="row">
                         <div class="col-lg-4 form-group">
-                            <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
-                                <label class="btn btn-secondary active w-50" style="border-top-left-radius: 25px;border-bottom-left-radius: 25px">
-                                    <input type="radio" name="options" onchange="fineType(0)" autocomplete="off" checked> 輸入%數
-                                </label>
-                                <label class="btn btn-secondary w-50" style="border-top-right-radius: 25px;border-bottom-right-radius: 25px">
-                                    <input type="radio" name="options" onchange="fineType(1)" autocomplete="off"> 輸入數字
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                        </div>
-                        <div class="col-lg-4 form-group">
                             <div>
                                 <label class="ml-2 col-form-label font-weight-bold">
                                     扣款%數
@@ -711,7 +699,7 @@
                             </div>
                             <div class="d-flex justify-content-center" >
                                 <label class="content-label-style col-form-label">
-                                    <input type="text" id="default_amount" name="default_amount" class="form-control{{ $errors->has('default_amount') ? ' is-invalid' : '' }}" oninput="changedefaultPerson('add')" readonly>
+                                    <input type="text" id="default_amount" name="default_amount" class="form-control{{ $errors->has('default_amount') ? ' is-invalid' : '' }}" readonly>
                                 </label>
                                 
                             </div>
@@ -777,18 +765,6 @@
                     @method('POST')
                     @csrf
                     <div class="row">
-                        <div class="col-lg-4 form-group">
-                            <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
-                                <label class="btn btn-secondary active w-50" style="border-top-left-radius: 25px;border-bottom-left-radius: 25px">
-                                    <input type="radio" name="options" onchange="editFineType(0)" autocomplete="off" checked> 輸入%數
-                                </label>
-                                <label class="btn btn-secondary w-50" style="border-top-right-radius: 25px;border-bottom-right-radius: 25px">
-                                    <input type="radio" name="options" onchange="editFineType(1)" autocomplete="off"> 輸入數字
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                        </div>
                         <input id="edit_default_remenber" value="" type="text" hidden>
                         <div class="col-lg-4 form-group">
                             <div>
@@ -810,7 +786,7 @@
                             </div>
                             <div class="d-flex justify-content-center" >
                                 <label class="content-label-style col-form-label">
-                                    <input type="text" id="edit_default_amount" name="edit_default_amount" class="form-control" oninput="changedefaultPerson('edit')" readonly>
+                                    <input type="text" id="edit_default_amount" name="edit_default_amount" class="form-control" readonly>
                                 </label>
                             </div>
                         </div>
@@ -1194,6 +1170,7 @@
                     <form action="performance/{{$data['project']->performance_id}}/update" method="POST" style="width:100%" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
+                        @if(isset($data['project']->performance))
                         <div class="form-group row justify-content-center" >
                             <div class="form-group col-lg-3 col-md-4">
                                 <label class="label-style col-form-label" for="deposit_update">履保金金額</label>
@@ -1201,7 +1178,8 @@
                                 @if ($errors->has('deposit_update'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('deposit_update') }}</strong>
-                                </span> @endif
+                                </span>
+                                @endif
                             </div>
                             <div class="col-lg-3 col-md-4 form-group">
                                 <label class="label-style col-form-label" for="invoice_finished_id_update">請款單號</label>
@@ -1246,6 +1224,7 @@
                         <div class="d-flex justify-content-center">
                             <button type="submit" class="btn btn-green rounded-pill">儲存</button>
                         </div>
+                        @endif
                     </form>
                 </div>
             </div>
@@ -1508,7 +1487,6 @@
         document.getElementById('edit_default_remenber').value = val+1
         $("#editDefaultForm").attr("action","defaultItem/" + projectData.defaults[val].id +"/update");
         changedefaultAmount('edit')
-        changedefaultPerson('edit')
         $("#editDefaultModal").modal('show')
     }
 
@@ -1524,49 +1502,6 @@
             var defaultpersen = document.getElementById('edit_default_persen').value;
             var contract_value = document.getElementById('contract_value').value
             defaultAmount.value = defaultpersen * contract_value / 100;
-        }
-    }
-    
-    function changedefaultPerson(val){
-        if(val == 'add'){
-            var defaultPersen = document.getElementById('default_persen');
-            var defaultAmount = document.getElementById('default_amount').value;
-            var contract_value = document.getElementById('contract_value').value
-            defaultPersen.value = defaultAmount  * 100 / contract_value;
-        }
-        else if(val == 'edit'){
-            var defaultPersen = document.getElementById('edit_default_persen');
-            var defaultAmount = document.getElementById('edit_default_amount').value;
-            var contract_value = document.getElementById('contract_value').value
-            defaultPersen.value = defaultAmount  * 100 / contract_value;
-        }
-    }
-
-    function fineType(val){
-        if (val == 0){
-            document.getElementById('default_persen').removeAttribute('readonly')
-            document.getElementById('default_persen').setAttribute('required', true)
-            document.getElementById('default_amount').setAttribute('readonly', true)
-            document.getElementById('default_amount').removeAttribute('required')
-        }else if (val == 1){
-            document.getElementById('default_amount').removeAttribute('readonly')
-            document.getElementById('default_amount').setAttribute('required', true)
-            document.getElementById('default_persen').setAttribute('readonly', true)
-            document.getElementById('default_persen').removeAttribute('required')
-        }
-    }
-
-    function editFineType(val){
-        if (val == 0){
-            document.getElementById('edit_default_persen').removeAttribute('readonly')
-            document.getElementById('edit_default_persen').setAttribute('required', true)
-            document.getElementById('edit_default_amount').setAttribute('readonly', true)
-            document.getElementById('edit_default_amount').removeAttribute('required')
-        }else if (val == 1){
-            document.getElementById('edit_default_amount').removeAttribute('readonly')
-            document.getElementById('edit_default_amount').setAttribute('required', true)
-            document.getElementById('edit_default_persen').setAttribute('readonly', true)
-            document.getElementById('edit_default_persen').removeAttribute('required')
         }
     }
 
