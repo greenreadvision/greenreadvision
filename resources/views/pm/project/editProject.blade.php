@@ -462,11 +462,15 @@
                                     <div style="display: flex;justify-content: space-between">
                                         <label class="ml-2 col-form-label font-weight-bold" style="font-size: 1.2rem; font-weight: 700;">健豪帳務</label>
                                         <span class="ml-2 col-form-label font-weight-bold" id="dging_cost" style="font-size: 1.2rem; font-weight: 700;"></span>
-
+                                        <span class="ml-2 col-form-label font-weight-bold" id="jianhao_cost" style="font-size: 1.2rem; font-weight: 700;">{{$data['project']->jianhao_statement == null ? '無資料' : '有資料'}}</span>
                                     </div>
                                     <div style="text-align: center">
                                         <button type="button" id="dging_cost_button" class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#GdingModal">查看健豪帳務</button>
-
+                                    </div>
+                                    <div style="display: flex;justify-content: center" >
+                                        <div class="fileButton rounded-pill form-control" style="width: auto">
+                                            <input type="file"  id="jianhao_statement" name="jianhao_statement" onchange="UploadJianhaoStatement()" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"  multiple/>檔案上傳請按這
+                                        </div>
                                     </div>
                                 </div>
                                 @if((\Auth::user()->role == 'manager' || \Auth::user()->role == 'proprietor' || \Auth::user()->user_id == $data['project']->user_id) && $data['project']->status !='unacceptable')
@@ -480,7 +484,7 @@
                                     </div>
                                     <div style="display: flex;justify-content: center" >
                                         <div class="fileButton rounded-pill form-control" style="width: auto">
-                                            <input type="file"  id="income_statement" name="income_statement" onchange="UpLoadStatement()" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"  multiple/>檔案上傳請按這
+                                            <input type="file"  id="income_statement" name="income_statement" onchange="UploadIncomeStatement()" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"  multiple/>檔案上傳請按這
                                         </div>
                                     </div>
                                 </div>
@@ -2508,7 +2512,14 @@
 </script>
 <script>
 //成本利潤表設定類---------------------------------------------------------------------------------------
-    function UpLoadStatement(){
+    function UploadJianhaoStatement(){
+        var Statement_file = document.getElementById('jianhao_statement')
+        var Statement_show = document.getElementById('jianhao_cost')
+
+        Statement_show.innerText = '已上傳新資料'
+    }
+    
+    function UploadIncomeStatement(){
         var Statement_file = document.getElementById('income_statement')
         var Statement_show = document.getElementById('Statement_show')
 

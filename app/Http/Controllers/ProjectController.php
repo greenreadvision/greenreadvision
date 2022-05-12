@@ -129,6 +129,7 @@ class ProjectController extends Controller
             if ($project['performance']->PayBack_file != null) $project['performance']->PayBack_file = explode('/',$project['performance']->PayBack_file);
             
         }
+        if ($project->jianhao_statement != null) $project->jianhao_statement = explode('/',$project->jianhao_statement);
         if ($project->income_statement != null) $project->income_statement = explode('/',$project->income_statement);
         $gding = Gding::where('project_id','=',$project_id)->orderby('id')->get();
         $invoice = Invoice::where('project_id','=',$project_id)->orderby('created_at','desc')->get();
@@ -202,6 +203,7 @@ class ProjectController extends Controller
             'status' => 'nullable|string',
             'project_note' => 'nullable|string',
             'Acceptance_times' => 'required|string|size:1',
+            'jianhao_statement' => 'nullable|file',
             'income_statement' => 'nullable|file'
         ]);
 
@@ -259,6 +261,15 @@ class ProjectController extends Controller
         }
 
         $file_path =null;
+        if($request->hasFile('jianhao_statement')){
+            if($request->jianhao_statement->isValid()){
+                $file = $request->file('jianhao_statement');
+                $file->storeAs('public/project/'.$project->name,$file->getClientOriginalName());
+                $file_path = 'project/'.$project->name.'/'.$file->getClientOriginalName();
+                $project->jianhao_statement = $file_path;
+            }
+        }
+        
         if($request->hasFile('income_statement')){
             if($request->income_statement->isValid()){
                 $file = $request->file('income_statement');
@@ -267,6 +278,8 @@ class ProjectController extends Controller
                 $project->income_statement = $file_path;
             }
         }
+
+        
 
         
         //專案本體更新

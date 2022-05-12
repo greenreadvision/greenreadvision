@@ -108,7 +108,11 @@
             <i class="fas fa-chevron-right page_title_arrow"></i>
             <a  href="/invoice" class="page_title_a" >請款單</a>
             <i class="fas fa-chevron-right page_title_arrow"></i>
+            @if(strpos(URL::full(),'other'))
+            <a href="/invoice/{{$data['invoice']['other_invoice_id']}}/review/other" class="page_title_a" >{{$data['invoice']['finished_id']}}</a>
+            @else
             <a href="/invoice/{{$data['invoice']['invoice_id']}}/review" class="page_title_a" >{{$data['invoice']['finished_id']}}</a>
+            @endif
             <i class="fas fa-chevron-right page_title_arrow"></i>
             <span class="page_title_span">編輯資料</span>
         </div>
@@ -392,7 +396,7 @@
                                             <label class="label-style col-form-label" for="intern_name">實習生姓名</label>
                                             <select type="text" id="intern_name" name="intern_name" class="form-control rounded-pill" autofocus>
                                                 @foreach ($data['interns'] as $intern)
-                                                    <option {{$data['invoice']['intern_name'] == $intern->nickname? 'selected':''}}>{{$intern->nickname}}</option>
+                                                    <option value="{{$intern->name}}" {{$data['invoice']['intern_name'] == $intern->name? 'selected':''}}>{{$intern->nickname}}</option>
                                                 @endforeach
                                             </select>
                                         </div>

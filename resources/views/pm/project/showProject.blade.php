@@ -411,6 +411,13 @@
                                     <button type="button" id="dging_cost_button" class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#GdingModal">查看健豪帳務</button>
 
                                 </div>
+                                <div style="display: flex;justify-content: center" >
+                                    @if($data->jianhao_statement !=null)
+                                    <a class="btn btn-blue rounded-pill" href="{{route('threedownload', $data->jianhao_statement)}}">帳務檔案下載</a>
+                                    @else
+                                    <label class="ml-2 col-form-label font-weight-bold" style="font-size: 1.2rem; font-weight: 700;">未上傳帳務檔案</label>
+                                    @endif
+                                </div>
                             </div>
                             @if(\Auth::user()->role == 'manager' || \Auth::user()->role == 'proprietor' || \Auth::user()->user_id == $data->user_id)
                             <div style="padding: 10px">
