@@ -12,12 +12,13 @@
         <div class="col-lg-3 Side">
             <div class="title">
                 <h3>消息分類</h3>
+                <button type="button" onclick="select('type', '')"><span>全部消息</span></button>
                 <button type="button" onclick="select('type', 'news')"><span>最新消息</span></button>
                 <button type="button" onclick="select('type', 'service')"><span>服務項目</span></button>
                 <button type="button" onclick="select('type', 'question')"><span>常見問題</span></button>
             </div>
             <div class="title">
-                <h3>社群連結</h3>
+                {{--  <h3>社群連結</h3>  --}}
             </div>
         </div>
         <div class="col-lg-9" id="new_title">
@@ -81,17 +82,17 @@
         var table = document.createElement("tbody");
 
         table.innerHTML = '<tr class="text-white">' +
-            "<th width='70%' style='color:#fff'>文章主旨</th>" +
+            "<th width='55%' style='color:#fff'>文章主旨</th>" +
             "<th width='15%' style='color:#fff'>公告類型</th>" +
             "<th width='15%' style='color:#fff'>上架日期</th>" +
             "<tr>"
         var tr, span, a, tp
 
         for(var i=0;i< boards.length;i++){
-            if(i >=(nowPage - 1)*10 && i <nowPage*10){
+            if(i >=(nowPage - 1)*13 && i <nowPage*13){
                 table.innerHTML = table.innerHTML + setBoardData(i)
             }
-            else if(i >= nowPage){
+            else if(i >= nowPage*13){
                 break;
             }
         }
@@ -111,7 +112,7 @@
     }
 
     function nextPage() {
-        var number = Math.ceil(boards.length / 10)
+        var number = Math.ceil(boards.length / 13)
 
         if (nowPage < number) {
             var temp = document.getElementsByClassName('page-item')
@@ -125,7 +126,7 @@
     }
 
     function previousPage() {
-        var number = Math.ceil(boards.length / 10)
+        var number = Math.ceil(boards.length / 13)
 
         if (nowPage > 1) {
             var temp = document.getElementsByClassName('page-item')
@@ -141,7 +142,7 @@
         $("#board-page").empty()
         var parent = document.getElementById('board-page');
         var table = document.createElement("div");
-        var number = Math.ceil(boards.length / 10)
+        var number = Math.ceil(boards.length / 13)
         var data = ''
         if (nowPage < 4) {
             for (var i = 0; i < number; i++) {
@@ -233,12 +234,16 @@
         
         a = "/news/" + boards[i]['board_id'] + "/show" 
         tr = "<tr>" + 
-            "<td width='60%'><a href='" + a + "' target='_blank'>" + boards[i]['title']+ "</td>" +
-            "<td width='10%'><a href='" + a + "' target='_blank'>" + tp + "</td>" +
-            "<td width='10%'><a href='" + a + "' target='_blank'>" + boards[i]['updata_date'] + "</td>" +
+            "<td width='60%'><a href='" + a + "' target='_blank' onclick = 'addView("+i+")'>" + boards[i]['title']+ "</td>" +
+            "<td width='10%'><a href='" + a + "' target='_blank' onclick = 'addView("+i+")'>" + tp + "</td>" +
+            "<td width='10%'><a href='" + a + "' target='_blank' onclick = 'addView("+i+")'>" + boards[i]['updata_date'] + "</td>" +
             "</tr>"
 
         return tr;
+    }
+
+    function addView(i){
+        console.log(i)
     }
 
     function select(type, id){
@@ -310,6 +315,7 @@
     }
 
     function reset(){
+        nowPage = 1;
         setBoard();
         setUser();
         setYear();

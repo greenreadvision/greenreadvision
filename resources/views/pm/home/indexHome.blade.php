@@ -25,11 +25,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($homes as $home)
+                            @foreach ($board as $boards)
                                 <tr>
-                                    <td >{{$home->title}}</td>
+                                    {{--  <td >{{$home->title}}</td>
                                     <td><a href="{{route('home.review', $home->home_id)}}">{{$home->content}}</a></td>
-                                    <td>{{$home->created_at->format('Y-m-d')}}</td>
+                                    <td>{{$home->created_at->format('Y-m-d')}}</td>  --}}
                                 </tr>
                             @endforeach
                         </tbody>

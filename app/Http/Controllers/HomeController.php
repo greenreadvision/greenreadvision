@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Home;
+use App\Board;
+use App\User;
 use App\Functions\RandomId;
 use Illuminate\Http\Request;
 
@@ -16,8 +18,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $homes = Home::all();
-        return view('pm.home.indexHome', ["homes" => $homes]);
+        $users=[];
+        $allUsers = User::orderby('user_id')->get();
+        $board = Board::select('board_id','user_id','title','newTypes','updata_date')->orderby('created_at', 'desc')->with('user')->get();
+        foreach($allUsers as $allUser){
+            //if ($allUser->role != 'manager' &&count($allUser->boards) != 0) {
+            if (count($allUser->boards) != 0) {
+                array_push($users, $allUser);
+            }
+        }
+        return view('pm.home.indexHome', ['board'=>$board,'users'=>$users]);
     }
 
     /**

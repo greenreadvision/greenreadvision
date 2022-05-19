@@ -6,8 +6,8 @@
                 <div class="logo">
                     <a id="nav_top" class="logo"><img id="nav_logo" src="{{ URL::asset('img/綠雷德創新logo.png') }}" alt="綠雷德文創"></a>
                 </div>
-                <a id="go-news" href="javascript:void(0);"><div class="nav_cover">最新消息<b class="nav_b">News</b></div></a>
-                <a id="go-about" href="javascript:void(0);">
+                <a id="go-news" href="#news-board"><div class="nav_cover">最新消息<b class="nav_b">News</b></div></a>
+                <a id="go-about" href="#about-as">
                     <div class="nav_cover">
                         公司簡介
                         <b class="nav_b">About us</b>
@@ -15,10 +15,10 @@
                 </a>
                 <!-- <a id="nav_" href="javascript:void(0);"><div id="go-history" class="nav_cover">公司實蹟<b class="nav_b" >History</b></div></a> -->
                 
-                <a id="go-event" href="javascript:void(0);"><div class="nav_cover">活動花絮<b class="nav_b">Highlights</b></div></a>
-                <a id="go-design" href="javascript:void(0);"><div  class="nav_cover">文創設計<b class="nav_b">Design</b></div></a>
-                <a id="go-video" href="javascript:void(0);"><div  class="nav_cover">影音專區<b class="nav_b">Videos</b></div></a>
-                <a id="go-contact" href="javascript:void(0);"><div class="nav_cover">聯絡我們<b class="nav_b">Contact</b></div></a>
+                <a id="go-event" href="#event"><div class="nav_cover">活動花絮<b class="nav_b">Highlights</b></div></a>
+                <a id="go-design" href="#design"><div  class="nav_cover">文創設計<b class="nav_b">Design</b></div></a>
+                <a id="go-video" href="#video"><div  class="nav_cover">影音專區<b class="nav_b">Videos</b></div></a>
+                <a id="go-contact" href="#contact"><div class="nav_cover">聯絡我們<b class="nav_b">Contact</b></div></a>
             </nav>
             <div id="nav2">
                 <div id="nav-panel-open" style="display: inline-flex">

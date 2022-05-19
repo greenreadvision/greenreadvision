@@ -124,10 +124,10 @@
         var tr, span, a, tp
 
         for(var i=0;i< boards.length;i++){
-            if(i >=(nowPage - 1)*10 && i <nowPage*10){
+            if(i >=(nowPage - 1)*13 && i <nowPage*13){
                 table.innerHTML = table.innerHTML + setBoardData(i)
             }
-            else if(i >= nowPage){
+            else if(i >= nowPage*13){
                 break;
             }
         }
@@ -147,7 +147,7 @@
     }
 
     function nextPage() {
-        var number = Math.ceil(boards.length / 10)
+        var number = Math.ceil(boards.length / 13)
 
         if (nowPage < number) {
             var temp = document.getElementsByClassName('page-item')
@@ -161,7 +161,7 @@
     }
 
     function previousPage() {
-        var number = Math.ceil(boards.length / 10)
+        var number = Math.ceil(boards.length / 13)
 
         if (nowPage > 1) {
             var temp = document.getElementsByClassName('page-item')
@@ -177,7 +177,7 @@
         $("#board-page").empty()
         var parent = document.getElementById('board-page');
         var table = document.createElement("div");
-        var number = Math.ceil(boards.length / 10)
+        var number = Math.ceil(boards.length / 13)
         var data = ''
         if (nowPage < 4) {
             for (var i = 0; i < number; i++) {
@@ -232,7 +232,8 @@
                 }
             }
         }
-
+        var previous = "previous"
+        var next = "next"
         table.innerHTML = '<nav aria-label="Page navigation example">' +
             '<ul class="pagination mb-0">' +
             '<li class="page-item">' +
@@ -348,10 +349,13 @@
     }
 
     function reset(){
+        boards = getNewBoard()
+        nowPage = 1
         setBoard();
         setUser();
         setYear();
         setMonth();
+        setType();
         listBoard();
         listPage();
     }
@@ -400,6 +404,12 @@
                 $("#select-board-month").append("<option value='" + boards[i]['updata_date'].substr(5, 2) + "'>" + boards[i]['updata_date'].substr(5, 2) + "</option>");
             }
         }
+    }
+    
+    function setType(){
+        newTypes = ''
+        $('#select-board-type').val('')
+
     }
 
 

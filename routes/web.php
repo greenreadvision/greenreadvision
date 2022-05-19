@@ -42,8 +42,8 @@ Route::get('/eventpage', 'GrvController@eventpage')->name('eventpage');
 Route::get('/eventpage/{type}', 'GrvController@show')->name('eventpage.show');
 Route::get('/eventpage/{type}/{id}', 'GrvController@view')->name('eventpage.view');
 
-//new
-Route::get('/news/index','GrvNewsController@index')->name('news.index');
+//news
+Route::get('/news','GrvNewsController@index')->name('news.index');
 Route::get('/news/{id}/show','GrvNewsController@show')->name('news.show');
 
 //activity

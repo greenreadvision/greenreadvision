@@ -57,14 +57,32 @@
 
 <div style="min-height: 200px">
 </div>
+<script type="text/javascript">
 
+    if (localStorage.pagecount){
+        localStorage.pagecount=Number(localStorage.pagecount) +1;
+    }else{
+        localStorage.pagecount=1;
+    }
+    document.write("Visits: " + localStorage.pagecount + " time(s).");
+
+    {{--  localStorage.setItem(location.href, 1);
+    localStorage.pagecount=1;
+    if (localStorage.pagecount){
+        localStorage.setItem(location.href, Number(localStorage.getItem(location.href))+1)
+    }else{
+        localStorage.pagecount=1;
+    }
+    document.write("Visits: " + localStorage.getItem(location.href) + " time(s).");
+    console.log(localStorage.pagecount)  --}}
+</script> 
 @stop
 
 
 @section('script')
 <script type="text/javascript" src="{{ URL::asset('js/jquery.min.js') }}"></script>
 <script type="text/javascript" src="https://unpkg.com/xlsx@0.14.0/dist/xlsx.full.min.js"></script>
-<script src="{{URL::asset('ckeditor/ckeditor.js') }}"></script>
+{{--  <script src="{{URL::asset('ckeditor/ckeditor.js') }}"></script>
 <script>
     setTimeout(function(){
         var editor = CKEDITOR.replace( 'ckeditor',{
@@ -74,4 +92,5 @@
             
         } ); //Your selector must match the textarea ID
     },400);
-</script>
+</script>  --}}
+
