@@ -37,6 +37,11 @@ $letter = new Letter();
                                 <span class="ml-2">公司資料庫</span>
                             </a>
                         </li>
+                        <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                            <a id="menu-resource" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('resource.index') }}">
+                                <span class="ml-2">共用資源</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}" >

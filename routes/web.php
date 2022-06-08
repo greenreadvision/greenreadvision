@@ -78,6 +78,7 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::post('/board/create/review','BoardController@store')->name('board.store');
     Route::get('/board/{id}/review','BoardController@show')->name('board.show');
     Route::put('/board/{id}/update/{type}','BoardController@update')->name('board.update');
+    Route::delete('/board/{id}/delete', 'BoardController@delete')->name('board.delete');
 });
 
 Route::group(['middleware' => ['auth', 'general']], function () {
@@ -380,6 +381,15 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::post('/projectSOP/{id}/update','ProjectSOPController@update')->name('projectSOP.update');
     Route::delete('/projectSOP/{id}/delete','ProjectSOPController@destroy')->name('projectSOP.delete');
     
+});
+
+Route::group(['middleware' => ['auth', 'general']], function () {
+    Route::get('/resource','ResourceController@index')->name('resource.index');
+    Route::get('/resource/create','ResourceController@create')->name('resource.create');
+    Route::post('/resource/create/review','ResourceController@store')->name('resource.store');
+    Route::get('/resource/{id}/review', 'ResourceController@show')->name('resource.show');
+    Route::put('/resource/{id}/update/{type}', 'ResourceController@update')->name('resource.update');
+    Route::delete('/resource/{id}/delete', 'ResourceController@delete')->name('resource.delete');
 });
 
 Route::group(['middleware' => ['auth', 'staffManager']], function () {

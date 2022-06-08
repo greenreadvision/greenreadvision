@@ -260,5 +260,14 @@ return [
     //board公告類型
     'news' => '最近項目',
     'service' => '服務項目',
-    'question' => '常見問題'
+    'question' => '常見問題',
+
+    //resource類型
+    'host' => '主持人',
+    'performance' => '表演團隊',
+    'stall_food' => '攤商(食)',
+    'stall_ngo' => '攤商(NGO)',
+    'tour' => '導覽老師',
+    'manufacturer' => '商品廠商'
+
 ];
