@@ -60,9 +60,9 @@ class BoardController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create(){
-        return view('grv.CMS.board.create');
-    }
+        public function create(){
+            return view('grv.CMS.board.create');
+        }
 
     public function show(String $board_id){
         $board = Board::find($board_id);
@@ -153,9 +153,10 @@ class BoardController extends Controller
         }
         return redirect()->route('board.show', $id);
     }
-    public function destroy(String $bank_id)
-    {
-        
+    function delete($id){
+        $board = Board::find($id);
+        $board->delete();
+        return redirect()->route('board.index');
     }
 
 }

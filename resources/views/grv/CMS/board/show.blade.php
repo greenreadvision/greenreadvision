@@ -161,6 +161,14 @@
         </div>
     </div>
 </div>    
+
+<form action="delete" method="POST">
+    @method('DELETE')
+    @csrf
+    <div class="col-lg-12 d-flex justify-content-end">
+        <button class="btn btn-red rounded-pill" type="submit" ><span class="mx-2">{{__('customize.Delete')}}</span> </button>
+    </div>
+</form>
 {{--  <div class="d-flex justify-content-center">
     <div class="col-lg-10 mb-2">
         <div class="row">
