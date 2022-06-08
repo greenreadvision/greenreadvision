@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\App;
 
-App::make('files')->link(storage_path('app/public'), public_path('storage'));
-
 use App\Resource;
 use App\Ckeditor;
 use App\Functions\RandomId;
@@ -18,7 +16,7 @@ use SebastianBergmann\Environment\Console;
 class ResourceController extends Controller{
     function index(){
         $types = ['host', 'performance', 'stall_food', 'stall_ngo', 'tour', 'manufacturer'];
-        $datas = Resource::select('id','name','type','phone','email', 'intro',)->orderby('created_at', 'desc')->get();
+        $datas = Resource::select('id','name','type','phone','email', 'intro')->orderby('created_at', 'desc')->get();
         return view('pm.resource.index', ['datas'=>$datas, 'types'=>$types ]);
     }
 

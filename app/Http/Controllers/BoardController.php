@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\App;
 
-App::make('files')->link(storage_path('app/public'), public_path('storage'));
 
 use App\Board;
 use App\Ckeditor;
@@ -60,9 +59,9 @@ class BoardController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-        public function create(){
-            return view('grv.CMS.board.create');
-        }
+    public function create(){
+        return view('grv.CMS.board.create');
+    }
 
     public function show(String $board_id){
         $board = Board::find($board_id);
