@@ -59,6 +59,9 @@
                             {{ Auth::user()->nickname }} <span class="caret"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('change.index') }}">
+                                系統更動申請表單
+                            </a>
                             @if(\Auth::user()->status == "general")
                                 @if (Route::has('register'))
                                 <a class="dropdown-item" href="{{ route('register') }}">

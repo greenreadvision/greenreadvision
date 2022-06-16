@@ -193,6 +193,19 @@ Route::group(['middleware' => ['auth', 'general']], function () {
 });
 
 Route::group(['middleware' => ['auth', 'general']], function () {
+    Route::get('/change', 'ChangeController@index')->name('change.index');
+    Route::get('/change/create', 'ChangeController@create')->name('change.create');
+    Route::post('/change/create/review', 'ChangeController@store')->name('change.create.review');
+    Route::get('/change/{id}/review', 'ChangeController@show')->name('change.review');
+    Route::get('/change/{id}/edit', 'ChangeController@edit')->name('change.edit');
+    Route::put('/change/{id}/update', 'ChangeController@update')->name('change.update');
+    Route::post('/change/{id}/withdraw', 'ChangeController@withdraw')->name('change.withdraw');
+    Route::post('/change/{id}/match', 'ChangeController@match')->name('change.match');
+    Route::delete('/change/{id}/delete', 'ChangeController@delete')->name('change.delete');
+    
+});
+
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/businessTrip/index','BusinessTripController@index')->name('businessTrip.index');
     Route::get('/businessTrip/{id}/show','BusinessTripController@show')->name('businessTrip.show');
     Route::get('/businessTrip/create','BusinessTripController@create')->name('businessTrip.create');
@@ -445,6 +458,11 @@ Route::any('/download/{type}/{id}/{file}', function ($type, $id, $file) {   //ä¸
 Route::any('/invoicedownload/{id}/{file}', function ($id, $file) {
     return response()->download(storage_path("app/" . $id . "/" . $file));
 })->name('invoicedownload');
+
+
+Route::any('/changedownload/{id}/{file}', function ($id, $file) {
+    return response()->download(storage_path("app/" . $id . "/" . $file));
+})->name('changedownload');
 
 Route::post('/ckeditor/upload','CkeditorController@upload')->name('ckeditor.upload');
 

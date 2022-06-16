@@ -161,7 +161,7 @@
         </div>
     </div>
 </div>    
-
+@if(\Auth::user()->role =='manager'||$board->user_id==\Auth::user()->user_id)
 <form action="delete" method="POST">
     @method('DELETE')
     @csrf
@@ -169,6 +169,7 @@
         <button class="btn btn-red rounded-pill" type="submit" ><span class="mx-2">{{__('customize.Delete')}}</span> </button>
     </div>
 </form>
+@endif
 {{--  <div class="d-flex justify-content-center">
     <div class="col-lg-10 mb-2">
         <div class="row">
