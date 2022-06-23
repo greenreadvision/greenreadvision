@@ -78,7 +78,7 @@ class OtherInvoiceController extends Controller
             'receipt_file' => 'nullable|file',
             'detail_file' => 'nullable|file',
             'purchase_id' => 'nullable|string',
-            'reviewer' => 'required|string'
+            'reviewer' => 'nullable|string'
         ]);
 
         $id = RandomId::getNewId($other_invoice_ids);
@@ -131,7 +131,7 @@ class OtherInvoiceController extends Controller
         }
 
         $intern = '';
-        if(\Auth::user()->role =='manager'){
+        if(\Auth::user()->role =='manager'||"intern"){
             $intern = $request->input('intern_name');
         }
         else{
@@ -679,6 +679,7 @@ class OtherInvoiceController extends Controller
         } else if($invoice->status=='check'){
             $invoice->status = 'managed';
             $invoice->managed = \Auth::user()->name;
+            $invoice->reviewer = \Auth::user()->user_id;
             // $invoice->finished_id = $request->finished_id;
             $invoice->save();
             $letter_ids = Letters::select('letter_id')->get()->map(function ($letter) {

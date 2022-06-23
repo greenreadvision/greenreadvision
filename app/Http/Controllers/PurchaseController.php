@@ -146,7 +146,7 @@ class PurchaseController extends Controller
                     'content' => $request->input('content-' . $j),
                     'quantity' => $request->input('quantity-' . $j),
                     'price' => $request->input('price-' . $j),
-                    'amount' => $request->input('amount-' . $j),
+                    'amount' => $request->input('quantity-' . $j) * $request->input('price-' . $j),
                     'note' => $request->input('note-' . $j)
                 ]);
             }
@@ -260,7 +260,7 @@ class PurchaseController extends Controller
                 $item->content = $request->input('content-' . $i);
                 $item->quantity = $request->input('quantity-' . $i);
                 $item->price = $request->input('price-' . $i);
-                $item->amount = $request->input('quantity-' . $i) * $request->input('price' . $i);
+                $item->amount = $request->input('quantity-' . $i) * $request->input('price-' . $i);
                 $item->note = $request->input('note-' . $i);
                 $i++;
                 $item->save();

@@ -1,6 +1,17 @@
 @extends('layouts.app')
 @section('content')
 
+<div class="page_level">
+    <div class="page_show">
+        <div class="page_title" id="page_title">
+            <span class="page_title_span">公司文案</span>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <a href="/resource" class="page_title_a" >共用資源</a>
+            <i class="fas fa-chevron-right page_title_arrow"></i>
+            <span class="page_title_span">{{$data->id}}</span>
+        </div>
+    </div>
+</div>
 <!--類型(修改)-->
 <div class="modal fade" id="typeModal" role="dialog" aria-labelledby="typeModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
