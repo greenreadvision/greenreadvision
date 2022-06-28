@@ -44,7 +44,7 @@
                                     活動內容介紹
                                 </div>
                                 <div class="col-lg-12">
-                                    <span id="content">{!!$board->content!!}</span>
+                                    <span>{!!$board->content!!}</span>
                                 </div>
                             </div>
                         </div>

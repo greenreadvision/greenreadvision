@@ -10,48 +10,46 @@ if(window.innerWidth<=1024){
 else{
     $headerHeight=93;
 }
-var changeStyle = function (index) {
-    document.getElementById('nav_logo').style.opacity = '1';
-    document.getElementById('nav2').style.color = "#514F4E";
-    $header.style.background = "rgba(253, 253, 253, 1)";
-    $header.style["boxShadow"] = "0px 2px 10px rgba(0, 0, 0, .3)"
-    if (window.innerWidth >= 1024) {
-        for (var i = 0; i < $nav.length; i++) {
-            if (i == index) {
-                navState[i]=1;
-                $nav[i].style.color = "#DC8749";
-                $nav_b[i].style.color = "#DC8749";
-            } else {
-                
-                    navState[i]=0;
-                
-                if(navState[i]==0){
-                    
-                    $nav[i].style.color = "#514F4E";
-                    $nav_b[i].style.color = "#514F4E";
-                }
-            }
-        }
-    }
-}
+
+// var changeStyle = function (index) {
+//     document.getElementById('nav_logo').style.opacity = '1';
+//     document.getElementById('nav').style.color = "#514F4E";
+//     $header.style.background = "rgba(253, 253, 253, 1)";
+//     $header.style["boxShadow"] = "0px 2px 10px rgba(0, 0, 0, .3)"
+//     if (window.innerWidth >= 1024) {
+//         for (var i = 0; i < $nav.length; i++) {
+//             if (i == index) {
+//                 navState[i]=1;
+//                 $nav[i].style.color = "#DC8749";
+//                 $nav_b[i].style.color = "#DC8749";
+//             } else {
+//                 navState[i]=0;
+//                 if(navState[i]==0){
+//                     $nav[i].style.color = "#514F4E";
+//                     $nav_b[i].style.color = "#514F4E";
+//                 }
+//             }
+//         }
+//     }
+// }
 window.onresize = (function(){
     $windowHeight = window.innerHeight;
     docTop=[$('news-board').offset().top,$('#about-as').offset().top,$('#event').offset().top,$('#design').offset().top,$('#video').offset().top,$('#contact').offset().top];
 })
 $(document).ready(function(){
-    var title=document.getElementsByClassName('title-style')
-    if (window.innerWidth > 1024) {
-        // if($(this).scrollTop()<=$windowHeight /2){
-            $("#home-img").addClass("homeImg");
-            $("#home-content").addClass("homeContent");
-        // }
+    // var title=document.getElementsByClassName('title-style')
+    // if (window.innerWidth > 1024) {
+    //     // if($(this).scrollTop()<=$windowHeight /2){
+    //         $("#home-img").addClass("homeImg");
+    //         $("#home-content").addClass("homeContent");
+    //     // }
         
-    }else{
-        $("#home-img").addClass("homeImg");
-        $("#home-content").addClass("homeImg");
-    }
+    // }else{
+    //     $("#home-img").addClass("homeImg");
+    //     $("#home-content").addClass("homeImg");
+    // }
     document.getElementById('nav_logo').style.opacity = '1';
-    document.getElementById('nav2').style.color = "#1d1d1d";
+    document.getElementById('nav').style.color = "#1d1d1d";
     $header.style.background = "rgba(253, 253, 253, 1)";
     $header.style["boxShadow"] = "0px 2px 10px rgba(0, 0, 0, .3)";
     if (window.innerWidth >= 1024) {
@@ -199,10 +197,10 @@ $(document).ready(function(){
     }    
 });
 
-$(window).scroll(function () {
-    var title=document.getElementsByClassName('title-style')
+// $(window).scroll(function () {
+//     var title=document.getElementsByClassName('title-style')
 
-});
+// });
 var hoverChange = function (index) {
     if ($(this).scrollTop() >= 50) {
         $nav[index].style.color = "#DC8749";
