@@ -239,6 +239,7 @@ class PurchaseController extends Controller
         //
         $request->validate([
             'project_id' => 'required|string|exists:projects,project_id|size:11',
+            'title' => 'required|string|min:1',
             'purchase_date' => 'required|date',
             'delivery_date' => 'required|date',
             'company' => 'required|string|min:2|max:20',

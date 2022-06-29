@@ -247,7 +247,7 @@
                                         <option value="{{$reviewer['user_id']}}">{{$reviewer->name}}</option>
                                         @endif
                                         @endforeach-->
-                                        <option value="GRV00001">吳奇靜</option>
+                                        <option value="">任何主管</option>
                                     </optgroup>
                                     <optgroup id="optgroup-3" label="10000元以上">
                                         <option value="GRV00001">吳奇靜</option>
@@ -276,8 +276,6 @@
                         <div class="float-right">
                             <button type="submit" class="btn btn-green rounded-pill"><span class="mx-2">新增</span> </button>
                         </div>
-
-
                     </form>
                 </div>
             </div>

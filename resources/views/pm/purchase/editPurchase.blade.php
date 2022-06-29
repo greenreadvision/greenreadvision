@@ -29,6 +29,16 @@
                             </div>
 
                             <div class="col-lg-6 form-group">
+                                <label class="label-style col-form-label" for="title">採購項目</label>
+                                <input autocomplete="off" type="text" id="title" name="title" class="rounded-pill form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{ $purchase->title }}" required>
+                                @if ($errors->has('title'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('title') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+
+                            <div class="col-lg-6 form-group">
                                 <label class="label-style col-form-label" for="applicant">採購人</label>
                                 <input autocomplete="off" type="text" id="applicant" name="applicant" class="rounded-pill form-control{{ $errors->has('applicant') ? ' is-invalid' : '' }}" value="{{$purchase->applicant}}" required>
                                 @if ($errors->has('applicant'))
@@ -119,7 +129,7 @@
                                 </span>
                                 @endif
                             </div>
-                            <div class="col-lg-6 form-group">
+                            <div class="col-lg-12 form-group">
                                 <label class="label-style col-form-label" for="address">送貨地址</label>
                                 <input autocomplete="off" type="text" id="address" name="address" class="rounded-pill form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" value="{{ $purchase->address }}" required>
                                 @if ($errors->has('address'))

@@ -51,7 +51,7 @@
                                             @if($data['invoice']['price'] >=3000 && $data['invoice']['price'] < 10000) 
                                                 <small>第二階段審核中 (1.列印紙本 2.主管簽名)</small>
                                             @elseif($data['invoice']['price'] >=10000)
-                                                <small>第二階段審核中 (1.列印紙本 2.老闆簽名)</small>
+                                                <small>第二階段審核中 (1.列印紙本 2.執行長簽名)</small>
                                             @else
                                                 <small>第二階段審核中</small>
                                             @endif
@@ -62,7 +62,7 @@
                                         @if($data['invoice']['price'] >=3000 && $data['invoice']['price'] < 10000) 
                                             <small>第二階段審核中 (1.列印紙本 2.主管簽名)</small>
                                         @elseif($data['invoice']['price'] >=10000)
-                                            <small>第二階段審核中 (1.列印紙本 2.老闆簽名)</small>
+                                            <small>第二階段審核中 (1.列印紙本 2.執行長簽名)</small>
                                         @else
                                             <small>第二階段審核中</small>
                                         @endif
@@ -246,7 +246,7 @@
                         <div class="col-md-12 row" style="margin: auto; display:flex">
                             <div style="width:30%;text-align:left;"><label>匯款日期：</label><u>　{{$data['invoice']['status']=='complete'? $data['invoice']['remittance_date']:'　　'}}　.</u></div>
                             <div style="width:25%;text-align:left;"><label>帳務處理：</label><u>　{{$data['invoice']['status']=='complete'? $data['invoice']['matched']:'　　'}}　.</u></div>
-                            <div style="width:25%;text-align:left;"><label>主管審核：</label><u>　{{$data['invoice']['status']!='waiting'? $data['invoice']['managed']:$data['invoice']['managed']}}　.</u></div>
+                            <div style="width:25%;text-align:left;"><label>{{$data['invoice']['price']>=10000? "執行長審核：":"主管審核："}}</label><u>　{{$data['invoice']['status']!='waiting'? $data['invoice']['managed']:$data['invoice']['managed']}}　.</u></div>
                             <div style="width:20%;text-align:left;"><label>請款人：</label><u>　{{($data['invoice']->user->role == 'manager' && $data['invoice']['intern_name']!=null) ? $data['invoice']['intern_name'] : $data['invoice']->user->name}}　.</u></div>
                         </div>
                     </div>
@@ -316,20 +316,18 @@
                         @else
                         <form action="match" method="POST" class="d-flex justify-content-between">
                         @endif
-
                             @csrf
                             <button type="submit" class="btn btn-green rounded-pill"><span class="mx-2">第二階段審核</span></button>
                         </form>
 
 
-                    @elseif($data['invoice']['status']=='managed'&&(\Auth::user()->role=='administrator'||(\Auth::user()->role=='proprietor')))
+                    @elseif($data['invoice']['status']=='managed'&&(\Auth::user()->role=='administrator'||(\Auth::user()->role=='proprietor'&&$data['invoice']['price'] >= 10000)||($data['invoice']['price'] >= 3000&&$data['invoice']['price'] < 10000&&\Auth::user()->role=='supervisor')))
                     <div class="w-100">
                         @if(strpos(URL::full(),'other'))
                         <form action="../match/other" method="POST" class="d-flex justify-content-end">
                             @else
                             <form action="match" method="POST" class="d-flex justify-content-end">
                                 @endif
-
                                 @csrf
                                 <button type="submit" class="btn btn-green rounded-pill"><span class="mx-2">請款審核</span></button>
                             </form>

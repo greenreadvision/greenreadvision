@@ -421,38 +421,40 @@
                                 <tr width="100%">
                                     <td class="p-1" style="display:flex;justify-content: space-between;"><span>採</span><span>購</span><span>單</span><span>號 : </span></td>
                                     <td width="40%" class="p-1" style="text-align: left;">{{$purchase->id}}</td>
-                                    <td class="p-1" style="text-align:left;display:flex;justify-content: space-between;"><span>採</span><span>購</span><span>人 :</span></td>
-                                    <td width="40%" class="p-1" style="text-align: left;">{{$purchase->applicant}}</td>
+                                    <td class="p-1" style="text-align:left;display:flex;justify-content: space-between;"><span>採</span><span>購</span><span>項</span><span>目 :</span></td>
+                                    <td width="40%" class="p-1" style="text-align: left;">{{$purchase->title}}</td>
                                 </tr>
                                 <tr width="100%">
+                                    <td class="p-1" style=" text-align: left;display:flex;justify-content: space-between;"><span>採</span><span>購</span><span>人 : </span></td>
+                                    <td width="40%" class="p-1" style=" text-align: left;">{{$purchase->applicant}}</td>
                                     <td class="p-1" style=" text-align: left;display:flex;justify-content: space-between;"><span>專</span><span>案</span><span>名</span><span>稱 : </span></td>
                                     <td width="40%" class="p-1" style=" text-align: left;">{{$purchase->project->name}}</td>
-                                    <td class="p-1" style=" text-align: left;display:flex;justify-content: space-between;"><span>採</span><span>購</span><span>日</span><span>期 : </span></td>
-                                    <td width="40%" class="p-1" style=" text-align: left;">{{$purchase->purchase_date}}</td>
 
                                 </tr>
                                 <tr>
-                                    <td class="p-1" style="text-align:left;display:flex;justify-content: space-between;"><span>廠</span><span>商</span><span>名</span><span>稱 : </span></td>
-                                    <td class="p-1" style="text-align:left;">{{$purchase->company}}</td>
+                                    <td class="p-1" style="text-align:left;display:flex;justify-content: space-between;"><span>採</span><span>購</span><span>日</span><span>期 : </span></td>
+                                    <td class="p-1" style="text-align:left;">{{$purchase->purchase_date}}</td>
 
-                                    <td class="p-1" style="text-align: left;display:flex;justify-content: space-between;"><span>交</span><span>貨</span><span>日</span><span>期 : </span></td>
-                                    <td class="p-1" style="text-align: left;">{{$purchase->delivery_date}}</td>
+                                    <td class="p-1" style="text-align: left;display:flex;justify-content: space-between;"><span>廠</span><span>商</span><span>名</span><span>稱 : </span></td>
+                                    <td class="p-1" style="text-align: left;">{{$purchase->company}}</td>
 
                                 </tr>
                                 <tr>
-                                    <td class="p-1" style="text-align:left;display:flex;justify-content: space-between;"><span>聯</span><span>絡</span><span>人 : </span></td>
-                                    <td class="p-1" style="text-align:left;">{{$purchase->contact_person}}</td>
+                                    <td class="p-1" style="text-align:left;display:flex;justify-content: space-between;"><span>交</span><span>貨</span><span>日</span><span>期 : </td>
+                                    <td class="p-1" style="text-align:left;">{{$purchase->delivery_date}}</td>
 
-                                    <td class="p-1" style="text-align:left;white-space:pre-line;display:flex;justify-content: space-between;"><span>送</span><span>貨</span><span>地</span><span>址 : </span></td>
-                                    <td rowspan="3" class="p-1" style="text-align:left;white-space:pre-line;vertical-align:top">{{$purchase->address}}</td>
+                                    <td class="p-1" style="text-align:left;white-space:pre-line;display:flex;justify-content: space-between;"><span>聯</span><span>絡</span><span>人 :</span></td>
+                                    <td rowspan="3" class="p-1" style="text-align:left;white-space:pre-line;vertical-align:top">{{$purchase->contact_person}}</td>
+
+                                </tr>
+                                <tr>
+                                    <td class="p-1" style="text-align:left;display:flex;justify-content: space-between;"><span>送</span><span>貨</span><span>地</span><span>址 : </span></td>
+                                    <td class="p-1" style="text-align:left;">{{$purchase->address}}</td>
 
                                 </tr>
                                 <tr>
                                     <td class="p-1" style="text-align:left;display:flex;justify-content: space-between;"><span>電</span><span>話 : </span></td>
                                     <td class="p-1" style="text-align:left;">{{$purchase->phone}}</td>
-
-                                </tr>
-                                <tr>
                                     <td class="p-1" style="text-align:left;display:flex;justify-content: space-between;"><span>傳</span><span>真 : </span></td>
                                     <td class="p-1" style="text-align:left;">
                                         @if($purchase->fax != null)
