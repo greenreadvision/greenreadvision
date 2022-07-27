@@ -14,6 +14,6 @@ class Activity extends Model
 
     public $incrementing = false;
     protected $primaryKey = "activity_id";
-    protected $fillable = ['id','activity_id','organizers','name','type','content','project_id','project_user_id','user_id','begin_time','end_time','img_path'];
+    protected $fillable = ['activity_id','organizers','name','type','content','project_id','project_user_id','user_id','begin_time','end_time','img_path'];
 
 }
