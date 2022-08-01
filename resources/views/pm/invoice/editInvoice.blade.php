@@ -508,6 +508,11 @@
                                         <label class="label-style col-form-label" for="title">請款項目</label>
                                         <input id="title" autocomplete="off" type="text" name="title" class="form-control rounded-pill{{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{$errors->has('title')? old('title'): $data['invoice']['title']}}">
                                     </div>
+                                    <div class="col-lg-6 form-group">
+                                        <label class="label-style col-12 col-form-label" for="prepay">是否為預支款?</label>
+                                        <label class="label-style col-3 col-form-label" for="prepay_false"><input type="radio" id="prepay_false" name="prepay" value="0" class="{{ $errors->has('prepay') ? 'is-invalid' : '' }}" {{$data['invoice']['prepay']? '': 'checked'}}>否</label>
+                                        <label class="label-style col-3 col-form-label" for="prepay_true"><input type="radio" id="prepay_true" name="prepay" value="1" class="{{ $errors->has('prepay') ? 'is-invalid' : '' }}" {{$data['invoice']['prepay']? 'checked': ''}}>是</label>
+                                    </div>
                                     <div class="col-lg-12 form-group">
                                         <label class="label-style col-form-label" for="content">請款事項(100字以內)</label>
                                         <textarea id="content" name="content" rows="5" style="resize:none;" class="form-control rounded-pill{{ $errors->has('content') ? ' is-invalid' : '' }}" required>{{$errors->has('content')? old('content'): $data['invoice']['content']}}</textarea>

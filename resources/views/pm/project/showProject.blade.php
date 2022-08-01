@@ -697,7 +697,7 @@
             invoice = JSON.parse(invoice.replace(/&quot;/g, '"'));
             console.log(invoice)
             for (var i = 0; i < invoice.length; i++) {
-                if(invoice[i].status != 'delete' ){
+                if(invoice[i].status != 'delete' && invoice[i].prepay != 1){
                     
                     InvoiceCost += invoice[i].price
                 }

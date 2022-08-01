@@ -450,7 +450,9 @@ class ProjectController extends Controller
             $total_cost += $item->price;
         }
         foreach($invoices as $item){
-            $total_cost += $item->price;
+            if($item -> prepay == 0 || $item -> prepay == null){
+                $total_cost += $item->price;
+            }
         }
         foreach($default as $item){
             $contract_value = $project->contract_value;

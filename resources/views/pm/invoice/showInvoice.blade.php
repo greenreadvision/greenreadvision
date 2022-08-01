@@ -243,6 +243,13 @@
                             <div class="col-md-8" style="text-align:left;"><label>附{{__('customize.receipt')}}：沒有，{{$data['invoice']['receipt_date']}}補上</label></div>
                             @endif
                         </div>
+                        <div class="col-md-11 row" style="margin: auto;">
+                            @if ($data['invoice']['prepay'])
+                            <div class="col-md-8" style="text-align:left;"><label>是否為預支款? 是</label></div>
+                            @else
+                            <div class="col-md-8" style="text-align:left;"><label>是否為預支款? 否</label></div>
+                            @endif
+                        </div>
                         <div class="col-md-12 row" style="margin: auto; display:flex">
                             <div style="width:30%;text-align:left;"><label>匯款日期：</label><u>　{{$data['invoice']['status']=='complete'? $data['invoice']['remittance_date']:'　　'}}　.</u></div>
                             <div style="width:25%;text-align:left;"><label>帳務處理：</label><u>　{{$data['invoice']['status']=='complete'? $data['invoice']['matched']:'　　'}}　.</u></div>
