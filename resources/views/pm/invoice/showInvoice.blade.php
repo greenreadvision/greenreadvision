@@ -16,7 +16,7 @@
         <div class="card border-0 shadow">
             <div class="card-body ">
                 @if($data['invoice']['status'] == 'delete')
-                <div style="position: absolute;width:100%;height:100%;display:flex;justify-content:center;align-items:center" >
+                <div style="position: absolute;width:100%;height:100%;display:flex;justify-content:center;align-items:center;z-index:1;" >
                     <img style="width:70%" src="{{ URL::asset('gif/cancelled.png') }}" alt=""/>
                 </div>
                 @endif
