@@ -109,6 +109,7 @@ class GrvController extends Controller
     {
         return view('grv.eventpage');
     }
+
     public function show(String $type)
     {
         $photo = Photos::orderby('name', 'desc')->get();

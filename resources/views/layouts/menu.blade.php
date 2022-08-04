@@ -9,8 +9,8 @@ $letter = new Letter();
         </div>
         <div style="width:220px">
             <ul class="navbar-nav mr-auto" style="overflow:auto;max-height:calc(100vh - 55px)">
-                
-                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}" >
+                //<li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}" >
+                <li class = "" >
                     <div id="menu-project-manager" class="icon-link" >
                         <a href="javascript:void(0);" onclick="dropMenu(this)" class="d-flex justify-content-between" style="display: flex;">
                             <div  class="menu-a d-flex navbar-brand py-2 align-items-center justify-content-start position-relative"  >
@@ -22,29 +22,29 @@ $letter = new Letter();
                     </div>
                     
                     <ul class="Dropdown_item" id="menu-project-dropdown" >
-                        <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                        <li class = "" >
                             <a id="menu-project" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('project.index') }}">
                                 <span class="ml-2">@lang('customize.Project')</span>
                             </a>
                         </li>
-                        <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                        <li class = "" >
                             <a id="menu-seal" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('seal.index') }}">
                                 <span class="ml-2">用印申請單</span>
                             </a>
                         </li>
-                        <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                        <li class = "" >
                             <a id="menu-projectSOP" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('projectSOP.index') }}">
                                 <span class="ml-2">公司資料庫</span>
                             </a>
                         </li>
-                        <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                        <li class = "" >
                             <a id="menu-resource" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('resource.index') }}">
                                 <span class="ml-2">共用資源</span>
                             </a>
                         </li>
                     </ul>
                 </li>
-                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}" >
+                <li class = "" >
                     <div id="menu-money-manager" class="icon-link" >
                         <a href="javascript:void(0);" onclick="dropMenu(this)" class="d-flex justify-content-between" style="display: flex;">
                             <div  class="menu-a d-flex navbar-brand py-2 align-items-center justify-content-start position-relative"  >
@@ -56,34 +56,34 @@ $letter = new Letter();
                     </div>
                     
                     <ul class="Dropdown_item" id="menu-money-dropdown" >
-                        <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                        <li class = "" >
                             <a id="menu-invoice" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('invoice.index') }}">
                                 <span class="ml-2">請款單</span>
                             </a>
                         </li>
-                        <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                        <li class = "" >
                             <a id="menu-purchase" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('purchase.index') }}">
                                 <span class="ml-2">採購單</span>
                             </a>
                         </li>
-                        <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                        <li class = "" >
                             <a id="menu-service" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('service.index') }}">
                                 <span class="ml-2">勞務單</span>
                             </a>
                         </li>
-                        <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                        <li class = "" >
                             <a id="menu-BusinessTrip" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('businessTrip.index') }}">
                                 <span class="ml-2">出差報告表</span>
                             </a>
                         </li>
-                        <!--<li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                        <!--<li class = "" >
                             <a id="menu-Estimate" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('estimate.index') }}">
                                 <i class='fas fa-file-invoice' style="width:40px"></i><span class="ml-2">報價單</span>
                             </a>
                         </li>-->
                     </ul>
                 </li>
-                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}" >
+                <li class = "" >
                     <div id="menu-people-manager" class="icon-link" >
                         <a href="javascript:void(0);" onclick="dropMenu(this)" class="d-flex justify-content-between" style="display: flex;">
                             <div  class="menu-a d-flex navbar-brand py-2 align-items-center justify-content-start position-relative"  >
@@ -95,7 +95,7 @@ $letter = new Letter();
                     </div>
                     
                     <ul class="Dropdown_item" id="menu-people-dropdown" >
-                        <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                        <li class = "" >
                             <a id="menu-leaveday" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('leaveDay.show',[\Auth::user()->leaveDay->leave_day_id,date('Y').'-apply']) }}">
                                 <span class="ml-2">請/補假</span>
                             </a>
@@ -103,7 +103,7 @@ $letter = new Letter();
                         
                     </ul>
                 </li>
-                <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}" >
+                <li class = "" >
                     <div id="menu-hardward-manager" class="icon-link" >
                         <a href="javascript:void(0);" onclick="dropMenu(this)" class="d-flex justify-content-between" style="display: flex;">
                             <div  class="menu-a d-flex navbar-brand py-2 align-items-center justify-content-start position-relative"  >
@@ -115,7 +115,7 @@ $letter = new Letter();
                     </div>
                     
                     <ul class="Dropdown_item" id="menu-hardward-dropdown" >
-                        <li class = "{{\Auth::user()->role == 'intern' ? 'd-none':''}}">
+                        <li class = "" >
                             <a id="menu-reserve" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('reserve.index') }}">
                                 <span class="ml-2">倉儲查詢</span>
                             </a>

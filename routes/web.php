@@ -58,6 +58,8 @@ Route::put('/hulk/store', 'HulkController@store')->name('hulk.store');
 
 
 
+
+
 //pm
 
 Route::group(['middleware' => ['auth', 'general']], function () {
