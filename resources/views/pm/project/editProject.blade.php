@@ -1396,7 +1396,7 @@
         
         for (var i = 0; i < invoice.length; i++) {
             
-            if(invoice[i].status != 'delete' ){
+            if(invoice[i].status != 'delete' && invoice[i].prepay != 0){
                 totalActualCost += invoice[i].price
             }
             if(projectData.performance_id != null){
