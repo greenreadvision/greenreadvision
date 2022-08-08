@@ -94,7 +94,7 @@
                         <button class="btn btn-green rounded-pill" onclick="location.href='{{route('businessTrip.create')}}'"><span class="mx-2">{{__('customize.Add')}}</span> </button>
                     </div>
                 </div>
-                <div class="businessTrip_list_content table-style">
+                <div class="businessTrip_list_content table-style-invoice">
                     <table id="search-businessTrip">
                             
                     </table>
@@ -351,7 +351,6 @@
         $("#select-year").empty();
         $("#select-year").append("<option value=''></option>");
         for (var i = 0; i < businesses.length; i++) {
-            console.log(businesses[i])
             if (years.indexOf(businesses[i]['created_at'].substr(0, 4)) == -1) {
                 years.push(businesses[i]['created_at'].substr(0, 4))
                 $("#select-year").append("<option value='" + businesses[i]['created_at'].substr(0, 4) + "'>" + businesses[i]['created_at'].substr(0, 4) + "</option>");
@@ -419,8 +418,6 @@
                 "<td width='15%'><a href='" + a + "' target='_blank'>" + businesses[i].created_at.substr(0, 10) + "</td>" +
                 "</tr>"
         }
-        
-
 
         return tr
     }
