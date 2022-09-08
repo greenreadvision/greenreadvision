@@ -7,6 +7,7 @@ use App\User;
 use App\Goods;
 use App\Functions\RandomId;
 use App\Project;
+use App\Intern
 
 ;
 
@@ -52,13 +53,14 @@ class GoodsController extends Controller
     {
         $users = [];
         $allUsers = User::orderby('nickname')->get();
+        $interns = Intern::all();
         foreach ($allUsers as $allUser) {
             if ($allUser->role != 'manager' && $allUser->role != 'resigned') {
                 array_push($users, $allUser);
             }
         }
         $purchases = Purchase::orderby('purchase_date', 'desc')->with('project')->with('user')->get();
-        return view('pm.goods.create', ['users' => $users, 'purchases' => $purchases]);
+        return view('pm.goods.create', ['users' => $users, 'purchases' => $purchases, 'interns' => $interns]);
     }
     public function store(Request $request)
     {
@@ -121,11 +123,17 @@ class GoodsController extends Controller
             $purchase_id = $purchase[0]->purchase_id;
         }
 
+        $intern = null;
+        if($request->input('signer')=='實習生'){
+            $intern = $request->input('intern');
+        }
+
         $post = Goods::create([
             'goods_id' => $id,
             'purchase_id' => $purchase_id,
             'user_id' => \Auth::user()->user_id,
             'signer' => $request->input('signer'),
+            'intern' => $intern,
             'receipt_date' => $request->input('receipt_date'),
             'good_name' => $request->input('good_name'),
             'freight_name' => $request->input('freight_name'),
@@ -154,6 +162,7 @@ class GoodsController extends Controller
         //
         $good = Goods::find($id);
         $users = [];
+        $interns = Intern::all();
         $allUsers = User::orderby('nickname')->get();
         foreach ($allUsers as $allUser) {
             if ($allUser->role != 'manager' && $allUser->role != 'resigned') {
@@ -162,6 +171,13 @@ class GoodsController extends Controller
         }
         $purchases = Purchase::orderby('purchase_date', 'desc')->with('project')->with('user')->get();
 
+        $purchase = null;
+        
+        $purchase_id = null;
+        if ($good->purchase_id != null){
+            $purchase = Purchase::find($good->purchase_id);
+            $purchase_id = $purchase->id;
+        }
         // $invoice->content = InvoiceController::replaceEnter(false, $invoice->content);
         if ($good->freight_bill != null) $good->freight_bill = explode('/', $good->freight_bill);
         if ($good->freight_exterior != null) $good->freight_exterior = explode('/', $good->freight_exterior);
@@ -169,7 +185,7 @@ class GoodsController extends Controller
         if ($good->single_good != null) $good->single_good = explode('/', $good->single_good);
         if ($good->defect_goods != null) $good->defect_goods = explode('/', $good->defect_goods);
 
-        return view('pm.goods.show', ['good' => $good, 'users' => $users,'purchases' => $purchases]);
+        return view('pm.goods.show', ['good' => $good, 'users' => $users,'purchases' => $purchases, 'purchase_id' => $purchase_id, 'interns' => $interns]);
     }
 
     public function update(Request $request, String $id, String $type)

@@ -63,25 +63,6 @@
             <label class="label-style col-form-label" for="delivery_number">貨運單號</label>
         </div>
         <div class="col-lg-6 form-group">
-                </div>
-      
-        <div class="col-lg-6 form-group">
-            <label class="label-style col-form-label" for="inventory_name">清點人</label>
-            <select name="inventory_name" type="text" class="form-control mb-2">
-                <option value=""></option>
-                @foreach($users as $user)
-                @if($user->name == $good->inventory_name)
-                <option value="{{$user['name']}}" selected>{{$user['name']}}({{$user['nickname']}})</option>
-                @else
-                <option value="{{$user['name']}}">{{$user['name']}}({{$user['nickname']}})</option>
-                @endif
-                @endforeach
-            </select>
-        </div>
-        <div class="col-lg-6 form-group">
-        </div>
-
-        <div class="col-lg-6 form-group">
             <label class="label-style col-form-label" for="freight_bill">貨運單</label>
             <input accept="image/jpeg,image/gif,image/png" type="file" id="freight_bill" name="freight_bill" class="form-control{{ $errors->has('freight_bill') ? ' is-invalid' : '' }}">
         </div>

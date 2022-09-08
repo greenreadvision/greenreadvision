@@ -21,7 +21,7 @@
                         <div class="form-group row">
                             <div class="col-lg-6 form-group">
                                 <label class="label-style col-form-label" for="signer">簽收人</label>
-                                <select required name="signer" type="text" class="rounded-pill form-control mb-2">
+                                <select required name="signer" type="text" class="rounded-pill form-control mb-2" onchange="select('signer',this.options[this.options.selectedIndex].value)">
                                     <option value=""></option>
                                     @foreach($users as $user)
                                     @if( $user->role != 'manager' && $user->status == 'general' && $user->user_id !='GRV00000')
@@ -30,7 +30,16 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-lg-6 form-group">
+                            <div class="col-lg-6 form-group" id="intern" hidden>
+                                <label class="label-style col-form-label" for="intern">實習生</label>
+                                <select required name="intern" type="text" class="rounded-pill form-control mb-2">
+                                    <option value=""></option>
+                                    @foreach($interns as $intern)
+                                    <option value="{{$intern['nickname']}}">{{$intern['name']}}({{$intern['nickname']}})</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg-12 form-group">
                                 <label class="label-style col-form-label" for="purchase_id">採購單號</label>
                                 <div class="input-group mb-3">
                                     <input readonly style="border-top-left-radius: 25px;border-bottom-left-radius: 25px" id="purchase_id" autocomplete="off" type="text" name="purchase_id" class="form-control {{ $errors->has('purchase_id') ? ' is-invalid' : '' }}" value="{{ old('purchase_id') }}">
@@ -38,6 +47,9 @@
                                         <button onclick="showPurchase()" class="btn btn-green" type="button" id="button-addon2" style="border-top-right-radius: 25px;border-bottom-right-radius: 25px">採購單</button>
                                     </div>
                                 </div>
+                            </div>
+                            <div>
+                                
                             </div>
                             <div class="col-lg-6 form-group">
                                 <label class="label-style col-form-label" for="freight_name">貨運名稱</label>
@@ -322,6 +334,15 @@
                     setPurchase()
                 }
                 break;
+
+            case 'signer':
+                if(id == '實習生'){
+                    document.getElementById('intern').hidden = false;
+                    
+                }
+                else{
+                    document.getElementById('intern').hidden = true;
+                }
             default:
 
         }

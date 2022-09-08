@@ -17,13 +17,26 @@
             @csrf
             <div class="col-lg-12 form-group">
               <label class="label-style col-form-label" for="signer">簽收人</label>
-              <select required name="signer" type="text" class="form-control rounded-pill">
+              <select required name="signer" type="text" class="form-control rounded-pill" onchange="select('signer', this.options[this.options.selectedIndex].value)">
                 <option value=""></option>
                 @foreach($users as $user)
                 @if($user->name == $good->signer)
                 <option value="{{$user['name']}}" selected>{{$user['name']}}({{$user['nickname']}})</option>
                 @else
                 <option value="{{$user['name']}}">{{$user['name']}}({{$user['nickname']}})</option>
+                @endif
+                @endforeach
+              </select>
+            </div>
+            <div class="col-lg-12 form-group" id="intern" hidden>
+              <label class="label-style col-form-label" for="intern">實習生</label>
+              <select name="intern" type="text" class="form-control rounded-pill" id="internSelect">
+                <option value=""></option>
+                @foreach($interns as $intern)
+                @if($intern->name == $good->intern)
+                <option value="{{$intern['nickname']}}" selected>{{$intern['name']}}({{$intern['nickname']}})</option>
+                @else
+                <option value="{{$intern['nickname']}}">{{$intern['name']}}({{$intern['nickname']}})</option>
                 @endif
                 @endforeach
               </select>
@@ -114,10 +127,6 @@
           <form action="{{$good->goods_id}}/update/quantity" method="post" enctype="multipart/form-data">
             @method('PUT')
             @csrf
-            <div class="col-lg-12 form-group">
-              <label class="label-style col-form-label" for="inventory_name">清點人</label>
-              <input id="inventory_name" autocomplete="off" type="text" name="inventory_name" class="rounded-pill form-control{{ $errors->has('inventory_name') ? ' is-invalid' : '' }}" value="{{ $good->inventory_name }}">
-            </div>
             <div class="col-lg-12 form-group">
               <label class="label-style col-form-label" for="quantity">總數量</label>
               <input id="quantity" autocomplete="off" type="text" name="quantity" class="rounded-pill form-control{{ $errors->has('quantity') ? ' is-invalid' : '' }}" value="{{ $good->quantity }}">
@@ -217,7 +226,7 @@
                               <div class="col-lg-12 form-group">
                                 <label class="label-style col-form-label" for="freight_name">採購單號</label>
                                 <div class="input-group mb-3">
-                                  <input readonly style="border-top-left-radius: 25px;border-bottom-left-radius: 25px" id="purchase_id" autocomplete="off" type="text" name="purchase_id" class="form-control {{ $errors->has('purchase_id') ? ' is-invalid' : '' }}" value="{{$good->purchases['id']}}">
+                                  <input readonly style="border-top-left-radius: 25px;border-bottom-left-radius: 25px" id="purchase_id" autocomplete="off" type="text" name="purchase_id" class="form-control {{ $errors->has('purchase_id') ? ' is-invalid' : '' }}" value = "{{$purchase_id != null ? $purchase_id : '' }}">
                                   <div class="input-group-append">
                                       <button type="submit" class="btn btn-green" id="button-addon2" style="border-top-right-radius: 25px;border-bottom-right-radius: 25px"><span class="mx-2">{{__('customize.Save')}}</span></button>
                                   </div>
@@ -543,9 +552,15 @@
             <div class="col-lg-12">
               簽收人
             </div>
+            @if($good->signer == '實習生')
+            <div class="col-lg-12 text-center">
+              <h3>{{$good->intern}}</h3>
+            </div>
+            @else
             <div class="col-lg-12 text-center">
               <h3>{{$good->signer}}</h3>
             </div>
+            @endif
           </div>
         </div>
       </div>
@@ -650,26 +665,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-3 mb-3 ">
-        <div class="card border-0 shadow mb-3 " style="height:100%;max-height:100%">
-          <div class="card-body" style="height:100%;max-height:100%">
-            <div class="col-lg-12 d-flex justify-content-end p-0">
-              @if(\Auth::user()->user_id == $good->user_id ||  \Auth::user()->role == 'intern'|| \Auth::user()->user_id == $good->purchases['user_id']|| \Auth::user()->name == $good->signer)
-              <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#quantityModal"></i>
-              @else
-              <i class='fas fa-edit icon-gray' data-toggle="modal" data-target="#quantityModal"  hidden></i>
-              @endif
-            </div>
-            <div class="col-lg-12">
-              清點人
-            </div>
-            <div class="col-lg-12 text-center">
-              <h3>{{$good->inventory_name}}</h3>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-9 mb-3">
+      <div class="col-lg-12 mb-3">
         <div class="card border-0 shadow mb-3 " style="height:100%;max-height:100%">
           <div class="card-body" style="height:100%;max-height:100%">
             <div class="col-lg-12 d-flex justify-content-end p-0">
@@ -862,6 +858,11 @@
       purchases = purchases.replace(/[\n\r]/g, "")
       purchases = JSON.parse(purchases.replace(/&quot;/g, '"'));
       reset()
+    var good = getNewGood();
+    if(good.signer == '實習生'){
+      document.getElementById('intern').hidden = false;
+      document.getElementById('internSelect').required = true;
+    }
   });
 </script>
 
@@ -951,6 +952,17 @@
                   setPurchase()
               }
               break;
+          case 'signer':
+          //document.getElementById('intern').hidden = false;
+          //document.getElementById('internSelect').required = true;
+              if (id != '實習生') {
+                document.getElementById('intern').hidden = true;
+                document.getElementById('internSelect').required = false;
+              }
+              else{
+                document.getElementById('intern').hidden = false;
+                document.getElementById('internSelect').required = true;
+              }
           default:
 
       }
@@ -1311,6 +1323,13 @@
       parent.appendChild(div);
 
       $(".page-" + String(nowPage)).addClass('active')
+  }
+
+  function getNewGood(){
+    data = "{{$good}}"
+    data = data.replace(/[\n\r]/g, "")
+    data = JSON.parse(data.replace(/&quot;/g, '"'));
+    return data
   }
 </script>
 @stop
