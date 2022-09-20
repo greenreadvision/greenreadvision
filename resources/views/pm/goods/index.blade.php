@@ -331,6 +331,21 @@
         parent.appendChild(table);
     }
 
+    function internFilter(i, signer) {
+        if(signer == "實習生" && goods[i].intern == null && goods[i].inventory_name == null) {
+            return "未選擇清點人";
+        }
+        else if(signer == "實習生" && goods[i].intern == null) {
+            return goods[i].inventory_name;
+        }
+        else if(signer == "實習生") {
+            return goods[i].intern;
+        }
+        else{
+            return goods[i].signer;
+        }
+    }
+
     function setData(i) {
         var quantity = ""
         if(goods[i].quantity != null){
@@ -346,7 +361,7 @@
         tr = "<tr>" +
             "<td><a href='" + a + "'  target='_blank'>" + goods[i].delivery_number + "</td>" +
             // "<td><a href='" + a + "'  target='_blank'>" + goods[i].purchase_id + "</td>" +
-            "<td><a href='" + a + "'  target='_blank'>" + goods[i].signer + "</td>" +
+            "<td><a href='" + a + "'  target='_blank'>" + internFilter(i, goods[i].signer) + "</td>" +
             "<td><a href='" + a + "' target='_blank'>" + goods[i].receipt_date + "</td>" +
             "<td><a href='" + a + "' target='_blank'>" + goods[i].good_name + "</a></td>" +
             "<td><a href='" + a + "' target='_blank'>" + quantity + "</td>" +

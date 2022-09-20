@@ -52,8 +52,8 @@ class GoodsController extends Controller
     public function create()
     {
         $users = [];
-        $allUsers = User::orderby('nickname')->get();
-        $interns = Intern::all();
+        $allUsers = User::orderby('nickname')->where('status', '!=', 'resign')->get();
+        $interns = Intern::where('status', '!=', 'resign')->get();
         foreach ($allUsers as $allUser) {
             if ($allUser->role != 'manager' && $allUser->role != 'resigned') {
                 array_push($users, $allUser);
@@ -162,8 +162,8 @@ class GoodsController extends Controller
         //
         $good = Goods::find($id);
         $users = [];
-        $interns = Intern::all();
-        $allUsers = User::orderby('nickname')->get();
+        $interns = Intern::where('status', '!=', 'resign')->get();
+        $allUsers = User::where('status', '!=', 'resign')->orderby('nickname')->get();
         foreach ($allUsers as $allUser) {
             if ($allUser->role != 'manager' && $allUser->role != 'resigned') {
                 array_push($users, $allUser);

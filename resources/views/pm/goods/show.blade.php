@@ -552,7 +552,15 @@
             <div class="col-lg-12">
               簽收人
             </div>
-            @if($good->signer == '實習生')
+            @if($good->signer == '實習生' && $good->intern == null && $good->inventory_name == null)
+            <div class="col-lg-12 text-center">
+              <h3>-未選擇清點人-</h3>
+            </div>
+            @elseif($good->signer == '實習生' && $good->intern == null)
+            <div class="col-lg-12 text-center">
+              <h3>{{$good->inventory_name}}</h3>
+            </div>
+            @elseif($good->signer == '實習生')
             <div class="col-lg-12 text-center">
               <h3>{{$good->intern}}</h3>
             </div>

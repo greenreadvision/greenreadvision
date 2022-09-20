@@ -10,11 +10,12 @@
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                            {{--  {{ session('status') }}  --}}
+                            已寄送重設通知信至信箱！請檢查垃圾郵件夾~
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('password.email') }}">
+                    <form method="POST" action="{{ route('password.email') }}" >
                         @csrf
 
                         <div class="form-group row">
@@ -25,7 +26,8 @@
 
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        {{--  <strong>{{ $errors->first('email') }}</strong>  --}}
+                                        <strong>無此使用者電郵，請重新輸入！</strong>
                                     </span>
                                 @endif
                             </div>
