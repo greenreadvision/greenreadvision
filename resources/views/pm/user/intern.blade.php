@@ -26,7 +26,7 @@
                     <input type="text" class="form-control rounded-pill" id="create_nickname"  name="create_nickname">
                   </div>
                   <div class="form-group col-lg-6">
-                    <label for="email">email</label>
+                    <label for="email">電話</label>
                     <input type="text" class="form-control rounded-pill" id="create_email" name="create_email">
                   </div>
                   <div class="form-group col-lg-6">
@@ -70,7 +70,7 @@
               <div class="form-group row">
                 <div class="form-group col-lg-6">
                   <label for="intern_id">實習生編號</label>
-                  <input autocomplete="off" type="text" class="form-control rounded-pill" id="intern_id" name="intern_id" value="{{$intern->intern_id}}">
+                  <input autocomplete="off" type="text" class="form-control rounded-pill" id="intern_id" name="intern_id" value="{{$intern->intern_id}}" disabled>
                 </div>
                 <div class="form-group col-lg-3">
                   <label for="name">姓名</label>
@@ -78,11 +78,11 @@
                 </div>
                 <div class="form-group col-lg-3">
                   <label for="nickname">綽號</label>
-                  <input type="text" class="form-control rounded-pill" id="nickname" value="{{$intern->nickname}}" disabled>
+                  <input type="text" class="form-control rounded-pill" id="nickname" value="{{$intern->nickname}}" >
                 </div>
                 <div class="form-group col-lg-6">
-                  <label for="nickname">email</label>
-                  <input type="text" class="form-control rounded-pill" id="email" value="{{$intern->email}}" disabled>
+                  <label for="phone">電話</label>
+                  <input type="text" class="form-control rounded-pill" id="phone" value="{{$intern->phone}}" >
                 </div>
                 <div class="form-group col-lg-6">
                   <label for="status">在職狀況</label>
@@ -126,7 +126,7 @@
                 <th>實習生編號</th>
                 <th>姓名</th>
                 <th>綽號</th>
-                <th>電子郵件</th>
+                <th>電話</th>
                 <th>在職狀態</th>
               </tr>
               @foreach($interns as $intern)
@@ -134,7 +134,7 @@
                 <td>{{$intern->intern_id}}</td>
                 <td>{{$intern->name}}</td>
                 <td>{{$intern->nickname}}</td>
-                <td>{{__($intern->email)}}</td>
+                <td>{{__($intern->phone)}}</td>
                 <td>{{__('customize.'.$intern->status)}}</td>
               </tr>
               @endforeach

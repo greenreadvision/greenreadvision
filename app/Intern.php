@@ -14,7 +14,7 @@ class Intern extends Model
         'intern_id', //ID
         'name', //姓名
         'nickname', //暱稱
-        'email', //電郵
+        'phone', //電郵
         'status',//在職狀態
     ];
 }

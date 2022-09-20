@@ -13,7 +13,7 @@ class OtherInvoice extends Model
     public $incrementing = false;
     protected $primaryKey = "other_invoice_id";
     protected $keyType = 'string';
-    protected $fillable = ['other_invoice_id', 'user_id', 'intern_name','title', 'content', 'number','company_name','company', 'bank','type', 'bank_branch', 'bank_account_number', 'bank_account_name', 'receipt', 'receipt_date', 'remuneration', 'price', 'detail_file', 'receipt_file', 'status','reviewer','finished_id','purchase_id'];
+    protected $fillable = ['other_invoice_id', 'user_id', 'intern_name','title', 'content', 'number','company_name','company', 'bank','type', 'bank_branch', 'bank_account_number', 'bank_account_name', 'receipt', 'receipt_date', 'remuneration', 'price', 'detail_file', 'receipt_file','prepay', 'status','reviewer','finished_id','purchase_id'];
 
     // protected $invoice_id = "invoice_id";
     // protected $user_id = "user_id";

@@ -1,6 +1,16 @@
 @extends('layouts.page')
 
 @section('content')
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RYMMYFFT5Z"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-RYMMYFFT5Z');
+    </script>
+</head>
 <div class="modal fade" style="padding-top: 5%" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="max-width:90vw;">
         <div class="modal-content" >
