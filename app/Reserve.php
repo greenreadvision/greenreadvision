@@ -12,12 +12,12 @@ class Reserve extends Model
     protected $fillable = [
         'reserve_id',       //ID
         'name',             //品名
-        'number',           //數量
-        'unit',             //單位
-        'main_category',    //分類名稱
-        'storage_location', //存放位置
+        'stock',           //數量
+        'category',    //分類
+        'location',      //存放位置
         'cabinet_number',   //櫃子編號
-        'image_route',
-        'tag'               //關鍵字
+        'note',
+        'signer',
+        'project_id'
     ];
 }

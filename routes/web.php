@@ -276,12 +276,14 @@ Route::group(['middleware' => ['auth', 'general']], function () {
 Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/reserve/index','ReserveController@index')->name('reserve.index');
     Route::get('/reserve/create','ReserveController@create')->name('reserve.create');
-    Route::post('/reserve/create/store','ReserveController@store')->name('reserve.create.review');
-    Route::get('reserve/{id}/show','ReserveController@show')->name('reserve.show');
+    Route::post('/reserve/create/store','ReserveController@store')->name('reserve.create.store');
+    Route::get('reserve/{location}/show','ReserveController@show')->name('reserve.show');
     Route::get('reserve/{id}/edit','ReserveController@edit')->name('reserve.edit');
     Route::put('reserve/{id}/update','ReserveController@update')->name('reserve.update');
     Route::delete('reserve/{id}/delete','ReserveController@delete')->name('reserve.delete');
+});
 
+Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/rent/index','RentController@index')->name('rent.index');
     Route::get('/rent/create','RentController@create')->name('rent.create');
     Route::post('/rent/create/store','RentController@store')->name('rent.create.store');
