@@ -261,19 +261,20 @@
                     $('#days_long').val(DateDiff(start_day, end_day, 'd') + 1)
                 }
                 break
-            case 'twoDays':
-                if (length_long.value == 'twoDays') { 
-                    console.log(start_day)
+                case 'twoDays':
+                if (length_long.value == 'twoDays') {
                     $('#days_long').val(2)
                     //因怕過日會有跨月份情況發生，所以採取new Date方式來做AddDays
 
-                    //產生 new Date，擷取start_day的value來做分割，分割成年分、月份、日期
-                    var end_time_twoDays = new Date(start_day.substr(0,4), start_day.substr(5,2), start_day.substr(8,2));
+                    //產生 new Date，擷取start_day的value來做分割，分割成年分、月份(數值:0 ~ 11 -> 1月~12月)、日期
+                    var end_time_twoDays = new Date(start_day.substr(0,4), start_day.substr(5,2) - 1, start_day.substr(8,2));
                     //使用DateAddDay，產生下一天的值
                     end_time_twoDays = DateAddDays(end_time_twoDays, 1);
-
+                    console.log(end_time_twoDays.getMonth());
+                    console.log(end_time_twoDays);
                     //確定月份是否小於10，若是的話，字串前面增加 0
                     var end_time_month = end_time_twoDays.getMonth()
+                    end_time_month = end_time_month + 1;
                     if(end_time_month < 10){
                         end_time_month = "0" + end_time_month
                     }
@@ -283,11 +284,12 @@
                         end_time_date = "0" + end_time_date
                     }
 
+                    
                     //統整上述字串，讓字串改變成input(type="date")會吃的形式(yyyy-mm-dd)
                     end_time_twoDays = end_time_twoDays.getFullYear() + "-" + end_time_month + "-" + end_time_date
                     //回傳第二天的值以做顯示
-                    document.getElementById('end_day').value = end_time_twoDays   
-                } 
+                    document.getElementById('end_day').value = end_time_twoDays
+                }
                 break
             case 'day':
                 if (length_long.value == 'day') {
