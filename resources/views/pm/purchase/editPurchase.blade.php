@@ -165,7 +165,8 @@
                                     <thead>
                                         <tr class="bg-dark text-white" style="text-align:center">
                                             <th class="px-2" width="5%">
-                                            <th class="px-2" width="30%"> <label class="label-style col-form-label" for="content">品名</label></th>
+                                            <th class="px-2" width="5%">
+                                            <th class="px-2" width="25%"> <label class="label-style col-form-label" for="content">品名</label></th>
                                             <th class="px-2" width="10%"><label class="label-style col-form-label" for="quantity">數量</label></th>
                                             <th class="px-2" width="10%"><label class="label-style col-form-label" for="price">單價</label></th>
                                             <th class="px-2" width="15%"><label class="label-style col-form-label" for="amount">單項總計</label></th>
@@ -178,6 +179,9 @@
                                             <tr>
                                                 <th class="p-2">
                                                     <button id="addItemButton" type="button" onclick="additem()" class="w-100 btn btn-green rounded-pill">+</button>
+                                                </th>
+                                                <th class="p-2">
+                                                    <button id="deleteItemButton" type="button" onclick="deleteitem({{$item->no}})" class="w-100 btn btn-red rounded-pill">-</button>
                                                 </th>
                                                 <th class="p-2">
                                                     <input autocomplete="off" type="text" id="content-{{$item->no}}" name="content-{{$item->no}}" class="item-num rounded-pill form-control{{ $errors->has('content') ? ' is-invalid' : '' }}" value="{{ $item->content }}" required>
@@ -198,6 +202,9 @@
                                             @else
                                             <tr>
                                                 <th class="p-2">
+                                                </th>
+                                                <th class="p-2">
+                                                    <button id="deleteItemButton" type="button" onclick="deleteitem({{$item->no}})" class="w-100 btn btn-red rounded-pill">-</button>
                                                 </th>
                                                 <th class="p-2">
                                                     <input autocomplete="off" type="text" id="content-{{$item->no}}" name="content-{{$item->no}}" class="item-num rounded-pill form-control{{ $errors->has('content') ? ' is-invalid' : '' }}" value="{{ $item->content }}" required>
@@ -441,6 +448,16 @@
         parent.appendChild(tr);
         calculation()
     }
+
+    
+    function deleteitem(id){
+        document.getElementById('content-'+id).value = "已刪除項目";
+        document.getElementById('quantity-'+id).value = 0;
+        document.getElementById('price-'+id).value = 0;
+        document.getElementById('amount-'+id).value = 0;
+        document.getElementById('note-'+id).value = "";        
+    }
+
 </script>
 <script src="{{ URL::asset('js/grv.js') }}"></script>
 @stop
