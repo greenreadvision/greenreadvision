@@ -5,7 +5,7 @@
         <div class="page_title" id="page_title">
             <span class="page_title_span">硬體管理</span>
             <i class="fas fa-chevron-right page_title_arrow"></i>
-            <a  href="/reserve" class="page_title_a" >倉儲查詢</a>
+            <a  href="/reserve/index" class="page_title_a" >倉儲查詢</a>
             <i class="fas fa-chevron-right page_title_arrow"></i>
             <span class="page_title_span">新增物品</span>
         </div>
@@ -30,23 +30,25 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="col-lg-6 form-group" id="space"></div>
                             <div class="col-lg-6 form-group" id="intern" hidden>
                                 <label class="label-style col-form-label" for="intern">實習生</label>
-                                <select required name="intern" type="text" class="rounded-pill form-control mb-2">
+                                <select id="intern" name="intern" type="text" class="rounded-pill form-control mb-2">
                                     <option value=""></option>
                                     @foreach($interns as $intern)
                                     <option value="{{$intern['nickname']}}">{{$intern['name']}}({{$intern['nickname']}})</option>
                                     @endforeach
                                 </select>
                             </div>
-                            </div>
+                        </div>
+                        <div class="form-group row">
                             <div class="col-lg-6 form-group">
                                 <label class="label-style col-form-label" for="name">物品名稱</label>
                                 <input required id="name" autocomplete="off" type="text" name="name" class="rounded-pill form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" value="{{ old('name') }}">
                             </div>
                             <div class="col-lg-6 form-group">
                                 <label class="label-style col-form-label" for="stock">物品數量</label>
-                                <input required id="stock" autocomplete="off" type="text" name="stock" class="rounded-pill form-control{{ $errors->has('stock') ? ' is-invalid' : '' }}" value="{{ old('stock') }}">
+                                <input required id="stock" autocomplete="off" type="number" min="0" name="stock" class="rounded-pill form-control{{ $errors->has('stock') ? ' is-invalid' : '' }}" value="{{ old('stock') }}">
                             </div>
                             <div class="col-lg-6 form-group">
                                 <label class="label-style col-form-label" for="category">物品分類</label>
@@ -54,7 +56,21 @@
                             </div>
                             <div class="col-lg-6 form-group">
                                 <label class="label-style col-form-label" for="location">存放位置</label>
-                                <input required id="location" autocomplete="off" type="text" name="location" class="rounded-pill form-control{{ $errors->has('location') ? ' is-invalid' : '' }}" value="{{ old('location') }}">
+                                <select required id="location" autocomplete="off" type="text" name="location" class="rounded-pill form-control{{ $errors->has('location') ? ' is-invalid' : '' }}" value="{{ old('location') }}">
+                                    <optgroup>
+                                        <option value="largeInventory">大型雜物</option>
+                                        <option value="eventInventory">活動器具</option>
+                                        <option value="XinWuAndHakaInventory">農博及客家器材道具</option>
+                                        <option value="eventSpareAndClothes">活動常用備品及衣服</option>
+                                        <option value="lotteryPrizeAndAppliance">抽獎品/活動器具</option>
+                                        <option value="Appliance1">器材櫃1</option>
+                                        <option value="Appliance2">器材櫃2</option>
+                                        <option value="historyDocument">歷年教案</option>
+                                        <option value="historyAccountingData">歷年會計資料</option>
+                                        <option value="historyProject">歷年專案歸檔</option>
+                                        <option value="stationery">文具</option>
+                                    </optgroup>
+                                </select>
                             </div>
                             <div class="col-lg-6 form-group">
                                 <label class="label-style col-form-label" for="note">備註</label>
@@ -82,10 +98,13 @@
 function internInput(signer) {
     if(signer == '實習生'){
         document.getElementById('intern').hidden = false;
-        
+        document.getElementById('space').hidden = true;
+        document.getElementById('intern').setAttribute('required','');
     }
     else{
         document.getElementById('intern').hidden = true;
+        document.getElementById('space').hidden = false;
+        document.getElementById('intern').removeAttribute('required');
     }
 }
 </script>

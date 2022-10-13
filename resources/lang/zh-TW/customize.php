@@ -268,6 +268,19 @@ return [
     'stall_food' => '攤商(食)',
     'stall_ngo' => '攤商(NGO)',
     'tour' => '導覽老師',
-    'manufacturer' => '商品廠商'
+    'manufacturer' => '商品廠商',
 
+
+    //reserve
+    "largeInventory" => '大型雜物',
+    "eventInventory" => '活動器具',
+    "XinWuAndHakaInventory" => '農博及客家器材道具',
+    "eventSpareAndClothes" => '活動常用備品及衣服',
+    "lotteryPrizeAndAppliance" => '抽獎品/活動器具',
+    "Appliance1" => '器材櫃1',
+    "Appliance2" => '器材櫃2',
+    "historyDocument" => '歷年教案',
+    "historyAccountingData" => '歷年會計資料',
+    "historyProject" => '歷年專案歸檔',
+    "stationery" => '文具'
 ];

@@ -10530,3 +10530,11 @@ a.text-dark:hover {
     -webkit-transition: opacity 0.3s;
 }
 
+.effect{
+    transition: all .4s;
+}
+
+.effect:hover{
+    transform: scale(1.05);
+    color: #a2e044;
+}

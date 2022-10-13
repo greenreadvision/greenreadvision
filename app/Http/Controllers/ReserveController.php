@@ -16,12 +16,48 @@ class ReserveController extends Controller
         return view('pm.reserve.index');
     }
 
-    function show() {
+    function show(String $location) {
+        $users = [];
+        $allUsers = User::orderby('nickname')->with('goods')->get();
+        $interns = Intern::where('status', '!=', 'resign')->get();
+        
+        foreach ($allUsers as $allUser) {
+            if ($allUser->role != 'manager' && $allUser->status != 'resign') {
+                array_push($users, $allUser);
+            }
+        }
 
-        return view('pm.reserve.show');
+        $reserves = Reserve::orderby('created_at', 'desc')->get();
+
+        return view('pm.reserve.show', ['reserves' => $reserves, 'users' => $users, 'interns' => $interns, 'location' => $location]);
     }
 
-    function update() {
+    public function update(Request $request, String $location, String $reserve_id)
+    {
+        $reserve = Reserve::find($reserve_id);
+        //$project = Project::find($request->input('project_id'));
+        //
+        $request->validate([
+            'name' => 'required|string|min:1|max:191',
+            'stock' => 'required|string|min:1|max:191',
+            'category' => 'required|string|min:1|max:191',
+            // 'cabinet_number' => 'nullable|exists:cabinet_number',
+            'signer' => 'required|string|min:1|max:15',
+            'note' => 'nullable|exists:note',
+            'project_id' => 'nullable|exists:project_id'
+        ]);
+
+
+        $reserve->update($request->except('_method', '_token'));
+
+        $reserve->name = $request ->input('name');
+        $reserve->stock = $request->input('stock');
+        $reserve->category = $request->input('category');
+        $reserve->signer = $request->input('signer');
+        $reserve->project_id = $request->input('project_id');
+        $reserve->save();
+        
+        return redirect()->route('reserve.show', $location);
 
     }
 
@@ -37,16 +73,8 @@ class ReserveController extends Controller
         return view('pm.reserve.create', ['users' => $users, 'interns' => $interns]);
     }
 
-    function edit() {
-        
-    }
-
     public function store(Request $request)
     {
-        $reserve_ids = Reserve::select('reverse_id')->get()->map(function ($reserve) {
-            return $reserve->reserve_id;
-        })->toArray();
-
         $request->validate([
             'name' => 'required|string|min:1|max:191',
             'stock' => 'required|string|min:1|max:191',
@@ -58,24 +86,39 @@ class ReserveController extends Controller
             'project_id' => 'nullable|exists:project_id'
         ]);
 
+        $reserve_ids = Reserve::select('reserve_id')->get()->map(function ($reserve) {
+            return $reserve->reserve_id;
+        })->toArray();
         $id = RandomId::getNewId($reserve_ids);
 
         $intern = null;
         if($request->input('signer')=='實習生'){
-            $intern = $request->input('intern');
+            $signer = $request->input('intern');
         }
+        else{
+            $signer = $request->input('signer');
+        }
+        $location = $request->input('location');
 
         $post = Reserve::create([
             'reserve_id' => $id,
             'name' => $request->input('name'),
             'stock' => $request->input('stock'),
             'category' => $request->input('category'),
-            'location' => $request->input('location'),
-            'signer' => $request->input('signer'),
+            'location' => $location,
+            'signer' => $signer,
             'note' => $request->input('note'),
             'project_id' => $request->input('project_id')
         ]);
 
-        return redirect()->route('reserve.index');
+        return redirect()->route('reserve.show', $location);
+    }
+
+    public function delete(String $location, String $id)
+    {
+        $reserve = Reserve::find($id);
+
+        $reserve->delete();
+        return redirect()->route('reserve.show', $location);
     }
 }

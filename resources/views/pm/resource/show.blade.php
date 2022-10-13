@@ -348,3 +348,4 @@
         } ); //Your selector must match the textarea ID
     },400);
 </script>
+@stop

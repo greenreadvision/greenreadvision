@@ -241,7 +241,6 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/purchase/{id}/list', 'PurchaseController@list')->name('purchase.list');
     Route::get('/purchase/create', 'PurchaseController@create')->name('purchase.create');
     Route::post('/purchase/create/review', 'PurchaseController@store')->name('purchase.create.review');
-    Route::get('/purchase/{id}/edit', 'PurchaseController@edit')->name('purchase.edit');
     Route::put('/purchase/{id}/update', 'PurchaseController@update')->name('purchase.update');
     Route::get('/purchase/{id}/review', 'PurchaseController@show')->name('purchase.review');
     Route::delete('/purchase/{id}/delete', 'PurchaseController@destroy')->name('purchase.destroy');
@@ -278,9 +277,8 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/reserve/create','ReserveController@create')->name('reserve.create');
     Route::post('/reserve/create/store','ReserveController@store')->name('reserve.create.store');
     Route::get('reserve/{location}/show','ReserveController@show')->name('reserve.show');
-    Route::get('reserve/{id}/edit','ReserveController@edit')->name('reserve.edit');
-    Route::put('reserve/{id}/update','ReserveController@update')->name('reserve.update');
-    Route::delete('reserve/{id}/delete','ReserveController@delete')->name('reserve.delete');
+    Route::put('reserve/{location}/{id}/update','ReserveController@update')->name('reserve.update');
+    Route::delete('reserve/{location}/{id}/delete','ReserveController@delete')->name('reserve.delete');
 });
 
 Route::group(['middleware' => ['auth', 'general']], function () {

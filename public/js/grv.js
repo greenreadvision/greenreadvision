@@ -7,6 +7,8 @@ $(document).ready(function () {
     var project =document.getElementById('menu-project')
     var seal = document.getElementById('menu-seal')
     var projectSOP = document.getElementById('menu-projectSOP')
+    var resource = document.getElementById('menu-resource')
+
 
     //款項相關
     var menu_money_manager =document.getElementById('menu-money-manager')
@@ -56,6 +58,18 @@ $(document).ready(function () {
         span_setting = "<span class=\"page_title_span\">公司文案</span>"
         span_setting += "<i class=\"fas fa-chevron-right page_title_arrow\"></i>"
         span_setting += "<a  href=\"/projectSOP/index\" class=\"page_title_a\">公司資料</a>"
+        page_title_span.innerHTML = span_setting
+
+    }
+    else if (location.pathname.split('/')[1] == 'resource') {
+        resource.style.backgroundColor = '#666B8D'
+        menu_project_manager.style.backgroundColor = '#666B8D'
+        menu_project_manager.parentElement.classList.add('showMenu')
+
+
+        span_setting = "<span class=\"page_title_span\">公司文案</span>"
+        span_setting += "<i class=\"fas fa-chevron-right page_title_arrow\"></i>"
+        span_setting += "<a  href=\"/projectSOP/index\" class=\"page_title_a\">共用資源</a>"
         page_title_span.innerHTML = span_setting
 
     }
