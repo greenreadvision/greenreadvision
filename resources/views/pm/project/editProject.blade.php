@@ -2281,8 +2281,8 @@
             $(".page-" + String(invoice_check_page)).removeClass('active')
             invoice_check_page++
             $(".page-" + String(invoice_check_page)).addClass('active')
-            listPage()
-            listInvoice()
+            listInvoiceCheckPage()
+            listInvoiceCheck()
         }
 
     }
@@ -2295,8 +2295,8 @@
             $(".page-" + String(invoice_check_page)).removeClass('active')
             invoice_check_page--
             $(".page-" + String(invoice_check_page)).addClass('active')
-            listPage()
-            listInvoice()
+            listInvoiceCheckPage()
+            listInvoiceCheck()
         }
 
     }
@@ -2306,11 +2306,11 @@
         var temp = document.getElementsByClassName('page-item')
 
         $(".page-" + String(invoice_check_page)).removeClass('active')
-        invoice_check_page = index
+        invoice_check_page  = index
         $(".page-" + String(invoice_check_page)).addClass('active')
 
-        listPage()
-        listInvoice()
+        listInvoiceCheckPage()
+        listInvoiceCheck()
 
     }
 

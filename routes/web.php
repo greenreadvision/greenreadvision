@@ -241,6 +241,7 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::get('/purchase/{id}/list', 'PurchaseController@list')->name('purchase.list');
     Route::get('/purchase/create', 'PurchaseController@create')->name('purchase.create');
     Route::post('/purchase/create/review', 'PurchaseController@store')->name('purchase.create.review');
+    Route::get('/purchase/{id}/edit', 'PurchaseController@edit')->name('purchase.edit');
     Route::put('/purchase/{id}/update', 'PurchaseController@update')->name('purchase.update');
     Route::get('/purchase/{id}/review', 'PurchaseController@show')->name('purchase.review');
     Route::delete('/purchase/{id}/delete', 'PurchaseController@destroy')->name('purchase.destroy');
