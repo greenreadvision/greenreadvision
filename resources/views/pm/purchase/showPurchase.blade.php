@@ -397,7 +397,7 @@
                 <div class="mb-3">
                     <div class="col-lg-12 d-flex justify-content-end">
                         <button type="button" id="print_button" class="btn btn-blue rounded-pill"><span class="mx-2">{{__('customize.Print')}}</span></button>
-                        @if(\Auth::user()->user_id==$purchase['user_id'])
+                        @if(\Auth::user()->user_id==$purchase['user_id']||\Auth::user()->role == "administrator")
                         <button class="btn btn-green rounded-pill ml-2" onclick="location.href='{{route('purchase.edit', $purchase->purchase_id)}}'"><span class="mx-2"> {{__('customize.Edit')}}</span></button>
                         @endif
 

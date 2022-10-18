@@ -80,7 +80,7 @@
             @endif
         </div>
         <div class="col-lg-4 mb-3">
-            @if(\Auth::user()->user_id==$data['user_id'] || \Auth::user()->user_id == $data['agent_id'] || \Auth::user()->role == 'manager' || \Auth::user()->user_id==$data['agent_id'])
+            @if(\Auth::user()->user_id==$data['user_id'] ||\Auth::user()->role == 'manager' || \Auth::user()->user_id==$data['agent_id'])
             <button class="float-right btn btn-primary btn-primary-style" onclick="location.href='{{route('project.edit', $data->project_id)}}'"><i class='fas fa-edit'></i><span class="ml-3"> {{__('customize.Edit')}}</span></button>
             @endif
             @if(\Auth::user()->user_id == $data['receiver'])

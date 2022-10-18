@@ -23,7 +23,7 @@
                             <h5 class="modal-title" id="locationModalLabel">倉庫平面圖</h5>
                             <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
                         </div>
-                        <img src="{{ URL::asset('storage/reserve/倉庫平面圖.png') }}" alt="倉庫平面圖">
+                        <img src="{{ URL::asset('img/倉庫平面圖.png') }}" alt="倉庫平面圖">
                     </div>
                 </div>
             </div>
