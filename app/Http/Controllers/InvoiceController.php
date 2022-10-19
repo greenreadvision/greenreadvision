@@ -53,6 +53,9 @@ class InvoiceController extends Controller
         }
         $interns = Intern::orderby('intern_id')->get();
         $invoices = Invoice::orderby('created_at', 'desc')->with('project')->with('user')->get();
+        $someInvoices = Invoice::where('invoice_id', '=', 'DfrzQEKq9n7')->get();
+
+        
         $otherInvoices = OtherInvoice::orderby('created_at', 'desc')->with('user')->get();
 
         $today = date("Y-m-d");
@@ -125,7 +128,7 @@ class InvoiceController extends Controller
             }
         }
         
-        return view('pm.invoice.indexInvoice', ['users' => $users, 'invoices' => $invoices,'otherInvoices' => $otherInvoices,'ZipCount' => $fileNum, 'interns'=>$interns]);
+        return view('pm.invoice.indexInvoice', ['users' => $users, 'invoices' => $invoices, 'someInvoices' => $someInvoices,'otherInvoices' => $otherInvoices,'ZipCount' => $fileNum, 'interns'=>$interns]);
     }
 
     /**
@@ -380,8 +383,8 @@ class InvoiceController extends Controller
         $path = [];
         $data =json_decode($request->input('file'));
         $zip = new ZipArchive();
-        $fileName = storage_path("a pp/public/"."zip/" .  $today."_". $fileNum . '.zip');
-        if ($zip->open($fileName, ZIPARCHIVE::CREATE) === TRUE){
+        $fileName = storage_path("app/public/"."zip/" .  $today."_". $fileNum . '.zip');
+        if ($zip->open($fileName, ZipArchive::CREATE) === TRUE){
             foreach($data as $key => $item){
                 if ($item->receipt_file != null) {
                     $file = '';

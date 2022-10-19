@@ -412,6 +412,8 @@
                 console.log(XMLHttpRequest.status);
                 console.log(XMLHttpRequest.readyState);
                 console.log(textStatus);
+                console.log(someInvoices.length);
+                console.log(data);
             }
         })
     }
@@ -528,6 +530,7 @@
     //帳務
     var accountNames = []
     var invoices = []
+    var someInvoices = []
     var projects = []
     $(document).ready(function() {
         resetOther()
@@ -781,6 +784,14 @@
     function getNewInvoice() {
         
         data = "{{$invoices}}"
+        data = data.replace(/[\n\r]/g, "")
+        data = JSON.parse(data.replace(/&quot;/g, '"'));
+        return data
+    }
+
+    function getSomeNewInvoice() {
+        
+        data = "{{$someInvoices}}"
         data = data.replace(/[\n\r]/g, "")
         data = JSON.parse(data.replace(/&quot;/g, '"'));
         return data
@@ -1047,6 +1058,7 @@
             $('#defaultCheck1')[0].checked = false
         }
         invoices = getNewInvoice()
+        someInvoices = getSomeNewInvoice()
         setUser()
         setCompany()
         projectYear = ''
