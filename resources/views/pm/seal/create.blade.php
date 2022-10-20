@@ -108,20 +108,20 @@
                         <div class="col-lg-3" id="oneday_input">
                             <div class="form-group">
                                 <label class="col-lg-12 col-form-label">日期</label>
-                                <input type='date' name="one_date" id="one_date" class="form-control rounded-pill" >
+                                <input type='date' name="one_date" id="one_date" class="form-control rounded-pill" required>
                             </div>
                         </div>
                         <div id="manyday_input" class = "col-lg-6 row" hidden>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="col-lg-12 col-form-label">開始日期</label>
-                                    <input type='date' name="first_date" id="first_date" class="form-control rounded-pill" >
+                                    <input type='date' name="first_date" id="first_date" class="form-control rounded-pill">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="col-lg-12 col-form-label">結束日期</label>
-                                    <input type='date' name="end_date" id="end_date" class="form-control rounded-pill" >
+                                    <input type='date' name="end_date" id="end_date" class="form-control rounded-pill">
                                 </div>
                             </div>
                         </div>
