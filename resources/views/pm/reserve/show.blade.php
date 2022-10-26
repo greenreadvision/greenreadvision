@@ -594,7 +594,6 @@
             }
             btnEdit.hidden = true;
             btnConfirm.hidden = false;
-            console.log(btnConfirm);
 
         }
     </script>

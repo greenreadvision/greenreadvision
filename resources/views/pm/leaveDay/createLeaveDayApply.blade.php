@@ -135,14 +135,58 @@
                 extra_hour_options.hidden = true
                 document.getElementById('leave').checked = false;
                 document.getElementById('pay').checked = false;
+
+                days.hidden = false
+                day.hidden = true
+                hours.hidden = true
+                content.hidden = false
+                $('#days_long').val(0)
+                resetRequire()
+                document.getElementById('start_day').required = true;
+                document.getElementById('end_day').required = true;
+                document.getElementById('start_day').setAttribute('onchange', "calculation('days')");
+                document.getElementById('start_day').value = ""
+                document.getElementById('end_day').removeAttribute('readonly')
+                document.getElementById('end_day').value = ""
+                document.getElementById('lengths').hidden = false;
+
+
                 break
             case 'special_leave':
                 extra_hour_options.hidden = true
                 document.getElementById('leave').checked = false;
                 document.getElementById('pay').checked = false;
+
+                days.hidden = true
+                day.hidden = false
+                hours.hidden = true
+                content.hidden = false
+                another_day.setAttribute('oninput',"calculation('day')")
+                $('#days_long').val(1)
+                resetRequire()
+                document.getElementById('another_day').required = true;
+
+                document.getElementById('length_long').value="day";
+                document.getElementById('lengths').hidden = true;
+                days_long.readOnly = false;
                 break
             case 'extra_hour_options':
                 extra_hour_options.hidden = false
+
+                days.hidden = false
+                day.hidden = true
+                hours.hidden = true
+                content.hidden = false
+                $('#days_long').val(0)
+                resetRequire()
+                document.getElementById('start_day').required = true;
+                document.getElementById('end_day').required = true;
+                document.getElementById('start_day').setAttribute('onchange', "calculation('days')");
+                document.getElementById('start_day').value = ""
+                document.getElementById('end_day').removeAttribute('readonly')
+                document.getElementById('end_day').value = ""
+                document.getElementById('lengths').hidden = false;
+                
                 break
             default:
         }
