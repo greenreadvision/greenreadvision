@@ -47,7 +47,8 @@ class LeaveDayApplyController extends Controller
             'content' => $request->input('contents'),
             'apply_date' => $apply_date,
             'should_break' => $request->input('days_long'),
-            'status' => 'waiting'
+            'status' => 'waiting',
+            'extra_hour_options' => $request->input('extra_hour_options')
         ]);
 
         return redirect()->route('leaveDay.show', [$leaveDayId, date("Y").'-apply']);
@@ -79,7 +80,7 @@ class LeaveDayApplyController extends Controller
     }
     public function create(String $leave_day_id)
     {
-        $selects = ['days', 'twoDays', 'day', 'half', 'houes'];
+        $selects = ['days', 'twoDays', 'day', 'half', 'houes', 'extra_hour_options'];
 
         return view('pm.leaveDay.createLeaveDayApply', ["leaveDayId" => $leave_day_id, 'selects' => $selects]);
     }

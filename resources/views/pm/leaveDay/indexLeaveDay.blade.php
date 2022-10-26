@@ -581,7 +581,8 @@
             'compensatory_leave_break': '休假',
             'compensatory_leave': '補休假',
             'bereavement_leave': '喪假',
-            'special_leave': '特休假'
+            'special_leave': '特休假',
+            'extra_hour_options': '加班'
         }
 
         role = '{{Auth::user()->role}}'
@@ -600,9 +601,18 @@
             form = '<div class="mx-2 icon-green disabled"><i class="far fa-check-circle"></i></div>'
             span = '<span class="badge badge-success">已審核</span>'
         }
+        if(leaveApply[i].extra_hour_options == "pay") {
+            extra = "(加班費)"
+        }
+        else if(leaveApply[i].extra_hour_options == "leave") {
+            extra = "(補休假)"
+        }
+        else{
+            extra = ""
+        }
         applyDelete = '<div class="mx-2 icon-red " data-toggle="modal" data-target="#apply' + leaveApply[i].leave_day_apply_id + '"><i class="far fa-trash-alt"></i></div>'
         tr = "<tr>" +
-            "<td>" + type[leaveApply[i].type] + "</td>" +
+            "<td>" + type[leaveApply[i].type] + extra +"</td>" +
             "<td >" + leaveApply[i].apply_date + "</td>" +
             "<td >" + leaveApply[i].content + "</td>" +
             "<td class='status-d'>" + leaveApply[i].should_break + "天</td>" +

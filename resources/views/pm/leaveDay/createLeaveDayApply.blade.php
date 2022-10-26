@@ -22,11 +22,12 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="type" class=" col-form-label">類別</label>
-                                    <select type="text" id="type" name="type" class="form-control rounded-pill">
+                                    <select type="text" id="type" name="type" class="form-control rounded-pill" onchange="changeType(this.options[this.options.selectedIndex].value)">
                                         <option value="compensatory_leave" {{old('type')=='compensatory_leave'?'selected':''}}>補休假</option>
                                         @if(\Auth::user()->role == 'administrator')
                                         <option value="special_leave" {{old('type')=='special_leave'?'selected':''}}>特休假</option>
                                         @endif
+                                        <option value="extra_hour_options" {{old('type')=='extra_hour_options'?'selected':''}}>加班</option>
                                     </select>
                                 </div>
                                 <div id="lengths" class="form-group">
@@ -42,6 +43,15 @@
                                 <div id="content" class="form-group">
                                     <label for="content" class='col-form-label'>事由</label>
                                     <input autocomplete="off" type="text" name="contents" class="form-control rounded-pill{{ $errors->has('content') ? ' is-invalid' : '' }}" required value="{{ old('contents') }}">
+                                </div>
+                                <div id="extra_hour_options" hidden>
+                                    <div class="form-group ">
+                                        <input type="radio" name="extra_hour_options" id="leave" value="leave">
+                                        <label for="leave">補休假</label>
+                                        
+                                        <input type="radio" name="extra_hour_options" id="pay" value="pay">
+                                        <label for="pay">加班費</label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -83,7 +93,6 @@
                                         @endif
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                         <div class="d-flex justify-content-end">
@@ -101,6 +110,7 @@
 
 <script>
     $(document).ready(function() {
+        var extra_hour_options = document.getElementById('extra_hour_options')
         var days = document.getElementById('days')
         var twoDays = document.getElementById('twoDays')
         var day = document.getElementById('day')
@@ -119,6 +129,24 @@
         
     });
 
+    function changeType(type) {
+        switch(type) {
+            case 'compensatory_leave':
+                extra_hour_options.hidden = true
+                document.getElementById('leave').checked = false;
+                document.getElementById('pay').checked = false;
+                break
+            case 'special_leave':
+                extra_hour_options.hidden = true
+                document.getElementById('leave').checked = false;
+                document.getElementById('pay').checked = false;
+                break
+            case 'extra_hour_options':
+                extra_hour_options.hidden = false
+                break
+            default:
+        }
+    }
 
     function changeLength(length) {
         switch (length) {
