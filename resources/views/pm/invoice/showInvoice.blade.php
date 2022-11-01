@@ -256,6 +256,13 @@
                             <div style="width:25%;text-align:left;"><label>{{$data['invoice']['price']>=10000? "執行長審核：":"主管審核："}}</label><u>　{{$data['invoice']['status']!='waiting'? $data['invoice']['managed']:$data['invoice']['managed']}}　.</u></div>
                             <div style="width:20%;text-align:left;"><label>請款人：</label><u>　{{($data['invoice']->user->role == 'manager' && $data['invoice']['intern_name']!=null) ? $data['invoice']['intern_name'] : $data['invoice']->user->name}}　.</u></div>
                         </div>
+                        <div class="col-md-12 row" style="margin: auto; display:flex">
+                            @if($data['invoice']['pay_day'] == '0')
+                            <div style="width:30%;text-align:left;"><label>付款天數：</label><u>　未選擇　.</u></div>
+                            @else
+                            <div style="width:30%;text-align:left;"><label>付款天數：</label><u>　{{$data['invoice']['pay_day']}}　.</u></div>
+                            @endif
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-12 mb-3 d-flex justify-content-center">

@@ -355,7 +355,7 @@
 
                                     </select>
                                 </div>
-                                <div class="col-lg-6 form-group">
+                                <div class="col-lg-4 form-group">
                                     <label class="label-style col-form-label" for="receipt_file">{{__('customize.receipt_file')}}</label>
                                     <input type="file" id="receipt_file" name="receipt_file" class="form-control rounded-pill{{ $errors->has('receipt_file') ? ' is-invalid' : '' }}" value="$data['invoice']['receipt_file']}}">
                                     @if ($errors->has('receipt_file'))
@@ -363,12 +363,23 @@
                                         <strong>{{ $errors->first('receipt_file') }}</strong>
                                     </span> @endif
                                 </div>
-                                <div class="col-lg-6 form-group">
+                                <div class="col-lg-4 form-group">
                                     <label class="label-style col-form-label" for="detail_file">{{__('customize.detail_file')}}</label>
                                     <input type="file" id="detail_file" name="detail_file" class="form-control rounded-pill{{ $errors->has('detail_file') ? ' is-invalid' : '' }}" value="$data['invoice']['detail_file']}}">
                                     @if ($errors->has('detail_file'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('detail_file') }}</strong>
+                                    </span> @endif
+                                </div>
+                                <div class="col-lg-4 form-group">
+                                    <label class="label-style col-form-label" for="pay_day">付款天數</label>
+                                    <select id="pay_day" name="pay_day" class="form-control rounded-pill{{ $errors->has('pay_day') ? ' is-invalid' : '' }}">
+                                        <option value="30">30</option>
+                                        <option value="60">60</option>
+                                    </select>
+                                         @if ($errors->has('pay_day'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('pay_day') }}</strong>
                                     </span> @endif
                                 </div>
                             </div>
@@ -631,7 +642,7 @@
 
                                         </select>
                                     </div>
-                                    <div class="col-lg-6 form-group">
+                                    <div class="col-lg-4 form-group">
                                         <label class="label-style col-form-label" for="receipt_file">{{__('customize.receipt_file')}}</label>
                                         <input type="file" id="receipt_file" name="receipt_file" class="form-control rounded-pill{{ $errors->has('receipt_file') ? ' is-invalid' : '' }}" value="$data['invoice']['receipt_file']}}">
                                         @if ($errors->has('receipt_file'))
@@ -639,12 +650,23 @@
                                             <strong>{{ $errors->first('receipt_file') }}</strong>
                                         </span> @endif
                                     </div>
-                                    <div class="col-lg-6 form-group">
+                                    <div class="col-lg-4 form-group">
                                         <label class="label-style col-form-label" for="detail_file">{{__('customize.detail_file')}}</label>
                                         <input type="file" id="detail_file" name="detail_file" class="form-control rounded-pill{{ $errors->has('detail_file') ? ' is-invalid' : '' }}" value="$data['invoice']['detail_file']}}">
                                         @if ($errors->has('detail_file'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('detail_file') }}</strong>
+                                        </span> @endif
+                                    </div>
+                                    <div class="col-lg-4 form-group">
+                                        <label class="label-style col-form-label" for="pay_day">付款天數</label>
+                                        <select id="pay_day" name="pay_day" class="form-control rounded-pill{{ $errors->has('pay_day') ? ' is-invalid' : '' }}">
+                                            <option value="30">30</option>
+                                            <option value="60">60</option>
+                                        </select>
+                                             @if ($errors->has('pay_day'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('pay_day') }}</strong>
                                         </span> @endif
                                     </div>
                                 </div>

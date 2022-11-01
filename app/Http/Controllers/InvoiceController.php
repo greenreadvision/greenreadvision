@@ -224,7 +224,8 @@ class InvoiceController extends Controller
             'receipt_file' => 'nullable|file',
             'detail_file' => 'nullable|file',
             'purchase_id' => 'nullable|string',
-            'reviewer' => 'nullable|string'
+            'reviewer' => 'nullable|string',
+            'pay_day' => 'required|integer'
         ]);
         
 
@@ -330,7 +331,8 @@ class InvoiceController extends Controller
             'status' => 'waiting',
             'finished_id' => $finished_id,
             'purchase_id' => $request->input('purchase_id'),
-            'reviewer' => $request->input('reviewer')
+            'reviewer' => $request->input('reviewer'),
+            'pay_day' => $request->input('pay_day')
         ]);
 
 
@@ -512,7 +514,8 @@ class InvoiceController extends Controller
             'receipt_file' => 'nullable|file',
             'detail_file' => 'nullable|file',
             'remittance_date' => 'nullable|date',
-            'reviewer' => 'required|string'
+            'reviewer' => 'required|string',
+            'pay_day' => 'required|integer'
         ]);
         if($invoice->company_name != $request->input('company_name')){  //如果有更改公司
             
@@ -605,7 +608,8 @@ class InvoiceController extends Controller
                 'status' => $invoice->status,
                 'finished_id' => $finished_id,
                 'purchase_id' => $request->input('purchase_id'),
-                'reviewer' => $request->input('reviewer')
+                'reviewer' => $request->input('reviewer'),
+                'pay_day' => $request->input('pay_day')
             ]);
             $invoice->status = 'delete';
             $invoice->save();
@@ -665,8 +669,8 @@ class InvoiceController extends Controller
             'price' => 'required|integer',
             'receipt_file' => 'nullable|file',
             'detail_file' => 'nullable|file',
-            'reviewer' => 'required|string'
-
+            'reviewer' => 'required|string',
+            'pay_day' => 'required|integer'
            
             // 'number' => 'required|integer',
             
