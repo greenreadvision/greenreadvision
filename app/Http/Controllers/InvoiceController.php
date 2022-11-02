@@ -20,6 +20,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use phpDocumentor\Reflection\Types\Nullable;
 use ZipArchive;
 
 class InvoiceController extends Controller
@@ -218,6 +219,7 @@ class InvoiceController extends Controller
             'bank_account_number' => 'required|string|min:2|max:255',
             'bank_account_name' => 'required|string|min:2|max:255',
             'receipt' => 'required|Boolean',
+            'receipt_date_paper' => 'nullable|date',
             'receipt_date' => 'required|date',
             'remuneration' => 'required|integer',
             'price' => 'required|integer',
@@ -225,7 +227,8 @@ class InvoiceController extends Controller
             'detail_file' => 'nullable|file',
             'purchase_id' => 'nullable|string',
             'reviewer' => 'nullable|string',
-            'pay_day' => 'required|integer'
+            'pay_day' => 'required|integer',
+            'pay_date' => 'nullable|date'
         ]);
         
 
@@ -322,6 +325,7 @@ class InvoiceController extends Controller
             'bank_account_number' => $request->input('bank_account_number'),
             'bank_account_name' => $request->input('bank_account_name'),
             'receipt' => $request->input('receipt'),
+            'receipt_date_paper' => $request->input('receipt_date_paper'),
             'receipt_date' => $request->input('receipt_date'),
             'remuneration' => $request->input('remuneration'),
             'price' => $request->input('price'),
@@ -332,7 +336,8 @@ class InvoiceController extends Controller
             'finished_id' => $finished_id,
             'purchase_id' => $request->input('purchase_id'),
             'reviewer' => $request->input('reviewer'),
-            'pay_day' => $request->input('pay_day')
+            'pay_day' => $request->input('pay_day'),
+            'pay_date' => $request->input('pay_date')
         ]);
 
 
@@ -507,6 +512,7 @@ class InvoiceController extends Controller
             'bank_account_number' => 'required|string|min:2|max:255',
             'bank_account_name' => 'required|string|min:2|max:255',
             'receipt' => 'required|Boolean',
+            'receipt_date_paper' => 'nullable|date',
             'receipt_date' => 'required|date',
             'remuneration' => 'required|integer',
             // 'number' => 'required|integer',
@@ -515,7 +521,8 @@ class InvoiceController extends Controller
             'detail_file' => 'nullable|file',
             'remittance_date' => 'nullable|date',
             'reviewer' => 'required|string',
-            'pay_day' => 'required|integer'
+            'pay_day' => 'required|integer',
+            'pay_date' => 'nullable|date'
         ]);
         if($invoice->company_name != $request->input('company_name')){  //如果有更改公司
             
@@ -599,6 +606,7 @@ class InvoiceController extends Controller
                 'bank_account_number' => $request->input('bank_account_number'),
                 'bank_account_name' => $request->input('bank_account_name'),
                 'receipt' => $request->input('receipt'),
+                'receipt_date_paper' => $request->input('receipt_date_paper'),
                 'receipt_date' => $request->input('receipt_date'),
                 'remuneration' => $request->input('remuneration'),
                 'price' => $request->input('price'),
@@ -609,7 +617,8 @@ class InvoiceController extends Controller
                 'finished_id' => $finished_id,
                 'purchase_id' => $request->input('purchase_id'),
                 'reviewer' => $request->input('reviewer'),
-                'pay_day' => $request->input('pay_day')
+                'pay_day' => $request->input('pay_day'),
+                'pay_date' => $request->input('pay_date')
             ]);
             $invoice->status = 'delete';
             $invoice->save();
@@ -663,6 +672,7 @@ class InvoiceController extends Controller
             'bank_account_number' => 'required|string|min:2|max:255',
             'bank_account_name' => 'required|string|min:2|max:255',
             'receipt' => 'required|Boolean',
+            'receipt_date_paper' => 'nullable|date',
             'receipt_date' => 'required|date',
             'remuneration' => 'required|integer',
             // 'number' => 'required|integer',
@@ -670,7 +680,8 @@ class InvoiceController extends Controller
             'receipt_file' => 'nullable|file',
             'detail_file' => 'nullable|file',
             'reviewer' => 'required|string',
-            'pay_day' => 'required|integer'
+            'pay_day' => 'required|integer',
+            'pay_date' => 'nullable|date'
            
             // 'number' => 'required|integer',
             

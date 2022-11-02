@@ -204,7 +204,7 @@
                                 </span>
                                 @endif
                             </div>
-                            <div class="col-lg-6 form-group">
+                            <div class="col-lg-4 form-group">
                                 <label class="label-style col-form-label">{{__('customize.receipt')}}</label>
                                 <div class="d-flex justify-content-around" style="padding: .375rem .75rem">
                                     <div class="form-check form-check-inline">
@@ -217,7 +217,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 form-group">
+                            <div class="col-lg-4 form-group">
+                                <label class="label-style col-form-label" for="receipt_date_paper">實際發票日期(有影本再填入即可)</label>
+                                <input type="date" id="receipt_date_paper" name="receipt_date_paper" onchange="dateCalc()" class="form-control rounded-pill{{ $errors->has('receipt_date_paper') ? ' is-invalid' : '' }}" value="{{ old('receipt_date_paper') }}"> @if ($errors->has('receipt_date_paper'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('receipt_date_paper') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                            <div class="col-lg-4 form-group">
                                 <label class="label-style col-form-label" for="receipt_date">{{__('customize.receipt_date')}}</label>
                                 <input type="date" id="receipt_date" name="receipt_date" class="form-control rounded-pill{{ $errors->has('receipt_date') ? ' is-invalid' : '' }}" value="{{ old('receipt_date') }}" required> @if ($errors->has('receipt_date'))
                                 <span class="invalid-feedback" role="alert">
@@ -263,9 +271,9 @@
 
                                 </select>
                             </div>
-                            <div class="col-lg-4 form-group">
-                                <label class="label-style col-form-label" for="receipt_file">{{__('customize.receipt_file')}}</label>
-                                <input type="file" id="receipt_file" name="receipt_file" class="form-control rounded-pill{{ $errors->has('receipt_file') ? ' is-invalid' : '' }}"> @if ($errors->has('receipt_file'))
+                            <div class="col-lg-4 form-group" onchange="receiptAdjust()">
+                                <label class="label-style col-form-label" for="receipt_file" onchange="receiptAdjust()">{{__('customize.receipt_file')}}</label>
+                                <input type="file" id="receipt_file" name="receipt_file" class="form-control rounded-pill{{ $errors->has('receipt_file') ? ' is-invalid' : '' }}" onchange="receiptAdjust()"> @if ($errors->has('receipt_file'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('receipt_file') }}</strong>
                                 </span> @endif
@@ -291,6 +299,9 @@
                         </div>
                         <div class="float-right">
                             <button type="submit" class="btn btn-green rounded-pill"><span class="mx-2">新增</span> </button>
+                        </div>
+                        <div hidden>
+                            <input type="date" id="pay_date" name="pay_date" class="form-control rounded-pill{{ $errors->has('pay_date') ? ' is-invalid' : '' }}"> 
                         </div>
                     </form>
                 </div>
@@ -782,6 +793,15 @@
         $('#purchaseModal').modal('hide')
     }
 
+    function receiptAdjust() {
+        if(document.getElementById('receipt_file').value == ""){
+            document.getElementById('receipt_date_paper').required = false;
+        }
+        else{
+            document.getElementById('receipt_date_paper').required = true;
+        }
+    }
+
     function setData(i) {
 
         a = "/purchase/" + purchases[i]['purchase_id'] + "/review"
@@ -1017,6 +1037,40 @@
         parent.appendChild(div);
 
         $(".page-" + String(nowPage)).addClass('active')
+    }
+
+    function DateAddDays(_date, days){
+        var result = new Date(_date);
+        result.setDate(result.getDate() + days);
+        return result;
+    };
+
+    function dateCalc(){
+        //因怕過日會有跨月份情況發生，所以採取new Date方式來做AddDays
+        start_day = document.getElementById('receipt_date_paper').value;
+        //產生 new Date，擷取start_day的value來做分割，分割成年分、月份(數值:0 ~ 11 -> 1月~12月)、日期
+        var end_time_payDays = new Date(start_day.substr(0,4), start_day.substr(5,2) - 1, start_day.substr(8,2));
+        console.log(end_time_payDays);
+        //使用DateAddDay，產生下一天的值 (使用-0產生型別轉換為數字)
+        end_time_payDays = DateAddDays(end_time_payDays, document.getElementById('pay_day').value - 0);
+        
+        //確定月份是否小於10，若是的話，字串前面增加 0
+        var end_time_month = end_time_payDays.getMonth()
+        end_time_month = end_time_month + 1;
+        if(end_time_month < 10){
+            end_time_month = "0" + end_time_month
+        }
+        //確定日期是否小於10，若是的話，字串前面增加 0
+        var end_time_date = end_time_payDays.getDate()
+        if(end_time_date < 10){
+            end_time_date = "0" + end_time_date
+        }
+
+        
+        //統整上述字串，讓字串改變成input(type="date")會吃的形式(yyyy-mm-dd)
+        end_time_payDays = end_time_payDays.getFullYear() + "-" + end_time_month + "-" + end_time_date
+        //回傳第二天的值以做顯示
+        document.getElementById('pay_date').value = end_time_payDays
     }
 </script>
 @stop

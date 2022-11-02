@@ -576,18 +576,26 @@
                                         </span>
                                         @endif
                                     </div>
-                                    <div class="row col-lg-6 form-group" style="margin:auto;">
+                                    <div class="row {{$data['invoice']['status'] !='complete' ? 'col-lg-4' : 'col-lg-3'}} form-group">
 
                                         <label class="label-style col-12">{{__('customize.receipt')}}</label>
                                         <label class="label-style col-6 col-form-label" for="receipt_true"><input type="radio" id="receipt_true" name="receipt" value="1" class="{{ $errors->has('receipt') ? 'is-invalid' : '' }}" {{$data['invoice']['receipt']? 'checked': ''}} required>有</label>
-                                        <label class="label-style col-6 col-form-label" for="receipt_false"><input type="radio" id="receipt_false" name="receipt" value="0" class="{{ $errors->has('receipt') ? 'is-invalid' : '' }}" {{$data['invoice']['receipt']? '': 'checked'}}>沒有，待補</label>
+                                        <label class="label-style col-6 col-form-label pr-0 pl-0" for="receipt_false"><input type="radio" id="receipt_false" name="receipt" value="0" class="{{ $errors->has('receipt') ? 'is-invalid' : '' }}" {{$data['invoice']['receipt']? '': 'checked'}}>沒有，待補</label>
                                         @if ($errors->has('receipt'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('receipt') }}</strong>
                                         </span>
                                         @endif
                                     </div>
-                                    <div class="{{$data['invoice']['status'] !='complete' ? 'col-lg-6' : 'col-lg-3'}} form-group ">
+                                    <div class="{{$data['invoice']['status'] !='complete' ? 'col-lg-4' : 'col-lg-3'}} form-group ">
+                                        <label class="label-style col-form-label" for="receipt_date_paper">實際發票日期(有影本再填入即可)</label>
+                                        <input type="date" id="receipt_date_paper" name="receipt_date_paper" onchange="dateCalc()" class="form-control rounded-pill{{ $errors->has('receipt_date_paper') ? ' is-invalid' : '' }}" value="{{ old('receipt_date_paper') }}"> @if ($errors->has('receipt_date_paper'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('receipt_date_paper') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                    <div class="{{$data['invoice']['status'] !='complete' ? 'col-lg-4' : 'col-lg-3'}} form-group ">
                                         <label class="label-style col-form-label" for="receipt_date">{{__('customize.receipt_date')}}</label>
                                         <input type="date" id="receipt_date" name="receipt_date" class="form-control rounded-pill{{ $errors->has('receipt_date') ? ' is-invalid' : '' }}" value="{{$data['invoice']['receipt_date']}}" required>
                                         @if ($errors->has('receipt_date'))
@@ -677,6 +685,9 @@
                                 </div>
                                 <div style="float: right;">
                                     <button type="submit" class="btn btn-blue rounded-pill"><span class="mx-2">{{__('customize.Save')}}</span></button>
+                                </div>
+                                <div hidden>
+                                    <input type="date" id="pay_date" name="pay_date" class="form-control rounded-pill{{ $errors->has('pay_date') ? ' is-invalid' : '' }}"> 
                                 </div>
                             </form>
                             @endif
@@ -1221,6 +1232,40 @@
         parent.appendChild(div);
 
         $(".page-" + String(nowPage)).addClass('active')
+    }
+
+    function DateAddDays(_date, days){
+        var result = new Date(_date);
+        result.setDate(result.getDate() + days);
+        return result;
+    };
+
+    function dateCalc(){
+        //因怕過日會有跨月份情況發生，所以採取new Date方式來做AddDays
+        start_day = document.getElementById('receipt_date_paper').value;
+        //產生 new Date，擷取start_day的value來做分割，分割成年分、月份(數值:0 ~ 11 -> 1月~12月)、日期
+        var end_time_payDays = new Date(start_day.substr(0,4), start_day.substr(5,2) - 1, start_day.substr(8,2));
+        console.log(end_time_payDays);
+        //使用DateAddDay，產生下一天的值 (使用-0產生型別轉換為數字)
+        end_time_payDays = DateAddDays(end_time_payDays, document.getElementById('pay_day').value - 0);
+        
+        //確定月份是否小於10，若是的話，字串前面增加 0
+        var end_time_month = end_time_payDays.getMonth()
+        end_time_month = end_time_month + 1;
+        if(end_time_month < 10){
+            end_time_month = "0" + end_time_month
+        }
+        //確定日期是否小於10，若是的話，字串前面增加 0
+        var end_time_date = end_time_payDays.getDate()
+        if(end_time_date < 10){
+            end_time_date = "0" + end_time_date
+        }
+
+        
+        //統整上述字串，讓字串改變成input(type="date")會吃的形式(yyyy-mm-dd)
+        end_time_payDays = end_time_payDays.getFullYear() + "-" + end_time_month + "-" + end_time_date
+        //回傳第二天的值以做顯示
+        document.getElementById('pay_date').value = end_time_payDays
     }
 </script>
 @stop
