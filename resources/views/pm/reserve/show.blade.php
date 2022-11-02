@@ -295,7 +295,7 @@
                 '<th style="width:5rem;">數量</th>' +
                 '<th style="width:5rem;">專案</th>' +
                 '<th>登記日期</th>' +
-                '<th>測試按鈕</th>' +
+                '<th></th>' +
                 '</tr>'
             var tr, span, name, a
     

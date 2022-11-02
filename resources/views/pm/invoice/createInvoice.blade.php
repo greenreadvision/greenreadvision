@@ -287,7 +287,7 @@
                             </div>
                             <div class="col-lg-4 form-group">
                                 <label class="label-style col-form-label" for="pay_day">付款天數</label>
-                                <select id="pay_day" name="pay_day" class="form-control rounded-pill{{ $errors->has('pay_day') ? ' is-invalid' : '' }}">
+                                <select id="pay_day" name="pay_day" onchange="dateCalc()" class="form-control rounded-pill{{ $errors->has('pay_day') ? ' is-invalid' : '' }}">
                                     <option value="30">30</option>
                                     <option value="60">60</option>
                                 </select>

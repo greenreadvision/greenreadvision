@@ -668,7 +668,7 @@
                                     </div>
                                     <div class="col-lg-4 form-group">
                                         <label class="label-style col-form-label" for="pay_day">付款天數</label>
-                                        <select id="pay_day" name="pay_day" class="form-control rounded-pill{{ $errors->has('pay_day') ? ' is-invalid' : '' }}">
+                                        <select id="pay_day" name="pay_day" onchange="dateCalc()" class="form-control rounded-pill{{ $errors->has('pay_day') ? ' is-invalid' : '' }}">
                                             <option value="30">30</option>
                                             <option value="60">60</option>
                                         </select>
@@ -1247,6 +1247,7 @@
         var end_time_payDays = new Date(start_day.substr(0,4), start_day.substr(5,2) - 1, start_day.substr(8,2));
         console.log(end_time_payDays);
         //使用DateAddDay，產生下一天的值 (使用-0產生型別轉換為數字)
+        
         end_time_payDays = DateAddDays(end_time_payDays, document.getElementById('pay_day').value - 0);
         
         //確定月份是否小於10，若是的話，字串前面增加 0
