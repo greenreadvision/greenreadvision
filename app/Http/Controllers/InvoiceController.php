@@ -220,7 +220,6 @@ class InvoiceController extends Controller
             'bank_account_name' => 'required|string|min:2|max:255',
             'receipt' => 'required|Boolean',
             'receipt_date_paper' => 'nullable|date',
-            'receipt_date' => 'required|date',
             'remuneration' => 'required|integer',
             'price' => 'required|integer',
             'receipt_file' => 'nullable|file',
@@ -337,6 +336,7 @@ class InvoiceController extends Controller
             'purchase_id' => $request->input('purchase_id'),
             'reviewer' => $request->input('reviewer'),
             'pay_day' => $request->input('pay_day'),
+            'petty_cash' => $request->input('petty_cash'),
             'pay_date' => $request->input('pay_date')
         ]);
 
@@ -513,7 +513,6 @@ class InvoiceController extends Controller
             'bank_account_name' => 'required|string|min:2|max:255',
             'receipt' => 'required|Boolean',
             'receipt_date_paper' => 'nullable|date',
-            'receipt_date' => 'required|date',
             'remuneration' => 'required|integer',
             // 'number' => 'required|integer',
             'price' => 'required|integer',
@@ -618,6 +617,7 @@ class InvoiceController extends Controller
                 'purchase_id' => $request->input('purchase_id'),
                 'reviewer' => $request->input('reviewer'),
                 'pay_day' => $request->input('pay_day'),
+                'petty_cash' => $request->input('petty_cash'),
                 'pay_date' => $request->input('pay_date')
             ]);
             $invoice->status = 'delete';
@@ -673,7 +673,6 @@ class InvoiceController extends Controller
             'bank_account_name' => 'required|string|min:2|max:255',
             'receipt' => 'required|Boolean',
             'receipt_date_paper' => 'nullable|date',
-            'receipt_date' => 'required|date',
             'remuneration' => 'required|integer',
             // 'number' => 'required|integer',
             'price' => 'required|integer',

@@ -288,6 +288,11 @@
                                     <strong>{{ $errors->first('detail_file') }}</strong>
                                 </span> @endif
                             </div>
+                            <div class="col-lg-4 form-group pt-5">
+                                <label class="label-style mr-3">已用零用金支付</label>
+                                <label class="label-style col-form-label" for="petty_cash_true"><input type="radio" id="petty_cash_true" name="petty_cash" value="1" class="{{ $errors->has('petty_cash') ? 'is-invalid' : '' }}" required>是</label>
+                                <label class="label-style col-form-label pr-0 pl-0" for="petty_cash_false"><input type="radio" id="petty_cash_false" name="petty_cash" value="0" class="{{ $errors->has('petty_cash') ? 'is-invalid' : '' }}">否</label>
+                            </div>
                         </div>
                         <div class="float-right">
                             <button type="submit" class="btn btn-green rounded-pill"><span class="mx-2">新增</span> </button>
