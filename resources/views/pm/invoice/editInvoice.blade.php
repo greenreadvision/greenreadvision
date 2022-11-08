@@ -589,20 +589,22 @@
                                     </div>
                                     <div class="{{$data['invoice']['status'] !='complete' ? 'col-lg-4' : 'col-lg-3'}} form-group ">
                                         <label class="label-style col-form-label" for="receipt_date_paper">實際發票日期(有影本再填入即可)</label>
-                                        <input type="date" id="receipt_date_paper" name="receipt_date_paper" onchange="dateCalc()" class="form-control rounded-pill{{ $errors->has('receipt_date_paper') ? ' is-invalid' : '' }}" value="{{ old('receipt_date_paper') }}"> @if ($errors->has('receipt_date_paper'))
+                                        <input type="date" id="receipt_date_paper" name="receipt_date_paper" onchange="dateCalc()" class="form-control rounded-pill{{ $errors->has('receipt_date_paper') ? ' is-invalid' : '' }}" value="{{$errors->has('receipt_date_paper') ? old('receipt_date_paper'): $data['invoice']['receipt_date_paper']}}"> @if ($errors->has('receipt_date_paper'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('receipt_date_paper') }}</strong>
                                         </span>
                                         @endif
                                     </div>
-                                    <div class="{{$data['invoice']['status'] !='complete' ? 'col-lg-4' : 'col-lg-3'}} form-group ">
-                                        <label class="label-style col-form-label" for="receipt_date">{{__('customize.receipt_date')}}</label>
-                                        <input type="date" id="receipt_date" name="receipt_date" class="form-control rounded-pill{{ $errors->has('receipt_date') ? ' is-invalid' : '' }}" value="{{$data['invoice']['receipt_date']}}" required>
-                                        @if ($errors->has('receipt_date'))
+                                    <div class="col-lg-4 form-group">
+                                        <label class="label-style col-form-label" for="pay_day">付款天數</label>
+                                        <select id="pay_day" name="pay_day" onchange="dateCalc()" class="form-control rounded-pill{{ $errors->has('pay_day') ? ' is-invalid' : '' }}">
+                                            <option value="30">30</option>
+                                            <option value="60">60</option>
+                                        </select>
+                                             @if ($errors->has('pay_day'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('receipt_date') }}</strong>
-                                        </span>
-                                        @endif
+                                            <strong>{{ $errors->first('pay_day') }}</strong>
+                                        </span> @endif
                                     </div>
                                     <div class="col-lg-3 form-group " {{$data['invoice']['status'] !='complete' ? 'hidden' : ''}}>
                                         <label class="label-style col-form-label" for="remittance_date">匯款日期</label>
@@ -666,16 +668,10 @@
                                             <strong>{{ $errors->first('detail_file') }}</strong>
                                         </span> @endif
                                     </div>
-                                    <div class="col-lg-4 form-group">
-                                        <label class="label-style col-form-label" for="pay_day">付款天數</label>
-                                        <select id="pay_day" name="pay_day" onchange="dateCalc()" class="form-control rounded-pill{{ $errors->has('pay_day') ? ' is-invalid' : '' }}">
-                                            <option value="30">30</option>
-                                            <option value="60">60</option>
-                                        </select>
-                                             @if ($errors->has('pay_day'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('pay_day') }}</strong>
-                                        </span> @endif
+                                    <div class="col-lg-4 form-group pt-5">
+                                        <label class="label-style mr-3">已用零用金支付</label>
+                                        <label class="label-style col-form-label" for="petty_cash_true"><input type="radio" id="petty_cash_true" name="petty_cash" value="1" class="{{ $errors->has('petty_cash') ? 'is-invalid' : '' }}" required>是</label>
+                                        <label class="label-style col-form-label pr-0 pl-0" for="petty_cash_false"><input type="radio" id="petty_cash_false" name="petty_cash" value="0" class="{{ $errors->has('petty_cash') ? 'is-invalid' : '' }}">否</label>
                                     </div>
                                 </div>
                                 <div style="float: left;">

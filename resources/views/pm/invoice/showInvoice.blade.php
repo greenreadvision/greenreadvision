@@ -215,10 +215,14 @@
                                         </td>
                                         <th class="border border-dark align-middle text-center" style="white-space:nowrap;">付款日期</th>
                                         <td style="font-size: 16px" class="border border-dark align-middle text-left">
-                                        @if($data['invoice']['pay_date'] == null)
-                                            -尚未輸入發票日期-
+                                        @if($data['invoice']['petty_cash'] == "1")
+                                            -已用零用金支付-
                                         @else
-                                            {{$data['invoice']['pay_date']}}
+                                            @if($data['invoice']['pay_date'] == null)
+                                                -尚未輸入發票日期-
+                                            @else
+                                                {{$data['invoice']['pay_date']}}
+                                            @endif
                                         @endif
                                         </td>
                                     </tr>
