@@ -337,7 +337,6 @@ class InvoiceController extends Controller
             'purchase_id' => $request->input('purchase_id'),
             'reviewer' => $request->input('reviewer'),
             'pay_day' => $request->input('pay_day'),
-            'petty_cash' => $request->input('petty_cash'),
             'pay_date' => $request->input('pay_date')
         ]);
 
@@ -619,7 +618,6 @@ class InvoiceController extends Controller
                 'purchase_id' => $request->input('purchase_id'),
                 'reviewer' => $request->input('reviewer'),
                 'pay_day' => $request->input('pay_day'),
-                'petty_cash' => $request->input('petty_cash'),
                 'pay_date' => $request->input('pay_date')
             ]);
             $invoice->status = 'delete';

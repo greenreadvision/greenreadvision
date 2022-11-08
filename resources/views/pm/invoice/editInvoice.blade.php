@@ -668,11 +668,6 @@
                                             <strong>{{ $errors->first('detail_file') }}</strong>
                                         </span> @endif
                                     </div>
-                                    <div class="col-lg-4 form-group pt-5">
-                                        <label class="label-style mr-3">已用零用金支付</label>
-                                        <label class="label-style col-form-label" for="petty_cash_true"><input type="radio" id="petty_cash_true" name="petty_cash" value="1" class="{{ $errors->has('petty_cash') ? 'is-invalid' : '' }}" required>是</label>
-                                        <label class="label-style col-form-label pr-0 pl-0" for="petty_cash_false"><input type="radio" id="petty_cash_false" name="petty_cash" value="0" class="{{ $errors->has('petty_cash') ? 'is-invalid' : '' }}">否</label>
-                                    </div>
                                 </div>
                                 <div style="float: left;">
                                     <button type="button" class="btn btn-red rounded-pill" data-toggle="modal" data-target="#deleteModal">
@@ -1243,7 +1238,6 @@
         var end_time_payDays = new Date(start_day.substr(0,4), start_day.substr(5,2) - 1, start_day.substr(8,2));
         console.log(end_time_payDays);
         //使用DateAddDay，產生下一天的值 (使用-0產生型別轉換為數字)
-        
         end_time_payDays = DateAddDays(end_time_payDays, document.getElementById('pay_day').value - 0);
         
         //確定月份是否小於10，若是的話，字串前面增加 0
