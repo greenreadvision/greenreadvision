@@ -273,7 +273,7 @@
                     '<th class="p-2">' +
                     '<th class="p-2"><input autocomplete="off" type="text" id="content-' + i + '" name="content-'+ i + '" class="rounded-pill form-control{{ $errors->has("content-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("content-'+ i +'") }}"></th>' +
                     '<th class="p-2"><input oninput="value=value.replace(/[^\d]/g,"")" onkeyup="calculation()" autocomplete="off" type="text" id="quantity-'+ i + '" name="quantity-'+ i +'" class="rounded-pill form-control{{ $errors->has("quantity-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("quantity-'+ i +'") }}"></th>' +
-                    '<th class="p-2"><input oninput="value=value.replace(/[^\d]/g,"")" onkeyup="calculation()" autocomplete="off" type="text" id="price-'+ i +'" name="price-'+ i +'" class="rounded-pill form-control{{ $errors->has("price-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("price-'+ i +'") }}"></th>' +
+                    '<th class="p-2"><input oninput="value=value.replace(/[^\d\.]/g,"")" onkeyup="calculation()" autocomplete="off" type="text" id="price-'+ i +'" name="price-'+ i +'" class="rounded-pill form-control{{ $errors->has("price-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("price-'+ i +'") }}"></th>' +
                     '<th class="p-2"><input autocomplete="off" type="text" id="amount-'+ i +'" name="amount-'+ i +'" class="rounded-pill form-control{{ $errors->has("amount-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("amount-'+ i +'") }}" readonly></th>' +
                     '<th class="p-2"><input autocomplete="off" type="text" id="note-'+ i +'" name="note-'+ i +'" class="rounded-pill form-control{{ $errors->has("note-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("note-'+ i +'") }}"></th>' +
                     '</tr>'
@@ -283,7 +283,7 @@
                     '<th class="p-2"><button id="addItemButton" type="button" onclick="additem()" class="w-100 btn btn-green rounded-pill">+</button>' +
                     '<th class="p-2"><input autocomplete="off" type="text" id="content-' + i + '" name="content-'+ i + '" class="rounded-pill form-control{{ $errors->has("content-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("content-'+ i +'") }}"></th>' +
                     '<th class="p-2"><input oninput="value=value.replace(/[^\d]/g,"")" onkeyup="calculation()" autocomplete="off" type="text" id="quantity-'+ i + '" name="quantity-'+ i +'" class="rounded-pill form-control{{ $errors->has("quantity-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("quantity-'+ i +'") }}"></th>' +
-                    '<th class="p-2"><input oninput="value=value.replace(/[^\d]/g,"")" onkeyup="calculation()" autocomplete="off" type="text" id="price-'+ i +'" name="price-'+ i +'" class="rounded-pill form-control{{ $errors->has("price-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("price-'+ i +'") }}"></th>' +
+                    '<th class="p-2"><input oninput="value=value.replace(/[^\d\.]/g,"")" onkeyup="calculation()" autocomplete="off" type="text" id="price-'+ i +'" name="price-'+ i +'" class="rounded-pill form-control{{ $errors->has("price-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("price-'+ i +'") }}"></th>' +
                     '<th class="p-2"><input autocomplete="off" type="text" id="amount-'+ i +'" name="amount-'+ i +'" class="rounded-pill form-control{{ $errors->has("amount-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("amount-'+ i +'") }}" readonly></th>' +
                     '<th class="p-2"><input autocomplete="off" type="text" id="note-'+ i +'" name="note-'+ i +'" class="rounded-pill form-control{{ $errors->has("note-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("note-'+ i +'") }}"></th>' +
                     '</tr>'
@@ -303,7 +303,7 @@
             '<th class="p-2"><button id="addItemButton" type="button" onclick="additem()" class="w-100 btn btn-green rounded-pill">+</button>' +
             '<th class="p-2"><input autocomplete="off" type="text" id="content-' + item_num + '" name="content-'+ item_num + '" class="rounded-pill form-control{{ $errors->has("content-'+ item_num +'") ? " is-invalid" : "" }}" value="{{ old("content-'+ item_num +'") }}"></th>' +
             '<th class="p-2"><input oninput="value=value.replace(/[^\d]/g,"")" onkeyup="calculation()" autocomplete="off" type="text" id="quantity-'+ item_num + '" name="quantity-'+ item_num +'" class="rounded-pill form-control{{ $errors->has("quantity-'+ item_num +'") ? " is-invalid" : "" }}" value="{{ old("quantity-'+ item_num +'") }}"></th>' +
-            '<th class="p-2"><input oninput="value=value.replace(/[^\d]/g,"")" onkeyup="calculation()" autocomplete="off" type="text" id="price-'+ item_num +'" name="price-'+ item_num +'" class="rounded-pill form-control{{ $errors->has("price-'+ item_num +'") ? " is-invalid" : "" }}" value="{{ old("price-'+ item_num +'") }}"></th>' +
+            '<th class="p-2"><input oninput="value=value.replace(/[^\d\.]/g,"")" onkeyup="calculation()" autocomplete="off" type="text" id="price-'+ item_num +'" name="price-'+ item_num +'" class="rounded-pill form-control{{ $errors->has("price-'+ item_num +'") ? " is-invalid" : "" }}" value="{{ old("price-'+ item_num +'") }}"></th>' +
             '<th class="p-2"><input autocomplete="off" type="text" id="amount-'+ item_num +'" name="amount-'+ item_num +'" class="rounded-pill form-control{{ $errors->has("amount-'+ item_num +'") ? " is-invalid" : "" }}" value="{{ old("amount-'+ item_num +'") }}" readonly></th>' +
             '<th class="p-2"><input autocomplete="off" type="text" id="note-'+ item_num +'" name="note-'+ item_num +'" class="rounded-pill form-control{{ $errors->has("note-'+ item_num +'") ? " is-invalid" : "" }}" value="{{ old("note-'+ item_num +'") }}"></th>' +
             '</tr>'
@@ -333,7 +333,7 @@
             quantity = document.getElementById('quantity-' + i).value
             price = document.getElementById('price-' + i).value
             amount_one = document.getElementById('amount-' + i)
-            amount_one.value = Math.round(quantity * price)
+            amount_one.value = Math.round(quantity * price * 100)/100
             console.log(amount_one)
             sum = sum + quantity * price
         }
@@ -356,13 +356,13 @@
         if (texType == 'untexed') {
             
             amount.value = sum()
-            tex.value = Math.round(sum() * 0.05)
-            total_amount.value = Math.round(sum() * 1.05)
+            tex.value = Math.round(sum() * 0.05 * 100)/100
+            total_amount.value = Math.round(sum() * 1.05 * 100)/100
         }
         else if(texType == 'texed'){
             total_amount.value = sum()
-            amount.value = Math.round(total_amount.value/1.05)
-            tex.value = Math.round(amount.value * 0.05)
+            amount.value = Math.round((total_amount.value/1.05)*100)/100
+            tex.value = Math.round(amount.value * 0.05 * 100)/100
         }else if(texType == 'zerotexed'){
             total_amount.value = sum()
             amount.value = total_amount.value

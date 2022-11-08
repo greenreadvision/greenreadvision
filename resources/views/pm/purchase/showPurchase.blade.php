@@ -494,8 +494,8 @@
                                     <th style="text-align:right;border-bottom:none;border-top:none;padding:0 .1cm">{{$item->no}}</th>
                                     <th style="text-align:left;border-bottom:none;border-top:none;padding:0 .1cm">{{$item->content}}</th>
                                     <th style="text-align:right;border-bottom:none;border-top:none;padding:0 .1cm">{{$item->quantity}}</th>
-                                    <th style="text-align:right;border-bottom:none;border-top:none;padding:0 .1cm">{{number_format($item->price)}}</th>
-                                    <th style="text-align:right;border-bottom:none;border-top:none;padding:0 .1cm">{{number_format($item->amount)}}</th>
+                                    <th style="text-align:right;border-bottom:none;border-top:none;padding:0 .1cm">{{$item->price}}</th>
+                                    <th style="text-align:right;border-bottom:none;border-top:none;padding:0 .1cm">{{$item->amount}}</th>
                                     <th style="text-align:left;border-bottom:none;border-top:none;padding:0 .1cm">{{$item->note}}</th>
                                 </tr>
                                 @endforeach
@@ -512,15 +512,15 @@
                                 <tr>
                                     <th style="vertical-align: text-top;text-align:left;padding:0 .1cm" rowspan="3" colspan="3">備註 : <br>{{$purchase->note}}</th>
                                     <th style="text-align:right;padding:0 .1cm" colspan="1">金額</th>
-                                    <th style="text-align:right;padding:0 .1cm" colspan="2">{{number_format($purchase->amount)}}</th>
+                                    <th style="text-align:right;padding:0 .1cm" colspan="2">{{$purchase->amount}}</th>
                                 </tr>
                                 <tr>
                                     <th class="test" style="text-align:right;padding:0 .1cm" colspan="1">稅額</th>
-                                    <th style="text-align:right;padding:0 .1cm" colspan="2">{{number_format($purchase->tex)}}</th>
+                                    <th style="text-align:right;padding:0 .1cm" colspan="2">{{$purchase->tex}}</th>
                                 </tr>
                                 <tr>
                                     <th style="text-align:right;padding:0 .1cm" colspan="1">總金額</th>
-                                    <th style="text-align:right;padding:0 .1cm" colspan="2">{{number_format($purchase->total_amount)}}</th>
+                                    <th style="text-align:right;padding:0 .1cm" colspan="2">{{$purchase->total_amount}}</th>
                                 </tr>
                             </tfoot>
                         </table>
