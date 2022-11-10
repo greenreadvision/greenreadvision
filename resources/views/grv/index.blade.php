@@ -87,7 +87,11 @@
             <div class="col-lg-12">
                     <div style="padding-left: 10px" class="nav-tabs">
                         @foreach ($types as $key => $type)
-                            <a class="nav-link type_{{$type['type_id']}}" target='_blank' data-toggle="tab" onclick="window.location = '/activity/{{$type['type_id']}}'" href="#"><span> {{__('customize.' . $type['type_id'])}}</span></a>
+                        @if($type['type_id'] == '2023-winterCamp')
+                        <a class="nav-link type_2023-winterCamp" target='_blank' data-toggle="tab" onclick="window.location.href = 'https://www.accupass.com/event/2210171006281303758272'"><span>{{__('customize.' . $type['type_id'])}}</span></a>
+                        @else
+                        <a class="nav-link type_{{$type['type_id']}}" target='_blank' data-toggle="tab" onclick="window.location = '/activity/{{$type['type_id']}}'" href="#"><span> {{__('customize.' . $type['type_id'])}}</span></a>
+                        @endif
                         @endforeach
                     </div>
                     <!--<div class="card border-0 shadow">

@@ -139,6 +139,9 @@ p {
 .type_major-activity{
     background-image: url("../../activity/2020農博活動.jpg");
 }
+.type_2023-winterCamp{
+    background-image: url("../../activity/新竹冬令營.jpg");
+}
 .type_Venue:hover{
     background-image: url("../../activity/2020農博營運.jpg");
 }
@@ -151,6 +154,11 @@ p {
 .type_major-activity:hover{
     background-image:url("../../activity/2020農博活動.jpg");
 }
+.type_2023-winterCamp:hover{
+    background-image: url("../../activity/新竹冬令營.jpg");
+}
+
+
 
 
 .nav-tabs a span{

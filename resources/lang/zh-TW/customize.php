@@ -226,6 +226,7 @@ return [
     'culture' => '文化活動',
     'major-activity'=>'大型活動',
     'Venue'=>'場館營運',
+    '2023-winterCamp'=>'2023兒童新竹冬令營',
 
     
     'general' => '在職',
