@@ -142,7 +142,7 @@ class BoardController extends Controller
                 break;
             case 'content':
                 $request->validate([
-                    'ckeditor' => 'required|string|max:5000'
+                    'ckeditor' => 'required|string|max:8000'
                 ]);
                 $board->content = $request->input('ckeditor');
                 $board->save();

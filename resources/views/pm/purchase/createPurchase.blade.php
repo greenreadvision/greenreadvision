@@ -355,14 +355,14 @@
         console.log(texType)
         if (texType == 'untexed') {
             
-            amount.value = sum()
-            tex.value = Math.round(sum() * 0.05 * 100)/100
-            total_amount.value = Math.round(sum() * 1.05 * 100)/100
+            amount.value = Math.round(sum() * 100)/100  
+            tex.value = Math.ceil(amount.value * 0.05)
+            total_amount.value = Math.round(sum()) + Number(tex.value)
         }
         else if(texType == 'texed'){
             total_amount.value = sum()
-            amount.value = Math.round((total_amount.value/1.05)*100)/100
-            tex.value = Math.round(amount.value * 0.05 * 100)/100
+            amount.value = Math.round((total_amount.value/1.05))
+            tex.value = total_amount.value - amount.value
         }else if(texType == 'zerotexed'){
             total_amount.value = sum()
             amount.value = total_amount.value
