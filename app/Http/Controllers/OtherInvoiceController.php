@@ -72,13 +72,17 @@ class OtherInvoiceController extends Controller
             'bank_account_number' => 'required|string|min:2|max:255',
             'bank_account_name' => 'required|string|min:2|max:255',
             'receipt' => 'required|Boolean',
-            'receipt_date' => 'required|date',
+            'receipt_date_paper' => 'nullable|date',
+            'receipt_date' => 'nullable|date',
             'remuneration' => 'required|integer',
             'price' => 'required|integer',
             'receipt_file' => 'nullable|file',
             'detail_file' => 'nullable|file',
             'purchase_id' => 'nullable|string',
-            'reviewer' => 'nullable|string'
+            'reviewer' => 'nullable|string',
+            'pay_day' => 'required|integer',
+            'petty_cash' => 'required|Boolean',
+            'pay_date' => 'nullable|date'
         ]);
 
         $id = RandomId::getNewId($other_invoice_ids);
@@ -169,6 +173,7 @@ class OtherInvoiceController extends Controller
             'bank_account_number' => $request->input('bank_account_number'),
             'bank_account_name' => $request->input('bank_account_name'),
             'receipt' => $request->input('receipt'),
+            'receipt_date_paper' => $request->input('receipt_date_paper'),
             'receipt_date' => $request->input('receipt_date'),
             'remuneration' => $request->input('remuneration'),
             'price' => $request->input('price'),
@@ -178,7 +183,10 @@ class OtherInvoiceController extends Controller
             'finished_id'=>$finished_id,
             'purchase_id' => $request->input('purchase_id'),
             'managed' => '',
-            'reviewer' => $request->input('reviewer')
+            'reviewer' => $request->input('reviewer'),
+            'pay_day' => $request->input('pay_day'),
+            'petty_cash' => $request->input('petty_cash'),
+            'pay_date' => $request->input('pay_date')
 
         ]);
 
@@ -299,13 +307,17 @@ class OtherInvoiceController extends Controller
             'bank_account_number' => 'required|string|min:2|max:255',
             'bank_account_name' => 'required|string|min:2|max:255',
             'receipt' => 'required|Boolean',
-            'receipt_date' => 'required|date',
+            'receipt_date_paper' => 'nullable|date',
+            'receipt_date' => 'nullable|date',
             'remuneration' => 'required|integer',
             // 'number' => 'required|integer',
             'price' => 'required|integer',
             'receipt_file' => 'nullable|file',
             'detail_file' => 'nullable|file',
-            'reviewer' => 'required|string'
+            'reviewer' => 'required|string',
+            'pay_day' => 'required|integer',
+            'petty_cash' => 'required|Boolean',
+            'pay_date' => 'nullable|date'
 
         ]);
         //如果公司有更換
@@ -394,6 +406,7 @@ class OtherInvoiceController extends Controller
                 'bank_account_number' => $request->input('bank_account_number'),
                 'bank_account_name' => $request->input('bank_account_name'),
                 'receipt' => $request->input('receipt'),
+                'receipt_date_paper' => $request->input('receipt_date_paper'),
                 'receipt_date' => $request->input('receipt_date'),
                 'remuneration' => $request->input('remuneration'),
                 'price' => $request->input('price'),
@@ -403,8 +416,11 @@ class OtherInvoiceController extends Controller
                 'finished_id'=>$finished_id,
                 'purchase_id' => $request->input('purchase_id'),
                 'managed' => '',
-                'reviewer' => $request->input('reviewer')
-    
+                'reviewer' => $request->input('reviewer'),
+                'pay_day' => $request->input('pay_day'),
+                'petty_cash' => $request->input('petty_cash'),
+                'pay_date' => $request->input('pay_date')
+        
             ]);
             $invoice->status = 'delete';
             $invoice->save();
@@ -452,13 +468,17 @@ class OtherInvoiceController extends Controller
             'bank_account_number' => 'required|string|min:2|max:255',
             'bank_account_name' => 'required|string|min:2|max:255',
             'receipt' => 'required|Boolean',
-            'receipt_date' => 'required|date',
+            'receipt_date_paper' => 'nullable|date',
+            'receipt_date' => 'nullable|date',
             'remuneration' => 'required|integer',
             // 'number' => 'required|integer',
             'price' => 'required|integer',
             'receipt_file' => 'nullable|file',
             'detail_file' => 'nullable|file',
-            'reviewer' => 'required|string'
+            'reviewer' => 'required|string',
+            'pay_day' => 'required|integer',
+            'petty_cash' => 'required|Boolean',
+            'pay_date' => 'nullable|date'
             
 
         ]);
@@ -527,6 +547,7 @@ class OtherInvoiceController extends Controller
                 'bank_account_number' => $request->input('bank_account_number'),
                 'bank_account_name' => $request->input('bank_account_name'),
                 'receipt' => $request->input('receipt'),
+                'receipt_date_paper' => $request->input('receipt_date_paper'),
                 'receipt_date' => $request->input('receipt_date'),
                 'remuneration' => $request->input('remuneration'),
                 'price' => $request->input('price'),
@@ -536,7 +557,10 @@ class OtherInvoiceController extends Controller
                 'finished_id'=>$finished_id,
                 'purchase_id' => $request->input('purchase_id'),
                 'managed' => '',
-                'reviewer' => $request->input('reviewer')
+                'reviewer' => $request->input('reviewer'),
+                'pay_day' => $request->input('pay_day'),
+                'petty_cash' => $request->input('petty_cash'),
+                'pay_date' => $request->input('pay_date')
     
             ]);
             $invoice->status = 'delete';

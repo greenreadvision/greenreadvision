@@ -9,17 +9,19 @@
                 <li class="breadcrumb-item active"><a href="{{route('eventpage')}}">活動花絮</a></li>
                 <li class="breadcrumb-item"><a href="{{route('eventpage.show', $type)}}">{{__('customize.'.$type)}}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{$photo->name}}</li>
-
             </ol>
         </nav>
-        <div class="row popup-gallery">
-            @foreach($data as $temp)
-            <div class="col-xl-4 mb-3 photo-img">
-                <a href="{{route('download', $temp['path'])}}">
-                    <img class="object-fit_cover" src="{{route('download', $temp['path'])}}" alt="" width="100%" height="240px">
-                </a>
+        
+                <div class="row popup-gallery">
+                    @foreach($data as $temp)
+                    <div class="col-xl-4 mb-3 photo-img">
+                        <a href="{{route('download', $temp['path'])}}">
+                            <img class="object-fit_cover" src="{{route('download', $temp['path'])}}" alt="" width="100%" height="240px">
+                        </a>
+                    </div>
+                    @endforeach
+                </div>
             </div>
-            @endforeach
         </div>
     </div>
 </div>

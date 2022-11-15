@@ -34,10 +34,11 @@
                     <li class="menu-highlight">
                         <p><span>活動花絮</span></p>
                         <ul id="sub-menu02" class="sub-menu">
-                            <li class="h-menu01"><a href="#">場館營運</a></li>
-                            <li class="h-menu02"><a href="#">文化活動</a></li>
-                            <li class="h-menu03"><a href="#">記者會</a></li>
-                            <li class="h-menu04"><a href="#">大型活動</a></li>
+                            <li class="h-menu01"><a href="https://www.accupass.com/event/2210171006281303758272">2023新竹冬令營</a></li>
+                            <li class="h-menu02"><a href="#">場館營運</a></li>
+                            <li class="h-menu03"><a href="#">文化活動</a></li>
+                            <li class="h-menu04"><a href="#">記者會</a></li>
+                            <li class="h-menu05"><a href="#">大型活動</a></li>
                         </ul>
                     </li>
                     <li class="menu-design">
