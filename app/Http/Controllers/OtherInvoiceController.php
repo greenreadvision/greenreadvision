@@ -314,7 +314,7 @@ class OtherInvoiceController extends Controller
             'price' => 'required|integer',
             'receipt_file' => 'nullable|file',
             'detail_file' => 'nullable|file',
-            'reviewer' => 'required|string',
+            'reviewer' => 'nullable|string',
             'pay_day' => 'required|integer',
             'petty_cash' => 'required|Boolean',
             'pay_date' => 'nullable|date'
@@ -475,7 +475,7 @@ class OtherInvoiceController extends Controller
             'price' => 'required|integer',
             'receipt_file' => 'nullable|file',
             'detail_file' => 'nullable|file',
-            'reviewer' => 'required|string',
+            'reviewer' => 'nullable|string',
             'pay_day' => 'required|integer',
             'petty_cash' => 'required|Boolean',
             'pay_date' => 'nullable|date'
