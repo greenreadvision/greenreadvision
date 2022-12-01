@@ -125,26 +125,23 @@
                 <div class="col-lg-12">
                     @if($data['invoice']['status']=="waiting-fix" || $data['invoice']['status']=="check-fix")
                     @if(strpos(URL::full(),'other'))
-                    <form action="../fix/other" method="POST" enctype="multipart/form-data">
+                    <form action="../fix/other" onsubmit="dateCalc()" method="POST" enctype="multipart/form-data">
                         @else
-                        <form action="fix" method="POST" enctype="multipart/form-data">
+                        <form action="fix" onsubmit="dateCalc()" method="POST" enctype="multipart/form-data">
                             @endif
                             @method('PUT')
                             @csrf
                             <div class="form-group row">
-                                @if(\Auth::user()->role =='manager')
-                                    <div id = "intern_name" class="col-lg-12 form-group" style="padding :10px">
-                                        <label class="label-style col-form-label" for="intern_name">實習生姓名</label>
-                                        <select type="text" id="intern_name" name="intern_name" class="form-control rounded-pill" autofocus>
-                                            <option value="">請選擇實習生姓名</option>
-                                            <option>柴犬</option>
-                                            <option>貓頭鷹</option>
-                                            <option>比目魚</option>
-                                            <option>北極熊</option>
-                                            <option>刺蝟</option>
-                                            <option>花貓</option>
-                                            <option>河馬</option>
-                                        </select>
+                                @if(\Auth::user()->role =='intern'||\Auth::user()->role =='manager')
+                                    <div class="col-lg-12 col-form-label" style="padding-left: 0px">
+                                        <div id = "intern_name" class="col-lg-6 form-group" >
+                                            <label class="label-style col-form-label" for="intern_name">實習生姓名</label>
+                                            <select type="text" id="intern_name" name="intern_name" class="form-control rounded-pill" autofocus>
+                                                @foreach ($data['interns'] as $intern)
+                                                    <option value="{{$intern->name}}" {{$data['invoice']['intern_name'] == $intern->name? 'selected':''}}>{{$intern->nickname}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                     @endif
                                 <div class="col-lg-6 form_group">
@@ -394,9 +391,9 @@
                         </form>
                         @else
                         @if(strpos(URL::full(),'other'))
-                        <form action="../update/other" method="POST" enctype="multipart/form-data">
+                        <form action="../update/other" onsubmit="dateCalc()" method="POST" enctype="multipart/form-data">
                             @else
-                            <form action="update" method="POST" enctype="multipart/form-data">
+                            <form action="update" onsubmit="dateCalc()" method="POST" enctype="multipart/form-data">
                                 @endif
                                 @method('PUT')
                                 @csrf
@@ -670,8 +667,8 @@
                                     </div>
                                     <div class="col-lg-4 form-group pt-5">
                                         <label class="label-style mr-3">已用零用金支付</label>
-                                        <label class="label-style col-form-label" for="petty_cash_true"><input type="radio" id="petty_cash_true" name="petty_cash" value="1" class="{{ $errors->has('petty_cash') ? 'is-invalid' : '' }}" required>是</label>
-                                        <label class="label-style col-form-label pr-0 pl-0" for="petty_cash_false"><input type="radio" id="petty_cash_false" name="petty_cash" value="0" class="{{ $errors->has('petty_cash') ? 'is-invalid' : '' }}">否</label>
+                                        <label class="label-style col-form-label" for="petty_cash_true"><input type="radio" id="petty_cash_true" name="petty_cash" value="1" class="{{ $errors->has('petty_cash') ? 'is-invalid' : '' }}" {{$data['invoice']['petty_cash']? 'checked': ''}} required>是</label>
+                                        <label class="label-style col-form-label pr-0 pl-0" for="petty_cash_false"><input type="radio" id="petty_cash_false" name="petty_cash" value="0" class="{{ $errors->has('petty_cash') ? 'is-invalid' : '' }}" {{$data['invoice']['petty_cash']? '': 'checked'}}>否</label>
                                     </div>
                                 </div>
                                 <div style="float: left;">
@@ -683,7 +680,7 @@
                                     <button type="submit" class="btn btn-blue rounded-pill"><span class="mx-2">{{__('customize.Save')}}</span></button>
                                 </div>
                                 <div hidden>
-                                    <input type="date" id="pay_date" name="pay_date" class="form-control rounded-pill{{ $errors->has('pay_date') ? ' is-invalid' : '' }}"> 
+                                    <input type="date" id="pay_date" name="pay_date" class="form-control rounded-pill{{ $errors->has('pay_date') ? ' is-invalid' : '' }}" value="{{$errors->has('pay_date') ? old('pay_date'): $data['invoice']['pay_date']}}"> 
                                 </div>
                             </form>
                             @endif

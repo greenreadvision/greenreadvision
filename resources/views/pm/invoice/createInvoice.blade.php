@@ -39,7 +39,7 @@
                         </div> -->
                     </div>
                     
-                    <form name="invoiceForm" action="create/review" method="post" enctype="multipart/form-data">
+                    <form name="invoiceForm" action="create/review" onsubmit="dateCalc()" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
                             @if(\Auth::user()->role =='intern'||\Auth::user()->role =='manager')
