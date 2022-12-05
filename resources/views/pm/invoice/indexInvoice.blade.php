@@ -461,23 +461,28 @@
             'check-fix': '請款被撤回',
             'managed': '請款中',
             'matched': '匯款中',
-            'complete': '匯款完成'
+            'complete': '匯款完成',
+            'delete': '已註銷'
         }
         var InvoiceDate =''
         var excel = [
-            ['請款單號', '請款日期', '請款人', '專案', '請款廠商', '請款項目', '請款事項', '請款費用', '銀行名稱', '分行', '帳號', '戶名', '是否附上發票','發票繳交日(預計)', '是否匯款', '狀態']
+            ['請款單號', '請款日期', '請款人', '專案', '請款廠商', '請款項目', '請款事項', '請款費用', '銀行名稱', '分行', '帳號', '戶名', '是否附上發票', '是否匯款', '狀態', '零用金支付']
         ];
         for (var i = 0; i < invoices.length; i++) {
             isReceipt = ''
             isComplete = ''
+            isPetty = ''
             if (invoices[i]['status'] == 'complete') {
                 isComplete = '∨'
             }
             if (invoices[i]['receipt'] == 1) {
                 isReceipt = '∨'
             }
+            if (invoices[i]['petty_cash'] == 1) {
+                isPetty = '∨'
+            }
             invoiceDate = invoices[i]['created_at'].substring(0,10);
-            excel.push([invoices[i]['finished_id'],invoiceDate , invoices[i].user['name'], invoices[i].project['name'], invoices[i]['company'], invoices[i]['title'], invoices[i]['content'], invoices[i]['price'], invoices[i]['bank'], invoices[i]['bank_branch'], invoices[i]['bank_account_number'], invoices[i]['bank_account_name'], isReceipt, invoices[i]['receipt_date'] , isComplete, status[invoices[i]['status']]])
+            excel.push([invoices[i]['finished_id'],invoiceDate , invoices[i].user['name'], invoices[i].project['name'], invoices[i]['company'], invoices[i]['title'], invoices[i]['content'], invoices[i]['price'], invoices[i]['bank'], invoices[i]['bank_branch'], invoices[i]['bank_account_number'], invoices[i]['bank_account_name'], isReceipt, isComplete, status[invoices[i]['status']], isPetty])
         }
         var filename = "請款表.xlsx";
 
@@ -1200,26 +1205,31 @@
             'check-fix': '請款被撤回',
             'managed': '請款中',
             'matched': '匯款中',
-            'complete': '匯款完成'
+            'complete': '匯款完成',
+            'delete': '已註銷'
         }
         var excel = [
-            ['請款單號', '請款日期', '請款人', '專案', '請款廠商', '請款項目', '請款事項', '請款費用', '銀行名稱', '分行', '帳號', '戶名', '是否附上發票', '是否匯款', '狀態']
+            ['請款單號', '請款日期', '請款人', '專案', '請款廠商', '請款項目', '請款事項', '請款費用', '銀行名稱', '分行', '帳號', '戶名', '是否附上發票', '是否匯款', '狀態', '零用金支付']
         ];
         for (var i = 0; i < other_invoices.length; i++) {
             isReceipt = ''
             isComplete = ''
+            isPetty = ''
             if (other_invoices[i]['status'] == 'complete') {
                 isComplete = '∨'
             }
             if (other_invoices[i]['receipt'] == 1) {
                 isReceipt = '∨'
             }
+            if (other_invoices[i]['petty_cash'] == 1) {
+                isPetty = '∨'
+            }
             var lang = [{
                 salary: "薪資"
             }, {
                 other: "其他"
             }]
-            excel.push([other_invoices[i]['finished_id'], other_invoices[i]['receipt_date'], other_invoices[i].user['name'], chinese[other_invoices[i]['type']], other_invoices[i]['company'], other_invoices[i]['title'], other_invoices[i]['content'], other_invoices[i]['price'], other_invoices[i]['bank'], other_invoices[i]['bank_branch'], other_invoices[i]['bank_account_number'], other_invoices[i]['bank_account_name'], isReceipt, isComplete, status[other_invoices[i]['status']]])
+            excel.push([other_invoices[i]['finished_id'], other_invoices[i]['receipt_date'], other_invoices[i].user['name'], chinese[other_invoices[i]['type']], other_invoices[i]['company'], other_invoices[i]['title'], other_invoices[i]['content'], other_invoices[i]['price'], other_invoices[i]['bank'], other_invoices[i]['bank_branch'], other_invoices[i]['bank_account_number'], other_invoices[i]['bank_account_name'], isReceipt, isComplete, status[other_invoices[i]['status']], isPetty])
         }
         var filename = "請款表.xlsx";
 
