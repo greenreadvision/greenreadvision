@@ -211,6 +211,7 @@ class InvoiceController extends Controller
         $request->validate([
             'intern_name' => 'nullable|string',
             'project_id' => 'required|string|exists:projects,project_id|size:11',
+            'invoice_date' => 'nullable|date',
             'title' => 'required|string|min:1|max:100',
             'content' => 'required|string|min:1|max:100',
             'company' => 'required|string|min:1|max:255',
@@ -315,6 +316,7 @@ class InvoiceController extends Controller
             'user_id' => \Auth::user()->user_id,
             'intern_name' => $intern,
             'project_id' => $request->input('project_id'),
+            'invoice_date' => $request->input('invoice_date'),
             'title' => $request->input('title'),
             'content' => $request->input('content'),
             'number' => $i + 1,
@@ -506,6 +508,7 @@ class InvoiceController extends Controller
         $request->validate([
             'intern_name' => 'nullable|string',
             'project_id' => 'required|string|exists:projects,project_id|size:11',
+            'invoice_date' => 'nullable|date',
             'content' => 'required|string|min:1|max:100',
             'company_name' => 'required|string|min:2|max:255',
             'company' => 'required|string|min:2|max:255',
@@ -598,6 +601,7 @@ class InvoiceController extends Controller
                 'invoice_id' => $id,
                 'user_id' => $invoice->user_id,
                 'project_id' => $request->input('project_id'),
+                'invoice_date' => $request->input('invoice_date'),
                 'title' => $request->input('title'),
                 'content' => $request->input('content'),
                 'number' => $i + 1,
@@ -666,6 +670,7 @@ class InvoiceController extends Controller
         //
         $request->validate([
             'intern_name' => 'nullable|string',
+            'invoice_date' => 'nullable|date',
             'project_id' => 'required|string|exists:projects,project_id|size:11',
             'content' => 'required|string|min:1|max:100',
             'company_name' => 'required|string|min:2|max:255',

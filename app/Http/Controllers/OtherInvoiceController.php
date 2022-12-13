@@ -62,6 +62,7 @@ class OtherInvoiceController extends Controller
 
         $request->validate([
             'intern_name' => 'nullable|string',
+            'invoice_date' => 'nullable|date',
             'type' => 'required|string|min:2|max:255',
             'title' => 'required|string|min:1|max:100',
             'content' => 'required|string|min:1|max:100',
@@ -161,12 +162,13 @@ class OtherInvoiceController extends Controller
             'other_invoice_id' => $id,
             'user_id' => \Auth::user()->user_id,
             'intern_name' => $intern,
+            'invoice_date' => $request->input('invoice_date'),
             'type'=>$request->input('type'),
             'title' => $request->input('title'),
             'content' => $request->input('content'),
             'number' => $i+1,
             // 'content' => InvoiceController::replaceEnter(true, $request->input('content')),
-            'company_name' => $request->input('company_name'),
+            'company_name' => $request->input('company_name'),  
             'company' => $request->input('company'),
             'bank' => $request->input('bank'),
             'bank_branch' => $request->input('bank_branch'),
@@ -297,6 +299,7 @@ class OtherInvoiceController extends Controller
         //
         $request->validate([
             'intern_name' => 'nullable|string',
+            'invoice_date' => 'nullable|date',
             'type' => 'required|string|min:2|max:255',
             'title' => 'required|string|min:1|max:100',
             'content' => 'required|string|min:1|max:100',
@@ -394,6 +397,7 @@ class OtherInvoiceController extends Controller
             $post = OtherInvoice::create([
                 'other_invoice_id' => $id,
                 'user_id' => $invoice->user_id,
+                'invoice_date' => $request->input('invoice_date'),
                 'type'=>$request->input('type'),
                 'title' => $request->input('title'),
                 'content' => $request->input('content'),
@@ -459,6 +463,7 @@ class OtherInvoiceController extends Controller
         //
         $request->validate([
             'intern_name' => 'nullable|string',
+            'invoice_date' => 'nullable|date',
             'title' => 'required|string|min:1|max:100',
             'content' => 'required|string|min:1|max:100',
             'company_name' => 'required|string|min:2|max:255',
@@ -535,6 +540,7 @@ class OtherInvoiceController extends Controller
             $post = OtherInvoice::create([
                 'other_invoice_id' => $id,
                 'user_id' => \Auth::user()->user_id,
+                'invoice_date' => $request->input('invoice_date'),
                 'type'=>$request->input('type'),
                 'title' => $request->input('title'),
                 'content' => $request->input('content'),

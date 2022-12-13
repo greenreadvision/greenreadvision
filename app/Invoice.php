@@ -13,7 +13,7 @@ class Invoice extends Model
     public $incrementing = false;
     protected $primaryKey = "invoice_id";
     protected $keyType = 'string';
-    protected $fillable = ['invoice_id', 'user_id', 'project_id', 'title','content', 'number','intern_name','company_name','company', 'bank', 'bank_branch', 'bank_account_number', 'bank_account_name', 'receipt','receipt_date_paper', 'receipt_date', 'remuneration', 'price', 'detail_file', 'receipt_file', 'prepay', 'status','finished_id','purchase_id','reviewer','pay_day','petty_cash','pay_date'];
+    protected $fillable = ['invoice_id', 'user_id', 'project_id', 'invoice_date', 'title','content', 'number','intern_name','company_name','company', 'bank', 'bank_branch', 'bank_account_number', 'bank_account_name', 'receipt','receipt_date_paper', 'receipt_date', 'remuneration', 'price', 'detail_file', 'receipt_file', 'prepay', 'status','finished_id','purchase_id','reviewer','pay_day','petty_cash','pay_date'];
 
     // protected $invoice_id = "invoice_id";
     // protected $user_id = "user_id";

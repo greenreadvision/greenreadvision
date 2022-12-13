@@ -125,24 +125,33 @@
                 <div class="col-lg-12">
                     @if($data['invoice']['status']=="waiting-fix" || $data['invoice']['status']=="check-fix")
                     @if(strpos(URL::full(),'other'))
-                    <form action="../fix/other" onsubmit="dateCalc()" method="POST" enctype="multipart/form-data">
+                    <form action="../fix/other" method="POST" enctype="multipart/form-data">
                         @else
-                        <form action="fix" onsubmit="dateCalc()" method="POST" enctype="multipart/form-data">
+                        <form action="fix" method="POST" enctype="multipart/form-data">
                             @endif
                             @method('PUT')
                             @csrf
                             <div class="form-group row">
-                                @if(\Auth::user()->role =='intern'||\Auth::user()->role =='manager')
-                                    <div class="col-lg-12 col-form-label" style="padding-left: 0px">
-                                        <div id = "intern_name" class="col-lg-6 form-group" >
-                                            <label class="label-style col-form-label" for="intern_name">實習生姓名</label>
-                                            <select type="text" id="intern_name" name="intern_name" class="form-control rounded-pill" autofocus>
-                                                @foreach ($data['interns'] as $intern)
-                                                    <option value="{{$intern->name}}" {{$data['invoice']['intern_name'] == $intern->name? 'selected':''}}>{{$intern->nickname}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                <div class="form-group row">
+                                    <div  class="col-lg-6 form-group" >
+                                        <label class="label-style col-form-label" for="invoice_date">請款日期</label>
+                                        <input type="date" id="invoice_date" name="invoice_date" class="form-control rounded-pill{{ $errors->has('invoice_date') ? ' is-invalid' : '' }}" value="{{$data['invoice']['invoice_date']}}"> @if ($errors->has('invoice_date'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('invoice_date') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
+                                    @if(\Auth::user()->role =='intern'||\Auth::user()->role =='manager')
+                                    <div  class="col-lg-6 form-group" >
+                                        <label class="label-style col-form-label" for="intern_name">實習生姓名</label>
+                                        <select type="text" id="intern_name" name="intern_name" class="form-control rounded-pill" autofocus>
+                                        @foreach ($data['interns'] as $intern)
+                                            <option value="{{$intern->name}}">{{$intern->nickname}}</option>
+                                        @endforeach
+                                        </select>
+                                    </div>
+                                    @else
+                                    <div  class="col-lg-6 form-group" ></div>
                                     @endif
                                 <div class="col-lg-6 form_group">
                                     <div class="row">
@@ -370,7 +379,7 @@
                                 </div>
                                 <div class="col-lg-4 form-group">
                                     <label class="label-style col-form-label" for="pay_day">付款天數</label>
-                                    <select id="pay_day" name="pay_day" class="form-control rounded-pill{{ $errors->has('pay_day') ? ' is-invalid' : '' }}">
+                                    <select id="pay_day" name="pay_day" onchange="dateCalc()" class="form-control rounded-pill{{ $errors->has('pay_day') ? ' is-invalid' : '' }}">
                                         <option value="30">30</option>
                                         <option value="60">60</option>
                                     </select>
@@ -379,38 +388,120 @@
                                         <strong>{{ $errors->first('pay_day') }}</strong>
                                     </span> @endif
                                 </div>
+                                <div class="col-lg-3 form-group " {{$data['invoice']['status'] !='complete' ? 'hidden' : ''}}>
+                                    <label class="label-style col-form-label" for="remittance_date">匯款日期</label>
+                                    <input type="date" id="remittance_date" name="remittance_date" class="form-control rounded-pill{{ $errors->has('remittance_date') ? ' is-invalid' : '' }}" value="{{$data['invoice']['remittance_date']}}">
+                                    @if ($errors->has('remittance_date'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('remittance_date') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="col-lg-4 form-group">
+                                    <label class="label-style col-form-label" for="remuneration">{{__('customize.remuneration')}}(張數)</label>
+                                    <input oninput="value=value.replace(/[^\d]/g,'')" autocomplete="off" type="text" id="remuneration" name="remuneration" class="form-control rounded-pill{{ $errors->has('remuneration') ? ' is-invalid' : '' }}" value="{{$errors->has('remuneration')? old('remuneration'): $data['invoice']['remuneration']}}" required>
+                                    @if ($errors->has('remuneration'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('remuneration') }}</strong>
+                                    </span> @endif
+                                </div>
+                                <div class="col-lg-4">
+                                    <label class="label-style col-form-label" for="price">{{__('customize.price')}}</label>
+                                    <input oninput="value=value.replace(/[^\d]/g,'')" onkeyup="checkPrice()" autocomplete="off" type="text" id="price" name="price" class="form-control rounded-pill{{ $errors->has('price') ? ' is-invalid' : '' }}" value="{{$errors->has('price')? old('price'): $data['invoice']['price']}}" required>
+                                    @if ($errors->has('price'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('price') }}</strong>
+                                    </span> @endif
+                                </div>
+                                <div class="col-lg-4 form-group">
+                                    <label class="label-style col-form-label" for="reviewer">審核主管</label>
+                                    <select type="text" id="reviewer" name="reviewer" class="form-control rounded-pill" required>
+                                        <option value=""></option>
+                                        <optgroup id="optgroup-1" label="3000元以下">
+                                            <option value="GRV00002" id="GRV00002" {{$data['invoice']['reviewer']=='GRV00002'? 'selected' : ''}}>蔡貴瑄</option>
+                                        </optgroup>
+                                        <optgroup id="optgroup-2" label="3000~10000元">
+                                            @foreach($data['reviewers'] as $reviewer)
+                                            @if($reviewer['status'] != 'resign')
+                                            <option value="{{$reviewer['user_id']}}">{{$reviewer->name}}</option>
+                                            @endif
+                                            @endforeach-->
+                                            <option value="">任何主管</option>
+                                        </optgroup>
+                                        <optgroup id="optgroup-3" label="10000元以上">
+                                            <option value="GRV00001" id="GRV00001" {{$data['invoice']['reviewer']=='GRV00001'? 'selected' : ''}}>吳奇靜</option>
+                                        </optgroup>
+
+                                    </select>
+                                </div>
+                                <div class="col-lg-4 form-group">
+                                    <label class="label-style col-form-label" for="receipt_file">{{__('customize.receipt_file')}}</label>
+                                    <input type="file" id="receipt_file" name="receipt_file" class="form-control rounded-pill{{ $errors->has('receipt_file') ? ' is-invalid' : '' }}" value="{{$data['invoice']['receipt_file']}}">
+                                    @if ($errors->has('receipt_file'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('receipt_file') }}</strong>
+                                    </span> @endif
+                                </div>
+                                <div class="col-lg-4 form-group">
+                                    <label class="label-style col-form-label" for="detail_file">{{__('customize.detail_file')}}</label>
+                                    <input type="file" id="detail_file" name="detail_file" class="form-control rounded-pill{{ $errors->has('detail_file') ? ' is-invalid' : '' }}" value="{{$data['invoice']['detail_file']}}">
+                                    @if ($errors->has('detail_file'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('detail_file') }}</strong>
+                                    </span> @endif
+                                </div>
+                                <div class="col-lg-4 form-group pt-5">
+                                    <label class="label-style mr-3">已用零用金支付</label>
+                                    <label class="label-style col-form-label" for="petty_cash_true"><input type="radio" id="petty_cash_true" name="petty_cash" value="1" class="{{ $errors->has('petty_cash') ? 'is-invalid' : '' }}" {{$data['invoice']['petty_cash']? 'checked': ''}} required>是</label>
+                                    <label class="label-style col-form-label pr-0 pl-0" for="petty_cash_false"><input type="radio" id="petty_cash_false" name="petty_cash" value="0" class="{{ $errors->has('petty_cash') ? 'is-invalid' : '' }}" {{$data['invoice']['petty_cash']? '': 'checked'}}>否</label>
+                                </div>
+                                <div class="col-lg-4 form-group">
+                                    <label class="label-style col-form-label" for="pay_date">付款日期</label>
+                                    <input type="date" id="pay_date" name="pay_date" class="form-control rounded-pill{{ $errors->has('pay_date') ? ' is-invalid' : '' }}" value="{{$data['invoice']['pay_date']}}"> 
+                                </div>
                             </div>
-                            <div style="float: left;">
-                                <button type="button" class="btn btn-red rounded-pill" data-toggle="modal" data-target="#deleteModal">
-                                    <i class='ml-2 fas fa-trash-alt'></i><span class="ml-1 mr-2">{{__('customize.Delete')}}</span>
-                                </button>
-                            </div>
-                            <div style="float: right;">
-                                <button type="submit" class="btn btn-blue rounded-pill"><span class="mx-2">{{__('customize.Save')}}</span></button>
+                            <div class="col-lg-12 form-group">
+                                <div style="float: left;">
+                                    <button type="button" class="btn btn-red rounded-pill" data-toggle="modal" data-target="#deleteModal">
+                                        <i class='ml-2 fas fa-trash-alt'></i><span class="ml-3 mr-2">{{__('customize.Delete')}}</span>
+                                    </button>
+                                </div>
+
+                                <div style="float: right;">
+                                    <button type="submit" class="btn btn-blue rounded-pill"><span class="mx-2">{{__('customize.Save')}}</span></button>
+                                </div>
                             </div>
                         </form>
                         @else
                         @if(strpos(URL::full(),'other'))
-                        <form action="../update/other" onsubmit="dateCalc()" method="POST" enctype="multipart/form-data">
+                        <form action="../update/other" method="POST" enctype="multipart/form-data">
                             @else
-                            <form action="update" onsubmit="dateCalc()" method="POST" enctype="multipart/form-data">
+                            <form action="update" method="POST" enctype="multipart/form-data">
                                 @endif
                                 @method('PUT')
                                 @csrf
                                 <div class="form-group row">
-                                    @if(\Auth::user()->role =='intern'||\Auth::user()->role =='manager')
-                                    <div class="col-lg-12 col-form-label" style="padding-left: 0px">
-                                        <div id = "intern_name" class="col-lg-6 form-group" >
+                                    <div class="form-group row">
+                                        <div  class="col-lg-6 form-group" >
+                                            <label class="label-style col-form-label" for="invoice_date">請款日期</label>
+                                            <input type="date" id="invoice_date" name="invoice_date" class="form-control rounded-pill{{ $errors->has('invoice_date') ? ' is-invalid' : '' }}" value="{{$data['invoice']['invoice_date']}}"> @if ($errors->has('invoice_date'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('invoice_date') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                        @if(\Auth::user()->role =='intern'||\Auth::user()->role =='manager')
+                                        <div  class="col-lg-6 form-group" >
                                             <label class="label-style col-form-label" for="intern_name">實習生姓名</label>
                                             <select type="text" id="intern_name" name="intern_name" class="form-control rounded-pill" autofocus>
-                                                @foreach ($data['interns'] as $intern)
-                                                    <option value="{{$intern->name}}" {{$data['invoice']['intern_name'] == $intern->name? 'selected':''}}>{{$intern->nickname}}</option>
-                                                @endforeach
+                                            @foreach ($data['interns'] as $intern)
+                                                <option value="{{$intern->name}}">{{$intern->nickname}}</option>
+                                            @endforeach
                                             </select>
                                         </div>
-                                    </div>
-                                    
-                                    @endif
+                                        @else
+                                        <div  class="col-lg-6 form-group" ></div>
+                                        @endif
                                     <div class="col-lg-6 form_group">
                                         <div class="row">
                                             <div class="col-lg-12">
@@ -651,7 +742,7 @@
                                     </div>
                                     <div class="col-lg-4 form-group">
                                         <label class="label-style col-form-label" for="receipt_file">{{__('customize.receipt_file')}}</label>
-                                        <input type="file" id="receipt_file" name="receipt_file" class="form-control rounded-pill{{ $errors->has('receipt_file') ? ' is-invalid' : '' }}" value="$data['invoice']['receipt_file']}}">
+                                        <input type="file" id="receipt_file" name="receipt_file" class="form-control rounded-pill{{ $errors->has('receipt_file') ? ' is-invalid' : '' }}" value="{{$data['invoice']['receipt_file']}}">
                                         @if ($errors->has('receipt_file'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('receipt_file') }}</strong>
@@ -659,7 +750,7 @@
                                     </div>
                                     <div class="col-lg-4 form-group">
                                         <label class="label-style col-form-label" for="detail_file">{{__('customize.detail_file')}}</label>
-                                        <input type="file" id="detail_file" name="detail_file" class="form-control rounded-pill{{ $errors->has('detail_file') ? ' is-invalid' : '' }}" value="$data['invoice']['detail_file']}}">
+                                        <input type="file" id="detail_file" name="detail_file" class="form-control rounded-pill{{ $errors->has('detail_file') ? ' is-invalid' : '' }}" value="{{$data['invoice']['detail_file']}}">
                                         @if ($errors->has('detail_file'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('detail_file') }}</strong>
@@ -670,17 +761,21 @@
                                         <label class="label-style col-form-label" for="petty_cash_true"><input type="radio" id="petty_cash_true" name="petty_cash" value="1" class="{{ $errors->has('petty_cash') ? 'is-invalid' : '' }}" {{$data['invoice']['petty_cash']? 'checked': ''}} required>是</label>
                                         <label class="label-style col-form-label pr-0 pl-0" for="petty_cash_false"><input type="radio" id="petty_cash_false" name="petty_cash" value="0" class="{{ $errors->has('petty_cash') ? 'is-invalid' : '' }}" {{$data['invoice']['petty_cash']? '': 'checked'}}>否</label>
                                     </div>
+                                    <div class="col-lg-4 form-group">
+                                        <label class="label-style col-form-label" for="pay_date">付款日期</label>
+                                        <input type="date" id="pay_date" name="pay_date" class="form-control rounded-pill{{ $errors->has('pay_date') ? ' is-invalid' : '' }}" value="{{$data['invoice']['pay_date']}}"> 
+                                    </div>
                                 </div>
-                                <div style="float: left;">
-                                    <button type="button" class="btn btn-red rounded-pill" data-toggle="modal" data-target="#deleteModal">
-                                        <i class='ml-2 fas fa-trash-alt'></i><span class="ml-3 mr-2">{{__('customize.Delete')}}</span>
-                                    </button>
-                                </div>
-                                <div style="float: right;">
-                                    <button type="submit" class="btn btn-blue rounded-pill"><span class="mx-2">{{__('customize.Save')}}</span></button>
-                                </div>
-                                <div hidden>
-                                    <input type="date" id="pay_date" name="pay_date" class="form-control rounded-pill{{ $errors->has('pay_date') ? ' is-invalid' : '' }}" value="{{$errors->has('pay_date') ? old('pay_date'): $data['invoice']['pay_date']}}"> 
+                                <div class="col-lg-12 form-group">
+                                    <div style="float: left;">
+                                        <button type="button" class="btn btn-red rounded-pill" data-toggle="modal" data-target="#deleteModal">
+                                            <i class='ml-2 fas fa-trash-alt'></i><span class="ml-3 mr-2">{{__('customize.Delete')}}</span>
+                                        </button>
+                                    </div>
+
+                                    <div style="float: right;">
+                                        <button type="submit" class="btn btn-blue rounded-pill"><span class="mx-2">{{__('customize.Save')}}</span></button>
+                                    </div>
                                 </div>
                             </form>
                             @endif

@@ -1033,13 +1033,20 @@
             UserName = invoices[i].intern_name
         }
         a = "/invoice/" + invoices[i]['invoice_id'] + "/review"
+        var invoice_dates = ''
+        if(invoices[i].invoice_date == null) {
+            invoice_dates = invoices[i].created_at.substr(0, 10)
+        }
+        else {
+            invoice_dates = invoices[i].invoice_date
+        }
         tr = "<tr>" +
             "<td width='11%'><a href='" + a + "' target='_blank'>" + invoices[i].finished_id + "</td>" +
             "<td width='10%'><a href='" + a + "' target='_blank'>" + UserName + "</td>" +
             "<td width='20%'><a href='" + a + "' target='_blank'>" + invoices[i].project['name'] + "</td>" +
             "<td width='20%'><a href='" + a + "' target='_blank'>" + invoices[i].title + "</a></td>" +
             "<td width='10%'><a href='" + a + "' target='_blank'>" + commafy(invoices[i].price) + "</td>" +
-            "<td width='12%'> <a href='" + a + "' target='_blank'>" + invoices[i].created_at.substr(0, 10) + "</td>" +
+            "<td width='12%'> <a href='" + a + "' target='_blank'>" + invoice_dates + "</td>" +
             "<td width='12%'> <a href='" + a + "' target='_blank'>" + petty + remittance_date + "</td>" +
             "<td width='5%'>" + span + "</td>" +
             "</tr>"
@@ -1714,6 +1721,14 @@
             UserName2 = other_invoices[i].intern_name
         }
 
+        var other_invoice_dates = ''
+        if(other_invoices[i].invoice_date == null) {
+            other_invoice_dates = other_invoices[i].created_at.substr(0, 10)
+        }
+        else {
+            other_invoice_dates = other_invoices[i].invoice_date
+        }
+
         a = "/invoice/" + other_invoices[i]['other_invoice_id'] + "/review/other"
         tr = "<tr>" +
             "<td width='11%'><a href='" + a + "' target='_blank'>" + other_invoices[i].finished_id + "</td>" +
@@ -1721,7 +1736,7 @@
             "<td width='19%'><a href='" + a + "' target='_blank'>" + chinese[other_invoices[i].company_name] + "-" + chinese[other_invoices[i].type] + "</a></td>" +
             "<td><a href='" + a + "' target='_blank'>" + other_invoices[i].title + "</a></td>" +
             "<td width='10%'><a href='" + a + "' target='_blank'>" + commafy(other_invoices[i].price) + "</td>" +
-            "<td width='12%'><a href='" + a + "' target='_blank'>" + other_invoices[i].created_at.substr(0, 10) + "</td>" +
+            "<td width='12%'><a href='" + a + "' target='_blank'>" + other_invoice_dates + "</td>" +
             "<td width='12%'><a href='" + a + "' target='_blank'>" + petty + remittance_date + "</td>" +
             "<td width='5%'>" + span + "</td>" +
             "</tr>"

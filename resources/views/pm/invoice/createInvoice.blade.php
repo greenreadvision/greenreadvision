@@ -39,11 +39,19 @@
                         </div> -->
                     </div>
                     
-                    <form name="invoiceForm" action="create/review" onsubmit="dateCalc()" method="post" enctype="multipart/form-data">
+                    <form name="invoiceForm" action="create/review" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
-                            @if(\Auth::user()->role =='intern'||\Auth::user()->role =='manager')
-                            <div class="col-lg-12 col-form-label" style="padding-left: 0px">
+                            <div class="form-group row">
+                                <div  class="col-lg-6 form-group" >
+                                    <label class="label-style col-form-label" for="invoice_date">請款日期</label>
+                                    <input type="date" id="invoice_date" name="invoice_date" class="form-control rounded-pill{{ $errors->has('invoice_date') ? ' is-invalid' : '' }}" value="{{ old('invoice_date') }}"> @if ($errors->has('invoice_date'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('invoice_date') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                @if(\Auth::user()->role =='intern'||\Auth::user()->role =='manager')
                                 <div  class="col-lg-6 form-group" >
                                     <label class="label-style col-form-label" for="intern_name">實習生姓名</label>
                                     <select type="text" id="intern_name" name="intern_name" class="form-control rounded-pill" autofocus>
@@ -52,9 +60,9 @@
                                     @endforeach
                                     </select>
                                 </div>
-                            </div>
-                            
-                            @endif
+                                @else
+                                <div  class="col-lg-6 form-group" ></div>
+                                @endif
 
                             <div class="col-lg-6 form-group">
                                 <div id="otherCreateInvoice">
@@ -293,12 +301,16 @@
                                 <label class="label-style col-form-label" for="petty_cash_true"><input type="radio" id="petty_cash_true" name="petty_cash" value="1" class="{{ $errors->has('petty_cash') ? 'is-invalid' : '' }}" required>是</label>
                                 <label class="label-style col-form-label pr-0 pl-0" for="petty_cash_false"><input type="radio" id="petty_cash_false" name="petty_cash" value="0" class="{{ $errors->has('petty_cash') ? 'is-invalid' : '' }}">否</label>
                             </div>
+                            <div class="col-lg-4 form-group">
+                                <label class="label-style col-form-label" for="pay_date">付款日期</label>
+                                <input type="date" id="pay_date" name="pay_date" class="form-control rounded-pill{{ $errors->has('pay_date') ? ' is-invalid' : '' }}"> 
+                            </div>
                         </div>
-                        <div class="float-right">
-                            <button type="submit" class="btn btn-green rounded-pill"><span class="mx-2">新增</span> </button>
-                        </div>
-                        <div hidden>
-                            <input type="date" id="pay_date" name="pay_date" class="form-control rounded-pill{{ $errors->has('pay_date') ? ' is-invalid' : '' }}"> 
+                        <div class="col-lg-12 form-group"></div>
+                            <div class="col-lg-11"></div>
+                            <div class="float-right">
+                                <button type="submit" class="btn btn-green rounded-pill"><span class="mx-2">新增</span> </button>
+                            </div>
                         </div>
                     </form>
                 </div>

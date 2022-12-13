@@ -179,7 +179,11 @@
                                 <tbody>
                                     <tr class="border border-dark">
                                         <th width="10%" class="align-middle text-center border border-dark " style="white-space:nowrap;">請款日期</th>
+                                        @if($data['invoice']['invoice_date'] == null)
                                         <td style="font-size: 16px" width="40%" class="border border-dark align-middle text-left">{{$data['invoice']['created_at']->format('Y-m-d')}}</td>
+                                        @else
+                                        <td style="font-size: 16px" width="40%" class="border border-dark align-middle text-left">{{$data['invoice']['invoice_date']}}</td>
+                                        @endif
                                         <th width="10%" class="border border-dark align-middle text-center" style="white-space:nowrap;">請款金額</th>
                                         <td style="font-size: 16px" width="40%" class="border border-dark align-middle text-left">
                                             {{number_format($data['invoice']['price'])}}</td>
