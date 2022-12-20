@@ -11,6 +11,7 @@
         gtag('config', 'G-RYMMYFFT5Z');
     </script>
 </head>
+
 <div class="modal fade" style="padding-top: 5%" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="max-width:90vw;">
         <div class="modal-content" >
@@ -233,18 +234,26 @@
         </div>
     </div>
 </div>
-<div id="BackTop">
-    <div style="position: relative;width:100%;height:100%"><i class='fas fa-chevron-up' style='font-size:24px;position: absolute;
-	top:8px;
-    left:8px;'></i></div>
-
-</div>
 
 @stop
 
 {{--  <link href="{{ URL::asset('css/grv/board.css') }}" rel="stylesheet">  --}}
 
 @section('javascript')
+<script type="text/javascript">
+    (function () {
+        var options = {
+            line: "https://line.me/R/ti/p/@777cqtot", // Line QR code URL
+            call_to_action: "歡迎向我們提出問題~", // Call to action
+            button_color: "#FF6550", // Color of button
+            position: "right", // Position may be 'right' or 'left'
+        };
+        var proto = 'https:', host = "getbutton.io", url = proto + '//static.' + host;
+        var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = url + '/widget-send-button/js/init.js';
+        s.onload = function () { WhWidgetSendButton.init(host, proto, options); };
+        var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+    })();
+</script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script type="text/javascript" src="{{ URL::asset('js/jquery.min.js') }}"></script>
 
@@ -399,6 +408,7 @@
     ga('send', 'pageview');
 </script>
 <script src="{{ URL::asset('js/jquery.min.js') }}"></script>
+/*
 <script>
     $(window).scroll(function() {
         if ($(this).scrollTop() >= 50) { // If page is scrolled more than 50px
@@ -413,6 +423,7 @@
         }, 500);
     });
 </script>
+*/
 <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
 <script>
     var mySwiper = new Swiper ( ".swiper-home", {
