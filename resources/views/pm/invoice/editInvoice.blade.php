@@ -156,8 +156,8 @@
                                 <div class="col-lg-6 form_group">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <label class="label-style col-form-label" for="company_name">公司</label>
-                                            <select type="text" id="company_name_fix" name="company_name" class="form-control rounded-pill" autofocus>
+                                            <label class="label-style col-form-label" for="company_name">{{__('customize.company')}}</label>
+                                            <select type="text" id="company_name" name="company_name" class="form-control rounded-pill" autofocus>
                                                 @foreach ($data['company_name'] as $key)
                                                 @if($data['invoice']['company_name']==$key)
                                                 <option value="{{$key}}" selected>{{__('customize.'.$key)}}</option>
@@ -169,36 +169,39 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6 form-group">
-                                    <label class="label-style col-form-label" for="purchase_id">採購單號</label>
-
-                                    <div class="input-group mb-3">
-                                        <input readonly style="border-top-left-radius: 25px;border-bottom-left-radius: 25px" id="purchase_id" autocomplete="off" type="text" name="purchase_id" class="form-control {{ $errors->has('purchase_id') ? ' is-invalid' : '' }}" value="{{$errors->has('purchase_id')? old('purchase_id'): $data['invoice']['purchase_id']}}">
-
-                                        <div class="input-group-append">
-                                            <button onclick="showPurchase()" class="btn btn-green" type="button" id="button-addon2" style="border-top-right-radius: 25px;border-bottom-right-radius: 25px">採購單</button>
-                                        </div>
-                                    </div>
+                                    <label class="label-style col-form-label" for="company_edit">戶名</label>
+                                    <input autocomplete="off" type="text" list="list-other-account" id="company_edit" name="company" class="form-control rounded-pill{{ $errors->has('company') ? ' is-invalid' : '' }}" value="{{$errors->has('company')? old('company'): $data['invoice']['company']}}" required>
+                                    @if ($errors->has('company'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('company') }}</strong>
+                                    </span> @endif
                                 </div>
+
+
+
                                 <div class="col-lg-6 form-group">
                                     @if(strpos(URL::full(),'other'))
-                                    <div class="row">
-                                        <div class="col-lg-12 form-group">
-                                            <label class="label-style col-form-label" for="type">類型</label>
-                                            <select type="text" id="type_fix" name="type" class="form-control rounded-pill" autofocus onchange="checkPrice()">
-                                                @foreach ($data['type'] as $key)
-                                                <option value="{{$key}}" {{$data['types'][$key]['selected']}}>{{__('customize.'.$key)}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
+                                    <label class="label-style col-form-label" for="type">類型</label>
+                                    <select type="text" id="type" name="type" class="form-control rounded-pill" autofocus onchange="checkPrice()">
+                                        @foreach ($data['type'] as $key)
+                                        <option value="{{$key}}" {{$data['types'][$key]['selected']}}>{{__('customize.'.$key)}}</option>
+                                        @endforeach
+                                    </select>
                                     @else
                                     <div class="row">
 
                                         <div class="col-lg-12">
                                             <label class="label-style col-form-label" for="project_id">{{__('customize.Project')}}</label>
                                             <select type="text" id="project_id" name="project_id" class="form-control rounded-pill" autofocus>
-                                                
+                                                <!-- @foreach ($data['projects'] as $project)
+
+                                        @if($project['name']!='其他'&&$project['status']=='running')
+                                        <option value="{{$project['project_id']}}" {{$project['selected']}}>{{$project['name']}}</option>
+
+                                        @endif
+                                        @endforeach -->
                                                 <optgroup label="綠雷德">
                                                     @foreach($data['grv2'] as $gr2)
                                                     @if($gr2['name']!='其他' )
@@ -211,7 +214,7 @@
 
                                                     @endforeach
                                                 </optgroup>
-                                                <optgroup label="綠雷德(舊))">
+                                                <optgroup label="綠雷德(舊)">
                                                     @foreach($data['grv'] as $gr)
                                                     @if($gr['name']!='其他' )
                                                     @if($data['invoice']['project_id'] == $gr['project_id'])
@@ -242,37 +245,42 @@
 
                                 </div>
                                 <div class="col-lg-6 form-group">
-                                    <label class="label-style col-form-label" for="company">{{__('customize.company')}}</label>
-                                    <input autocomplete="off" type="text"  list="list_fix_account"  id="company_fix" name="company_fix" class="form-control rounded-pill{{ $errors->has('company') ? ' is-invalid' : '' }}" value="{{$errors->has('company')? old('company'): $data['invoice']['company']}}" required>
-                                    @if ($errors->has('company'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('company') }}</strong>
-                                    </span> @endif
-                                    <datalist id="list_fix_account">
-                                    </datalist>
+                                    <label class="label-style col-form-label" for="purchase_id">採購單號</label>
+                                    <div class="input-group mb-3">
+                                        <input readonly style="border-top-left-radius: 25px;border-bottom-left-radius: 25px" id="purchase_id" autocomplete="off" type="text" name="purchase_id" class="form-control {{ $errors->has('purchase_id') ? ' is-invalid' : '' }}" value="{{$errors->has('purchase_id')? old('purchase_id'): $data['invoice']['purchase_id']}}">
+
+                                        <div class="input-group-append">
+                                            <button onclick="showPurchase()" class="btn btn-green" type="button" id="button-addon2" style="border-top-right-radius: 25px;border-bottom-right-radius: 25px">採購單</button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-lg-6 form-group">
                                     <label class="label-style col-form-label" for="title">請款項目</label>
                                     <input id="title" autocomplete="off" type="text" name="title" class="form-control rounded-pill{{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{$errors->has('title')? old('title'): $data['invoice']['title']}}">
                                 </div>
+                                <div class="col-lg-6 form-group">
+                                    <label class="label-style col-12 col-form-label" for="prepay">是否為預支款?</label>
+                                    <label class="label-style col-3 col-form-label" for="prepay_false"><input type="radio" id="prepay_false" name="prepay" value="0" class="{{ $errors->has('prepay') ? 'is-invalid' : '' }}" {{$data['invoice']['prepay']? '': 'checked'}}>否</label>
+                                    <label class="label-style col-3 col-form-label" for="prepay_true"><input type="radio" id="prepay_true" name="prepay" value="1" class="{{ $errors->has('prepay') ? 'is-invalid' : '' }}" {{$data['invoice']['prepay']? 'checked': ''}}>是</label>
+                                </div>
                                 <div class="col-lg-12 form-group">
-                                    <label class="label-style col-form-label" for="content">{{__('customize.content')}}(50字以內)</label>
+                                    <label class="label-style col-form-label" for="content">請款事項(100字以內)</label>
                                     <textarea id="content" name="content" rows="5" style="resize:none;" class="form-control rounded-pill{{ $errors->has('content') ? ' is-invalid' : '' }}" required>{{$errors->has('content')? old('content'): $data['invoice']['content']}}</textarea>
                                     @if ($errors->has('content'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>超出50個字</strong>
+                                        <strong>超出100個字</strong>
                                     </span> @endif
                                 </div>
                                 <!-- <div class="col-lg-12">
-                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                        <label class="btn btn-secondary">
-                                            <input type="radio" name="options" id="option1" onchange="changeBankData(0)" autocomplete="off"> 個人帳戶
-                                        </label>
-                                        <label class="btn btn-secondary active">
-                                            <input type="radio" name="options" id="option2" onchange="changeBankData(1)" autocomplete="off" checked> 其他
-                                        </label>
-                                    </div>
-                                </div> -->
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="options" id="option1" onchange="changeBankData(0)" autocomplete="off"> 個人帳戶
+                    </label>
+                    <label class="btn btn-secondary active">
+                        <input type="radio" name="options" id="option2" onchange="changeBankData(1)" autocomplete="off" checked> 其他
+                    </label>
+                </div>
+            </div> -->
                                 <div class="col-lg-6 form-group">
                                     <label class="label-style col-form-label" for="bank">{{__('customize.bank')}}</label>
                                     <input autocomplete="off" type="text" id="bank" name="bank" class="form-control rounded-pill{{ $errors->has('bank') ? ' is-invalid' : '' }}" value="{{$errors->has('bank')? old('bank'): $data['invoice']['bank']}}" required>
@@ -307,75 +315,24 @@
                                     </span>
                                     @endif
                                 </div>
-                                <div class="row col-lg-6 form-group" style="margin:auto;">
+                                <div class="row {{$data['invoice']['status'] !='complete' ? 'col-lg-4' : 'col-lg-3'}} form-group">
 
                                     <label class="label-style col-12">{{__('customize.receipt')}}</label>
                                     <label class="label-style col-6 col-form-label" for="receipt_true"><input type="radio" id="receipt_true" name="receipt" value="1" class="{{ $errors->has('receipt') ? 'is-invalid' : '' }}" {{$data['invoice']['receipt']? 'checked': ''}} required>有</label>
-                                    <label class="label-style col-6 col-form-label" for="receipt_false"><input type="radio" id="receipt_false" name="receipt" value="0" class="{{ $errors->has('receipt') ? 'is-invalid' : '' }}" {{$data['invoice']['receipt']? '': 'checked'}}>沒有，待補</label>
+                                    <label class="label-style col-6 col-form-label pr-0 pl-0" for="receipt_false"><input type="radio" id="receipt_false" name="receipt" value="0" class="{{ $errors->has('receipt') ? 'is-invalid' : '' }}" {{$data['invoice']['receipt']? '': 'checked'}}>沒有，待補</label>
                                     @if ($errors->has('receipt'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('receipt') }}</strong>
                                     </span>
                                     @endif
                                 </div>
-                                <div  class=" form-group ">
-                                    <label class="label-style col-form-label" for="receipt_date">{{__('customize.receipt_date')}}</label>
-                                    <input type="date" id="receipt_date" name="receipt_date" class="form-control rounded-pill{{ $errors->has('receipt_date') ? ' is-invalid' : '' }}" value="{{$data['invoice']['receipt_date']}}" required>
-                                    @if ($errors->has('receipt_date'))
+                                <div class="{{$data['invoice']['status'] !='complete' ? 'col-lg-4' : 'col-lg-3'}} form-group ">
+                                    <label class="label-style col-form-label" for="receipt_date_paper">實際發票日期(有影本再填入即可)</label>
+                                    <input type="date" id="receipt_date_paper" name="receipt_date_paper" onchange="dateCalc()" class="form-control rounded-pill{{ $errors->has('receipt_date_paper') ? ' is-invalid' : '' }}" value="{{$errors->has('receipt_date_paper') ? old('receipt_date_paper'): $data['invoice']['receipt_date_paper']}}"> @if ($errors->has('receipt_date_paper'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('receipt_date') }}</strong>
+                                        <strong>{{ $errors->first('receipt_date_paper') }}</strong>
                                     </span>
                                     @endif
-                                </div>
-                                <div class="col-lg-4 form-group">
-                                    <label class="label-style col-form-label" for="remuneration">{{__('customize.remuneration')}}(張數)</label>
-                                    <input oninput="value=value.replace(/[^\d]/g,'')" autocomplete="off" type="text" id="remuneration" name="remuneration" class="form-control rounded-pill{{ $errors->has('remuneration') ? ' is-invalid' : '' }}" value="{{$errors->has('remuneration')? old('remuneration'): $data['invoice']['remuneration']}}" required>
-                                    @if ($errors->has('remuneration'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('remuneration') }}</strong>
-                                    </span> @endif
-                                </div>
-                                <div class="col-lg-4">
-                                    <label class="label-style col-form-label" for="price">{{__('customize.price')}}</label>
-                                    <input oninput="value=value.replace(/[^\d]/g,'')" onkeyup="checkPrice()" autocomplete="off" type="text" id="price" name="price" class="form-control rounded-pill{{ $errors->has('price') ? ' is-invalid' : '' }}" value="{{$errors->has('price')? old('price'): $data['invoice']['price']}}" required>
-                                    @if ($errors->has('price'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('price') }}</strong>
-                                    </span> @endif
-                                </div>
-                                <div class="col-lg-4 form-group">
-                                    <label class="label-style col-form-label" for="reviewer">審核主管</label>
-                                    <select type="text" id="reviewer" name="reviewer" class="form-control rounded-pill" required>
-                                        <option value=""></option>
-                                        <optgroup id="optgroup-1" label="3000元以下">
-                                            <option value="GRV00002" id="GRV00002" {{$data['invoice']['reviewer']=='GRV00002'? 'selected' : ''}}>蔡貴瑄</option>
-                                        </optgroup>
-                                        <optgroup id="optgroup-2" label="3000~10000元">
-                                            @foreach($data['reviewers'] as $reviewer)
-                                            <option value="{{$reviewer['user_id']}}" id="{{$reviewer['user_id']}}" {{$data['invoice']['reviewer']==$reviewer['user_id']? 'selected' : ''}}>{{$reviewer->name}}</option>
-                                            @endforeach
-                                        </optgroup>
-                                        <optgroup id="optgroup-3" label="10000元以上">
-                                            <option value="GRV00001" id="GRV00001" {{$data['invoice']['reviewer']=='GRV00001'? 'selected' : ''}}>吳奇靜</option>
-                                        </optgroup>
-
-                                    </select>
-                                </div>
-                                <div class="col-lg-4 form-group">
-                                    <label class="label-style col-form-label" for="receipt_file">{{__('customize.receipt_file')}}</label>
-                                    <input type="file" id="receipt_file" name="receipt_file" class="form-control rounded-pill{{ $errors->has('receipt_file') ? ' is-invalid' : '' }}" value="$data['invoice']['receipt_file']}}">
-                                    @if ($errors->has('receipt_file'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('receipt_file') }}</strong>
-                                    </span> @endif
-                                </div>
-                                <div class="col-lg-4 form-group">
-                                    <label class="label-style col-form-label" for="detail_file">{{__('customize.detail_file')}}</label>
-                                    <input type="file" id="detail_file" name="detail_file" class="form-control rounded-pill{{ $errors->has('detail_file') ? ' is-invalid' : '' }}" value="$data['invoice']['detail_file']}}">
-                                    @if ($errors->has('detail_file'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('detail_file') }}</strong>
-                                    </span> @endif
                                 </div>
                                 <div class="col-lg-4 form-group">
                                     <label class="label-style col-form-label" for="pay_day">付款天數</label>
