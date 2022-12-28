@@ -441,7 +441,7 @@
                                     <div class="form-group row">
                                         <div  class="col-lg-6 form-group" >
                                             <label class="label-style col-form-label" for="invoice_date">請款日期</label>
-                                            <input type="date" id="invoice_date" name="invoice_date" class="form-control rounded-pill{{ $errors->has('invoice_date') ? ' is-invalid' : '' }}" value="{{$data['invoice']['invoice_date']}}"> @if ($errors->has('invoice_date'))
+                                            <input type="date" id="invoice_date" name="invoice_date" class="form-control rounded-pill{{ $errors->has('invoice_date') ? ' is-invalid' : '' }}" value="{{$errors->has('invoice_date')? old('invoice_date'): $data['invoice']['invoice_date']}}"> @if ($errors->has('invoice_date'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('invoice_date') }}</strong>
                                             </span>
