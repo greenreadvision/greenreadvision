@@ -477,9 +477,9 @@ class InvoiceController extends Controller
         foreach ($projects as $key => $project) {
             $projects[$key]['selected'] = ($project['project_id'] == $invoice->project_id) ? "selected" : " ";
         }
-        $rv = Project::where('company_name', '=', 'rv')->where('status','=','running')->orderby('created_at', 'desc')->get();
-        $grv = Project::where('company_name', '=', 'grv')->where('status','=','running')->orderby('created_at', 'desc')->get();
-        $grv2 = Project::where('company_name', '=', 'grv_2')->where('status','=','running')->orderby('created_at', 'desc')->get();
+        $rv = Project::where('company_name', '=', 'rv')->where('status','!=','close')->orderby('created_at', 'desc')->get();
+        $grv = Project::where('company_name', '=', 'grv')->where('status','!=','close')->orderby('created_at', 'desc')->get();
+        $grv2 = Project::where('company_name', '=', 'grv_2')->where('status','!=','close')->orderby('created_at', 'desc')->get();
 
         $users = [];
         $allUsers = User::orderby('user_id')->get();
