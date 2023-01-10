@@ -181,9 +181,12 @@
                         <div>
                             <h4>{{$leave_day->user->nickname}} 應休申請</h4>
                         </div>
+                        <div style="text-align: right;">
+                        <button class="btn btn-blue rounded-pill" onclick='tableApplyToExcel()'><span class="mx-2">匯出 Excel</span></button>
                         @if(\Auth::user()->leaveDay->leave_day_id == $leave_day->leave_day_id || \Auth::user()->role == 'administrator')
                         <button class="btn btn-green rounded-pill" onclick="location.href='{{route('leaveDayApply.create',$leave_day['leave_day_id'])}}'"></i><span class="mx-2">{{__('customize.Add')}}</span></button>
                         @endif
+                        </div>
                     </div>
                     <div id="apply-page" class="col-lg-12 form-group d-flex align-items-end">
                         <nav aria-label="Page navigation example">
@@ -216,9 +219,12 @@
                         <div>
                             <h4>{{$leave_day->user->nickname}} 請假申請</h4>
                         </div>
+                        <div style="text-align: right;">
+                        <button class="btn btn-blue rounded-pill" onclick='tableBreakToExcel()'><span class="mx-2">匯出 Excel</span></button>
                         @if(\Auth::user()->leaveDay->leave_day_id == $leave_day->leave_day_id || \Auth::user()->role == 'administrator')
                         <button class="btn btn-green rounded-pill" onclick="location.href='{{route('leaveDayBreak.create',$leave_day['leave_day_id'])}}'"><span class="mx-2">{{__('customize.Add')}}</span></button>
                         @endif
+                        </div>
                     </div>
                     <div id="break-page" class="col-lg-12 form-group d-flex align-items-end">
                         <nav aria-label="Page navigation example">
@@ -254,7 +260,155 @@
 @section('script')
 <script type="text/javascript" src="{{ URL::asset('js/jquery.min.js') }}"></script>
 <script src="{{ URL::asset('js/grv.js') }}"></script>
-<script>
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.14.0/dist/xlsx.full.min.js"></script>
+<script type="text/javascript">
+        function tableApplyToExcel() {
+            var isComplete = ''
+            var type = {
+                'compensatory_leave_break': '休假',
+                'compensatory_leave': '補休假',
+                'bereavement_leave': '喪假',
+                'special_leave': '特休假',
+                'extra_hour_options': '加班'
+            }
+            var status = {
+                'waiting': '',
+                'managed': '✓',
+            }
+            var excel = [
+                ['開始日期','開始時間','結束日期','結束時間','類別','事由','時長','單位','已審核']
+            ];
+            var beginDate = ''
+            var beginTime = ''
+            var endDate = ''
+            var endTime = ''
+            var leaveApplyTimeLength = ''
+            var leaveApplyTimeUnit = ''
+            for (var i = 0; i < leaveApply.length; i++) {
+                console.log(leaveApply[i].apply_date.length)
+                if(leaveApply[i].apply_date.length == 33){
+                    beginDate = leaveApply[i].apply_date.substring(0, 10)
+                    endDate = leaveApply[i].apply_date.substring(17, 28)
+                    beginTime = leaveApply[i].apply_date.substring(11, 16)
+                    endTime = leaveApply[i].apply_date.substring(28, 33)
+                }
+                else if(leaveApply[i].apply_date.length == 22){
+                    beginDate = leaveApply[i].apply_date.substring(0, 10)
+                    endDate = leaveApply[i].apply_date.substring(0, 10)
+                    beginTime = leaveApply[i].apply_date.substring(11, 16)
+                    endTime = leaveApply[i].apply_date.substring(17, 22)
+                }
+                else if(leaveApply[i].apply_date.length == 21){
+                    beginDate = leaveApply[i].apply_date.substring(0, 10)
+                    endDate = leaveApply[i].apply_date.substring(0, 10)
+                    beginTime = '10:00'
+                    endTime = '18:00'
+                    console.log([leaveApply[i].apply_date.substring(0, 10), leaveApply[i].apply_date.substring(17, 28), leaveApply[i].apply_date.substring(11, 16), leaveApply[i].apply_date.substring(28, 33)])
+                    console.log(leaveApply[i].apply_date.length)
+                }
+                else{
+                    beginDate = leaveApply[i].apply_date.substring(0, 10)
+                    endDate = leaveApply[i].apply_date.substring(0, 10)
+                    beginTime = '10:00'
+                    endTime = '18:00'
+                }
+                if(leaveApply[i].should_break < 1){
+                    leaveApplyTimeLength = leaveApply[i].should_break * 8
+                    leaveApplyTimeUnit = '小時'
+                }
+                else{
+                    leaveApplyTimeLength = leaveApply[i].should_break
+                    leaveApplyTimeUnit = '天'
+                }
+                excel.push([beginDate, beginTime, endDate, endTime, type[leaveApply[i].type], leaveApply[i].content, leaveApplyTimeLength, leaveApplyTimeUnit, status[leaveApply[i].status],])
+            }
+            var filename = "應休表單({{$leave_day->user->nickname}}).xlsx";
+    
+            var ws_name = "應休表單";
+            var wb = XLSX.utils.book_new(),
+                ws = XLSX.utils.aoa_to_sheet(excel);
+            XLSX.utils.book_append_sheet(wb, ws, ws_name);
+            XLSX.writeFile(wb, filename);
+    
+    
+        }
+
+        function tableBreakToExcel() {
+            var isComplete = ''
+            var type = {
+                'compensatory_leave_break': '休假',
+                'compensatory_leave': '補休假',
+                'bereavement_leave': '喪假',
+                'special_leave': '特休假',
+                'extra_hour_options': '加班'
+            }
+            var status = {
+                'waiting': '',
+                'managed': '✓',
+            }
+            var excel = [
+                ['開始日期','開始時間','結束日期','結束時間','類別','事由','時長','單位','已審核']
+            ];
+            var beginDate = ''
+            var beginTime = ''
+            var endDate = ''
+            var endTime = ''
+            var leaveBreakTimeLength = ''
+            var leaveBreakTimeUnit = ''
+            for (var i = 0; i < leaveBreak.length; i++) {
+                console.log(leaveBreak[i].apply_date.length)
+                if(leaveBreak[i].apply_date.length == 33){
+                    beginDate = leaveBreak[i].apply_date.substring(0, 10)
+                    endDate = leaveBreak[i].apply_date.substring(17, 28)
+                    beginTime = leaveBreak[i].apply_date.substring(11, 16)
+                    endTime = leaveBreak[i].apply_date.substring(28, 33)
+                }
+                else if(leaveBreak[i].apply_date.length == 22){
+                    beginDate = leaveBreak[i].apply_date.substring(0, 10)
+                    endDate = leaveBreak[i].apply_date.substring(0, 10)
+                    beginTime = leaveBreak[i].apply_date.substring(11, 16)
+                    endTime = leaveBreak[i].apply_date.substring(17, 22)
+                }
+                else if(leaveBreak[i].apply_date.length == 21){
+                    beginDate = leaveBreak[i].apply_date.substring(0, 10)
+                    endDate = leaveBreak[i].apply_date.substring(0, 10)
+                    beginTime = '10:00'
+                    endTime = '18:00'
+                }
+                else if(leaveBreak[i].apply_date.length == 10 && leaveBreak[i].type == 'half'){
+                    beginDate = leaveBreak[i].apply_date.substring(0, 10)
+                    endDate = leaveBreak[i].apply_date.substring(0, 10)
+                    beginTime = '半天'
+                    endTime = '半天'
+                }
+                else{
+                    beginDate = leaveBreak[i].apply_date.substring(0, 10)
+                    endDate = leaveBreak[i].apply_date.substring(0, 10)
+                    beginTime = '10:00'
+                    endTime = '18:00'
+                }
+                if(leaveBreak[i].has_break < 1){
+                    leaveBreakTimeLength = leaveBreak[i].has_break * 8
+                    leaveBreakTimeUnit = '小時'
+                }
+                else{
+                    leaveBreakTimeLength = leaveBreak[i].has_break
+                    leaveBreakTimeUnit = '天'
+                }
+                excel.push([beginDate, beginTime, endDate, endTime, type[leaveBreak[i].types], leaveBreak[i].content, leaveBreakTimeLength, leaveBreakTimeUnit, status[leaveBreak[i].status],])
+            }
+            var filename = "請假表單({{$leave_day->user->nickname}}).xlsx";
+    
+            var ws_name = "請假表單";
+            var wb = XLSX.utils.book_new(),
+                ws = XLSX.utils.aoa_to_sheet(excel);
+            XLSX.utils.book_append_sheet(wb, ws, ws_name);
+            XLSX.writeFile(wb, filename);
+    
+    
+        }
+    </script type="text/javascript">
+    <script>
     var status = 'd'
     var year = '{{$year}}';
     var leaveDay = '{{$status}}'
