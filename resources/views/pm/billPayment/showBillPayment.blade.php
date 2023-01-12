@@ -200,7 +200,7 @@
                 </div>
                 <div class="col-lg-12 d-flex justify-content-between">
                     <!-- waiting -->
-                    @if($data['billPayment']['status']=='waiting'&&(\Auth::user()->role=='manager'))
+                    @if($data['billPayment']['status']=='waiting'&&(\Auth::user()->role=='administrator'))
                     <div class="col-lg-8 p-0" style="text-align:center;">
                         @if(strpos(URL::full(),'other'))
                         <form action="../withdraw/other" method="POST">
@@ -227,27 +227,7 @@
                                 @csrf
                                 <button type="submit" class="btn btn-green rounded-pill"><span class="mx-2">通過審核</span></button>
                             </form>
-
-                        <!-- waiting -->
-
-                        <!-- check -->
-                    @elseif($data['billPayment']['status']=='managed'&&(\Auth::user()->role=='administrator'))
-                        <div class="col-lg-8 p-0" style="text-align:center;">
-                            @if(strpos(URL::full(),'other'))
-                            <form action="../withdraw/other" method="POST">
-                            @else
-                            <form action="withdraw" method="POST">
-                                @endif
-                                @csrf
-                                <div class="form-row align-items-center">
-                                    <div class="col-lg-6 ">
-                                        <input autocomplete="off" type="text" class="rounded-pill form-control" name="reason" placeholder="原因" required>
-                                    </div>
-                                    <button type="submit" class="btn btn-red rounded-pill">撤回</button>
-                                </div>
-                            </form>
-                        </div>
-                    @endif
+                        @endif
 
                 </div>
             </div>
