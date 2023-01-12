@@ -473,6 +473,17 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div style="padding: 10px">
+                                    <div style="display: flex;justify-content: space-between" >
+                                        <label class="ml-2 col-form-label font-weight-bold" style="font-size: 1.2rem; font-weight: 700;">繳款帳務</label>
+                                        <span class="ml-2 col-form-label font-weight-bold" id="bill_payment" style="font-size: 1.2rem; font-weight: 700;"></span>
+    
+                                    </div>
+                                    <div style="text-align: center">
+                                        <button type="button" id="bill_payment_button" class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#billPaymentModal">查看繳款帳務</button>
+    
+                                    </div>
+                                </div>
                                 @if((\Auth::user()->role == 'manager' || \Auth::user()->role == 'proprietor' || \Auth::user()->user_id == $data['project']->user_id) && $data['project']->status !='unacceptable')
                                 <div style="padding: 10px">
                                 @else
@@ -1112,6 +1123,44 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="BillPaymentModal" role="dialog" aria-labelledby="BillPaymentModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog " style="max-width: 70%" role="document">
+        <div class="modal-content" >
+            <div class="modal-header border-0">
+                <h5 class="modal-title">繳款帳務表單</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group col-lg-6">
+                    <div id="billPayment-page" class="d-flex align-items-end">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination mb-0">
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                        <span aria-hidden="true"><i class="fas fa-caret-left" style="width:14.4px"></i></span>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                        <span aria-hidden="true"><i class="fas fa-caret-right" style="width:14.4px"></i></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-style-invoice ">
+                    <table id="search-billPayment">
+
+                    </table>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="createPerformanceModal" role="dialog" aria-labelledby="createPerformanceModalLabel" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog " style="max-width: 70%" role="document">
         <div class="modal-content" >
@@ -1280,6 +1329,7 @@
     var total_default = 0
     var FinalAmount = 0
     var GdingCost = 0
+    var Payment = 0
     var Today = new Date()
 </script>
 
@@ -1296,6 +1346,7 @@
         setActualCost()
         setInvoice()
         setGDing()
+        setBillPayment()
         setInvoiceCheck()
         ChangeStatusOption()
         $('#invoice_cost_button').click(function(){
@@ -1306,6 +1357,11 @@
         $('#dging_cost_button').click(function(){
             nowDgingPage = 1
             setDGingTable()
+    
+        });
+        $('#bill_payment_button').click(function(){
+            nowPaymentPage = 1
+            setBillPaymentTable()
     
         });
     });
@@ -1406,6 +1462,7 @@
             }
             
         }
+        
         var GdingCost = 0
         var Gding = "{{$data['gding_table']}}"
         Gding = Gding.replace(/[\n\r]/g, "")
@@ -1424,6 +1481,23 @@
         FinalAmount = document.getElementById('contract_value').value
         var actual_profit = document.getElementById('actual_profit')
         var actualProfit = FinalAmount * 0.95 - totalActualCost
+        var billPayment = "{{$data['project']->billPayments}}"
+        billPayment = billPayment.replace(/[\n\r]/g, "")
+        billPayment = JSON.parse(billPayment.replace(/&quot;/g, '"'));
+        
+        
+        for (var i = 0; i < billPayment.length; i++) {
+            
+            if(billPayment[i].status != 'delete' || billPayment[i].status != 'waiting-fix'){
+                actualProfit += billPayment[i].price
+            }
+            if(projectData.performance_id != null){
+                if(billPayment[i].finished_id == projectData.performance.billPayment_finished_id){
+                    actualProfit -= billPayment[i].price
+                }
+            }
+            
+        }
         actual_profit.value = actualProfit
     }
 </script>
@@ -2549,4 +2623,264 @@
         }
     }
 </script>
+
+<script>
+    //BillPayment帳務設定類---------------------------------------------------------------------------------------
+        var billPayment_table = []
+        var nowPaymentPage = 1
+    
+        function setBillPayment(){
+            setPayment()
+            billPayment_table = getNewBillPaymentTable()
+            setBillPaymentTable()
+        }
+        
+        function getNewBillPaymentTable(){
+            data="{{$data['billPayment_table']}}"
+            data = data.replace(/[\n\r]/g, "")
+            data = JSON.parse(data.replace(/&quot;/g, '"'));
+    
+            return data
+        }
+    
+        function setPayment(){
+           
+            var billPayment = "{{$data['project']->billPayments}}"
+            billPayment = billPayment.replace(/[\n\r]/g, "")
+            billPayment = JSON.parse(billPayment.replace(/&quot;/g, '"'));
+            for (var i = 0; i < billPayment.length; i++) {
+                if(billPayment[i].status != 'delete'){
+                    
+                    Payment += billPayment[i].price
+                }
+                if(projectData.performance_id != null){
+                    if(billPayment[i].finished_id == projectData.performance.payment_finished_id){
+                        Payment -= billPayment[i].price
+                    }
+                }
+                
+            }
+            $('#bill_payment').text("$" + commafy(Payment));
+        }
+    
+        function setBillPaymentTable(){
+            listPage()
+            listBillPayment()
+    
+        }
+    
+        function nextPage() {
+            var number = Math.ceil(billPayment_table.length / 13)
+    
+            if (nowPaymentPage < number) {
+                var temp = document.getElementsByClassName('page-item')
+                $(".page-" + String(nowPaymentPage)).removeClass('active')
+                nowPaymentPage++
+                $(".page-" + String(nowPaymentPage)).addClass('active')
+                listPage()
+                listBillPayment()
+            }
+    
+        }
+    
+        function previousPage() {
+            var number = Math.ceil(billPayment_table.length / 13)
+    
+            if (nowPaymentPage > 1) {
+                var temp = document.getElementsByClassName('page-item')
+                $(".page-" + String(nowPaymentPage)).removeClass('active')
+                nowPaymentPage--
+                $(".page-" + String(nowPaymentPage)).addClass('active')
+                listPage()
+                listBillPayment()
+            }
+    
+        }
+    
+        function changePage(index) {
+    
+            var temp = document.getElementsByClassName('page-item')
+    
+            $(".page-" + String(nowPaymentPage)).removeClass('active')
+            nowPaymentPage = index
+            $(".page-" + String(nowPaymentPage)).addClass('active')
+    
+            listPage()
+            listBillPayment()
+    
+        }
+    
+        function listPage() {
+            $("#billPayment-page").empty();
+            var parent = document.getElementById('billPayment-page');
+            var table = document.createElement("div");
+            table.style.width = "100%";
+            var number = Math.ceil(billPayment_table.length / 13)
+            var data = ''
+            if (nowPaymentPage < 4) {
+                for (var i = 0; i < number; i++) {
+                    if (i < 5) {
+                        data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
+                    } else {
+                        data = data + '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)" ">...</a></li>'
+                        data = data + '<li class="page-item page-' + number + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + number + ')">' + number + '</a></li>'
+                        break
+                    }
+                }
+            } else if (nowPaymentPage >= 4 && nowPaymentPage - 3 <= 2) {
+                for (var i = 0; i < number; i++) {
+                    if (i < nowPaymentPage + 2) {
+                        data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
+                    } else {
+                        data = data + '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)" ">...</a></li>'
+                        data = data + '<li class="page-item page-' + number + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + number + ')">' + number + '</a></li>'
+                        break
+                    }
+                }
+            } else if (nowPaymentPage >= 4 && nowPaymentPage - 3 > 2 && number - nowPaymentPage > 5) {
+                for (var i = 0; i < number; i++) {
+                    if (i == 0) {
+                        data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
+                        data = data + '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)" ">...</a></li>'
+                    } else if (i >= nowPaymentPage - 3 && i <= nowPaymentPage + 1) {
+                        data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
+    
+                    } else if (i > nowPaymentPage + 1) {
+                        data = data + '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)" ">...</a></li>'
+                        data = data + '<li class="page-item page-' + number + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + number + ')">' + number + '</a></li>'
+                        break
+                    }
+    
+    
+                }
+            } else if (number - nowPaymentPage <= 5 && number - nowPaymentPage >= 4) {
+                for (var i = 0; i < number; i++) {
+                    if (i == 0) {
+                        data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
+                        data = data + '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)" ">...</a></li>'
+                    } else if (i >= nowPaymentPage - 3) {
+                        data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
+                    }
+                }
+            } else if (number - nowPaymentPage < 4) {
+                for (var i = 0; i < number; i++) {
+                    if (i == 0) {
+                        data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
+                        data = data + '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)" ">...</a></li>'
+                    } else if (i >= number - 5) {
+                        data = data + '<li class="page-item page-' + (i + 1) + '"><a class="page-link" href="javascript:void(0)" onclick="changePage(' + (i + 1) + ')">' + (i + 1) + '</a></li>'
+                    }
+                }
+            }
+            var previous = "previous"
+            var next = "next"
+            table.innerHTML = '<nav aria-label="Page navigation example">' +
+                '<ul class="pagination mb-0">' +
+                '<li class="page-item">' +
+                '<a class="page-link" href="javascript:void(0)" onclick="previousPage()" aria-label="Previous">' +
+                '<span aria-hidden="true"><i class="fas fa-caret-left" style="width:14.4px"></i></span>' +
+                '</a>' +
+                '</li>' +
+                data +
+                '<li class="page-item">' +
+                '<a class="page-link" href="javascript:void(0)" onclick="nextPage()" aria-label="Next">' +
+                '<span aria-hidden="true"><i class="fas fa-caret-right" style="width:14.4px"></i></span>' +
+                '</a>' +
+                '</li>' +
+                '</ul>' +
+                '</nav>'
+    
+            parent.appendChild(table);
+    
+            $(".page-" + String(nowPaymentPage)).addClass('active')
+        }
+    
+        function listBillPayment() {
+            $("#search-billPayment").empty();
+            var parent = document.getElementById('search-billPayment');
+            var table = document.createElement("tbody");
+    
+            table.innerHTML = '<tr class="text-white">' +
+                '<th>繳款單號</th>' +
+                '<th>繳款者</th>' +
+                '<th>繳款項目</th>' +
+                '<th>繳款費用</th>' +
+                '<th>繳款日期</th>' +
+                '<th>狀態</th>' +
+                '<th>查看資料</th>' +
+                '</tr>'
+            var tr, span, name, a
+    
+    
+            for (var i = 0; i < billPayment_table.length; i++) {
+                if (i >= (nowPaymentPage - 1) * 13 && i < nowPaymentPage * 13) {
+                    table.innerHTML = table.innerHTML + setBillPaymentData(i)
+                } else if (i >= nowPaymentPage * 13) {
+                    break
+                }
+            }
+            parent.appendChild(table);
+        }
+    
+        function setBillPaymentData(i) {
+            
+            if (billPayment_table[i].status == 'waiting') {
+                span = "<div class='progress' data-toggle='tooltip' data-placement='top' title='待審核'>" +
+                    "<div class='progress-bar bg-danger' role='progressbar' style='width: 0%' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100'>" +
+                    "</div>" +
+                    "</div>";
+    
+            } else if (billPayment_table[i].status == 'waiting-fix') {
+    
+                span = " <div class='progress' data-toggle='tooltip' data-placement='top' title='繳款被撤回，請修改'>" +
+                    "<div class='progress-bar progress-bar-striped bg-danger progress-bar-animated' role='progressbar' style='width: 50%' aria-valuenow='50' aria-valuemin='0' aria-valuemax='100'></div>" +
+                    "</div>"
+    
+            } else if (billPayment_table[i].status == 'managed') {
+    
+                span = " <div class='progress' data-toggle='tooltip' data-placement='top' title='審核通過'>" +
+                    "<div class='progress-bar bg-success' role='progressbar' style='width: 100%' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100'></div>" +
+                    "</div>"
+    
+            } else if(billPayment_table[i].status == 'delete') {
+                span = " <div title='已註銷'>" +
+                    "<img src='{{ URL::asset('gif/cancelled.png') }}' alt='' style='width:100%'/>" +
+                    "</div>"
+            }
+    
+            a = "/billPayment/" + billPayment_table[i]['payment_id'] + "/review"
+            if(billPayment_table[i].status == 'delete'){
+                check_icon = ""
+            }else{
+                check_icon = "<a href='" + a + "' target='_blank'><i class='fas fa-search-dollar' >"
+            }
+            if(projectData.performance_id != null){
+                if(billPayment_table[i].finished_id == projectData.performance.payment_finished_id){
+                    var sgin = "<i class=\"fas fa-star\"></i>"
+                }
+                else{
+                    var sgin = ""
+                }
+            }
+            else{
+                var sgin = ""
+            }
+            
+            tr = "<tr>" +
+                "<td width='15%'><div class=\"d-flex justify-content-center\">" + sgin + billPayment_table[i].finished_id + "</div></td>" +
+                "<td width='20%'>" + billPayment_table[i].remittancer + "</td>" +
+                "<td width='30%'>" + billPayment_table[i].title + "</a></td>" +
+                "<td width='10%'>" + commafy(billPayment_table[i].price) + "</td>" +
+                "<td width='15%'>" + billPayment_table[i].receipt_date + "</td>" +
+                "<td width='5%'>" + span + "</td>" +
+                "<td width='5%'>" + check_icon + "</i>"
+                "</tr>"
+    
+    
+            return tr
+        }
+    
+    
+</script>
+
 @stop

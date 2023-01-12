@@ -9,6 +9,7 @@ class Project extends Model
     public function user() { return $this->belongsTo('App\User', 'user_id', 'user_id'); }
     public function agent() { return $this->belongsTo('App\User', 'agent_id', 'user_id'); }
     public function todos() { return $this->hasMany('App\Todo', 'project_id', 'project_id'); }
+    public function billPayments() { return $this->hasMany('App\BillPayment', 'project_id', 'project_id'); }
     public function invoices() { return $this->hasMany('App\Invoice', 'project_id', 'project_id'); }
     public function gding(){return $this->hasMany('App\Gding','project_id','project_id');}
     public function projectSOP(){return $this->hasMany('App\ProjectSOP','project_id','project_id');}

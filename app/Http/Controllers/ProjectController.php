@@ -13,6 +13,7 @@ use App\Functions\RandomId;
 use App\Gding;
 use App\Http\Controllers\EventController;
 use App\Invoice;
+use App\BillPayment;
 use App\Letters;
 use App\OtherInvoice;
 use App\Performance;
@@ -133,9 +134,10 @@ class ProjectController extends Controller
         if ($project->income_statement != null) $project->income_statement = explode('/',$project->income_statement);
         $gding = Gding::where('project_id','=',$project_id)->orderby('id')->get();
         $invoice = Invoice::where('project_id','=',$project_id)->orderby('created_at','desc')->get();
+        $billPayment = BillPayment::where('project_id','=',$project_id)->orderby('created_at','desc')->get();
         
 
-        return view('pm.project.showProject',['data'=> $project,'invoice_table'=>$invoice,'gding_table'=>$gding,'project_sop_item'=>$project_sop_item]);
+        return view('pm.project.showProject',['data'=> $project,'invoice_table'=>$invoice,'gding_table'=>$gding,'billPayment_table'=>$billPayment,'project_sop_item'=>$project_sop_item]);
     }
 
     /**
@@ -151,6 +153,9 @@ class ProjectController extends Controller
         $project_sop_item = ProjectSOP_item::all();
         $gding = Gding::where('project_id','=',$project_id)->orderby('id')->get();
         $invoice = Invoice::where('project_id','=',$project_id)->orderby('created_at','desc')->get();
+        $billPayment = BillPayment::where('project_id','=',$project_id)->orderby('created_at','desc')->get();
+
+
         if($project->performance_id!=null){
             if ($project['performance']->deposit_file != null) $project['performance']->deposit_file = explode('/', $project['performance']->deposit_file);
             if ($project['performance']->PayBack_file != null) $project['performance']->PayBack_file = explode('/',$project['performance']->PayBack_file);
@@ -162,7 +167,7 @@ class ProjectController extends Controller
                 array_push($users, $allUser);
             }
         }
-        return view('pm.project.editProject')->with('data', ['project' =>  $project,'gding_table'=>$gding, 'company_name' => $company_name,'users' => $users,'invoice_table' => $invoice,'project_sop_item'=>$project_sop_item]);
+        return view('pm.project.editProject')->with('data', ['project' =>  $project,'gding_table'=>$gding,'billPayment_table'=>$billPayment,'company_name' => $company_name,'users' => $users,'invoice_table' => $invoice,'project_sop_item'=>$project_sop_item]);
     }
 
     /**
@@ -443,6 +448,7 @@ class ProjectController extends Controller
         $project = Project::find($project_id);
         $gding = Gding::where('project_id','=',$project_id)->get();
         $invoices = Invoice::where('project_id','=',$project_id)->get();
+        $billPayments = BillPayment::where('project_id','=',$project_id)->get();
         $default = DefaultItem::where('project_id','=',$project_id)->get();
         $performance = Performance::where('project_id','=',$project_id)->get();
         $total_cost = 0;
@@ -454,6 +460,9 @@ class ProjectController extends Controller
                 $total_cost += $item->price;
             }
         }
+        //foreach($billPayments as $item){
+        //    $total_cost -= $item->price;
+        //}
         foreach($default as $item){
             $contract_value = $project->contract_value;
             $total_cost = $total_cost + ($contract_value*$item->persen/100);
