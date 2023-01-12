@@ -14,6 +14,7 @@ $(document).ready(function () {
     var menu_money_manager =document.getElementById('menu-money-manager')
     var purchase =document.getElementById('menu-purchase')
     var invoice =document.getElementById('menu-invoice')
+    var billPayment =document.getElementById('menu-bill-payment')
     var service =document.getElementById('menu-service')
 
     //貨物相關
@@ -85,6 +86,11 @@ $(document).ready(function () {
         menu_money_manager.style.backgroundColor = '#666B8D'
         menu_money_manager.parentElement.classList.add('showMenu')
     } 
+    else if (location.pathname.split('/')[1] == 'billPayment') {
+        billPayment.style.backgroundColor = '#666B8D'
+        menu_money_manager.style.backgroundColor = '#666B8D'
+        menu_money_manager.parentElement.classList.add('showMenu')
+    }
     else if (location.pathname.split('/')[1] == 'service') {
         service.style.backgroundColor = '#666B8D'
         menu_money_manager.style.backgroundColor = '#666B8D'

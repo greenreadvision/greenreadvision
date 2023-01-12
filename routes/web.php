@@ -187,11 +187,33 @@ Route::group(['middleware' => ['auth', 'general']], function () {
     Route::post('/invoice/{id}/match/other', 'OtherInvoiceController@match')->name('invoice.match.other');
     Route::post('/invoice/{id}/withdraw', 'InvoiceController@withdraw')->name('invoice.withdraw');
     Route::post('/invoice/{id}/withdraw/other', 'OtherInvoiceController@withdraw')->name('invoice.withdraw.other');
-    Route::post('/invoice/{id}/match/other', 'OtherInvoiceController@match')->name('invoice.match.other');
     Route::delete('/invoice/{id}/delete', 'InvoiceController@destroy')->name('invoice.destroy');
     Route::delete('/invoice/{id}/delete/other', 'OtherInvoiceController@destroy')->name('invoice.destroy.other');
     Route::post('/invoice/Zip','InvoiceController@downLoadZip')->name('invoice.zip');
     Route::any('/deleteZip','InvoiceController@deleteZip')->name('deleteZip');
+});
+
+Route::group(['middleware' => ['auth', 'general']], function () {
+    Route::get('/billPayment', 'BillPaymentController@index')->name('billPayment.index');
+    Route::get('/billPayment/create', 'BillPaymentController@create')->name('billPayment.create');
+    Route::post('/billPayment/create/review', 'BillPaymentController@store')->name('billPayment.create.review');
+    Route::post('/billPayment/create/review/other', 'OtherBillPaymentController@store')->name('billPayment.create.review.other');
+    Route::get('/billPayment/{id}/review', 'BillPaymentController@show')->name('billPayment.review');
+    Route::get('/billPayment/{id}/review/other', 'OtherBillPaymentController@show')->name('billPayment.review.other');
+    Route::get('/billPayment/{id}/edit', 'BillPaymentController@edit')->name('billPayment.edit');
+    Route::get('/billPayment/{id}/edit/other', 'OtherBillPaymentController@edit')->name('billPayment.edit.other');
+    Route::put('/billPayment/{id}/update', 'BillPaymentController@update')->name('billPayment.update');
+    Route::put('/billPayment/{id}/update/other', 'OtherBillPaymentController@update')->name('billPayment.update.other');
+    Route::put('/billPayment/{id}/fix', 'BillPaymentController@fix')->name('billPayment.fix');
+    Route::put('/billPayment/{id}/fix/other', 'OtherBillPaymentController@fix')->name('billPayment.fix.other');
+    Route::post('/billPayment/{id}/managed', 'BillPaymentController@managed')->name('billPayment.managed');
+    Route::post('/billPayment/{id}/managed/other', 'OtherBillPaymentController@managed')->name('billPayment.managed.other');
+    Route::post('/billPayment/{id}/withdraw', 'BillPaymentController@withdraw')->name('billPayment.withdraw');
+    Route::post('/billPayment/{id}/withdraw/other', 'OtherBillPaymentController@withdraw')->name('billPayment.withdraw.other');
+    Route::delete('/billPayment/{id}/delete', 'BillPaymentController@destroy')->name('billPayment.destroy');
+    Route::delete('/billPayment/{id}/delete/other', 'OtherBillPaymentController@destroy')->name('billPayment.destroy.other');
+    Route::post('/billPayment/Zip','BillPaymentController@downLoadZip')->name('billPayment.zip');
+    Route::any('/deleteZip','BillPaymentController@deleteZip')->name('deleteZip');
 });
 
 Route::group(['middleware' => ['auth', 'general']], function () {
@@ -461,6 +483,10 @@ Route::any('/download/{type}/{id}/{file}', function ($type, $id, $file) {   //ä¸
 Route::any('/invoicedownload/{id}/{file}', function ($id, $file) {
     return response()->download(storage_path("app/" . $id . "/" . $file));
 })->name('invoicedownload');
+
+Route::any('/billPaymentdownload/{id}/{file}', function ($id, $file) {
+    return response()->download(storage_path("app/" . $id . "/" . $file));
+})->name('billPaymentdownload');
 
 
 Route::any('/changedownload/{id}/{file}', function ($id, $file) {

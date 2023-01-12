@@ -57,22 +57,27 @@ $letter = new Letter();
                     
                     <ul class="Dropdown_item" id="menu-money-dropdown" >
                         <li class = "" >
-                            <a id="menu-invoice" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('invoice.index') }}">
+                            <a id="menu-invoice" class="menu-a d-flex navbar-brand py-1 justify-content-start position-relative" href="{{ route('invoice.index') }}">
                                 <span class="ml-2">請款單</span>
                             </a>
                         </li>
                         <li class = "" >
-                            <a id="menu-purchase" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('purchase.index') }}">
+                            <a id="menu-bill-payment" class="menu-a d-flex navbar-brand py-1 justify-content-start position-relative" href="{{ route('billPayment.index') }}">
+                                <span class="ml-2">繳款單(測試中)</span>
+                            </a>
+                        </li>
+                        <li class = "" >
+                            <a id="menu-purchase" class="menu-a d-flex navbar-brand py-1 justify-content-start position-relative" href="{{ route('purchase.index') }}">
                                 <span class="ml-2">採購單</span>
                             </a>
                         </li>
                         <li class = "" >
-                            <a id="menu-service" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('service.index') }}">
+                            <a id="menu-service" class="menu-a d-flex navbar-brand py-1 justify-content-start position-relative" href="{{ route('service.index') }}">
                                 <span class="ml-2">勞務單</span>
                             </a>
                         </li>
                         <li class = "" >
-                            <a id="menu-BusinessTrip" class="menu-a d-flex navbar-brand py-2 justify-content-start position-relative" href="{{ route('businessTrip.index') }}">
+                            <a id="menu-BusinessTrip" class="menu-a d-flex navbar-brand py-1 justify-content-start position-relative" href="{{ route('businessTrip.index') }}">
                                 <span class="ml-2">出差報告表</span>
                             </a>
                         </li>
