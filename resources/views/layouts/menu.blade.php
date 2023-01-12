@@ -63,7 +63,7 @@ $letter = new Letter();
                         </li>
                         <li class = "" >
                             <a id="menu-bill-payment" class="menu-a d-flex navbar-brand py-1 justify-content-start position-relative" href="{{ route('billPayment.index') }}">
-                                <span class="ml-2">繳款單(測試中)</span>
+                                <span class="ml-2">繳款單</span>
                             </a>
                         </li>
                         <li class = "" >
