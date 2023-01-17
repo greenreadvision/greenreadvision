@@ -903,6 +903,15 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div class="form-group col-lg-6">
+                    <select id="year" class="rounded-pill " onchange="totalCalc()">
+                        <option value=""></option>
+                    </select>
+                    <select id="month" class="rounded-pill " onchange="totalCalc()">
+                        <option value=""></option>
+                    </select>
+                    <span>總金額：</span><span id="month_total"></span>
+                </div>
                 <div class="form-group col-lg-12 d-flex justify-content-between">
                     <div id="invoice-page" class="d-flex align-items-end">
                         <nav aria-label="Page navigation example">
@@ -1331,6 +1340,8 @@
     var GdingCost = 0
     var Payment = 0
     var Today = new Date()
+    var yearArray = []
+    var monthArray = []
 </script>
 
 <script>
@@ -1345,6 +1356,7 @@
         setDefaultTable()
         setActualCost()
         setInvoice()
+        preTotalCalc()
         setGDing()
         setBillPayment()
         setInvoiceCheck()
@@ -1407,7 +1419,80 @@
         update()//金額處理
     }
 </script>
- 
+<script>
+    function preTotalCalc() {
+        var invoice = "{{$data['invoice_table']}}"
+
+        invoice = invoice.replace(/[\n\r]/g, "")
+        invoice = JSON.parse(invoice.replace(/&quot;/g, '"'));
+
+        var invoice_year = ""
+        var invoice_month = ""
+        var yearDiv = document.getElementById("year")
+        var monthDiv = document.getElementById("month")
+        for(var i = 0; i < invoice.length; i++){
+            if(invoice[i].invoice_date == null) {
+                invoice_year = invoice[i].created_at.substr(0, 4)
+                invoice_month = invoice[i].created_at.substr(5, 2)
+                console.log(invoice_year)
+            }
+            else {
+                invoice_year = invoice[i].invoice_date.substr(0, 4)
+                invoice_month = invoice[i].invoice_date.substr(5, 2)
+            }
+            
+            if(monthArray.indexOf(invoice_month) == -1) {
+                console.log("monthArray")
+                monthArray.push(invoice_month)
+            }
+            if(yearArray.indexOf(invoice_year) == -1) {
+                console.log("yearArray")
+                yearArray.push(invoice_year)
+            }
+        }
+        monthArray = monthArray.sort()
+        yearArray = yearArray.sort()
+        for(var i=0; i<yearArray.length; i++){
+            yearDiv.innerHTML += "<option value="+ yearArray[i] +">"+ yearArray[i] +"</option>"
+        }
+        for(var i=0; i<monthArray.length; i++){
+            monthDiv.innerHTML += "<option value="+ monthArray[i] +">"+ monthArray[i] +"</option>"
+        }
+    }
+
+    function totalCalc() {
+        var month = document.getElementById("month").value
+        var year = document.getElementById("year").value
+        var month_total = document.getElementById("month_total")
+        var total = 0
+        var invoice_month = '' 
+        var invoice_year = ''
+
+        for(var i=0;i < invoice_table.length;i++){
+            if(invoice_table[i].invoice_date == null) {
+                invoice_month = invoice_table[i].created_at.substr(5, 2)
+                invoice_year = invoice_table[i].created_at.substr(0, 4)
+            }
+            else {
+                invoice_month = invoice_table[i].invoice_date.substr(5, 2)
+                invoice_year = invoice_table[i].invoice_date.substr(0, 4)
+            }
+            if(invoice_month == month && invoice_year == year){
+                total += invoice_table[i].price
+                console.log("Yes, Price:"+total)
+            }
+        
+        }
+        console.log("total:"+total)
+        console.log("month_total:"+month_total)
+        if(total == 0){
+            month_total.innerHTML = "無"
+        }
+        else{
+            month_total.innerHTML = total
+        }
+    }
+</script> 
 <script>
 //設定類---------------------------------------------------------------------------------------
     function setdefault(){      //若有新增或是刪除Default，更新扣款金額

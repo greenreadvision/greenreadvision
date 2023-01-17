@@ -507,6 +507,15 @@
             </div>
             <div class="modal-body">
                 <div class="form-group col-lg-6">
+                    <select id="year" class="rounded-pill " onchange="totalCalc()">
+                        <option value=""></option>
+                    </select>
+                    <select id="month" class="rounded-pill " onchange="totalCalc()">
+                        <option value=""></option>
+                    </select>
+                    <span>總金額：</span><span id="month_total"></span>
+                </div>
+                <div class="form-group col-lg-6">
                     <div id="invoice-page" class="d-flex align-items-end">
                         <nav aria-label="Page navigation example">
                             <ul class="pagination mb-0">
@@ -621,6 +630,8 @@
     var InvoiceCost = 0
     var GdingCost = 0
     var Payment = 0
+    var yearArray = []
+    var monthArray = []
     $(document).ready(function() {
         projectData = getProjectData()
         var total = 0
@@ -628,11 +639,11 @@
 
         invoice = invoice.replace(/[\n\r]/g, "")
         invoice = JSON.parse(invoice.replace(/&quot;/g, '"'));
-
+        preTotalCalc()
         DGing_table = getNewDGing()
 
         var billPayment = '{{$data->billPayments}}'
-
+        
         billPayment = billPayment.replace(/[\n\r]/g, "")
         billPayment = JSON.parse(billPayment.replace(/&quot;/g, '"'));
         setInvoice()
@@ -656,10 +667,9 @@
         setTex()
         setdefault()
         $("#total-price").html(commafy(total))
-
         
         settextArea()
-
+        totalCalc()
         setInterestRate()
     });
 
@@ -671,7 +681,6 @@
             var total_amount = Math.round(contract_value * persen / 100)
             var tex = Math.round(total_amount*0.05)
             var amount = Math.round(total_amount-tex)
-            console.log(contract_value * persen / 100, amount, tex)
             $('#amount_' + projectData.acceptances[i].no).html(commafy(amount))
             $('#tex_' + projectData.acceptances[i].no).html(commafy(tex))
             $('#total_amount_' + projectData.acceptances[i].no).html(commafy(total_amount))
@@ -683,12 +692,9 @@
             var persen = projectData.defaults[i].persen
             var amount = Math.round(contract_value * persen / 100)
             total_default += amount
-            console.log('total_default = '+ total_default)
             $('#default_amount_' + projectData.defaults[i].no).html(commafy(amount))
-            console.log(commafy(amount))
             
         }
-        console.log(document.getElementById('total_default').innerHTML)
         document.getElementById('total_default').innerHTML = "{{__('customize.default_fine')}}" + "：" + commafy(total_default)
     }
 
@@ -696,7 +702,6 @@
         project_note = document.getElementById('project_note').textContent;
         
         project_note = project_note.replace(/\r?\n/g, '<br/>')
-        console.log(project_note)
         document.getElementById('project_note').innerHTML = project_note
         
     }
@@ -728,8 +733,78 @@
         return num;
     }
 
-    
-    
+    function preTotalCalc() {
+        var invoice = '{{$data->invoices}}'
+
+        invoice = invoice.replace(/[\n\r]/g, "")
+        invoice = JSON.parse(invoice.replace(/&quot;/g, '"'));
+
+        var invoice_year = ""
+        var invoice_month = ""
+        var yearDiv = document.getElementById("year")
+        var monthDiv = document.getElementById("month")
+        for(var i = 0; i < invoice.length; i++){
+            if(invoice[i].invoice_date == null) {
+                invoice_year = invoice[i].created_at.substr(0, 4)
+                invoice_month = invoice[i].created_at.substr(5, 2)
+                console.log(invoice_year)
+            }
+            else {
+                invoice_year = invoice[i].invoice_date.substr(0, 4)
+                invoice_month = invoice[i].invoice_date.substr(5, 2)
+            }
+            
+            if(monthArray.indexOf(invoice_month) == -1) {
+                console.log("monthArray")
+                monthArray.push(invoice_month)
+            }
+            if(yearArray.indexOf(invoice_year) == -1) {
+                console.log("yearArray")
+                yearArray.push(invoice_year)
+            }
+        }
+        monthArray = monthArray.sort()
+        yearArray = yearArray.sort()
+        for(var i=0; i<yearArray.length; i++){
+            yearDiv.innerHTML += "<option value="+ yearArray[i] +">"+ yearArray[i] +"</option>"
+        }
+        for(var i=0; i<monthArray.length; i++){
+            monthDiv.innerHTML += "<option value="+ monthArray[i] +">"+ monthArray[i] +"</option>"
+        }
+    }
+
+    function totalCalc() {
+        var month = document.getElementById("month").value
+        var year = document.getElementById("year").value
+        var month_total = document.getElementById("month_total")
+        var total = 0
+        var invoice_month = '' 
+        var invoice_year = ''
+
+        for(var i=0;i < invoice_table.length;i++){
+            if(invoice_table[i].invoice_date == null) {
+                invoice_month = invoice_table[i].created_at.substr(5, 2)
+                invoice_year = invoice_table[i].created_at.substr(0, 4)
+            }
+            else {
+                invoice_month = invoice_table[i].invoice_date.substr(5, 2)
+                invoice_year = invoice_table[i].invoice_date.substr(0, 4)
+            }
+            if(invoice_month == month && invoice_year == year){
+                total += invoice_table[i].price
+                console.log("Yes, Price:"+total)
+            }
+        
+        }
+        console.log("total:"+total)
+        console.log("month_total:"+month_total)
+        if(total == 0){
+            month_total.innerHTML = "無"
+        }
+        else{
+            month_total.innerHTML = total
+        }
+    }
 </script>
 <script>
     //Invoice帳務設定類---------------------------------------------------------------------------------------
@@ -755,7 +830,6 @@
             var invoice = "{{$data->invoices}}"
             invoice = invoice.replace(/[\n\r]/g, "")
             invoice = JSON.parse(invoice.replace(/&quot;/g, '"'));
-            console.log(invoice)
             for (var i = 0; i < invoice.length; i++) {
                 if(invoice[i].status != 'delete' && invoice[i].prepay != 1){
                     
@@ -997,13 +1071,19 @@
                 var sgin = ""
             }
             
-            
+            var invoice_dates = ''
+            if(invoice_table[i].invoice_date == null) {
+                invoice_dates = invoice_table[i].created_at.substr(0, 10)
+            }
+            else {
+                invoice_dates = invoice_table[i].invoice_date
+            }   
             tr = "<tr>" +
                 "<td width='15%'><div class=\"d-flex justify-content-center\">" + sgin + invoice_table[i].finished_id + "</div></td>" +
                 "<td width='20%'>" + invoice_table[i].company + "</td>" +
                 "<td width='30%'>" + invoice_table[i].title + "</a></td>" +
                 "<td width='10%'>" + commafy(invoice_table[i].price) + "</td>" +
-                "<td width='15%'>" + invoice_table[i].created_at.substr(0, 10) + "</td>" +
+                "<td width='15%'>" + invoice_dates + "</td>" +
                 "<td width='5%'>" + span + "</td>" +
                 "<td width='5%'>" + check_icon + "</i>"
                 "</tr>"
@@ -1256,7 +1336,6 @@
             var billPayment = "{{$data->billPayments}}"
             billPayment = billPayment.replace(/[\n\r]/g, "")
             billPayment = JSON.parse(billPayment.replace(/&quot;/g, '"'));
-            console.log(JSON.parse("{{$data}}".replace(/[\n\r]/g, "").replace(/&quot;/g, '"')))
             for (var i = 0; i < billPayment.length; i++) {
                 if(billPayment[i].status != 'delete'){
                     
