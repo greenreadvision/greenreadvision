@@ -73,6 +73,7 @@
                                                 <option value="grv_2">綠雷德</option>
                                                 <option value="rv">閱野</option>
                                                 <option value="grv">綠雷德(舊)</option>
+                                                <option value="zd">州道</option>
                                             </select>
                                         </div>
                                         <div class="col-lg-6">
@@ -113,6 +114,13 @@
                                             @foreach($data['rv'] as $r)
                                             @if( $r['finished']==0)
                                             <option value="{{$r['project_id']}}">{{$r->name}}</option>
+                                            @endif
+                                            @endforeach
+                                        </optgroup>
+                                        <optgroup label="州道">
+                                            @foreach($data['zd'] as $zd)
+                                            @if( $zd['finished']==0)
+                                            <option value="{{$zd['project_id']}}">{{$zd->name}}</option>
                                             @endif
                                             @endforeach
                                         </optgroup>
@@ -368,6 +376,7 @@
                                         <option value=''></option>
                                         <optgroup id="select-purchase-project-grv" label="綠雷德">
                                         <optgroup id="select-purchase-project-rv" label="閱野">
+                                        <optgroup id="select-purchase-project-zd" label="州道">
                                     </select>
                                 </div>
                             </div>
@@ -608,6 +617,7 @@
         project = ''
         $("#select-purchase-project-grv").empty();
         $("#select-purchase-project-rv").empty();
+        $("#select-purchase-project-zd").empty();
 
         if (projectYear == '') {
             reset()
@@ -620,6 +630,8 @@
                         $("#select-purchase-project-grv").append("<option value='" + projects[i]['project_id'] + "'>" + projects[i]['name'] + "</option>");
                     } else if (projects[i]['company_name'] == "rv") {
                         $("#select-purchase-project-rv").append("<option value='" + projects[i]['project_id'] + "'>" + projects[i]['name'] + "</option>");
+                    } else if (projects[i]['company_name'] == "zd") {
+                        $("#select-purchase-project-zd").append("<option value='" + projects[i]['project_id'] + "'>" + projects[i]['name'] + "</option>");
                     }
                 }
             }
@@ -860,6 +872,7 @@
         project = ''
         $("#select-purchase-project-grv").empty();
         $("#select-purchase-project-rv").empty();
+        $("#select-purchase-project-zd").empty();
 
         var projectYears = [] //初始化
 
@@ -871,6 +884,8 @@
                 $("#select-purchase-project-grv").append("<option value='" + projects[i]['project_id'] + "'>" + projects[i]['name'] + "</option>");
             } else if (projects[i]['company_name'] == "rv") {
                 $("#select-purchase-project-rv").append("<option value='" + projects[i]['project_id'] + "'>" + projects[i]['name'] + "</option>");
+            } else if (projects[i]['company_name'] == "zd") {
+                $("#select-purchase-project-zd").append("<option value='" + projects[i]['project_id'] + "'>" + projects[i]['name'] + "</option>");
             }
         }
 

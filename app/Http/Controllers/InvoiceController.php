@@ -145,6 +145,7 @@ class InvoiceController extends Controller
         $rv = Project::where('company_name', '=', 'rv')->where('status','!=','close')->orderby('created_at', 'desc')->get();
         $grv = Project::where('company_name', '=', 'grv')->where('status','!=','close')->orderby('created_at', 'desc')->get();
         $grv2 = Project::where('company_name', '=', 'grv_2')->where('status','!=','close')->orderby('created_at', 'desc')->get();
+        $zd = Project::where('company_name', '=', 'zd')->where('status','!=','close')->orderby('created_at', 'desc')->get();
 
         $users = [];
         $allUsers = User::orderby('user_id')->get();
@@ -159,7 +160,7 @@ class InvoiceController extends Controller
 
         $reviewers = User::where('role','=','supervisor')->get();
         $purchases = Purchase::orderby('purchase_date', 'desc')->with('project')->with('user')->get();
-        return view('pm.invoice.createInvoice')->with('data', ['projects' => $projects,  'bank' => $bank,  'rv' => $rv,  'grv' => $grv, 'grv2' => $grv2,'purchases'=>$purchases,'users' => $users,'reviewers'=>$reviewers, 'interns'=>$interns]);
+        return view('pm.invoice.createInvoice')->with('data', ['projects' => $projects,  'bank' => $bank,  'rv' => $rv,  'grv' => $grv, 'grv2' => $grv2, 'zd' => $zd, 'purchases'=>$purchases,'users' => $users,'reviewers'=>$reviewers, 'interns'=>$interns]);
     }
 
     /**
@@ -274,6 +275,9 @@ class InvoiceController extends Controller
         }
         //設定流水號
         switch($project->company_name){
+            case 'zd':
+                $finished_id = "IZD" . (date('Y') - 1911) . date("m") . $var;
+                break;
             case 'rv':
                 $finished_id = "IAR" . (date('Y') - 1911) . date("m") . $var;
                 break;
@@ -470,13 +474,14 @@ class InvoiceController extends Controller
     {
         //
         $type = ['salary','rent','accounting', 'insurance','cash','tax', 'other'];
-        $company_name = ['grv', 'grv_2', 'rv'];
+        $company_name = ['grv', 'grv_2', 'rv', 'zd'];
         $invoice = Invoice::find($invoice_id);
         // $invoice->content = InvoiceController::replaceEnter(false, $invoice->content);
         $projects = Project::select('project_id', 'name', 'status')->get()->toArray();
         foreach ($projects as $key => $project) {
             $projects[$key]['selected'] = ($project['project_id'] == $invoice->project_id) ? "selected" : " ";
         }
+        $zd = Project::where('company_name', '=', 'zd')->where('status','!=','close')->orderby('created_at', 'desc')->get();
         $rv = Project::where('company_name', '=', 'rv')->where('status','!=','close')->orderby('created_at', 'desc')->get();
         $grv = Project::where('company_name', '=', 'grv')->where('status','!=','close')->orderby('created_at', 'desc')->get();
         $grv2 = Project::where('company_name', '=', 'grv_2')->where('status','!=','close')->orderby('created_at', 'desc')->get();
@@ -491,7 +496,7 @@ class InvoiceController extends Controller
         $reviewers = User::where('role','=','supervisor')->get();
         $interns = Intern::orderby('intern_id')->get();
         $purchases = Purchase::orderby('purchase_date', 'desc')->with('project')->with('user')->get();
-        return view('pm.invoice.editInvoice')->with('data', ['invoice' => $invoice->toArray(), 'projects' => $projects, 'type' => $type, 'company_name' => $company_name,'rv' => $rv,  'grv' => $grv , 'grv2' =>$grv2 ,'purchases'=>$purchases,'users'=>$users,'reviewers'=>$reviewers, 'interns'=>$interns]);
+        return view('pm.invoice.editInvoice')->with('data', ['invoice' => $invoice->toArray(), 'projects' => $projects, 'type' => $type, 'company_name' => $company_name,'rv' => $rv,  'grv' => $grv , 'grv2' =>$grv2, 'zd' => $zd,'purchases'=>$purchases,'users'=>$users,'reviewers'=>$reviewers, 'interns'=>$interns]);
     }
 
     /**
@@ -585,6 +590,9 @@ class InvoiceController extends Controller
             }
             
             switch($request->input('company_name')){
+                case 'zd':
+                    $finished_id = "IZD" . (date('Y') - 1911) . substr($invoice->created_at, 5, 2) . $var;
+                    break;
                 case 'rv':
                     $finished_id = "IAR" . (date('Y') - 1911) . substr($invoice->created_at, 5, 2) . $var;
                     break;
@@ -732,6 +740,9 @@ class InvoiceController extends Controller
             }
             
             switch($request->input('company_name')){
+                case 'zd':
+                    $finished_id = "IZD" . (date('Y') - 1911) . substr($invoice->created_at, 5, 2) . $var;
+                    break;
                 case 'rv':
                     $finished_id = "IAR" . (date('Y') - 1911) . substr($invoice->created_at, 5, 2) . $var;
                     break;

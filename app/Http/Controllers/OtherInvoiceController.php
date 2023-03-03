@@ -122,6 +122,9 @@ class OtherInvoiceController extends Controller
         }
         
         switch($request->input('company_name')){
+            case 'zd':
+                $finished_id = "IZD" . (date('Y') - 1911) . date("m") . $var;
+                break;
             case 'rv':
                 $finished_id = "IAR" . (date('Y') - 1911) . date("m") . $var;
                 break;
@@ -266,7 +269,7 @@ class OtherInvoiceController extends Controller
     {
        
         $type = ['salary','rent','accounting', 'insurance','cash','tax', 'other'];
-        $company_name = ['grv', 'grv_2', 'rv'];
+        $company_name = ['grv', 'grv_2', 'rv', 'zd'];
         //
         $invoice = OtherInvoice::find($invoice_id);
         foreach($type as $key ){
@@ -382,6 +385,9 @@ class OtherInvoiceController extends Controller
             }
             
             switch($request->input('company_name')){
+                case 'zd':
+                    $finished_id = "IZD" . (date('Y') - 1911) . substr($invoice->created_at, 5, 2). $var;
+                    break;
                 case 'rv':
                     $finished_id = "IAR" . (date('Y') - 1911) . substr($invoice->created_at, 5, 2). $var;
                     break;
@@ -525,6 +531,9 @@ class OtherInvoiceController extends Controller
             }
             
             switch($request->input('company_name')){
+                case 'zd':
+                    $finished_id = "IZD" . (date('Y') - 1911) . substr($invoice->created_at, 5, 2) . $var;
+                    break;
                 case 'rv':
                     $finished_id = "IAR" . (date('Y') - 1911) . substr($invoice->created_at, 5, 2) . $var;
                     break;

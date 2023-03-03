@@ -171,6 +171,9 @@
                             @elseif($data['invoice']['company_name']=='grv_2')
                             <img src="{{ URL::asset('img/綠雷德創新logo.png') }}" height="50px">
                             <label style="font-size:xx-large;">綠雷德創新股份有限公司</label>
+                            @elseif($data['invoice']['company_name']=='zd')
+                            <img src="{{ URL::asset('img/綠雷德創新logo.png') }}" height="50px">
+                            <label style="font-size:xx-large;">州道創新有限公司</label>
                             @endif
 
                             <h3 class="mb-2">請款申請書</h3>

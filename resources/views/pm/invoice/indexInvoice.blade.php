@@ -69,6 +69,7 @@
                                 <option value="grv_2">綠雷德</option>
                                 <option value="rv">閱野</option>
                                 <option value="grv">綠雷德(舊)</option>
+                                <option value="zd">州道 </option>
                             </select>
                         </div>
                     </div>
@@ -85,6 +86,7 @@
                                 <optgroup id="select-project-grv_2" label="綠雷德">
                                 <optgroup id="select-project-grv" label="綠雷德(舊)">
                                 <optgroup id="select-project-rv" label="閱野">
+                                <optgroup id="select-project-zd" label="州道">
                             </select>
                         </div>
                     </div>
@@ -153,6 +155,7 @@
                                 <option value="grv_2">綠雷德</option>
                                 <option value="rv">閱野</option>
                                 <option value="grv">綠雷德(舊)</option>
+                                <option value="zd">州道</option>
                             </select>
                         </div>
                         <div class="col-lg-12">
@@ -553,6 +556,7 @@
         $("#select-project-grv_2").empty();
         $("#select-project-grv").empty();
         $("#select-project-rv").empty();
+        $("#select-project-zd").empty();
 
         if (projectYear == '') {
             reset()
@@ -567,6 +571,8 @@
                         $("#select-project-rv").append("<option value='" + projects[i]['project_id'] + "'>" + projects[i]['name'] + "</option>");
                     } else if (projects[i]['company_name'] == "grv_2") {
                         $("#select-project-grv_2").append("<option value='" + projects[i]['project_id'] + "'>" + projects[i]['name'] + "</option>");
+                    } else if (projects[i]['company_name'] == "zd") {
+                        $("#select-project-zd").append("<option value='" + projects[i]['project_id'] + "'>" + projects[i]['name'] + "</option>");
                     }
                 }
             }
@@ -1106,6 +1112,7 @@
         $("#select-project-grv_2").empty();
         $("#select-project-grv").empty();
         $("#select-project-rv").empty();
+        $("#select-project-zd").empty();
 
         var projectYears = [] //初始化
 
@@ -1120,6 +1127,8 @@
                     $("#select-project-rv").append("<option value='" + projects[i]['project_id'] + "'>" + projects[i]['name'] + "</option>");
                 } else if (projects[i]['company_name'] == "grv_2") {
                     $("#select-project-grv_2").append("<option value='" + projects[i]['project_id'] + "'>" + projects[i]['name'] + "</option>");
+                } else if (projects[i]['company_name'] == "zd") {
+                    $("#select-project-zd").append("<option value='" + projects[i]['project_id'] + "'>" + projects[i]['name'] + "</option>");
                 }
             }
         }
@@ -1282,7 +1291,8 @@
         other: "其他",
         grv: "綠雷德(舊)",
         rv: "閱野",
-        grv_2: "綠雷德"
+        grv_2: "綠雷德",
+        zd: "州道"
     }
 
     //帳務

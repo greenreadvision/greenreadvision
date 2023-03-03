@@ -208,6 +208,7 @@ return [
     'rv' => '閱野',
     'grv' => '綠雷德(舊)',
     'grv_2'=> '綠雷德創新',
+    'zd'=>'州道',
     'BusinessCar' => '公務車',
     'driver' => '駕駛人',
     'phone_number' => '聯絡電話',
