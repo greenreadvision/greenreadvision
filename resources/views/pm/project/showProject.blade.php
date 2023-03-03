@@ -831,7 +831,7 @@
             invoice = invoice.replace(/[\n\r]/g, "")
             invoice = JSON.parse(invoice.replace(/&quot;/g, '"'));
             for (var i = 0; i < invoice.length; i++) {
-                if(invoice[i].status != 'delete' && invoice[i].prepay != 1){
+                if(invoice[i].status != 'delete'){
                     
                     InvoiceCost += invoice[i].price
                 }
@@ -1047,6 +1047,11 @@
                 span = " <div class='progress' data-toggle='tooltip' data-placement='top' title='匯款完成'>" +
                     "<div class='progress-bar bg-info' role='progressbar' style='width: 100%' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100'></div>" +
                     "</div>"
+                } else if (invoice_table[i].status == 'complete_petty') {
+
+                span = " <div class='progress' data-toggle='tooltip' data-placement='top' title='零用金支付'>" +
+                    "<div class='progress-bar bg-info' role='progressbar' style='width: 100%' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100'></div>" +
+                    "</div>"
             } else if(invoice_table[i].status == 'delete') {
                 span = " <div title='已註銷'>" +
                     "<img src='{{ URL::asset('gif/cancelled.png') }}' alt='' style='width:100%'/>" +
@@ -1085,7 +1090,7 @@
                 "<td width='10%'>" + commafy(invoice_table[i].price) + "</td>" +
                 "<td width='15%'>" + invoice_dates + "</td>" +
                 "<td width='5%'>" + span + "</td>" +
-                "<td width='5%'>" + check_icon + "</i>"
+                "<td width='5%'>" + check_icon + "</i>"+
                 "</tr>"
     
     
