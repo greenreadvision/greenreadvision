@@ -172,7 +172,7 @@
                             <img src="{{ URL::asset('img/綠雷德創新logo.png') }}" height="50px">
                             <label style="font-size:xx-large;">綠雷德創新股份有限公司</label>
                             @elseif($data['invoice']['company_name']=='zd')
-                            <img src="{{ URL::asset('img/綠雷德創新logo.png') }}" height="50px">
+                            <img src="{{ URL::asset('img/州道章.jpg') }}" height="50px">
                             <label style="font-size:xx-large;">州道創新有限公司</label>
                             @endif
 
